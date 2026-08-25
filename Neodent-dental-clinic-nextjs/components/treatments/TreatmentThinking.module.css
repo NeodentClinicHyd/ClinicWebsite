@@ -1,0 +1,812 @@
+/* Section 03 — The Thinking Behind Treatment.
+
+   Dark charcoal editorial surface. Design language inherited from the
+   homepage's canonical .archive-* system (globals.css / LegacyStory.tsx)
+   and the About page's act-based grammar (LegacyAndPeople.module.css):
+   the same 10px/.2em uppercase eyebrow with a 34px red hairline,
+   DM Serif Display headings with a red italic emphasis span, an oversized
+   low-opacity serif chapter numeral bleeding into the eyebrow via negative
+   margin (same mechanic as .archive-year / ClinicalLeadership .numeral /
+   LegacyAndPeople .numeral), and 15px/1.7 muted body copy.
+
+   Three internal acts separated by constrained border-top seams (not the
+   chapter-level EditorialSeam component):
+     03.1 — Treatment Philosophy
+     03.2 — Clinical Expertise (open portrait plates, no card wrappers)
+     03.3 — Clinical Education (portrait DMLS video, object-fit: contain)
+
+   Nothing here edits globals.css or any locked section. */
+
+.section {
+  --charcoal: #1a1e20;
+  --ivory: #f1eee7;
+  --muted: rgba(241, 238, 231, 0.56);
+  --red: #d71920;
+  --mono: var(--app-font-mono, "Manrope", sans-serif);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--charcoal);
+  color: var(--ivory);
+  padding: clamp(72px, 8vw, 108px) 0 clamp(80px, 9vw, 120px);
+}
+
+/* Subtle radial atmosphere — identical pattern to ClinicalLeadership */
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 92% 4%, rgba(215, 25, 32, 0.09), transparent 44%),
+    radial-gradient(ellipse at 5% 94%, rgba(241, 238, 231, 0.03), transparent 55%),
+    var(--charcoal);
+}
+
+/* ---- Background geometry — treatment/clinical drafting motif ------- */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Vertical rail — left of centre, avoids doctor portrait zone */
+.verticalRail {
+  position: absolute;
+  left: 20%;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(241, 238, 231, 0.07) 15%,
+    rgba(241, 238, 231, 0.07) 85%,
+    transparent 100%
+  );
+}
+
+/* Mid-section horizontal draft line */
+.draftHorizontal {
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+  background: rgba(241, 238, 231, 0.04);
+}
+
+/* Registration dot at rail / draft intersection */
+.registrationDot {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: calc(20% - 7px);
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(215, 25, 32, 0.22);
+  border-radius: 50%;
+}
+
+/* ---- Container ---------------------------------------------------- */
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Shared act entrance ------------------------------------------ */
+.act {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.actVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- ACT 03.1 — Treatment Philosophy ------------------------------ */
+.actPhilosophy {
+  /* First act — no top seam, just the section padding */
+}
+
+/* Header: numeral → eyebrow → title, in-flow negative margin */
+.header {
+  max-width: 780px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+/* Chapter numeral — normal flow, negative bottom margin bleeds into eyebrow */
+.numeral {
+  display: block;
+  margin: 0 0 -0.34em -0.05em;
+  color: rgba(241, 238, 231, 0.06);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5.5rem, 9.5vw, 9.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Eyebrow — red hairline + uppercase tracked label */
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font: 700 10px/1 var(--mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrowRule {
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+/* Section title */
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: var(--type-section-title);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  color: var(--ivory);
+}
+.title span {
+  display: block;
+  color: var(--red);
+  font-style: italic;
+}
+
+/* Philosophy body — narrow measure, stacked paragraphs */
+.philosophyBody {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 740px;
+}
+
+.paragraph {
+  color: rgba(241, 238, 231, 0.75);
+  font-size: 15.5px;
+  line-height: 1.76;
+  margin: 0;
+}
+
+/* ---- Internal act seam — constrained, About page pattern ---------- */
+/* border-top sits inside .container, auto-constrained to content width */
+.actSeam {
+  border-top: 1px solid rgba(241, 238, 231, 0.1);
+  margin-top: clamp(64px, 7.5vw, 100px);
+  padding-top: 0; /* Acts start with their own padding */
+}
+
+/* ---- Acts 03.2 & 03.3 top spacing (after the seam element) ------- */
+.actTeam,
+.actEducation {
+  padding-top: clamp(44px, 5.5vw, 68px);
+}
+
+/* ---- Shared act eyebrow (03.2, 03.3) — mono, red, no hairline ---- */
+.actEyebrow {
+  margin: 0 0 clamp(32px, 4vw, 48px);
+  color: var(--red);
+  font: 10px/1.4 var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---- ACT 03.2 — Clinical Expertise -------------------------------- */
+.doctors {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0 clamp(24px, 3.5vw, 56px);
+  align-items: start;
+}
+
+/* Connecting hairline between the two doctor figures */
+.doctorBridge {
+  display: block;
+  width: 1px;
+  align-self: stretch;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(215, 25, 32, 0.28) 12%,
+    rgba(215, 25, 32, 0.28) 88%,
+    transparent 100%
+  );
+  margin-top: clamp(40px, 5vw, 60px);
+}
+
+/* Individual doctor — open editorial, no card wrapper */
+.doctor {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Offset stagger: Dr. Miftah sits ~28px lower — editorial asymmetry */
+.doctorMiftah {
+  margin-top: clamp(20px, 3vw, 32px);
+}
+
+/* Portrait plate — open figure, fine border, no radius */
+.doctorPortrait {
+  position: relative;
+  margin: 0 0 clamp(20px, 2.5vw, 28px);
+}
+
+/* Red registration tick above portrait — About page founderPortrait pattern */
+.portraitRegistration {
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  width: 1px;
+  height: 14px;
+  background: linear-gradient(180deg, var(--red), transparent);
+  z-index: 1;
+}
+
+.portraitImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center 15%;
+  border: 1px solid rgba(241, 238, 231, 0.16);
+  /* Subtle filter — same as ClinicalLeadership team cards */
+  filter: grayscale(0.1) saturate(0.85);
+  background: #1e2224;
+}
+
+.portraitCaption {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font: 9px/1.4 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Doctor information — no card background, no border-radius */
+.doctorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.doctorName {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 1.9vw, 26px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+}
+
+/* Credentials — muted, not red */
+.doctorMeta {
+  margin: 0;
+  color: var(--muted);
+  font: 10px/1.4 var(--mono);
+  letter-spacing: 0.1em;
+}
+
+/* Gold medallist — quiet italic serif, never a badge */
+.doctorRecognition {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.65);
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Specialty label */
+.doctorSpecialty {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.82);
+  font: 700 10px/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-top: 8px;
+  border-top: 1px solid rgba(241, 238, 231, 0.1);
+}
+
+/* Treatment context — 2–3 lines, muted, patient-relevant */
+.doctorContext {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.62);
+  font-size: 13.5px;
+  line-height: 1.68;
+  padding-top: 6px;
+}
+
+/* ---- ACT 03.3 — Clinical Education -------------------------------- */
+.educationLayout {
+  display: grid;
+  grid-template-columns: 1fr 0.7fr;
+  gap: clamp(40px, 5vw, 72px);
+  align-items: start;
+}
+
+/* Left — text content */
+.educationText {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2.2vw, 26px);
+  padding-top: 4px;
+}
+
+.educationTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.3vw, 32px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+}
+.educationTitle span {
+  color: rgba(241, 238, 231, 0.75);
+}
+
+/* Education metadata attribution — mono compact */
+.educationMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: clamp(14px, 1.8vw, 20px);
+  border-top: 1px solid rgba(241, 238, 231, 0.1);
+}
+.educationMetaName {
+  color: var(--ivory);
+  font: 700 10.5px/1.4 var(--mono);
+  letter-spacing: 0.08em;
+}
+.educationMetaSub {
+  color: var(--muted);
+  font: 9px/1.4 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Right — portrait video plate */
+.educationVideo {
+  /* Constrain so it doesn't dominate the section on wide viewports */
+  max-width: 280px;
+}
+
+.videoPlate {
+  position: relative;
+  margin: 0;
+}
+
+/* Registration tick above video frame */
+.videoRegistration {
+  position: absolute;
+  top: -14px;
+  left: 18px;
+  width: 1px;
+  height: 14px;
+  background: linear-gradient(180deg, var(--red), transparent);
+  z-index: 1;
+}
+
+/* Portrait frame — 9:16, max-height prevents section ballooning */
+.videoFrame {
+  position: relative;
+  /* Native portrait / reel aspect ratio */
+  aspect-ratio: 9 / 16;
+  max-height: clamp(380px, 50vh, 500px);
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.18);
+  background: #0e1012;
+}
+
+/* object-fit: contain — preserves native composition, no crop */
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+/* Top label overlay — fine mono */
+.videoTopLabel {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+.videoTopLabel span:first-child {
+  color: var(--red);
+  font: 700 8.5px/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.videoTopLabel span:last-child {
+  color: rgba(241, 238, 231, 0.55);
+  font: 8.5px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Play/pause — ClinicalLeadership .control pattern exactly */
+.videoControl {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(241, 238, 231, 0.7);
+  border-radius: 50%;
+  background: rgba(26, 30, 32, 0.72);
+  color: var(--ivory);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.videoControl:hover {
+  background: rgba(26, 30, 32, 0.92);
+  border-color: var(--ivory);
+}
+.videoControl:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.videoCaption {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font: 9px/1.4 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---- Stagger entrance -------------------------------------------- */
+.actPhilosophy { transition-delay: 0ms; }
+.actTeam       { transition-delay: 0ms; }
+.actEducation  { transition-delay: 0ms; }
+
+/* Doctor stagger via --stagger CSS custom property (set inline) */
+.doctor {
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--stagger, 0ms);
+}
+/* Doctors need their own opacity/transform start state */
+.actTeam:not(.actVisible) .doctor {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.actTeam.actVisible .doctor {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* doctorMiftah margin-top survives the reveal */
+.actTeam.actVisible .doctorMiftah {
+  transform: translateY(0);
+  margin-top: clamp(20px, 3vw, 32px);
+}
+
+/* ---- Tablet — 1024px --------------------------------------------- */
+@media (max-width: 1023px) {
+  .section {
+    padding: clamp(64px, 7.5vw, 96px) 0 clamp(72px, 8vw, 108px);
+  }
+  .container {
+    width: min(1180px, calc(100% - 48px));
+  }
+  .educationLayout {
+    grid-template-columns: 1fr 0.6fr;
+    gap: clamp(32px, 4.5vw, 56px);
+  }
+  .educationVideo {
+    max-width: 240px;
+  }
+  .doctorBridge {
+    /* On tablet at 1024 the bridge is still useful */
+  }
+}
+
+/* ---- Mobile — 768px ---------------------------------------------- */
+@media (max-width: 767px) {
+  .section {
+    padding: clamp(56px, 7vw, 72px) 0 clamp(64px, 8vw, 88px);
+  }
+  .container {
+    width: calc(100% - 40px);
+  }
+  .philosophyBody {
+    max-width: none;
+  }
+  .paragraph {
+    font-size: 15px;
+  }
+
+  /* Doctors: side by side up to 767px, then single column */
+  .doctors {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 clamp(20px, 3vw, 36px);
+  }
+  /* Hide the connecting bridge on two-column mobile */
+  .doctorBridge {
+    display: none;
+  }
+  /* Remove stagger offset on mobile — both doctors at same baseline */
+  .doctorMiftah {
+    margin-top: 0;
+  }
+  .actTeam.actVisible .doctorMiftah {
+    margin-top: 0;
+  }
+
+  /* Education: single column — text then video centered */
+  .educationLayout {
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 4vw, 44px);
+  }
+  .educationVideo {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  /* Vertical rail and geometry simplified on small screens */
+  .verticalRail {
+    display: none;
+  }
+  .registrationDot {
+    display: none;
+  }
+}
+
+/* ---- Mobile — 430px ---------------------------------------------- */
+@media (max-width: 430px) {
+  .section {
+    padding: clamp(48px, 7vw, 60px) 0 clamp(56px, 8vw, 72px);
+  }
+  .numeral {
+    font-size: clamp(4rem, 19vw, 6rem);
+  }
+  /* Doctors: single column on smallest screens */
+  .doctors {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 6vw, 56px);
+  }
+  .portraitImage {
+    max-width: 200px;
+  }
+  .doctorPortrait {
+    max-width: 200px;
+  }
+  .educationVideo {
+    max-width: 200px;
+  }
+  .videoFrame {
+    max-height: clamp(300px, 70vw, 380px);
+  }
+  .actSeam {
+    margin-top: clamp(48px, 7vw, 72px);
+  }
+}
+
+/* ---- Mobile — 390px ---------------------------------------------- */
+@media (max-width: 390px) {
+  .educationVideo {
+    max-width: 180px;
+  }
+  .videoFrame {
+    max-height: clamp(280px, 68vw, 340px);
+  }
+}
+
+/* ---- Reduced motion ---------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .act,
+  .doctor {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .actTeam:not(.actVisible) .doctor {
+    opacity: 1;
+    transform: none;
+  }
+  .videoControl {
+    transition: none;
+  }
+}
+
+/* ---- ACT 03.4 — How Treatment Takes Shape ------------------------- */
+.actProcess {
+  padding-top: clamp(44px, 5.5vw, 68px);
+}
+
+/* Sub-heading for the process act */
+.processHeader {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr;
+  gap: clamp(32px, 4.5vw, 64px);
+  align-items: start;
+  margin-bottom: clamp(44px, 5.5vw, 64px);
+}
+
+.processTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ivory);
+}
+.processTitle span {
+  color: var(--red);
+  font-style: italic;
+}
+
+.processParagraph {
+  color: rgba(241, 238, 231, 0.72);
+  font-size: 15px;
+  line-height: 1.76;
+  margin: 0;
+  padding-top: 6px;
+}
+
+/* Four-step editorial sequence — no cards, hairlines only */
+.processList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Top border across all steps */
+  border-top: 1px solid rgba(241, 238, 231, 0.12);
+}
+
+.processStep {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(20px, 2.5vw, 28px) clamp(16px, 2vw, 24px) clamp(20px, 2.5vw, 28px) 0;
+  /* Divider between steps — right-border on all but last */
+  border-right: 1px solid rgba(241, 238, 231, 0.09);
+  padding-right: clamp(16px, 2vw, 24px);
+  /* Entrance stagger */
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--step-delay, 0ms);
+}
+.processStep:last-child {
+  border-right: none;
+}
+.actProcess.actVisible .processStep {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mono step number */
+.processStepNumber {
+  display: block;
+  color: var(--red);
+  font: 700 10px/1 var(--mono);
+  letter-spacing: 0.18em;
+  margin-bottom: 4px;
+}
+
+/* Short red hairline beneath number */
+.processStepRule {
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: rgba(215, 25, 32, 0.45);
+  flex-shrink: 0;
+}
+
+/* Step label — serif, compact editorial heading */
+.processStepLabel {
+  display: block;
+  font-family: var(--app-font-serif);
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ivory);
+  font-style: italic;
+}
+
+/* Step description — muted, readable */
+.processStepText {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.58);
+  font-size: 13px;
+  line-height: 1.68;
+}
+
+/* ---- Tablet — 1024px : keep 4 across if comfortable -------------- */
+@media (max-width: 1023px) {
+  .processHeader {
+    grid-template-columns: 1fr;
+    gap: clamp(16px, 2.5vw, 24px);
+  }
+  /* 4 columns still fits at 768–1023 */
+}
+
+/* ---- 2×2 at 768px ------------------------------------------------ */
+@media (max-width: 768px) {
+  .processList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* Restore right border between the two columns */
+  .processStep:nth-child(2) {
+    border-right: none;
+  }
+  .processStep:nth-child(3) {
+    border-right: 1px solid rgba(241, 238, 231, 0.09);
+  }
+  /* Bottom border below the first row */
+  .processStep:nth-child(1),
+  .processStep:nth-child(2) {
+    border-bottom: 1px solid rgba(241, 238, 231, 0.09);
+    padding-bottom: clamp(20px, 3vw, 28px);
+  }
+  .processStep:nth-child(3),
+  .processStep:nth-child(4) {
+    padding-top: clamp(20px, 3vw, 28px);
+  }
+}
+
+/* ---- Mobile — 430 / 390 : single column stack ------------------- */
+@media (max-width: 430px) {
+  .processList {
+    grid-template-columns: 1fr;
+    border-top: none;
+  }
+  .processStep {
+    border-right: none !important;
+    border-top: 1px solid rgba(241, 238, 231, 0.1);
+    border-bottom: none !important;
+    padding: clamp(18px, 4vw, 24px) 0;
+  }
+  .processHeader {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Reduced motion ---------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .processStep {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

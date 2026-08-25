@@ -1,0 +1,636 @@
+/* Section 07 — Spaces designed around care.
+
+   Design language inherited directly from Section 02's canonical
+   .archive-* system in globals.css: the same 10px/.2em uppercase
+   eyebrow with a 34px red hairline, DM Serif Display headings with a
+   red italic emphasis line, an oversized low-opacity serif chapter
+   numeral bleeding into the eyebrow via negative margin (the same
+   mechanic as .archive-year / ClinicalLeadership's .numeral /
+   PatientStories' .numeral / WhatToExpect's .numeral), and 15px/1.7
+   muted body copy. Nothing here edits globals.css or any locked
+   section.
+
+   Dark editorial surface -- a deliberate tonal shift after the light
+   Sections 05/06, using ClinicalLeadership's local dark-token pattern
+   (its own --charcoal/--ivory/--muted/--red trio) but a genuinely
+   different base value so the two dark chapters read as separate
+   rooms rather than one continuous surface.
+
+   Composition is original to this section: an editorial 01/02 branch
+   selector + description (left) paired with a large primary clinic
+   photograph plus an offset secondary plate (right) that swap as one
+   coordinated unit -- a location atlas, not two equal cards. */
+
+.section {
+  --charcoal: #14161a;
+  --ivory: #f1eee7;
+  --muted: rgba(241, 238, 231, 0.58);
+  --red: #d71920;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--charcoal);
+  color: var(--ivory);
+  padding: clamp(72px, 8vw, 108px) 0 clamp(80px, 9vw, 120px);
+}
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 8% 4%, rgba(215, 25, 32, 0.09), transparent 46%),
+    radial-gradient(ellipse at 92% 92%, rgba(241, 238, 231, 0.03), transparent 55%),
+    var(--charcoal);
+}
+
+/* ---- Chapter-start seam ------------------------------------------- */
+.seam {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.seam::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(215, 25, 32, 0.55) 12%,
+    rgba(241, 238, 231, 0.2) 50%,
+    rgba(215, 25, 32, 0.55) 88%,
+    transparent
+  );
+}
+.seam::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 15px;
+  background: linear-gradient(180deg, rgba(215, 25, 32, 0.6), transparent);
+  transform: translateX(-50%);
+}
+.seamLabel {
+  position: absolute;
+  top: 20px;
+  left: max(0px, calc((100% - 1180px) / 2 + 24px));
+  color: rgba(241, 238, 231, 0.3);
+  font: 9px/1 var(--app-font-mono, monospace);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---- Location-atlas geometry --------------------------------------
+   A drafting cross registered against the media column, two quiet red
+   ticks and a compact coordinate tag -- the site's only "site plan"
+   motif. Purely decorative, no literal map, no pins. */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.draftVertical {
+  position: absolute;
+  top: 6%;
+  bottom: 6%;
+  left: 58%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(241, 238, 231, 0.08) 18%,
+    rgba(241, 238, 231, 0.08) 82%,
+    transparent
+  );
+}
+.draftHorizontal {
+  position: absolute;
+  left: 42%;
+  right: 4%;
+  top: 14%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(241, 238, 231, 0.07) 20%,
+    rgba(241, 238, 231, 0.07) 80%,
+    transparent
+  );
+}
+.registrationDot {
+  position: absolute;
+  top: 14%;
+  left: 58%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(215, 25, 32, 0.34);
+}
+.registrationDotSmall {
+  position: absolute;
+  bottom: 12%;
+  left: 6%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(215, 25, 32, 0.26);
+}
+.coordTag {
+  position: absolute;
+  top: 11%;
+  right: 4%;
+  color: rgba(241, 238, 231, 0.18);
+  font: 9px var(--app-font-mono, monospace);
+  letter-spacing: 0.22em;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Header -- numeral bleeds into eyebrow, matching Section 02 -- */
+.header {
+  max-width: 640px;
+  position: relative;
+}
+.numeral {
+  display: block;
+  margin: 0 0 -0.36em -0.04em;
+  color: rgba(241, 238, 231, 0.07);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5.5rem, 10vw, 10rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.7rem, 4.4vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+.title span {
+  color: var(--red);
+  font-style: italic;
+}
+.lede {
+  max-width: 460px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ---- Composition -- selector/description panel | connector | media
+   plate. The connector is a slim third track (not a spacer) carrying
+   a hairline + registration dot that visually binds the selector to
+   the photograph -- tightened ~12% from the previous top margin so
+   the heading/copy and the location composition read as one
+   intentional sequence rather than two separated blocks. */
+.composition {
+  display: grid;
+  grid-template-columns: 0.86fr 28px 1.1fr;
+  align-items: start;
+  gap: 0 clamp(20px, 2.6vw, 34px);
+  margin-top: clamp(42px, 5.2vw, 66px);
+}
+
+.panel {
+  padding-top: 4px;
+}
+
+/* ---- Connector -- binds the active selector row to the media plate.
+   A short hairline runs from the panel's text column to the primary
+   frame's top-left corner, meeting a small registration dot exactly
+   where .mediaRegistration's tick lands on the frame above. */
+.connector {
+  position: relative;
+  align-self: start;
+  height: 1px;
+  margin-top: 27px;
+}
+.connectorLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(241, 238, 231, 0.22), var(--red));
+}
+.connectorDot {
+  position: absolute;
+  right: -2px;
+  top: -2.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+/* ---- Selector -- editorial 01/02 list, never buttons/cards -------- */
+.selector ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.selectorItem {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 2px 18px 16px;
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.selector li:last-child .selectorItem {
+  border-bottom: 1px solid rgba(241, 238, 231, 0.14);
+}
+.selectorItem::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background: var(--red);
+  transform: translateY(-50%);
+  transition: height 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.selectorIndex {
+  color: rgba(241, 238, 231, 0.38);
+  font: 12px var(--app-font-mono, monospace);
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+}
+.selectorLabelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.selectorName {
+  color: var(--ivory);
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+.selectorSub {
+  color: rgba(241, 238, 231, 0.4);
+  font: 10px/1.5 var(--app-font-mono, monospace);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.selectorItem:hover .selectorName { color: var(--red); }
+.selectorItem:hover .selectorIndex { color: rgba(241, 238, 231, 0.6); }
+.selectorItemActive::before { height: 68%; }
+.selectorItemActive .selectorIndex { color: var(--red); }
+.selectorItemActive .selectorName { color: var(--red); }
+.selectorItem:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* ---- Description / metadata -- left edge aligned to the selector's
+   own text column (16px padding-left on .selectorItem), so the
+   description reads as a direct continuation of the active row
+   rather than sitting on a slightly different left edge. ---------- */
+.description {
+  max-width: 400px;
+  margin: 24px 0 0;
+  padding-left: 16px;
+  color: rgba(241, 238, 231, 0.72);
+  font-size: 15px;
+  line-height: 1.7;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.meta {
+  margin: 12px 0 0;
+  padding-left: 16px;
+  color: var(--muted);
+  font: 10px var(--app-font-mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.descriptionSwitching { opacity: 0; transform: translateY(4px); }
+
+/* Second supporting paragraph (Nampally only) -- same typography as
+   .description, restrained gap below the metadata line rather than
+   the default block margin, so it reads as one continuous column. */
+.extended {
+  margin-top: 16px;
+}
+
+/* ---- Brand line -- now shares the closing row with the CTA (see
+   .ctaRow), so it carries no margin/rule of its own. ---------------- */
+.brandLine {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: rgba(241, 238, 231, 0.5);
+  font: 10px var(--app-font-mono, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.brandLineTick {
+  width: 14px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+/* ---- Media column -- primary plate + offset secondary plate -------
+   .mediaCol's height is simply the natural block height of its two
+   children in normal flow (primaryWrap, then secondaryFrame pulled up
+   by its own negative margin-top) -- no assumed/guessed height here.
+   A little extra bottom padding gives the diptych genuine breathing
+   room before the CTA row and the fixed floating call/WhatsApp/Book
+   buttons near the viewport's bottom edge. */
+.mediaCol {
+  position: relative;
+  margin: 0;
+  padding-bottom: clamp(22px, 2.6vw, 38px);
+}
+/* Wraps ONLY the primary photograph (never the secondary plate), so
+   the hairline registration frame below always sizes to the photo's
+   own box precisely -- it no longer has to guess where the diptych as
+   a whole ends. */
+.primaryWrap {
+  position: relative;
+}
+.primaryOffsetFrame {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: -16px;
+  bottom: 16px;
+  border: 1px solid rgba(241, 238, 231, 0.16);
+  z-index: 0;
+}
+.primaryFrame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.24);
+  background: #1b1d1f;
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.primaryFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: saturate(0.88) contrast(1.03);
+}
+/* Quiet lower-band gradient -- keeps the metadata legible over any
+   photograph and recedes the busiest lower portion of the frame
+   (tiled floors, loose signage) so the architecture reads first. */
+.mediaShade {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  height: 30%;
+  background: linear-gradient(180deg, transparent, rgba(15, 16, 18, 0.62) 70%, rgba(15, 16, 18, 0.78));
+  pointer-events: none;
+}
+.mediaRegistration {
+  position: absolute;
+  top: -18px;
+  left: 30px;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, var(--red));
+  z-index: 2;
+}
+.mediaMeta {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  color: var(--ivory);
+  font: 9px var(--app-font-mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Secondary plate -- overlaps the primary plate's bottom-left corner,
+   an editorial diptych rather than a second unrelated photo. Its left
+   edge is registered exactly to .mediaRegistration's hairline (left:
+   30px on the primary frame) rather than an arbitrary offset, so the
+   two plates share one vertical registration line -- a deliberate
+   architectural plate pairing, not a photo floating on another. The
+   seam (::before) rises from its top edge to meet that same line. */
+.secondaryFrame {
+  position: relative;
+  z-index: 2;
+  width: 42%;
+  max-width: 206px;
+  aspect-ratio: 4 / 3;
+  margin: -58px 0 0 30px;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.26);
+  background: #1b1d1f;
+  box-shadow: 6px 8px 18px rgba(0, 0, 0, 0.3);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.secondaryFrame::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 1px;
+  height: 20px;
+  background: linear-gradient(180deg, transparent, var(--red));
+  z-index: 3;
+}
+.secondaryFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  filter: saturate(0.88) contrast(1.03);
+}
+.secondaryLabel {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 2;
+  color: rgba(241, 238, 231, 0.82);
+  font: 8px var(--app-font-mono, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.frameSwitching { opacity: 0; transform: translateY(6px) scale(0.985); }
+
+/* ---- Closing row -- brand line + CTA share one horizontal beat
+   under a single rule: "Two locations. One NeoDent standard." on the
+   left, "Explore our clinics" on the right. .mediaCol's own bottom
+   padding already reserves clearance for the secondary plate's
+   overhang, so this only needs a small top margin on top of that. */
+.ctaRow {
+  margin-top: clamp(4px, 0.8vw, 12px);
+  padding-top: 20px;
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  color: var(--ivory);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---- Restrained staggered entrance ---------------------------------- */
+.header,
+.composition,
+.ctaRow {
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section:not(.visible) .header,
+.section:not(.visible) .composition,
+.section:not(.visible) .ctaRow {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.composition { transition-delay: 120ms; }
+.ctaRow { transition-delay: 240ms; }
+
+@media (max-width: 1180px) {
+  .composition { grid-template-columns: 0.92fr 24px 1.08fr; gap: 0 26px; }
+}
+
+@media (max-width: 1024px) {
+  .composition { grid-template-columns: 1fr 20px 1.05fr; gap: 0 22px; }
+  .primaryOffsetFrame { top: 14px; left: 14px; right: -14px; bottom: 14px; }
+  .secondaryFrame { margin-top: -56px; width: 48%; }
+}
+
+@media (max-width: 900px) {
+  .composition { grid-template-columns: 1fr; gap: 40px; }
+  .panel { order: 1; }
+  .connector { display: none; }
+  .mediaCol { order: 0; max-width: 520px; }
+}
+
+@media (max-width: 767px) {
+  .container { width: min(100% - 32px, 600px); }
+  .numeral { font-size: clamp(4rem, 20vw, 6rem); }
+  .title { font-size: clamp(2.15rem, 9vw, 2.7rem); }
+  .lede { max-width: none; }
+  .composition { margin-top: 32px; gap: 36px; }
+  .mediaCol { max-width: none; }
+  .primaryOffsetFrame { display: none; }
+  .primaryFrame { aspect-ratio: 4 / 3; }
+  .secondaryFrame { width: 40%; max-width: 170px; margin: -44px 0 0 20px; }
+  .secondaryFrame::before { left: 0; }
+  .secondaryLabel { font-size: 7.5px; }
+  .description, .meta { max-width: none; padding-left: 14px; }
+  .selectorItem { padding: 15px 2px 15px 14px; gap: 12px; }
+  .selectorName { font-size: 19px; }
+  .draftVertical, .registrationDot { left: 50%; }
+  .draftHorizontal { left: 20%; right: 20%; }
+  .coordTag { display: none; }
+  .ctaRow { flex-direction: column; align-items: flex-start; gap: 14px; }
+}
+
+@media (max-width: 430px) {
+  .mediaMeta { font-size: 8px; }
+  .secondaryFrame { width: 44%; max-width: 150px; margin-left: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .composition,
+  .ctaRow,
+  .selectorItem,
+  .selectorItem::before,
+  .selectorIndex,
+  .selectorName,
+  .description,
+  .meta,
+  .primaryFrame,
+  .secondaryFrame,
+  .connectorLine {
+    transition: none;
+  }
+  .section:not(.visible) .header,
+  .section:not(.visible) .composition,
+  .section:not(.visible) .ctaRow {
+    opacity: 1;
+    transform: none;
+  }
+  .descriptionSwitching,
+  .frameSwitching {
+    opacity: 1;
+    transform: none;
+  }
+}

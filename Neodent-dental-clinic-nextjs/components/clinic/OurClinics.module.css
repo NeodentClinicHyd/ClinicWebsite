@@ -1,0 +1,571 @@
+/* Clinic page — Section 01 — Our Clinics.
+   POLISH PASS: improved text/image balance (45/55), stronger H1 scale,
+   more readable body copy, elevated location index hierarchy, tighter
+   vertical rhythm, constrained seam, consistent axis. */
+
+.section {
+  --ink: var(--neodent-ink, #263033);
+  --muted: var(--neodent-muted, #657173);
+  --red: var(--neodent-red, #d71920);
+  --paper: var(--neodent-ivory, #f8f6ef);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--paper);
+  color: var(--ink);
+  /* Generous but not bloated — matches About's section rhythm */
+  padding: clamp(96px, 11vw, 136px) 0 clamp(88px, 10vw, 120px);
+}
+
+/* ---- Chapter-start seam — container-constrained, never full-vw ---- */
+.seam {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.seam::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  /* Constrained to the same 1180px container used by .container */
+  left: max(0px, calc((100% - 1180px) / 2 + 32px));
+  right: max(0px, calc((100% - 1180px) / 2 + 32px));
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(215, 25, 32, 0.38) 12%,
+    rgba(38, 48, 51, 0.13) 50%,
+    rgba(215, 25, 32, 0.38) 88%,
+    transparent
+  );
+}
+.seam::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 14px;
+  background: linear-gradient(180deg, rgba(215, 25, 32, 0.48), transparent);
+  transform: translateX(-50%);
+}
+
+/* ---- Atmosphere geometry — About/archive vocabulary ---------------- */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* Arch — upper right, echoes LegacyAndPeople */
+.arch {
+  position: absolute;
+  top: 4%;
+  right: 2%;
+  width: 28vw;
+  height: 28vw;
+  max-width: 380px;
+  max-height: 380px;
+  border: 1px solid rgba(38, 48, 51, 0.07);
+  border-radius: 50% 50% 0 0;
+  transform: rotate(4deg);
+}
+/* Subtle horizontal rule across mid-section */
+.draftHorizontal {
+  position: absolute;
+  top: 52%;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: rgba(38, 48, 51, 0.065);
+}
+/* Right-side vertical rail — positioned at ~55% (the column divide) */
+.draftVertical {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  /* ~55% from left mirrors the grid column split */
+  left: 55%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(38, 48, 51, 0.07) 18%,
+    rgba(38, 48, 51, 0.07) 82%,
+    transparent
+  );
+}
+/* Registration dot at intersection of rail and horizontal */
+.registrationDot {
+  position: absolute;
+  top: 52%;
+  left: 55%;
+  width: 12px;
+  height: 12px;
+  margin: -6px -6px;
+  border: 1px solid rgba(215, 25, 32, 0.24);
+  border-radius: 50%;
+}
+.registrationDotSmall {
+  position: absolute;
+  bottom: 14%;
+  left: 12%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(215, 25, 32, 0.2);
+}
+
+/* ---- Container — matches About page container width --------------- */
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Main composition — 45/55 text/image split -------------------- */
+/* Previously 1fr/1.08fr which skewed heavily toward image.
+   Now 1fr/1.14fr with a wider gap — the text column is wider and
+   the image column is marginally narrower, landing near 45/55. */
+.composition {
+  display: grid;
+  grid-template-columns: 1fr 1.14fr;
+  gap: 0 clamp(44px, 5.8vw, 84px);
+  align-items: start;
+}
+
+/* ---- Copy column ---------------------------------------------------- */
+.copyCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---- Header — ghost numeral → eyebrow → H1 on one axis ------------ */
+.header {
+  position: relative;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1) 60ms;
+}
+
+/* Ghost numeral — same treatment as About/LegacyAndPeople:
+   muted ivory-gray, low opacity, bleeds into eyebrow via negative
+   margin. Never red, never detached. */
+.numeral {
+  display: block;
+  /* -0.34em pulls the eyebrow up to visually sit inside the numeral's
+     descending stroke, matching About exactly */
+  margin: 0 0 -0.34em -0.05em;
+  color: rgba(38, 48, 51, 0.065);
+  font-family: var(--app-font-serif);
+  /* Slightly larger than before — matches the About numeral ceiling */
+  font-size: clamp(6.5rem, 12vw, 12rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Eyebrow — mono, tracked, muted, red hairline rule */
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrowRule {
+  display: inline-block;
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+/* H1 — increased scale to match About's editorial authority */
+.title {
+  margin: 0 0 clamp(22px, 3vw, 36px);
+  font-family: var(--app-font-serif);
+  /* Stepped up from 4.5rem/clamp ceiling to 4.8rem, matching About's
+     title ceiling more closely */
+  font-size: clamp(2.9rem, 4.8vw, 4.8rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+.title span {
+  color: var(--red);
+  font-style: italic;
+}
+
+/* ---- Body copy — more readable, better line length ----------------- */
+.body {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1) 160ms,
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1) 160ms;
+}
+.paragraph {
+  margin: 0 0 20px;
+  color: var(--ink);
+  /* Increased from 15.5px — slightly more presence, matches About intro */
+  font-size: 16px;
+  line-height: 1.72;
+  /* Let the column dictate max-width; use none here so the copy fills
+     its natural column width rather than being artificially tight */
+  max-width: none;
+}
+.paragraph:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ---- Location index — elevated hierarchy --------------------------- */
+/* Previously too small and visually weak. Now given stronger type,
+   better padding, and a cleaner seam — reads as a real editorial index */
+.locationIndex {
+  margin-top: clamp(36px, 4.5vw, 52px);
+}
+
+/* Top seam with a red L-corner tick — same as About's horizontal rules */
+.locationIndexSeam {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(38, 48, 51, 0.18),
+    rgba(38, 48, 51, 0.08) 80%,
+    transparent
+  );
+  margin-bottom: clamp(22px, 2.8vw, 32px);
+  position: relative;
+}
+.locationIndexSeam::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 26px;
+  height: 7px;
+  border-top: 1px solid var(--red);
+  border-left: 1px solid var(--red);
+}
+
+.locationIndexList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.locationIndexItem {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(38, 48, 51, 0.1);
+}
+.locationIndexItem:first-child {
+  border-top: none;
+}
+
+/* Red mono index — stronger than muted */
+.locationIndexNum {
+  color: var(--red);
+  font: 700 10px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.14em;
+  flex-shrink: 0;
+  min-width: 22px;
+}
+
+.locationIndexDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+/* Branch name — elevated from 18–22px to 20–26px */
+.locationIndexName {
+  color: var(--ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 2.1vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* Location subtitle — mono, muted, restrained */
+.locationIndexSub {
+  color: var(--muted);
+  font: 9.5px/1.4 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Closing tick — thin line on the right edge */
+.locationIndexTick {
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(38, 48, 51, 0.22), transparent);
+  flex-shrink: 0;
+}
+
+/* ---- Media column — editorial diptych ------------------------------ */
+/* padding-top synchronises the image top with the heading block,
+   matching About's .openingImage pattern */
+.mediaCol {
+  position: relative;
+  margin: 0;
+  padding-top: clamp(10px, 1.8vw, 22px);
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1) 260ms,
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1) 260ms;
+}
+
+.primaryWrap {
+  position: relative;
+}
+
+/* Offset ghost frame — sits behind and to the left of the primary plate */
+.primaryOffsetFrame {
+  position: absolute;
+  top: 18px;
+  left: -18px;
+  right: 18px;
+  bottom: 18px;
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Primary frame — 4:5 portrait matches Section 07 / About */
+.primaryFrame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.16);
+  background: #ece7dc;
+}
+.primaryFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 68% 42%;
+  filter: saturate(0.9) contrast(1.02);
+}
+.mediaShade {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  height: 30%;
+  background: linear-gradient(180deg, transparent, rgba(38, 48, 51, 0.46) 70%, rgba(38, 48, 51, 0.58));
+  pointer-events: none;
+}
+/* Registration hairline that descends into the frame from above */
+.mediaRegistration {
+  position: absolute;
+  top: -18px;
+  left: 28px;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, var(--red));
+  z-index: 2;
+}
+.mediaMeta {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  right: 14px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(248, 246, 239, 0.9);
+  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Secondary plate — registered to the primary frame's left hairline */
+.secondaryFrame {
+  position: relative;
+  z-index: 2;
+  width: 42%;
+  max-width: 205px;
+  aspect-ratio: 4 / 3;
+  margin: -54px 0 0 28px;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.2);
+  background: #ece7dc;
+  box-shadow: 6px 8px 22px rgba(38, 48, 51, 0.17);
+}
+.secondaryFrame::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 1px;
+  height: 20px;
+  background: linear-gradient(180deg, transparent, var(--red));
+  z-index: 3;
+}
+.secondaryFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 32%;
+  filter: saturate(0.9) contrast(1.02);
+}
+.secondaryLabel {
+  position: absolute;
+  left: 8px;
+  bottom: 7px;
+  z-index: 2;
+  color: rgba(248, 246, 239, 0.86);
+  font: 8px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(38, 48, 51, 0.55);
+}
+
+/* ---- Reveal states ------------------------------------------------- */
+.blockVisible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ---- Responsive ------------------------------------------------------ */
+@media (max-width: 1280px) {
+  .composition {
+    grid-template-columns: 1fr 1.1fr;
+    gap: 0 clamp(36px, 5vw, 64px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .composition {
+    gap: 0 clamp(28px, 4.2vw, 52px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .composition {
+    grid-template-columns: 1fr 1.08fr;
+  }
+  .primaryOffsetFrame {
+    top: 14px;
+    left: -14px;
+    right: 14px;
+    bottom: 14px;
+  }
+  .secondaryFrame {
+    width: 46%;
+    margin-top: -50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .composition {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .copyCol {
+    order: 1;
+  }
+  .mediaCol {
+    order: 0;
+    max-width: 520px;
+    padding-top: 0;
+  }
+  /* On tablet stack, the right-side vertical rail is hidden */
+  .draftVertical,
+  .registrationDot {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .numeral {
+    font-size: clamp(4.4rem, 22vw, 6.8rem);
+  }
+  .title {
+    font-size: clamp(2.1rem, 8.8vw, 2.8rem);
+  }
+  .paragraph {
+    font-size: 15.5px;
+  }
+  .composition {
+    gap: 32px;
+  }
+  .mediaCol {
+    max-width: none;
+  }
+  .primaryOffsetFrame {
+    display: none;
+  }
+  .primaryFrame {
+    aspect-ratio: 4 / 3;
+  }
+  .secondaryFrame {
+    width: 42%;
+    max-width: 168px;
+    margin: -44px 0 0 20px;
+  }
+  .arch {
+    right: -8%;
+    top: 2%;
+    width: 56vw;
+    height: 56vw;
+  }
+  .locationIndexName {
+    font-size: clamp(18px, 5.2vw, 22px);
+  }
+}
+
+@media (max-width: 430px) {
+  .mediaMeta {
+    font-size: 8px;
+  }
+  .secondaryFrame {
+    width: 44%;
+    max-width: 148px;
+    margin-left: 14px;
+  }
+  .locationIndexItem {
+    gap: 14px;
+    padding: 14px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .body,
+  .mediaCol {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,112 @@
+/* EditorialSeam — Treatments page architectural seams.
+
+   Replicates the About page's seam system: hairlines constrained to
+   the same container width as content (min(1180px, calc(100% - 64px))),
+   creating proper left/right inset matching the editorial grid.
+   
+   Uses nested wrapper pattern:
+   - Outer .seamWrapper: full-width (provides section background context)
+   - Inner .seam: container-constrained (creates proper inset)
+   - .hairline: 100% of constrained .seam (creates the visible line)
+   
+   This matches the About page pattern where border-top sits inside
+   .container, automatically respecting the horizontal inset. */
+
+.seamWrapper {
+  --ink: var(--neodent-ink, #263033);
+  --ivory: var(--neodent-ivory, #f8f6ef);
+  --red: var(--neodent-red, #d71920);
+  
+  width: 100%;
+  position: relative;
+  background: transparent;
+}
+
+/* Match the background of the section this seam belongs to,
+   so the seam never shows a different-coloured box */
+.seamWrapper[data-surface="light"] {
+  background: var(--neodent-surface, #fffefa);
+}
+.seamWrapper[data-surface="dark"] {
+  background: var(--neodent-charcoal, #1a1e20);
+}
+
+/* Inner seam: constrained to match content container */
+.seam {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: clamp(64px, 7vw, 96px) 0 clamp(48px, 6vw, 72px);
+  position: relative;
+}
+
+/* Chapter variant: extra breathing space for major transitions */
+.chapter .seam {
+  padding: clamp(80px, 9vw, 120px) 0 clamp(56px, 7vw, 88px);
+}
+
+/* Thin horizontal hairline — now properly constrained */
+.hairline {
+  display: block;
+  width: 100%;  /* 100% of the constrained .seam container */
+  height: 1px;
+  background: rgba(38, 48, 51, 0.14);  /* Default for ivory surface */
+}
+
+/* Surface-aware line color */
+.seamWrapper[data-surface="dark"] .hairline {
+  background: rgba(241, 238, 231, 0.14);
+}
+
+/* Subtle red registration mark */
+.registrationMark {
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  margin-left: clamp(20px, 2.5vw, 32px);
+  border: 1px solid rgba(215, 25, 32, 0.32);
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* Responsive: maintain container constraint */
+@media (max-width: 767px) {
+  .seamWrapper {
+    /* Full-width wrapper preserved */
+  }
+  
+  .seam {
+    width: min(100% - 32px, 600px);  /* Match About mobile container */
+    padding: clamp(48px, 8vw, 64px) 0 clamp(36px, 6vw, 48px);
+  }
+  
+  .chapter .seam {
+    padding: clamp(56px, 9vw, 72px) 0 clamp(44px, 7vw, 56px);
+  }
+  
+  .registrationMark {
+    width: 5px;
+    height: 5px;
+    top: -5px;
+    margin-left: 16px;
+  }
+}
+
+@media (max-width: 430px) {
+  .seam {
+    padding: 40px 0 32px;
+  }
+  
+  .chapter .seam {
+    padding: 48px 0 36px;
+  }
+  
+  /* Simplify registration marks on small mobile */
+  .registrationMark {
+    width: 4px;
+    height: 4px;
+    top: -4px;
+    margin-left: 12px;
+  }
+}

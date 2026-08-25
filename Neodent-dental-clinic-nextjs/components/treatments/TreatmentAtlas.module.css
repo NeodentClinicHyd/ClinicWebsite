@@ -1,0 +1,912 @@
+/* Section 02 — Treatment Atlas
+   
+   Editorial treatment atlas matching About page design language.
+   
+   Structure:
+   - Ghost chapter numeral "02"
+   - Opening editorial (eyebrow, title, lede)
+   - Featured treatment: Full Mouth Rehabilitation (video + content)
+   - Treatment atlas acts (02-07, text-led editorial rows)
+   - Additional services appendix
+   
+   Ivory editorial surface with subtle registration geometry. */
+
+.section {
+  padding: clamp(72px, 8vw, 100px) 0 clamp(56px, 6.5vw, 72px);
+  background: var(--neodent-ivory, #f8f6ef);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ---- Background Geometry ------------------------------------------------ */
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Ghost chapter numeral "02" */
+.numeral {
+  position: absolute;
+  top: clamp(60px, 7vw, 100px);
+  left: clamp(20px, 3vw, 40px);
+  display: block;
+  color: rgba(38, 48, 51, 0.04);
+  font-family: var(--app-font-serif);
+  font-size: clamp(6rem, 11vw, 11.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Vertical registration rail */
+.verticalRail {
+  position: absolute;
+  left: 62%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(38, 48, 51, 0.06);
+  z-index: 0;
+}
+
+/* Registration dot at meaningful intersection */
+.registrationDot {
+  position: absolute;
+  top: 18%;
+  left: calc(62% - 7px);
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(215, 25, 32, 0.24);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* ---- Container ---------------------------------------------------------- */
+
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(56px, 7vw, 80px);
+}
+
+/* ---- Opening Editorial -------------------------------------------------- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 820px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.headerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--neodent-muted, #657173);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.eyebrowRule {
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red, #d71920);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.6rem, 4.8vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--neodent-ink, #263033);
+  margin: 0;
+}
+
+.title span {
+  color: var(--neodent-red, #d71920);
+  font-style: italic;
+}
+
+.lede {
+  color: var(--neodent-muted, #657173);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 68ch;
+  margin: 0;
+}
+
+/* ---- Featured Treatment: Full Mouth Rehabilitation ---------------------- */
+
+.featured {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: clamp(44px, 5.5vw, 64px);
+  align-items: start;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s,
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+
+.featuredVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Featured content — left column */
+.featuredContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.featuredHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.featuredEyebrow {
+  color: var(--neodent-muted, #657173);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.featuredTitle {
+  font-family: var(--app-font-serif);
+  font-size: clamp(30px, 3.4vw, 40px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--neodent-ink, #263033);
+  margin: 0;
+}
+
+.featuredText {
+  color: var(--neodent-muted, #657173);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.featuredText p {
+  margin: 0;
+}
+
+/* Featured metadata */
+.featuredMetadata {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Featured evidence — right column: Compact before/after editorial plate */
+.featuredEvidence {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featuredBeforeAfter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: rgba(38, 48, 51, 0.1);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.featuredCaseImage {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--neodent-surface, #fff);
+}
+
+.featuredImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.featuredCaseLabel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neodent-charcoal, #161c1e);
+  background: rgba(251, 250, 247, 0.94);
+  padding: 5px 9px;
+  border-radius: 2px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(38, 48, 51, 0.08);
+}
+
+.featuredCaption {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--neodent-muted, #657173);
+  font-style: italic;
+}
+
+.metadataItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metadataLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--neodent-red, #d71920);
+  opacity: 0.8;
+}
+
+.metadataValue {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--neodent-muted, #657173);
+  margin: 0;
+}
+
+/* ---- Treatment Atlas Acts ----------------------------------------------- */
+
+.treatmentAtlas {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.treatmentActWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Treatment seam between acts */
+.treatmentSeam {
+  padding: clamp(48px, 6vw, 64px) 0 clamp(40px, 5vw, 56px);
+}
+
+.hairline {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: rgba(38, 48, 51, 0.10);
+}
+
+/* ---- Additional Services Appendix — Editorial index structure ---------- */
+
+.additional {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+
+.additionalVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lighter seam treatment — editorial separator */
+.additionalSeam {
+  padding: clamp(56px, 7vw, 72px) 0 clamp(48px, 6vw, 64px);
+}
+
+.additionalSeam .hairline {
+  background: rgba(38, 48, 51, 0.08);
+}
+
+/* Appendix header — eyebrow system + serif title + supporting lede */
+.additionalHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: clamp(44px, 5.5vw, 60px);
+  max-width: 820px;
+}
+
+.additionalEyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--neodent-muted, #657173);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.additionalEyebrow .eyebrowRule {
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red, #d71920);
+  flex-shrink: 0;
+}
+
+.additionalTitle {
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 3.4vw, 36px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--neodent-ink, #263033);
+  margin: 0;
+}
+
+.additionalTitle span {
+  color: var(--neodent-red, #d71920);
+  font-style: italic;
+}
+
+.additionalLede {
+  color: var(--neodent-muted, #657173);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 66ch;
+  margin: 0;
+}
+
+/* Editorial 2 × 2 category grid — open composition, no cards */
+.serviceCategories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(48px, 6vw, 64px) clamp(56px, 7vw, 80px);
+  margin-bottom: 0;
+}
+
+/* Individual category — index + title + rule + list */
+.serviceCategory {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Small muted index number */
+.categoryIndex {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--neodent-muted, #657173);
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+
+.categoryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Category title — strong editorial hierarchy */
+.categoryTitle {
+  font-family: var(--app-font-serif);
+  font-size: clamp(17px, 1.8vw, 19px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--neodent-ink, #263033);
+  margin: 0 0 14px;
+}
+
+/* Thin local hairline separator */
+.categoryRule {
+  width: 100%;
+  height: 1px;
+  background: rgba(38, 48, 51, 0.12);
+  margin-bottom: 16px;
+}
+
+/* Service list — understated editorial list */
+.serviceList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.serviceList li {
+  color: var(--neodent-muted, #657173);
+  font-size: 14px;
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+
+/* Subtle red registration dot marker */
+.serviceList li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 3px;
+  height: 3px;
+  background: var(--neodent-red, #d71920);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* ---- Editorial closing card — "Changing smiles since decades" ----------- */
+
+.closingCard {
+  --card-charcoal: #15171a;
+  --card-ivory: #f1eee7;
+  --card-muted: rgba(241, 238, 231, 0.56);
+  --card-muted-quiet: rgba(241, 238, 231, 0.4);
+  --card-red: var(--neodent-red, #d71920);
+  --card-geo-line: rgba(241, 238, 231, 0.08);
+  --card-geo-red: rgba(215, 25, 32, 0.46);
+  
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--card-charcoal);
+  color: var(--card-ivory);
+  padding: clamp(52px, 6.5vw, 72px) clamp(40px, 5vw, 64px);
+  text-align: center;
+  border-radius: 4px;
+  margin-top: clamp(48px, 6vw, 64px);
+  margin-bottom: clamp(-56px, -7vw, -48px);
+  box-shadow: 0 16px 40px rgba(22, 28, 30, 0.18);
+}
+
+/* Subtle vignette on the charcoal surface */
+.closingCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 70% 100% at 50% 50%,
+    rgba(255, 255, 255, 0.018),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Background atmospheric geometry */
+.closingCardAtmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Circular architectural mark on the right */
+.closingCardArc {
+  position: absolute;
+  top: 50%;
+  right: clamp(-52px, 3vw, 20px);
+  width: clamp(160px, 17vw, 230px);
+  height: clamp(160px, 17vw, 230px);
+  border: 1px solid var(--card-geo-line);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.closingCardArc::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -1px;
+  width: 11px;
+  height: 1px;
+  background: var(--card-geo-red);
+  opacity: 0.75;
+  transform: translate(-100%, -50%);
+}
+
+.closingCardArc::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border: 1px solid var(--card-geo-red);
+  border-radius: 50%;
+  opacity: 0.75;
+  transform: translate(-50%, -50%);
+}
+
+/* Left registration point with lead-line */
+.closingCardRegister {
+  position: absolute;
+  top: 30%;
+  left: clamp(20px, 8vw, 64px);
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--card-geo-red);
+  border-radius: 50%;
+}
+
+.closingCardRegister::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: clamp(44px, 6vw, 84px);
+  height: 1px;
+  background: linear-gradient(90deg, var(--card-geo-red), transparent);
+  opacity: 0.75;
+  transform: translateY(-50%);
+}
+
+/* Card content container */
+.closingCardContent {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Eyebrow with red rule */
+.closingCardEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  color: var(--card-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.closingCardRule {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--card-red);
+  flex-shrink: 0;
+}
+
+/* Statement typography */
+.closingCardStatement {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.closingCardSupport {
+  display: block;
+  font-size: clamp(1.2rem, 1.85vw, 1.65rem);
+  color: rgba(241, 238, 231, 0.9);
+  letter-spacing: -0.015em;
+}
+
+.closingCardEmphasis {
+  display: block;
+  margin-top: 2px;
+  color: var(--card-red);
+  font-style: italic;
+  font-size: clamp(2.5rem, 4.6vw, 4.05rem);
+  letter-spacing: -0.02em;
+}
+
+/* Signature line */
+.closingCardSignature {
+  display: block;
+  margin: 18px auto 0;
+  width: 34px;
+  height: 1px;
+  background: var(--card-red);
+}
+
+/* Attribution */
+.closingCardAttribution {
+  margin: 14px 0 0;
+  color: rgba(241, 238, 231, 0.72);
+  font-family: var(--app-font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+
+.closingCardLocation {
+  margin: 6px 0 0;
+  color: var(--card-muted-quiet);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ---- Responsive --------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+  .section {
+    padding: clamp(68px, 8vw, 88px) 0 clamp(52px, 6vw, 68px);
+  }
+
+  .container {
+    gap: clamp(48px, 6vw, 64px);
+  }
+
+  /* Featured treatment: switch to single column */
+  .featured {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* Constrain featured evidence width on tablet */
+  .featuredEvidence {
+    max-width: 480px;
+  }
+
+  /* Simplify vertical rail */
+  .verticalRail {
+    left: 55%;
+  }
+
+  .registrationDot {
+    left: calc(55% - 7px);
+  }
+
+  /* Maintain 2-column appendix layout where comfortable */
+  .serviceCategories {
+    gap: clamp(40px, 5vw, 52px) clamp(44px, 5.5vw, 60px);
+  }
+
+  /* Closing card tablet adjustments */
+  .closingCardEmphasis {
+    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
+  }
+
+  .closingCardArc {
+    opacity: 0.85;
+  }
+
+  .closingCard {
+    margin-bottom: clamp(-48px, -6vw, -40px);
+  }
+}
+
+@media (max-width: 900px) {
+  /* Switch to 1-column appendix at 900px */
+  .serviceCategories {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 5.5vw, 48px);
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: clamp(56px, 7vw, 72px) 0 clamp(48px, 6vw, 60px);
+  }
+
+  .container {
+    width: calc(100% - 40px);
+    gap: 44px;
+  }
+
+  .header {
+    gap: 18px;
+  }
+
+  .title {
+    font-size: clamp(2.2rem, 7vw, 2.8rem);
+  }
+
+  .lede {
+    font-size: 14.5px;
+  }
+
+  .featured {
+    gap: 32px;
+  }
+
+  .featuredTitle {
+    font-size: clamp(27px, 5.5vw, 32px);
+  }
+
+  .featuredText {
+    font-size: 14.5px;
+  }
+
+  /* Constrain featured evidence on mobile */
+  .featuredEvidence {
+    max-width: 100%;
+  }
+
+  /* Maintain side-by-side on mobile if space allows */
+  .featuredBeforeAfter {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .featuredCaseLabel {
+    font-size: 7px;
+    padding: 4px 7px;
+    top: 8px;
+    left: 8px;
+  }
+
+  /* Hide vertical rail on mobile */
+  .verticalRail,
+  .registrationDot {
+    display: none;
+  }
+
+  /* Reduce seam spacing */
+  .treatmentSeam {
+    padding: clamp(40px, 7vw, 52px) 0 clamp(32px, 5vw, 44px);
+  }
+
+  .additionalSeam {
+    padding: clamp(48px, 8vw, 60px) 0 clamp(40px, 6vw, 52px);
+  }
+
+  /* Switch to 1-column editorial layout */
+  .serviceCategories {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 6vw, 52px);
+  }
+
+  .additionalLede {
+    font-size: 14.5px;
+  }
+
+  .categoryTitle {
+    font-size: 16px;
+  }
+
+  .serviceList li {
+    font-size: 13.5px;
+  }
+
+  /* Closing card responsive adjustments */
+  .closingCard {
+    padding: clamp(48px, 7vw, 60px) clamp(32px, 4vw, 48px);
+    margin-bottom: clamp(-44px, -5.5vw, -36px);
+  }
+
+  .closingCardArc {
+    width: 170px;
+    height: 170px;
+  }
+
+  .closingCardRegister::after {
+    width: 36px;
+  }
+}
+
+@media (max-width: 430px) {
+  .section {
+    padding: clamp(48px, 7vw, 60px) 0 clamp(44px, 6vw, 56px);
+  }
+
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .lede {
+    font-size: 14px;
+  }
+
+  .featuredTitle {
+    font-size: 25px;
+  }
+
+  .featuredText,
+  .metadataValue {
+    font-size: 14px;
+  }
+
+  /* Stack featured before/after vertically on small mobile */
+  .featuredBeforeAfter {
+    grid-template-columns: 1fr;
+  }
+
+  /* Adjust aspect ratio for stacked mobile view */
+  .featuredCaseImage {
+    aspect-ratio: 4 / 3;
+  }
+
+  .additionalTitle {
+    font-size: 24px;
+  }
+
+  .additionalLede {
+    font-size: 14px;
+  }
+
+  .categoryTitle {
+    font-size: 15px;
+  }
+
+  .serviceList li {
+    font-size: 13px;
+  }
+
+  /* Closing card mobile refinements */
+  .closingCard {
+    padding: clamp(44px, 8vw, 52px) clamp(28px, 5vw, 36px);
+    text-align: center;
+    margin-top: clamp(48px, 7vw, 64px);
+    margin-bottom: clamp(-40px, -5vw, -32px);
+  }
+
+  .closingCardSupport {
+    font-size: clamp(1rem, 4.4vw, 1.1rem);
+  }
+
+  .closingCardEmphasis {
+    font-size: clamp(1.9rem, 10vw, 2.4rem);
+    margin-top: 1px;
+  }
+
+  .closingCardSignature {
+    margin-top: 15px;
+  }
+
+  .closingCardAttribution {
+    margin-top: 12px;
+    font-size: 11.5px;
+  }
+
+  .closingCardLocation {
+    margin-top: 6px;
+  }
+
+  .closingCardRegister {
+    display: none;
+  }
+
+  .closingCardArc {
+    opacity: 0.55;
+  }
+
+  /* Reduce ghost numeral on very small screens */
+  .numeral {
+    font-size: clamp(4.5rem, 18vw, 6rem);
+    opacity: 0.6;
+  }
+}

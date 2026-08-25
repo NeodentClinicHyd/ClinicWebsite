@@ -1,0 +1,568 @@
+/* ------------------------------------------------------------------
+   Treatments Section 01 — Dental Expertise
+
+   Editorial composition matching the About page / homepage visual
+   grammar: DM Serif Display heading with red italic emphasis, a
+   10px/.2em uppercase eyebrow with red hairline, oversized
+   low-opacity "01" chapter numeral bleeding into the eyebrow (matches
+   About page "02" implementation), thin registration geometry,
+   and 15px/1.7 body copy with the EditorialHighlight system.
+
+   Surface: charcoal (establishes the Treatments page's clinical
+   identity, distinct from About's warm ivory opening).
+
+   Asymmetric two-column layout: left editorial copy, right vertical
+   Reel (9:16 Dr. Miftah educational video). Video preserves original
+   portrait format — no cropping, no object-fit: cover.
+
+   Background architecture: large offset frame, vertical/horizontal
+   registration lines, arc, multiple registration dots create
+   editorial depth matching About page / homepage atmospheric system.
+
+   NO inline CTAs. Editorial content first. Muted autoplay when in viewport.
+   ------------------------------------------------------------------ */
+
+.section {
+  position: relative;
+  min-height: calc(100svh - var(--nav-height-desktop));
+  display: flex;
+  align-items: center;
+  background: var(--neodent-charcoal);
+  color: var(--neodent-ivory);
+  padding: 140px 0 120px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Background architectural geometry layer — matches About/homepage depth */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Large offset rectangular frame — architectural registration system */
+.atmosphere::before {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 6%;
+  right: 8%;
+  bottom: 18%;
+  border: 1px solid rgba(251, 250, 247, 0.06);
+  transform: rotate(-0.8deg);
+}
+
+/* Secondary inner frame — layered depth */
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  top: 22%;
+  right: 5%;
+  width: min(440px, 38%);
+  height: 58%;
+  border: 1px solid rgba(251, 250, 247, 0.04);
+  transform: rotate(0.6deg);
+}
+
+/* Vertical drafting line — aligns with video/text relationship */
+.draftLine {
+  position: absolute;
+  left: 52%;
+  top: 15%;
+  width: 1px;
+  height: 62%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(251, 250, 247, 0.08) 12%,
+    rgba(251, 250, 247, 0.08) 88%,
+    transparent 100%
+  );
+}
+
+/* Right-side editorial rail — establishes page coordinate system */
+.draftLineVertical {
+  position: absolute;
+  right: 18%;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(251, 250, 247, 0.08) 15%,
+    rgba(251, 250, 247, 0.08) 85%,
+    transparent 100%
+  );
+}
+
+/* Horizontal registration line — editorial axis */
+.draftLineHorizontal {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 58%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(251, 250, 247, 0.06) 15%,
+    rgba(251, 250, 247, 0.06) 85%,
+    transparent 100%
+  );
+}
+
+/* Large arc — architectural curve vocabulary from About page */
+.arc {
+  position: absolute;
+  top: 8%;
+  right: 2%;
+  width: clamp(300px, 28vw, 420px);
+  height: clamp(300px, 28vw, 420px);
+  border: 1px solid rgba(251, 250, 247, 0.05);
+  border-radius: 50%;
+  transform: rotate(12deg);
+}
+
+/* Primary registration dot — marks text/video intersection */
+.registrationDot {
+  position: absolute;
+  left: calc(52% - 4px);
+  top: calc(58% - 4px);
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(215, 25, 32, 0.32);
+  border-radius: 50%;
+}
+
+/* Secondary registration dot — marks upper frame corner */
+.registrationDotSecondary {
+  position: absolute;
+  right: calc(8% - 3px);
+  top: calc(12% - 3px);
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(215, 25, 32, 0.24);
+  border-radius: 50%;
+}
+
+/* Tertiary small dot — subtle lower registration */
+.registrationDotTertiary {
+  position: absolute;
+  left: 6%;
+  bottom: 22%;
+  width: 4px;
+  height: 4px;
+  background: rgba(215, 25, 32, 0.18);
+  border-radius: 50%;
+}
+
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left column — editorial copy */
+.editorial {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding-top: 12px;
+  max-width: 560px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.16, 0.72, 0.2, 1),
+              transform 0.9s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+
+.visible .editorial {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+/* Ghost chapter numeral — matches About page "02" implementation */
+.numeral {
+  display: block;
+  margin: 0 0 -0.34em -0.04em;
+  color: rgba(251, 250, 247, 0.08);
+  font-family: var(--app-font-serif);
+  font-size: clamp(6rem, 11vw, 11.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Eyebrow with red hairline — matches About/homepage */
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: rgba(156, 178, 169, 0.85);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.eyebrowRule {
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red);
+  flex-shrink: 0;
+}
+
+/* H1 — editorial serif with red italic emphasis */
+.title {
+  font-family: var(--app-font-serif);
+  font-size: var(--type-hero-supporting);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--neodent-ivory);
+  margin: 0;
+}
+
+.title span {
+  color: var(--neodent-red);
+  font-style: italic;
+}
+
+/* Body copy with EditorialHighlight */
+.narrative {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.paragraph {
+  color: rgba(251, 250, 247, 0.75);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Right column — vertical Reel plate */
+.mediaPlate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 1s 0.2s cubic-bezier(0.16, 0.72, 0.2, 1),
+              transform 1s 0.2s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+
+.visible .mediaPlate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Video frame — portrait Reel, editorial plate treatment */
+.videoFrame {
+  position: relative;
+  width: 380px;
+  aspect-ratio: 9 / 16;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(251, 250, 247, 0.12);
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* Video metadata — quiet editorial labels with clinical hierarchy */
+.videoMetadata {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0;
+  max-width: 380px;
+}
+
+.metadataLabel {
+  color: rgba(156, 178, 169, 0.7);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.metadataName {
+  color: var(--neodent-ivory);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-top: 2px;
+}
+
+.metadataCredentials {
+  color: rgba(251, 250, 247, 0.7);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+
+.metadataSpecialty {
+  color: rgba(251, 250, 247, 0.68);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+}
+
+.metadataTopic {
+  color: rgba(251, 250, 247, 0.52);
+  font-size: 10.5px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* Responsive — intentional recomposition */
+
+@media (max-width: 1279px) {
+  .section {
+    padding: 120px 0 100px;
+  }
+
+  .container {
+    gap: 72px;
+  }
+
+  .videoFrame {
+    width: 340px;
+  }
+
+  .videoMetadata {
+    max-width: 340px;
+  }
+
+  .draftLine {
+    left: 50%;
+  }
+
+  .registrationDot {
+    left: calc(50% - 4px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .section {
+    padding: 100px 0 clamp(70px, 8vw, 88px);
+    min-height: auto;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    gap: 56px;
+    justify-items: center;
+    align-items: start;
+  }
+
+  .editorial {
+    max-width: 640px;
+  }
+
+  .videoFrame {
+    width: 320px;
+  }
+
+  .videoMetadata {
+    max-width: 320px;
+    text-align: center;
+  }
+
+  /* Simplify geometry on tablet */
+  .atmosphere::after {
+    display: none;
+  }
+
+  .draftLineHorizontal {
+    display: none;
+  }
+
+  .registrationDotSecondary {
+    display: none;
+  }
+
+  .arc {
+    width: clamp(260px, 24vw, 320px);
+    height: clamp(260px, 24vw, 320px);
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 80px 0 clamp(56px, 8vw, 68px);
+  }
+
+  .container {
+    width: calc(100% - 40px);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .editorial {
+    gap: 32px;
+    padding-top: 0;
+    max-width: 100%;
+  }
+
+  .header {
+    gap: 0;
+  }
+
+  .numeral {
+    font-size: clamp(4.4rem, 22vw, 6.5rem);
+  }
+
+  .eyebrow {
+    font-size: 9.5px;
+    margin: 0 0 20px;
+  }
+
+  .eyebrowRule {
+    width: 28px;
+  }
+
+  .narrative {
+    gap: 20px;
+  }
+
+  .paragraph {
+    font-size: 14.5px;
+  }
+
+  .videoFrame {
+    width: min(320px, 100%);
+  }
+
+  .videoMetadata {
+    max-width: min(320px, 100%);
+    text-align: center;
+  }
+
+  .metadataName {
+    font-size: 14px;
+  }
+
+  .metadataCredentials {
+    font-size: 11px;
+  }
+
+  .metadataSpecialty {
+    font-size: 11px;
+  }
+
+  .metadataTopic {
+    font-size: 10px;
+  }
+
+  /* Reduce geometry density on mobile */
+  .atmosphere::before {
+    display: none;
+  }
+
+  .draftLine {
+    left: 18%;
+    height: 48%;
+    top: 8%;
+  }
+  
+  /* Hide right-side rail on mobile */
+  .draftLineVertical {
+    display: none;
+  }
+
+  .draftLineHorizontal {
+    display: none;
+  }
+
+  .arc {
+    width: clamp(200px, 40vw, 260px);
+    height: clamp(200px, 40vw, 260px);
+    top: 4%;
+  }
+
+  .registrationDot {
+    left: calc(18% - 3px);
+    top: calc(8% - 3px);
+  }
+
+  .registrationDotSecondary {
+    display: none;
+  }
+
+  .registrationDotTertiary {
+    left: 4%;
+    bottom: 16%;
+  }
+}
+
+@media (max-width: 430px) {
+  .section {
+    padding: 70px 0 50px;
+  }
+
+  .container {
+    gap: 40px;
+  }
+
+  .editorial {
+    gap: 28px;
+  }
+
+  .videoFrame {
+    width: min(280px, 100%);
+  }
+
+  .videoMetadata {
+    max-width: min(280px, 100%);
+  }
+
+  /* Minimal geometry on small mobile */
+  .arc {
+    display: none;
+  }
+
+  .registrationDotTertiary {
+    display: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .editorial,
+  .mediaPlate {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+
+  .visible .editorial,
+  .visible .mediaPlate {
+    transform: none;
+  }
+}

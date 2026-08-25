@@ -1,0 +1,621 @@
+/* About page — Section 02 — Beyond The Clinic.
+
+   Dark editorial surface, following the same local-token pattern as
+   ClinicalLeadership / SpacesDesignedAroundCare / ContactNextStep: a
+   genuinely distinct charcoal value, DM Serif Display headings with
+   red-italic emphasis, a 10px/.2em uppercase eyebrow with a red
+   hairline, an oversized low-opacity numeral bleeding into the
+   eyebrow, and 15px/1.7 muted body copy on dark. Nothing here edits
+   globals.css or any locked homepage section. */
+
+.section {
+  --charcoal: #15171a;
+  --ivory: #f1eee7;
+  --muted: rgba(241, 238, 231, 0.58);
+  --red: #d71920;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--charcoal);
+  color: var(--ivory);
+  padding: clamp(80px, 9vw, 120px) 0 clamp(88px, 10vw, 132px);
+}
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 88% 4%, rgba(215, 25, 32, 0.1), transparent 46%),
+    radial-gradient(ellipse at 6% 96%, rgba(241, 238, 231, 0.035), transparent 55%),
+    var(--charcoal);
+}
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.grid {
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  left: 60%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(241, 238, 231, 0.08) 18%,
+    rgba(241, 238, 231, 0.08) 82%,
+    transparent
+  );
+}
+.arc {
+  position: absolute;
+  bottom: -18%;
+  left: -10%;
+  width: 46vw;
+  height: 46vw;
+  max-width: 600px;
+  max-height: 600px;
+  border: 1px solid rgba(241, 238, 231, 0.06);
+  border-radius: 50%;
+}
+.registrationDot {
+  position: absolute;
+  top: 10%;
+  left: 60%;
+  width: 6px;
+  height: 6px;
+  margin: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(215, 25, 32, 0.36);
+}
+.registrationDotSmall {
+  position: absolute;
+  bottom: 12%;
+  right: 8%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(215, 25, 32, 0.28);
+}
+
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Header ---------------------------------------------------------- */
+.header {
+  max-width: 700px;
+  position: relative;
+}
+.numeral {
+  display: block;
+  margin: 0 0 -0.34em -0.04em;
+  color: rgba(241, 238, 231, 0.08);
+  font-family: var(--app-font-serif);
+  font-size: clamp(6rem, 11vw, 11.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.7rem, 4.6vw, 4.6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+.title span {
+  color: var(--red);
+  font-style: italic;
+}
+
+/* ---- Intro ------------------------------------------------------------ */
+.intro {
+  max-width: 640px;
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 720ms cubic-bezier(0.22, 1, 0.36, 1), transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.intro p {
+  margin: 0 0 20px;
+  color: rgba(241, 238, 231, 0.82);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+.intro p:last-child {
+  margin-bottom: 0;
+}
+
+.blockVisible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ---- Shared act typography -------------------------------------------- */
+.actEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  color: var(--red);
+  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.actTitle {
+  margin: 0 0 18px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+.actText {
+  max-width: 480px;
+  margin: 0 0 16px;
+  color: rgba(241, 238, 231, 0.78);
+  font-size: 15px;
+  line-height: 1.72;
+}
+.actText:last-child {
+  margin-bottom: 0;
+}
+.inlineLink {
+  color: var(--red);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+/* ---- Act 01 — YouTube media archive ------------------------------------ */
+.archiveBlock {
+  --archive-gap: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(64px, 7vw, 96px);
+  padding-top: clamp(48px, 6vw, 72px);
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 720ms cubic-bezier(0.22, 1, 0.36, 1), transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.archiveHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(28px, 3.4vw, 40px);
+}
+.archiveHead .actTitle {
+  margin-bottom: 0;
+  max-width: 480px;
+}
+.archiveNav {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.archiveNavBtn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(241, 238, 231, 0.28);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ivory);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+.archiveNavBtn:hover:not(:disabled),
+.archiveNavBtn:focus-visible {
+  border-color: var(--red);
+  color: var(--red);
+}
+.archiveNavBtn:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+/* Horizontal scroll track — native scroll drives position; no JS
+   re-implementation of touch/trackpad/wheel behaviour. */
+.videoGrid {
+  display: flex;
+  gap: var(--archive-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+  margin: 0 -1px;
+}
+.videoGrid::-webkit-scrollbar {
+  display: none;
+}
+.videoCard {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: calc((100% - 2 * var(--archive-gap)) / 3);
+  scroll-snap-align: start;
+}
+.videoCopy {
+  order: 2;
+  margin-top: 16px;
+}
+.videoTitle {
+  margin: 0 0 10px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+}
+.videoText {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.68);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.videoFrame {
+  order: 1;
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.22);
+  background: #1b1d1f;
+}
+.videoRegistration {
+  position: absolute;
+  top: -16px;
+  left: 22px;
+  width: 1px;
+  height: 16px;
+  background: linear-gradient(180deg, transparent, var(--red));
+  z-index: 2;
+}
+.videoTop {
+  position: absolute;
+  inset: 14px 16px auto;
+  z-index: 2;
+  color: rgba(241, 238, 231, 0.85);
+  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* YouTube thumbnail facade — replaced by the iframe only after click */
+.mediaFacade {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: #1b1d1f;
+  cursor: pointer;
+}
+.mediaFacade img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) contrast(1.03);
+  transition: filter 0.2s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mediaFacade:hover img,
+.mediaFacade:focus-visible img {
+  filter: saturate(0.95) contrast(1.05);
+  transform: scale(1.02);
+}
+.mediaFacade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.28));
+}
+.mediaFacade:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: -2px;
+}
+.mediaPlayButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  border: 1px solid rgba(241, 238, 231, 0.75);
+  border-radius: 50%;
+  background: rgba(21, 23, 26, 0.6);
+  color: var(--ivory);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.mediaFacade:hover .mediaPlayButton,
+.mediaFacade:focus-visible .mediaPlayButton {
+  border-color: var(--red);
+  background: rgba(215, 25, 32, 0.88);
+  transform: translate(0, 0) scale(1.05);
+}
+
+.mediaIframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---- Act 04 — Community + interview ------------------------------------ */
+.community {
+  display: grid;
+  grid-template-columns: 0.46fr 0.54fr;
+  gap: 0 clamp(32px, 4.5vw, 56px);
+  align-items: start;
+  margin-top: clamp(80px, 9vw, 120px);
+  padding-top: clamp(48px, 6vw, 72px);
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 720ms cubic-bezier(0.22, 1, 0.36, 1), transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.communityImage {
+  margin: 0;
+}
+.communityImage img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(241, 238, 231, 0.22);
+}
+.communityImage figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font: 9px/1.4 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.communityCopy {
+  padding-top: 4px;
+}
+.interviewPlate {
+  margin: 24px 0 0;
+  width: min(220px, 60%);
+}
+.interviewPlate img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(241, 238, 231, 0.22);
+}
+.interviewPlate figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---- Act 05 — Archive continuation --------------------------------------- */
+.archiveContinuation {
+  display: grid;
+  grid-template-columns: 0.56fr 0.44fr;
+  gap: 0 clamp(32px, 4.5vw, 56px);
+  align-items: center;
+  margin-top: clamp(72px, 8vw, 100px);
+  padding-top: clamp(40px, 5vw, 56px);
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 720ms cubic-bezier(0.22, 1, 0.36, 1), transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.archiveCopy {
+  padding-top: 4px;
+}
+.archiveContinuationPlates {
+  display: flex;
+  gap: 16px;
+}
+.archiveContinuationPlates figure {
+  margin: 0;
+  flex: 1;
+}
+.archiveContinuationPlates img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 0.8;
+  object-fit: cover;
+  border: 1px solid rgba(241, 238, 231, 0.2);
+}
+.archiveContinuationPlates figure:nth-child(2) {
+  margin-top: 10%;
+}
+
+/* ---- Act 06 — The practice today ---------------------------------------- */
+.today {
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  gap: 0 clamp(32px, 4.5vw, 56px);
+  align-items: start;
+  margin-top: clamp(80px, 9vw, 120px);
+  padding-top: clamp(48px, 6vw, 72px);
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 720ms cubic-bezier(0.22, 1, 0.36, 1), transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.todayImages {
+  position: relative;
+}
+.todayPrimary {
+  margin: 0;
+}
+.todayPrimary img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid rgba(241, 238, 231, 0.22);
+}
+.todaySecondary {
+  width: 46%;
+  margin: -14% 0 0 auto;
+  position: relative;
+  right: -6%;
+}
+.todaySecondary img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(241, 238, 231, 0.24);
+  box-shadow: 6px 8px 18px rgba(0, 0, 0, 0.3);
+}
+.todayImages figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.todayCopy {
+  padding-top: 8px;
+}
+
+/* ---- Final CTA ------------------------------------------------------------ */
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 40px;
+  margin-top: clamp(64px, 7vw, 92px);
+  padding-top: 26px;
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 720ms cubic-bezier(0.22, 1, 0.36, 1), transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ivory);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+.cta:hover,
+.cta:focus-visible {
+  color: var(--red);
+  gap: 13px;
+}
+.cta:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+
+/* ---- Responsive ------------------------------------------------------------ */
+@media (max-width: 1100px) {
+  .videoGrid { gap: 24px; }
+}
+
+@media (max-width: 1024px) {
+  .community { grid-template-columns: 0.42fr 0.58fr; }
+  .archiveContinuation { grid-template-columns: 0.5fr 0.5fr; }
+  .today { grid-template-columns: 0.44fr 0.56fr; }
+  .videoCard { width: calc((100% - var(--archive-gap)) / 2); }
+}
+
+@media (max-width: 900px) {
+  .community { grid-template-columns: 1fr; gap: 28px; }
+  .communityImage { max-width: 460px; }
+  .archiveContinuation { grid-template-columns: 1fr; gap: 24px; }
+  .archiveContinuationPlates { max-width: 460px; }
+  .today { grid-template-columns: 1fr; gap: 32px; }
+  .todayImages { order: 0; max-width: 420px; }
+  .todayCopy { order: 1; }
+}
+
+@media (max-width: 767px) {
+  .container { width: min(100% - 32px, 600px); }
+  .numeral { font-size: clamp(4.4rem, 22vw, 6.5rem); }
+  .title { font-size: clamp(2rem, 8.4vw, 2.6rem); }
+  .intro { max-width: none; }
+  .actText { max-width: none; }
+  .archiveBlock,
+  .community,
+  .archiveContinuation,
+  .today,
+  .ctaRow {
+    margin-top: 56px;
+    padding-top: 32px;
+  }
+  .archiveHead { align-items: flex-start; }
+  .archiveHead .actTitle { max-width: none; }
+  .videoCard { width: min(84%, 360px); }
+  .interviewPlate { width: min(220px, 70%); }
+  .todaySecondary { width: 52%; right: 0; margin-left: auto; }
+  .ctaRow { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+@media (max-width: 430px) {
+  .archiveContinuationPlates { flex-direction: column; }
+  .archiveContinuationPlates figure:nth-child(2) { margin-top: 0; }
+  .videoCard { width: 88%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .archiveBlock,
+  .community,
+  .archiveContinuation,
+  .today,
+  .ctaRow,
+  .cta,
+  .mediaFacade,
+  .mediaFacade img,
+  .mediaPlayButton,
+  .archiveNavBtn {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,286 @@
+/* Archive viewer modal — About / Section 01.
+   Local to the About page. Does NOT edit globals.css.
+   Design language: deep charcoal overlay, NeoDent ivory/red tokens,
+   DM Serif Display for display text, mono metadata caps. */
+
+/* ---- Tokens (re-derived from global tokens without editing them) ---- */
+.backdrop {
+  --charcoal: #0f1113;
+  --ivory: #f1eee7;
+  --muted: rgba(241, 238, 231, 0.52);
+  --red: #d71920;
+  --serif: var(--app-font-serif, "DM Serif Display", serif);
+  --mono: var(--app-font-mono, "Manrope", sans-serif);
+
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(10, 11, 13, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: backdropFadeIn 240ms ease both;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---- Dialog shell -------------------------------------------------- */
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(720px, 100%);
+  max-height: calc(100svh - 32px);
+  background: #14161a;
+  border: 1px solid rgba(241, 238, 231, 0.12);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.72);
+  animation: dialogRise 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  overflow: hidden;
+}
+
+@keyframes dialogRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Top bar ------------------------------------------------------- */
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid rgba(241, 238, 231, 0.1);
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  flex: 1;
+}
+.eyebrowLine {
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+.counter {
+  color: var(--ivory);
+  font: 700 11px/1 var(--mono);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border: 1px solid rgba(241, 238, 231, 0.2);
+  background: transparent;
+  color: var(--muted);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease;
+  flex-shrink: 0;
+}
+.closeBtn:hover,
+.closeBtn:focus-visible {
+  border-color: var(--red);
+  color: var(--ivory);
+}
+.closeBtn:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.closeLbl {
+  display: none;
+}
+@media (min-width: 480px) {
+  .closeLbl { display: inline; }
+}
+
+/* ---- Image stage --------------------------------------------------- */
+.stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0c0d0f;
+  overflow: hidden;
+  padding: 24px 20px 16px;
+}
+
+.image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  animation: imageReveal 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* slight sepia treatment matching the archive editorial feel */
+  filter: sepia(0.08) contrast(1.02);
+}
+
+@keyframes imageReveal {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---- Caption ------------------------------------------------------- */
+.caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px 0;
+  flex-shrink: 0;
+}
+.captionText {
+  color: rgba(241, 238, 231, 0.72);
+  font: 10px/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.captionSource {
+  color: var(--red);
+  font: 700 9px/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ---- Navigation ---------------------------------------------------- */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 18px;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(241, 238, 231, 0.1);
+  gap: 12px;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(241, 238, 231, 0.22);
+  background: transparent;
+  color: var(--ivory);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.navBtn:hover:not(.navDisabled),
+.navBtn:focus-visible:not(.navDisabled) {
+  border-color: var(--red);
+  color: var(--ivory);
+  background: rgba(215, 25, 32, 0.1);
+}
+.navBtn:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.navDisabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.navLbl {
+  display: none;
+}
+@media (min-width: 480px) {
+  .navLbl { display: inline; }
+}
+
+/* Dot strip — scrollable if many items */
+.navDots {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px 2px;
+  flex: 1;
+  justify-content: center;
+}
+.navDots::-webkit-scrollbar { display: none; }
+
+.navDot {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(241, 238, 231, 0.22);
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.navDotActive {
+  background: var(--red);
+  transform: scale(1.4);
+}
+
+/* ---- Mobile adjustments -------------------------------------------- */
+@media (max-width: 599px) {
+  .dialog {
+    width: 100%;
+    max-height: calc(100svh - 16px);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  .stage {
+    padding: 16px 12px 12px;
+  }
+  .caption {
+    padding: 8px 14px 0;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .nav {
+    padding: 12px 14px 16px;
+  }
+  .navBtn {
+    padding: 8px 12px;
+  }
+}
+
+/* ---- Reduced motion ------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .dialog,
+  .image {
+    animation: none;
+  }
+  .navBtn,
+  .closeBtn,
+  .navDot {
+    transition: none;
+  }
+}

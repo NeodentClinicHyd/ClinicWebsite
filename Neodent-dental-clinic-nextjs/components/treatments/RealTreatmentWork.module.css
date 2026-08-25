@@ -1,0 +1,641 @@
+/* Section 04 — Real Clinical Work.
+
+   Ivory/warm editorial surface. Four acts:
+     04.1 — Introduction
+     04.2 — Featured Clinical Film   (open landscape plate, 16:9)
+     04.3 — Treatment Films          (three portrait reel plates, 9:16)
+     04.4 — Editorial Closing Note
+
+   Act 04.3 uses a compact reel archive: three equal portrait plates
+   side-by-side at desktop (220–280px each), preserving native 9:16
+   composition. Never cropped to landscape. Never stretched. Not cards.
+
+   Design language inherits the About-page act system: same chapter
+   numeral mechanic, same eyebrow token, same serif/sans hierarchy,
+   same restrained red, same horizontal seams. Nothing touches
+   globals.css or any locked section. */
+
+.section {
+  --ink: var(--neodent-ink, #263033);
+  --muted: var(--neodent-muted, #657173);
+  --red: var(--neodent-red, #d71920);
+  --paper: var(--neodent-surface, #fffefa);
+  --mono: var(--app-font-mono, "Manrope", sans-serif);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--paper);
+  color: var(--ink);
+  /* Top padding reduced — the EditorialSeam above already provides
+     inter-section breathing room; this just needs enough for the
+     ghost numeral to clear the seam */
+  padding: clamp(48px, 5.5vw, 72px) 0 0;
+}
+
+/* Subtle top registration line — chapter seam */
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1180px, calc(100% - 64px));
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(38, 48, 51, 0.08) 50%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---- Background geometry ------------------------------------------ */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Right-side vertical rail */
+.verticalRail {
+  position: absolute;
+  right: 18%;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(38, 48, 51, 0.06) 15%,
+    rgba(38, 48, 51, 0.06) 85%,
+    transparent 100%
+  );
+}
+
+/* Registration dot on the rail */
+.registrationDot {
+  position: absolute;
+  top: 32%;
+  right: calc(18% - 7px);
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(215, 25, 32, 0.18);
+  border-radius: 50%;
+}
+
+/* ---- Container ---------------------------------------------------- */
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Shared act entrance ------------------------------------------ */
+.act {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.actVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Internal act seam — constrained, About-page pattern ---------- */
+/* Default seam spacing — used between 04.2/04.3/04.4 */
+.actSeam {
+  border-top: 1px solid rgba(38, 48, 51, 0.1);
+  margin-top: clamp(52px, 6vw, 80px);
+}
+
+/* Seam directly after 04.1 intro is tighter — keeps opening act
+   (numeral + eyebrow + heading + lede) reading as one composed unit
+   without a dead zone before the featured film */
+.actIntro + .actSeam {
+  margin-top: clamp(40px, 5vw, 60px);
+}
+
+/* ---- Acts 04.2, 04.3, 04.4 top spacing (after seam) -------------- */
+.actFeature,
+.actArchive,
+.actClosing {
+  padding-top: clamp(40px, 5vw, 60px);
+}
+
+/* ---- ACT 04.1 — Introduction -------------------------------------- */
+.header {
+  max-width: 780px;
+  /* Reduced: heading and lede read as one composed block */
+  margin-bottom: clamp(14px, 1.8vw, 22px);
+}
+
+/* Chapter numeral — normal flow, negative bottom margin bleeds into eyebrow */
+.numeral {
+  display: block;
+  margin: 0 0 -0.34em -0.05em;
+  color: rgba(38, 48, 51, 0.055);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5.5rem, 9.5vw, 9.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Eyebrow — red hairline + uppercase tracked label */
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font: 700 10px/1 var(--mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrowRule {
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+/* Section heading */
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: var(--type-section-title, clamp(2.4rem, 3.8vw, 3.9rem));
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  color: var(--ink);
+}
+.title span {
+  display: block;
+  color: var(--red);
+  font-style: italic;
+}
+
+/* Intro copy — concise lede */
+.introCopy {
+  max-width: 600px;
+  color: var(--ink);
+  font-size: 15.5px;
+  line-height: 1.74;
+  margin: 0;
+}
+
+/* ---- Shared act eyebrow (04.2, 04.3) — red mono ------------------- */
+.actEyebrow {
+  margin: 0 0 clamp(24px, 3vw, 38px);
+  color: var(--red);
+  font: 10px/1.4 var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---- ACT 04.2 — Featured Clinical Film — open landscape plate ----- */
+/* TEXT 40–42% / MEDIA 58–60% */
+.featureLayout {
+  display: grid;
+  grid-template-columns: 0.41fr 0.59fr;
+  gap: clamp(36px, 5vw, 64px);
+  align-items: start;
+}
+
+/* Left — context column */
+/* ::after draws a short horizontal registration hairline from the
+   right edge of the text column into the gap — one subtle geometry
+   connection between text and media, echoing the rail/annotation
+   language in ClinicalLeadership. Positioned at the featureMeta
+   border level (bottom of the flex column). */
+.featureText {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.8vw, 20px);
+  padding-top: 4px;
+  position: relative;
+}
+.featureText::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  margin-left: 6px;
+  width: clamp(16px, 2vw, 28px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(215, 25, 32, 0.4), transparent);
+  pointer-events: none;
+}
+
+.featureTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.featureParagraph {
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.74;
+  margin: 0;
+}
+
+/* Metadata — compact mono annotation below copy */
+.featureMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: clamp(12px, 1.5vw, 18px);
+  border-top: 1px solid rgba(38, 48, 51, 0.1);
+}
+.featureMetaLabel {
+  color: var(--red);
+  font: 700 9.5px/1.4 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.featureMetaSub {
+  color: var(--muted);
+  font: 9px/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Right — open editorial plate, no card, fine 1px border only */
+.featurePlate {
+  position: relative;
+  margin: 0;
+}
+
+/* Registration tick bleeding down from top of plate */
+.featurePlateRegistration {
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  width: 1px;
+  height: 14px;
+  background: linear-gradient(180deg, var(--red), transparent);
+  z-index: 1;
+}
+
+/* 16:9 landscape frame — fine border, no radius, no shadow */
+.featureVideoFrame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.18);
+  background: #1a1e20;
+}
+
+.featureVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Top overlay label — shown while paused */
+.featureVideoLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(26, 30, 32, 0.55) 0%, transparent 100%);
+}
+.featureVideoLabel span:first-child {
+  color: rgba(248, 246, 239, 0.88);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.featureVideoLabel span:last-child {
+  color: rgba(248, 246, 239, 0.5);
+  font: 9px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.featureCaption {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font: 9px/1.4 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Play control — bottom-right, ClinicalLeadership .control pattern */
+.videoControl {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(241, 238, 231, 0.7);
+  border-radius: 50%;
+  background: rgba(26, 30, 32, 0.72);
+  color: #f1eee7;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.videoControl:hover {
+  background: rgba(26, 30, 32, 0.92);
+  border-color: #f1eee7;
+}
+.videoControl:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   ACT 04.3 — REEL ARCHIVE
+   Three portrait plates, 9:16, editorial reel composition.
+   NOT cards. NO rounded corners. NO background panels.
+   Fine 1px borders only. Compact at ~220–260px per reel.
+   ============================================================ */
+
+/* Three-up grid: equal columns, auto-sized to ~240px target width */
+.reelArchive {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3.5vw, 48px);
+  align-items: start;
+  /* Cap so reels never become excessively large on very wide screens */
+  max-width: 820px;
+}
+
+/* Individual reel item — stagger via inline transitionDelay */
+.reelItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  /* Items start invisible; revealed when actArchive gains actVisible */
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.actVisible .reelItem {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Registration micro-seam above each reel — echoes actSeam language */
+.reelSeamTop {
+  position: relative;
+  height: 12px;
+  margin-bottom: 8px;
+  border-top: 1px solid rgba(38, 48, 51, 0.1);
+}
+.reelSeamDot {
+  position: absolute;
+  top: -3.5px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(215, 25, 32, 0.3);
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+/* Portrait reel frame — 9:16, fine 1px border, no radius, no shadow */
+.reelFrame {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.16);
+  background: #1a1e20;
+}
+
+/* The video element fills the frame; contain preserves full reel */
+.reelVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #1a1e20;
+}
+
+/* Reel number — top-left, red mono */
+.reelNumber {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  color: rgba(215, 25, 32, 0.9);
+  font: 700 9px/1 var(--mono);
+  letter-spacing: 0.14em;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Play button — small, bottom-right corner, same .control language */
+.reelPlayBtn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(241, 238, 231, 0.65);
+  border-radius: 50%;
+  background: rgba(26, 30, 32, 0.7);
+  color: #f1eee7;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.reelPlayBtn:hover {
+  background: rgba(26, 30, 32, 0.9);
+  border-color: #f1eee7;
+}
+.reelPlayBtn:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* Caption below each reel — breathing room between frame and text */
+.reelInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 12px;
+}
+
+/* Default reel title — restrained serif */
+.reelTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(12px, 1.1vw, 14px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+/* First reel receives slightly stronger typographic presence —
+   subtle curated hierarchy without changing media dimensions */
+.reelItem:first-child .reelTitle {
+  font-size: clamp(13px, 1.25vw, 15.5px);
+  letter-spacing: -0.01em;
+}
+
+/* Reel number prefix in title — mono, red */
+.reelTitleNum {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--red);
+}
+
+.reelContext {
+  margin: 0;
+  color: var(--muted);
+  font: 10px/1.5 var(--mono);
+  letter-spacing: 0.06em;
+}
+
+/* ---- Stagger entrance delays ------------------------------------- */
+.actIntro    { transition-delay: 0ms; }
+.actFeature  { transition-delay: 60ms; }
+.actArchive  { transition-delay: 0ms; }
+
+/* ---- 1024px — Tablet --------------------------------------------- */
+@media (max-width: 1023px) {
+  .section {
+    padding: clamp(40px, 5vw, 60px) 0 0;
+  }
+  .container {
+    width: min(1180px, calc(100% - 48px));
+  }
+  .featureLayout {
+    grid-template-columns: 0.45fr 0.55fr;
+    gap: clamp(28px, 4vw, 48px);
+  }
+  /* Three reels at 1024 — keep comfortable, full width */
+  .reelArchive {
+    max-width: 100%;
+    gap: clamp(16px, 2.5vw, 32px);
+  }
+}
+
+/* ---- 768px — Tablet (small) -------------------------------------- */
+@media (max-width: 767px) {
+  .section {
+    padding: clamp(36px, 4.5vw, 52px) 0 0;
+  }
+  .container {
+    width: calc(100% - 40px);
+  }
+  .introCopy {
+    font-size: 15px;
+  }
+  /* featureText::after geometry hidden on single-column layout */
+  .featureText::after {
+    display: none;
+  }
+
+  /* Featured film: single column — text above, video below */
+  .featureLayout {
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 40px);
+  }
+
+  /* Reel archive at 768: 2 + 1 arrangement — two on first row, one centered below */
+  .reelArchive {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 480px;
+    gap: clamp(16px, 3vw, 28px);
+  }
+  /* Third item (03) centers below the two */
+  .reelItem:last-child {
+    grid-column: 1 / -1;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  /* Vertical rail hidden on small viewports */
+  .verticalRail,
+  .registrationDot {
+    display: none;
+  }
+}
+
+/* ---- 430px / 390px — Mobile -------------------------------------- */
+@media (max-width: 480px) {
+  .section {
+    padding: clamp(32px, 4vw, 44px) 0 0;
+  }
+  .numeral {
+    font-size: clamp(4rem, 19vw, 6rem);
+  }
+  /* Tighter seam on mobile */
+  .actSeam,
+  .actIntro + .actSeam {
+    margin-top: clamp(36px, 7vw, 52px);
+  }
+
+  /* Reel archive on mobile: vertical stack, each reel centered and compact */
+  .reelArchive {
+    grid-template-columns: 1fr;
+    max-width: 260px;
+    margin: 0 auto;
+    gap: clamp(28px, 5vw, 44px);
+  }
+  /* Reset the 768 centering rule so all three stack normally */
+  .reelItem:last-child {
+    grid-column: auto;
+    max-width: none;
+    margin: 0;
+  }
+
+  .closingStatement {
+    font-size: clamp(16px, 5vw, 20px);
+  }
+  .featureParagraph,
+  .introCopy {
+    font-size: 14.5px;
+  }
+}
+
+/* ---- Reduced motion ---------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .act,
+  .reelItem {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .videoControl,
+  .reelPlayBtn {
+    transition: none;
+  }
+}

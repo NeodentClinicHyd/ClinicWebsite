@@ -1,0 +1,1058 @@
+{
+  "1440x1000": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "96px",
+        "lineHeight": "88.32px",
+        "letterSpacing": "-4.992px",
+        "fontWeight": "400",
+        "marginTop": "22px",
+        "marginBottom": "32px",
+        "maxWidth": "720px",
+        "_w": 505.08
+      },
+      "heroPlace": {
+        "fontSize": "64px",
+        "lineHeight": "61.44px",
+        "letterSpacing": "-1.152px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 381.61
+      },
+      "heroRecord": {
+        "fontSize": "64px",
+        "lineHeight": "61.44px",
+        "letterSpacing": "-1.152px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 347.94
+      },
+      "section01": {
+        "fontSize": "56px",
+        "lineHeight": "58.8px",
+        "letterSpacing": "-1.4px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 480
+      }
+    },
+    "struct": {
+      "docScrollW": 1440,
+      "docClientW": 1440,
+      "sectionBox": {
+        "top": 0,
+        "bottom": 1001,
+        "left": 0,
+        "right": 1440,
+        "w": 1440,
+        "h": 1001
+      },
+      "videoBox": {
+        "top": 124,
+        "bottom": 864,
+        "left": 892,
+        "right": 1310,
+        "w": 418,
+        "h": 740
+      },
+      "frameBox": {
+        "top": 110,
+        "bottom": 864,
+        "left": 878,
+        "right": 1310,
+        "w": 432,
+        "h": 754
+      },
+      "ctaBox": {
+        "top": 814.53,
+        "bottom": 837.03,
+        "left": 130,
+        "right": 289.44,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 78,
+        "left": 0,
+        "right": 1440,
+        "w": 1440,
+        "h": 78
+      },
+      "heroBox": {
+        "top": -922,
+        "bottom": 0,
+        "left": 0,
+        "right": 1440,
+        "w": 1440,
+        "h": 922
+      },
+      "eyebrowBox": {
+        "top": 187.95,
+        "bottom": 206.7,
+        "left": 130,
+        "right": 610,
+        "w": 480,
+        "h": 18.75
+      },
+      "secondaryBox": {
+        "top": 715.28,
+        "bottom": 813.03,
+        "left": 130,
+        "right": 610,
+        "w": 480,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.56,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "110px"
+    },
+    "contrast": {
+      "worstContrast": 15.04,
+      "brightestLum": 0.015,
+      "pixels": 142560
+    }
+  },
+  "1280x1000": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "92.16px",
+        "lineHeight": "84.7872px",
+        "letterSpacing": "-4.79232px",
+        "fontWeight": "400",
+        "marginTop": "22px",
+        "marginBottom": "32px",
+        "maxWidth": "720px",
+        "_w": 507.95
+      },
+      "heroPlace": {
+        "fontSize": "60.16px",
+        "lineHeight": "57.7536px",
+        "letterSpacing": "-1.08288px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 383.78
+      },
+      "heroRecord": {
+        "fontSize": "60.16px",
+        "lineHeight": "57.7536px",
+        "letterSpacing": "-1.08288px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 349.92
+      },
+      "section01": {
+        "fontSize": "56px",
+        "lineHeight": "58.8px",
+        "letterSpacing": "-1.4px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 480
+      }
+    },
+    "struct": {
+      "docScrollW": 1280,
+      "docClientW": 1280,
+      "sectionBox": {
+        "top": 41,
+        "bottom": 959.77,
+        "left": 0,
+        "right": 1280,
+        "w": 1280,
+        "h": 918.77
+      },
+      "videoBox": {
+        "top": 165,
+        "bottom": 822.77,
+        "left": 860,
+        "right": 1230,
+        "w": 370,
+        "h": 657.77
+      },
+      "frameBox": {
+        "top": 151,
+        "bottom": 822.77,
+        "left": 846,
+        "right": 1230,
+        "w": 384,
+        "h": 671.77
+      },
+      "ctaBox": {
+        "top": 793.86,
+        "bottom": 816.36,
+        "left": 50,
+        "right": 209.44,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 78,
+        "left": 0,
+        "right": 1280,
+        "w": 1280,
+        "h": 78
+      },
+      "heroBox": {
+        "top": -881,
+        "bottom": 41,
+        "left": 0,
+        "right": 1280,
+        "w": 1280,
+        "h": 922
+      },
+      "eyebrowBox": {
+        "top": 208.41,
+        "bottom": 227.16,
+        "left": 50,
+        "right": 530,
+        "w": 480,
+        "h": 18.75
+      },
+      "secondaryBox": {
+        "top": 694.61,
+        "bottom": 792.36,
+        "left": 50,
+        "right": 530,
+        "w": 480,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.56,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "110px"
+    },
+    "contrast": {
+      "worstContrast": 15.07,
+      "brightestLum": 0.014,
+      "pixels": 142560
+    }
+  },
+  "1024x1000": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "73.728px",
+        "lineHeight": "67.8298px",
+        "letterSpacing": "-3.83386px",
+        "fontWeight": "400",
+        "marginTop": "22px",
+        "marginBottom": "32px",
+        "maxWidth": "720px",
+        "_w": 560
+      },
+      "heroPlace": {
+        "fontSize": "48.128px",
+        "lineHeight": "46.2029px",
+        "letterSpacing": "-0.866304px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 314.56
+      },
+      "heroRecord": {
+        "fontSize": "48.128px",
+        "lineHeight": "46.2029px",
+        "letterSpacing": "-0.866304px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 286.8
+      },
+      "section01": {
+        "fontSize": "47.104px",
+        "lineHeight": "49.4592px",
+        "letterSpacing": "-1.1776px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 560
+      }
+    },
+    "struct": {
+      "docScrollW": 1024,
+      "docClientW": 1024,
+      "sectionBox": {
+        "top": -119.09,
+        "bottom": 1193.67,
+        "left": 0,
+        "right": 1024,
+        "w": 1024,
+        "h": 1312.77
+      },
+      "videoBox": {
+        "top": 302.27,
+        "bottom": 952.92,
+        "left": 336,
+        "right": 702,
+        "w": 366,
+        "h": 650.66
+      },
+      "frameBox": {
+        "top": 288.27,
+        "bottom": 952.92,
+        "left": 322,
+        "right": 702,
+        "w": 380,
+        "h": 664.66
+      },
+      "ctaBox": {
+        "top": 1111.17,
+        "bottom": 1133.67,
+        "left": 32,
+        "right": 191.44,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 78,
+        "left": 0,
+        "right": 1024,
+        "w": 1024,
+        "h": 78
+      },
+      "heroBox": {
+        "top": -1139,
+        "bottom": -119.09,
+        "left": 0,
+        "right": 1024,
+        "w": 1024,
+        "h": 1019.91
+      },
+      "eyebrowBox": {
+        "top": -47.09,
+        "bottom": -28.34,
+        "left": 32,
+        "right": 592,
+        "w": 560,
+        "h": 18.75
+      },
+      "secondaryBox": {
+        "top": 1011.92,
+        "bottom": 1109.67,
+        "left": 32,
+        "right": 592,
+        "w": 560,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.56,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "72px"
+    },
+    "contrast": {
+      "worstContrast": 1,
+      "brightestLum": 1,
+      "pixels": 134400
+    }
+  },
+  "1024x800": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "73.728px",
+        "lineHeight": "67.8298px",
+        "letterSpacing": "-3.83386px",
+        "fontWeight": "400",
+        "marginTop": "22px",
+        "marginBottom": "32px",
+        "maxWidth": "720px",
+        "_w": 560
+      },
+      "heroPlace": {
+        "fontSize": "48.128px",
+        "lineHeight": "46.2029px",
+        "letterSpacing": "-0.866304px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 314.56
+      },
+      "heroRecord": {
+        "fontSize": "48.128px",
+        "lineHeight": "46.2029px",
+        "letterSpacing": "-0.866304px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 286.8
+      },
+      "section01": {
+        "fontSize": "47.104px",
+        "lineHeight": "49.4592px",
+        "letterSpacing": "-1.1776px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 560
+      }
+    },
+    "struct": {
+      "docScrollW": 1024,
+      "docClientW": 1024,
+      "sectionBox": {
+        "top": -227.3,
+        "bottom": 1026.81,
+        "left": 0,
+        "right": 1024,
+        "w": 1024,
+        "h": 1254.11
+      },
+      "videoBox": {
+        "top": 194.06,
+        "bottom": 786.06,
+        "left": 336,
+        "right": 702,
+        "w": 366,
+        "h": 592
+      },
+      "frameBox": {
+        "top": 180.06,
+        "bottom": 786.06,
+        "left": 322,
+        "right": 702,
+        "w": 380,
+        "h": 606
+      },
+      "ctaBox": {
+        "top": 944.31,
+        "bottom": 966.81,
+        "left": 32,
+        "right": 191.44,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 78,
+        "left": 0,
+        "right": 1024,
+        "w": 1024,
+        "h": 78
+      },
+      "heroBox": {
+        "top": -1125,
+        "bottom": -227.3,
+        "left": 0,
+        "right": 1024,
+        "w": 1024,
+        "h": 897.7
+      },
+      "eyebrowBox": {
+        "top": -155.3,
+        "bottom": -136.55,
+        "left": 32,
+        "right": 592,
+        "w": 560,
+        "h": 18.75
+      },
+      "secondaryBox": {
+        "top": 845.06,
+        "bottom": 942.81,
+        "left": 32,
+        "right": 592,
+        "w": 560,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.62,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "72px"
+    },
+    "contrast": {
+      "worstContrast": 1,
+      "brightestLum": 1,
+      "pixels": 82880
+    }
+  },
+  "900x1000": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "60px",
+        "lineHeight": "55.2px",
+        "letterSpacing": "-3.12px",
+        "fontWeight": "400",
+        "marginTop": "10px",
+        "marginBottom": "14px",
+        "maxWidth": "620px",
+        "_w": 560
+      },
+      "heroPlace": {
+        "fontSize": "46px",
+        "lineHeight": "44.16px",
+        "letterSpacing": "-0.828px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 620
+      },
+      "heroRecord": {
+        "fontSize": "46px",
+        "lineHeight": "44.16px",
+        "letterSpacing": "-0.828px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 620
+      },
+      "section01": {
+        "fontSize": "41.4px",
+        "lineHeight": "43.47px",
+        "letterSpacing": "-1.035px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 560
+      }
+    },
+    "struct": {
+      "docScrollW": 900,
+      "docClientW": 900,
+      "sectionBox": {
+        "top": -137.37,
+        "bottom": 1157.44,
+        "left": 0,
+        "right": 900,
+        "w": 900,
+        "h": 1294.81
+      },
+      "videoBox": {
+        "top": 266.03,
+        "bottom": 916.69,
+        "left": 274,
+        "right": 640,
+        "w": 366,
+        "h": 650.66
+      },
+      "frameBox": {
+        "top": 252.03,
+        "bottom": 916.69,
+        "left": 260,
+        "right": 640,
+        "w": 380,
+        "h": 664.66
+      },
+      "ctaBox": {
+        "top": 1074.94,
+        "bottom": 1097.44,
+        "left": 100,
+        "right": 259.44,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 68,
+        "left": 0,
+        "right": 900,
+        "w": 900,
+        "h": 68
+      },
+      "heroBox": {
+        "top": -1100,
+        "bottom": -137.37,
+        "left": 0,
+        "right": 900,
+        "w": 900,
+        "h": 962.63
+      },
+      "eyebrowBox": {
+        "top": -65.37,
+        "bottom": -46.62,
+        "left": 100,
+        "right": 660,
+        "w": 560,
+        "h": 18.75
+      },
+      "secondaryBox": {
+        "top": 975.69,
+        "bottom": 1073.44,
+        "left": 100,
+        "right": 660,
+        "w": 560,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.56,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "72px"
+    },
+    "contrast": {
+      "worstContrast": 1,
+      "brightestLum": 1,
+      "pixels": 123200
+    }
+  },
+  "768x1000": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "60px",
+        "lineHeight": "55.2px",
+        "letterSpacing": "-3.12px",
+        "fontWeight": "400",
+        "marginTop": "10px",
+        "marginBottom": "14px",
+        "maxWidth": "620px",
+        "_w": 560
+      },
+      "heroPlace": {
+        "fontSize": "39.936px",
+        "lineHeight": "38.3386px",
+        "letterSpacing": "-0.718848px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 620
+      },
+      "heroRecord": {
+        "fontSize": "39.936px",
+        "lineHeight": "38.3386px",
+        "letterSpacing": "-0.718848px",
+        "fontWeight": "400",
+        "marginTop": "20px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 620
+      },
+      "section01": {
+        "fontSize": "35.328px",
+        "lineHeight": "37.0944px",
+        "letterSpacing": "-0.8832px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 560
+      }
+    },
+    "struct": {
+      "docScrollW": 768,
+      "docClientW": 768,
+      "sectionBox": {
+        "top": -128.37,
+        "bottom": 1147.31,
+        "left": 0,
+        "right": 768,
+        "w": 768,
+        "h": 1275.69
+      },
+      "videoBox": {
+        "top": 255.91,
+        "bottom": 906.56,
+        "left": 208,
+        "right": 574,
+        "w": 366,
+        "h": 650.66
+      },
+      "frameBox": {
+        "top": 241.91,
+        "bottom": 906.56,
+        "left": 194,
+        "right": 574,
+        "w": 380,
+        "h": 664.66
+      },
+      "ctaBox": {
+        "top": 1064.81,
+        "bottom": 1087.31,
+        "left": 34,
+        "right": 193.44,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 68,
+        "left": 0,
+        "right": 768,
+        "w": 768,
+        "h": 68
+      },
+      "heroBox": {
+        "top": -1091,
+        "bottom": -128.37,
+        "left": 0,
+        "right": 768,
+        "w": 768,
+        "h": 962.63
+      },
+      "eyebrowBox": {
+        "top": -56.37,
+        "bottom": -37.62,
+        "left": 34,
+        "right": 594,
+        "w": 560,
+        "h": 18.75
+      },
+      "secondaryBox": {
+        "top": 965.56,
+        "bottom": 1063.31,
+        "left": 34,
+        "right": 594,
+        "w": 560,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.56,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "72px"
+    },
+    "contrast": {
+      "worstContrast": 1,
+      "brightestLum": 1,
+      "pixels": 117600
+    }
+  },
+  "430x900": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "30px",
+        "lineHeight": "30.9px",
+        "letterSpacing": "-1.44px",
+        "fontWeight": "400",
+        "marginTop": "0px",
+        "marginBottom": "8px",
+        "maxWidth": "620px",
+        "_w": 398
+      },
+      "heroPlace": {
+        "fontSize": "33px",
+        "lineHeight": "33px",
+        "letterSpacing": "-0.594px",
+        "fontWeight": "400",
+        "marginTop": "14px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 398
+      },
+      "heroRecord": {
+        "fontSize": "33px",
+        "lineHeight": "33px",
+        "letterSpacing": "-0.594px",
+        "fontWeight": "400",
+        "marginTop": "14px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 398
+      },
+      "section01": {
+        "fontSize": "34px",
+        "lineHeight": "35.7px",
+        "letterSpacing": "-0.85px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 398
+      }
+    },
+    "struct": {
+      "docScrollW": 430,
+      "docClientW": 430,
+      "sectionBox": {
+        "top": -95,
+        "bottom": 995.31,
+        "left": 0,
+        "right": 430,
+        "w": 430,
+        "h": 1090.31
+      },
+      "videoBox": {
+        "top": 282.56,
+        "bottom": 782.56,
+        "left": 81.38,
+        "right": 362.63,
+        "w": 281.25,
+        "h": 500
+      },
+      "frameBox": {
+        "top": 268.56,
+        "bottom": 782.56,
+        "left": 67.38,
+        "right": 362.63,
+        "w": 295.25,
+        "h": 514
+      },
+      "ctaBox": {
+        "top": 932.81,
+        "bottom": 955.31,
+        "left": 87.88,
+        "right": 247.31,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 68,
+        "left": 0,
+        "right": 430,
+        "w": 430,
+        "h": 68
+      },
+      "heroBox": {
+        "top": -927,
+        "bottom": -95,
+        "left": 0,
+        "right": 430,
+        "w": 430,
+        "h": 832
+      },
+      "eyebrowBox": {
+        "top": -39,
+        "bottom": 1.25,
+        "left": 16,
+        "right": 414,
+        "w": 398,
+        "h": 40.25
+      },
+      "secondaryBox": {
+        "top": 833.56,
+        "bottom": 931.31,
+        "left": 87.88,
+        "right": 342.13,
+        "w": 254.25,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.56,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "56px"
+    },
+    "contrast": {
+      "worstContrast": 1,
+      "brightestLum": 1,
+      "pixels": 90744
+    }
+  },
+  "390x844": {
+    "type": {
+      "heroPrimary": {
+        "fontSize": "30px",
+        "lineHeight": "30.9px",
+        "letterSpacing": "-1.44px",
+        "fontWeight": "400",
+        "marginTop": "0px",
+        "marginBottom": "8px",
+        "maxWidth": "620px",
+        "_w": 358
+      },
+      "heroPlace": {
+        "fontSize": "32.76px",
+        "lineHeight": "32.76px",
+        "letterSpacing": "-0.58968px",
+        "fontWeight": "400",
+        "marginTop": "14px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 358
+      },
+      "heroRecord": {
+        "fontSize": "32.76px",
+        "lineHeight": "32.76px",
+        "letterSpacing": "-0.58968px",
+        "fontWeight": "400",
+        "marginTop": "14px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 358
+      },
+      "section01": {
+        "fontSize": "31.2px",
+        "lineHeight": "32.76px",
+        "letterSpacing": "-0.78px",
+        "fontWeight": "400",
+        "marginTop": "16px",
+        "marginBottom": "0px",
+        "maxWidth": "none",
+        "_w": 358
+      }
+    },
+    "struct": {
+      "docScrollW": 390,
+      "docClientW": 390,
+      "sectionBox": {
+        "top": -118.55,
+        "bottom": 962.95,
+        "left": 0,
+        "right": 390,
+        "w": 390,
+        "h": 1081.5
+      },
+      "videoBox": {
+        "top": 250.2,
+        "bottom": 750.2,
+        "left": 61.38,
+        "right": 342.63,
+        "w": 281.25,
+        "h": 500
+      },
+      "frameBox": {
+        "top": 236.2,
+        "bottom": 750.2,
+        "left": 47.38,
+        "right": 342.63,
+        "w": 295.25,
+        "h": 514
+      },
+      "ctaBox": {
+        "top": 900.45,
+        "bottom": 922.95,
+        "left": 67.88,
+        "right": 227.31,
+        "w": 159.44,
+        "h": 22.5
+      },
+      "navbarBox": {
+        "top": 0,
+        "bottom": 68,
+        "left": 0,
+        "right": 390,
+        "w": 390,
+        "h": 68
+      },
+      "heroBox": {
+        "top": -897,
+        "bottom": -118.55,
+        "left": 0,
+        "right": 390,
+        "w": 390,
+        "h": 778.45
+      },
+      "eyebrowBox": {
+        "top": -62.55,
+        "bottom": -22.3,
+        "left": 16,
+        "right": 374,
+        "w": 358,
+        "h": 40.25
+      },
+      "secondaryBox": {
+        "top": 801.2,
+        "bottom": 898.95,
+        "left": 67.88,
+        "right": 322.13,
+        "w": 254.25,
+        "h": 97.75
+      },
+      "artifactPresent": false,
+      "thresholdPresent": false,
+      "decorativeLeaks": [
+        ".exp-intro-backdrop: pointerEvents=auto"
+      ],
+      "videoAspect": 0.56,
+      "videoNatural": {
+        "w": 0,
+        "h": 0
+      },
+      "videoCurrentTime": 0,
+      "videoLoopAttr": true,
+      "videoPoster": null,
+      "h2Count": 1,
+      "sectionPaddingTop": "56px"
+    },
+    "contrast": {
+      "worstContrast": 1,
+      "brightestLum": 1,
+      "pixels": 75896
+    }
+  }
+}

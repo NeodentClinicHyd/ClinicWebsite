@@ -1,0 +1,437 @@
+/* Section 06 — What to expect.
+
+   Design language inherited directly from Section 02's canonical
+   .archive-* system in globals.css: the same 10px/.2em uppercase
+   eyebrow with a 34px red hairline, DM Serif Display headings with a
+   red italic emphasis line, an oversized low-opacity serif chapter
+   numeral bleeding into the eyebrow below it via negative margin (the
+   same mechanic as .archive-year / ClinicalLeadership's .numeral /
+   PatientStories' .numeral), and 15px/1.7 muted body copy. Nothing
+   here edits globals.css or any locked section.
+
+   Composition is original to this section: one real clinic-interior
+   plate (with an offset secondary frame + registration mark) paired
+   with a four-stage journey rail via a single hairline bridge, on a
+   warm ivory surface with a quiet architectural drafting/registration
+   backdrop -- distinct from Section 03's clinical blueprint grid and
+   Section 05's quotation/arc geometry. */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(72px, 8vw, 108px) 0 clamp(64px, 7vw, 96px);
+}
+
+/* ---- Patient-journey / architectural-map geometry ---------------- */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.draftVertical {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 62%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(38, 48, 51, 0.07) 18%,
+    rgba(38, 48, 51, 0.07) 82%,
+    transparent
+  );
+}
+.draftHorizontal {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 68%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(38, 48, 51, 0.06) 20%,
+    rgba(38, 48, 51, 0.06) 80%,
+    transparent
+  );
+}
+.registrationDot {
+  position: absolute;
+  top: 14%;
+  left: 62%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(215, 25, 32, 0.35);
+}
+.registrationDotSmall {
+  position: absolute;
+  bottom: 10%;
+  left: 4%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(215, 25, 32, 0.3);
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Header -- numeral bleeds into eyebrow, matching Section 02 -- */
+.header {
+  max-width: 620px;
+  position: relative;
+}
+.numeral {
+  display: block;
+  margin: 0 0 -0.36em -0.04em;
+  color: rgba(38, 48, 51, 0.055);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5.5rem, 10vw, 10rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: rgba(38, 48, 51, 0.58);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red);
+  flex-shrink: 0;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.7rem, 4.4vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+.title span {
+  color: var(--neodent-red);
+  font-style: italic;
+}
+.lede {
+  max-width: 460px;
+  margin: 18px 0 0;
+  color: rgba(38, 48, 51, 0.68);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ---- Composition -- media plate | bridge | journey rail ----------- */
+.composition {
+  display: grid;
+  grid-template-columns: 0.86fr 40px 1.14fr;
+  align-items: start;
+  gap: 0;
+  margin-top: clamp(48px, 6vw, 76px);
+}
+
+.mediaCol {
+  position: relative;
+  margin: 0;
+}
+/* Offset secondary frame -- a thin hairline plate sitting behind and
+   right of the photograph, editorial-dossier framing rather than a
+   card shadow. */
+.mediaOffsetFrame {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: -16px;
+  bottom: -16px;
+  border: 1px solid rgba(38, 48, 51, 0.18);
+  z-index: 0;
+}
+.mediaFrame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.24);
+  background: #e2ddd0;
+  transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.mediaFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.02);
+}
+.mediaRegistration {
+  position: absolute;
+  top: -18px;
+  left: 28px;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, var(--neodent-red));
+  z-index: 2;
+}
+.mediaMeta {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  z-index: 2;
+  padding: 6px 11px;
+  background: rgba(251, 250, 247, 0.92);
+  color: rgba(38, 48, 51, 0.7);
+  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Bridge -- the single hairline that visually joins the media plate to
+   the journey's first marker, so image + timeline read as one
+   composition rather than an image beside an unrelated list. Aligned
+   to the top of the grid row (align-items:start on .composition) with
+   a fixed offset that lands it exactly level with step 01's marker,
+   instead of floating in the middle of the row's full height. */
+.bridge {
+  position: relative;
+  align-self: start;
+  height: 1px;
+  margin-top: 5px;
+}
+.bridgeLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(38, 48, 51, 0.32), var(--neodent-red));
+}
+.bridgeDot {
+  position: absolute;
+  right: -2px;
+  top: -2.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--neodent-red);
+}
+
+/* ---- Journey rail --------------------------------------------------
+   One thin vertical hairline (.segment, stacked per-step) with small
+   red numbered markers -- an editorial registration/journey drawing,
+   never icon circles or a literal flowchart. */
+.journey {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 20px;
+  padding: 0 0 30px;
+  cursor: pointer;
+  outline: none;
+}
+.step:last-child { padding-bottom: 0; }
+.markerColumn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.marker {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid rgba(38, 48, 51, 0.3);
+  background: var(--ivory);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  flex-shrink: 0;
+}
+.segment {
+  width: 1px;
+  flex: 1;
+  margin-top: 4px;
+  background: rgba(38, 48, 51, 0.16);
+}
+.segmentFilled,
+.segmentCurrent {
+  background: linear-gradient(180deg, var(--neodent-red), rgba(215, 25, 32, 0.25));
+}
+.stepNumber {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(38, 48, 51, 0.4);
+  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.14em;
+  transition: color 0.3s ease;
+}
+.stepContent h3 {
+  margin: 0 0 8px;
+  color: rgba(38, 48, 51, 0.62);
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+.stepContent p {
+  margin: 0;
+  max-width: 420px;
+  color: rgba(38, 48, 51, 0.5);
+  font-size: 14px;
+  line-height: 1.65;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.stepActive .marker {
+  border-color: var(--neodent-red);
+  background: var(--neodent-red);
+  transform: scale(1.25);
+}
+.stepActive .stepNumber { color: var(--neodent-red); }
+.stepActive .stepContent h3 { color: var(--ink); }
+.stepActive .stepContent p { color: rgba(38, 48, 51, 0.74); }
+.stepPast .marker { border-color: rgba(215, 25, 32, 0.55); background: rgba(215, 25, 32, 0.12); }
+.stepPast .stepNumber { color: rgba(215, 25, 32, 0.55); }
+
+.step:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+}
+
+/* ---- CTA ------------------------------------------------------------ */
+.ctaRow {
+  margin-top: clamp(48px, 6vw, 72px);
+  padding-top: 22px;
+  border-top: 1px solid rgba(38, 48, 51, 0.14);
+  display: flex;
+  justify-content: flex-end;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+.cta:hover { color: var(--neodent-red); gap: 13px; }
+
+/* ---- Restrained staggered entrance ---------------------------------- */
+.header,
+.composition,
+.ctaRow {
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section:not(.visible) .header,
+.section:not(.visible) .composition,
+.section:not(.visible) .ctaRow {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.composition { transition-delay: 110ms; }
+.ctaRow { transition-delay: 220ms; }
+
+/* Journey items reveal sequentially once the section is visible. */
+.step {
+  transition: opacity 560ms cubic-bezier(0.22, 1, 0.36, 1), transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section:not(.visible) .step {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.journey .step:nth-child(1) { transition-delay: 260ms; }
+.journey .step:nth-child(2) { transition-delay: 340ms; }
+.journey .step:nth-child(3) { transition-delay: 420ms; }
+.journey .step:nth-child(4) { transition-delay: 500ms; }
+
+@media (max-width: 1180px) {
+  .composition { grid-template-columns: 0.9fr 32px 1.1fr; }
+}
+
+@media (max-width: 1024px) {
+  .composition { grid-template-columns: 1fr 28px 1.3fr; gap: 0; margin-top: 40px; }
+  .mediaOffsetFrame { top: 12px; left: 12px; right: -12px; bottom: -12px; }
+}
+
+@media (max-width: 900px) {
+  .composition { grid-template-columns: 1fr; gap: 40px; }
+  .bridge { display: none; }
+  .mediaCol { max-width: 460px; }
+  .mediaFrame { aspect-ratio: 16 / 11; }
+}
+
+@media (max-width: 767px) {
+  .container { width: min(100% - 32px, 600px); }
+  .numeral { font-size: clamp(4rem, 20vw, 6rem); }
+  .title { font-size: clamp(2.15rem, 9vw, 2.7rem); }
+  .lede { max-width: none; }
+  .composition { margin-top: 32px; gap: 34px; }
+  .mediaCol { max-width: none; }
+  .mediaOffsetFrame { display: none; }
+  .mediaFrame { aspect-ratio: 4 / 3; }
+  .step { grid-template-columns: 20px 1fr; gap: 14px; padding-bottom: 24px; }
+  .marker { width: 8px; height: 8px; }
+  .stepContent h3 { font-size: 18px; }
+  .stepContent p { font-size: 13.5px; }
+  .draftVertical, .registrationDot { left: 50%; }
+  .ctaRow { justify-content: flex-start; }
+}
+
+@media (max-width: 430px) {
+  .mediaMeta { font-size: 8px; padding: 5px 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .composition,
+  .ctaRow,
+  .step,
+  .mediaFrame,
+  .marker,
+  .segment,
+  .stepNumber,
+  .stepContent h3,
+  .stepContent p,
+  .cta {
+    transition: none;
+  }
+  .section:not(.visible) .header,
+  .section:not(.visible) .composition,
+  .section:not(.visible) .ctaRow,
+  .section:not(.visible) .step {
+    opacity: 1;
+    transform: none;
+  }
+}

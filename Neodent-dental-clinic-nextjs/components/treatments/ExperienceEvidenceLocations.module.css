@@ -1,0 +1,372 @@
+/* Section 07 — Trust & Evidence.
+
+   Dark charcoal surface. Three focused acts:
+     — Experience metrics
+     — Patient review ratings (branch-specific, no contact info)
+     — Editorial closing statement
+
+   All location directory content removed. Section 08 handles contact.
+   Visual language: ghost 07, vertical rail, constrained seams,
+   restrained red, serif/mono hierarchy. */
+
+.section {
+  padding: clamp(72px, 8vw, 100px) 0 clamp(64px, 7vw, 88px);
+  background: var(--neodent-charcoal);
+  color: var(--neodent-ivory);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Top registration hairline */
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1180px, calc(100% - 64px));
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(215, 25, 32, 0.4) 50%,
+    transparent 100%
+  );
+}
+
+/* Background geometry */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.verticalRail {
+  position: absolute;
+  left: 60%;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(241, 238, 231, 0.08) 18%,
+    rgba(241, 238, 231, 0.08) 82%,
+    transparent 100%
+  );
+}
+
+/* Ghost chapter numeral — in-flow inside .header (see .numeral).
+   The old absolutely-positioned rule is removed. */
+
+/* Container */
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 72px);
+}
+
+/* ---- Header -------------------------------------------------------- */
+.header {
+  display: flex;
+  flex-direction: column;
+  max-width: 780px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 0.72, 0.2, 1),
+    transform 0.8s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.visible .header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Ghost numeral — in-flow, negative bottom margin bleeds into eyebrow */
+.numeral {
+  display: block;
+  margin: 0 0 -0.34em -0.05em;
+  color: rgba(215, 25, 32, 0.1);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5.5rem, 9.5vw, 9.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Eyebrow — red 34px hairline + 10px/0.2em uppercase mono */
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: rgba(241, 238, 231, 0.45);
+  font: 700 10px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrowRule {
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red);
+  flex-shrink: 0;
+}
+
+/* Section heading — DM Serif Display, same scale as Section 05 */
+.title {
+  font-family: var(--app-font-serif);
+  font-size: var(--type-section-title);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  color: var(--neodent-ivory);
+  margin: 0;
+}
+.title span {
+  display: block;
+  color: var(--neodent-red);
+  font-style: italic;
+}
+
+/* ---- Experience metrics -------------------------------------------- */
+.experience {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding-bottom: clamp(36px, 4.5vw, 52px);
+  border-bottom: 1px solid rgba(251, 250, 247, 0.12);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s 0.15s cubic-bezier(0.16, 0.72, 0.2, 1),
+    transform 0.8s 0.15s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.visible .experience {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.experienceItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* Item heading — serif, not bold sans */
+.experienceItem strong {
+  color: var(--neodent-ivory);
+  font-family: var(--app-font-serif);
+  font-size: clamp(17px, 1.6vw, 20px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+/* Item descriptor — matches body copy muted tone */
+.experienceItem span {
+  color: rgba(241, 238, 231, 0.55);
+  font-size: 13.5px;
+  line-height: 1.6;
+  font-family: var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.04em;
+}
+
+/* ---- Patient review ratings --------------------------------------- */
+.evidence {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-bottom: clamp(36px, 4.5vw, 52px);
+  border-bottom: 1px solid rgba(251, 250, 247, 0.12);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s 0.25s cubic-bezier(0.16, 0.72, 0.2, 1),
+    transform 0.8s 0.25s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.visible .evidence {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Evidence label — matches eyebrow pattern */
+.evidenceLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(241, 238, 231, 0.45);
+  font: 700 10px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.evidenceLabel::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red);
+  flex-shrink: 0;
+}
+
+.ratings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 280px));
+  gap: 28px;
+}
+
+/* Rating plate — fine 1px border, no background fill, no radius */
+.rating {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 28px;
+  border: 1px solid rgba(251, 250, 247, 0.12);
+}
+
+/* Branch name — mono metadata style */
+.branchName {
+  color: rgba(241, 238, 231, 0.5);
+  font: 700 9.5px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+/* Score number — large serif, red */
+.number {
+  font-family: var(--app-font-serif);
+  font-size: clamp(44px, 5vw, 52px);
+  line-height: 1;
+  color: var(--neodent-red);
+  font-weight: 400;
+}
+
+.stars {
+  font-size: 18px;
+  color: var(--neodent-red);
+  letter-spacing: 2px;
+}
+
+/* Review count — matches .ratingText in body copy system */
+.ratingText {
+  color: rgba(241, 238, 231, 0.45);
+  font: 11px/1.5 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+/* ---- Editorial closing statement ---------------------------------- */
+.closing {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.8s 0.35s cubic-bezier(0.16, 0.72, 0.2, 1),
+    transform 0.8s 0.35s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.visible .closing {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.closingStatement {
+  max-width: 540px;
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(17px, 1.7vw, 21px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: rgba(241, 238, 231, 0.65);
+}
+
+/* ---- Responsive ---------------------------------------------------- */
+@media (max-width: 1023px) {
+  .section {
+    padding: clamp(60px, 7.5vw, 80px) 0 clamp(56px, 7vw, 72px);
+  }
+  .container {
+    gap: clamp(40px, 5.5vw, 60px);
+  }
+  .experience {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: clamp(52px, 7vw, 68px) 0 clamp(48px, 7vw, 64px);
+  }
+  .container {
+    width: calc(100% - 40px);
+    gap: clamp(36px, 5vw, 52px);
+  }
+  .experience {
+    gap: 24px;
+    padding-bottom: 36px;
+  }
+  .experienceItem strong {
+    font-size: 17px;
+  }
+  .experienceItem span {
+    font-size: 13.5px;
+  }
+  .evidence {
+    padding-bottom: 36px;
+  }
+  .ratings {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .rating {
+    padding: 22px 24px;
+  }
+  .number {
+    font-size: 44px;
+  }
+  .stars {
+    font-size: 18px;
+  }
+  .verticalRail {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: clamp(44px, 7vw, 56px) 0 clamp(40px, 6vw, 52px);
+  }
+  .numeral {
+    font-size: clamp(4rem, 19vw, 6rem);
+  }
+  .closingStatement {
+    font-size: clamp(15px, 4.5vw, 18px);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .experience,
+  .evidence,
+  .closing {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

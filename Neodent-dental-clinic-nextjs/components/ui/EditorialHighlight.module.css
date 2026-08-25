@@ -1,0 +1,99 @@
+/* Editorial text-highlight system -- shared across Sections 01-04.
+   Reads directly off the same tokens Section 02 (.archive-*) defines
+   in globals.css (--neodent-red) rather than inventing new colour
+   values. Scoped entirely to this module; globals.css is untouched.
+
+   Both decorated tones (secondary/quiet) rely on
+   box-decoration-break: clone so a phrase that wraps across lines
+   gets its own independent underline/marker per line fragment,
+   instead of one decoration anchored to only the first or last line.
+   The phrase's actual text and its color/opacity are never part of
+   the reveal transition -- only the decorative background sweeps in --
+   so the copy is fully present and readable from first paint,
+   regardless of JavaScript or animation state. */
+
+.highlight {
+  position: relative;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Reset <mark>'s default yellow browser styling before applying our
+   own treatment. */
+mark.highlight {
+  background-color: transparent;
+  color: inherit;
+}
+
+/* Treatment A -- PRIMARY. Semibold, NeoDent red, no background. */
+.primary {
+  color: var(--neodent-red, #d71920);
+  font-weight: 600;
+}
+
+/* Treatment B -- SECONDARY. Semibold + a thin, softly-tapered
+   editorial underline (gradient, not a literal <u>/border-bottom),
+   revealed by sweeping its width in rather than fading opacity. */
+.secondary {
+  font-weight: 600;
+  padding-bottom: 0.14em;
+  background-image: linear-gradient(
+    100deg,
+    transparent 0%,
+    var(--neodent-red, #d71920) 8%,
+    var(--neodent-red, #d71920) 92%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.7s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.secondary.revealed {
+  background-size: 100% 2px;
+}
+
+/* Treatment C -- QUIET. Semibold + an extremely subtle translucent
+   sweep behind the phrase. Equal padding/negative-margin cancel each
+   other out so the marker never changes the phrase's advance width --
+   no layout shift, no reflow, nothing for surrounding text to react
+   to when the sweep reveals. */
+.quiet {
+  font-weight: 600;
+  padding: 0.02em 0.16em;
+  margin: 0 -0.16em;
+  border-radius: 3px;
+  background-image: linear-gradient(
+    100deg,
+    rgba(215, 25, 32, 0.05) 0%,
+    rgba(215, 25, 32, 0.13) 42%,
+    rgba(215, 25, 32, 0.13) 68%,
+    rgba(215, 25, 32, 0.04) 100%
+  );
+  background-repeat: no-repeat;
+  background-position: 0 62%;
+  background-size: 0% 60%;
+  transition: background-size 0.7s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.quiet.revealed {
+  background-size: 100% 60%;
+}
+
+/* Dark-surface variant (Section 04 / ClinicalLeadership sits on
+   --charcoal). Same geometry, tuned opacity so the sweep still reads
+   as a quiet annotation rather than disappearing or over-darkening. */
+.onDark.quiet {
+  background-image: linear-gradient(
+    100deg,
+    rgba(215, 25, 32, 0.1) 0%,
+    rgba(215, 25, 32, 0.22) 42%,
+    rgba(215, 25, 32, 0.22) 68%,
+    rgba(215, 25, 32, 0.08) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlight {
+    transition: none;
+  }
+}

@@ -1,0 +1,576 @@
+/* Section 08 — The next step / Get in touch.
+
+   Design language inherited directly from Section 02's canonical
+   .archive-* system in globals.css: the same 10px/.2em uppercase
+   eyebrow with a 34px red hairline, DM Serif Display headings with a
+   red italic emphasis line, an oversized low-opacity serif chapter
+   numeral bleeding into the eyebrow via negative margin (the same
+   mechanic as .archive-year / ClinicalLeadership's .numeral /
+   SpacesDesignedAroundCare's .numeral), and 15px/1.7 muted body copy.
+   Nothing here edits globals.css or any locked section.
+
+   Dark closing-frame surface -- a genuinely distinct charcoal value
+   from Section 04 (#15171a) and Section 07 (#14161a) so this reads as
+   its own final room rather than a continuation of either. Composition
+   is original to this section: heading (left weight) above two
+   branch-specific "information plates" (Mehdipatnam / Nampally, mirrored
+   across a shared central axis) as the functional layer, closing on a
+   centred signature line -- editorial rules/typography throughout,
+   never cards. */
+
+.section {
+  --charcoal: #121316;
+  --ivory: #f1eee7;
+  --muted: rgba(241, 238, 231, 0.58);
+  --red: #d71920;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--charcoal);
+  color: var(--ivory);
+  padding: clamp(72px, 8vw, 104px) 0 clamp(64px, 7vw, 92px);
+}
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 90% 6%, rgba(215, 25, 32, 0.09), transparent 46%),
+    radial-gradient(ellipse at 4% 94%, rgba(241, 238, 231, 0.03), transparent 55%),
+    var(--charcoal);
+}
+
+/* ---- Closing-frame geometry ---------------------------------------
+   A single restrained arc anchored directly behind the chapter
+   numeral (rather than a second, competing ghost numeral), one
+   horizontal registration hairline and one vertical axis line that
+   cross exactly above the branch grid, plus two quiet red points at
+   that crossing and at the far corner. The crossing is the section's
+   compositional anchor: it visually ties "08" to the two branch
+   plates beneath it, instead of leaving the upper-right as an
+   unrelated void. Deliberately sparser than earlier sections'
+   atmospheres -- this is the homepage's last chapter, not a new motif
+   to introduce. */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.arc {
+  position: absolute;
+  top: -14%;
+  right: -8%;
+  width: 52vw;
+  height: 52vw;
+  max-width: 680px;
+  max-height: 680px;
+  border: 1px solid rgba(241, 238, 231, 0.065);
+  border-radius: 50%;
+}
+/* Vertical axis -- registered to the same column as the branch
+   divider (50%), running from just below the numeral down to the
+   branch grid's top edge, so "08" and the two locations read as one
+   continuous compositional line rather than separate elements. */
+.axisLine {
+  position: absolute;
+  top: 6%;
+  bottom: 40%;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(241, 238, 231, 0.1) 30%,
+    rgba(215, 25, 32, 0.28) 82%,
+    rgba(215, 25, 32, 0.28)
+  );
+}
+.registrationLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 60%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(241, 238, 231, 0.08) 18%,
+    rgba(241, 238, 231, 0.08) 82%,
+    transparent
+  );
+}
+/* Sits precisely on the axis/registration-line crossing -- the
+   composition's single anchor point. */
+.registrationDot {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  border: 1px solid rgba(215, 25, 32, 0.5);
+}
+.registrationDotSmall {
+  position: absolute;
+  bottom: 14%;
+  right: 6%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(215, 25, 32, 0.32);
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Header -- numeral bleeds into eyebrow, matching Section 02 -- */
+.header {
+  max-width: 660px;
+  position: relative;
+}
+.numeral {
+  display: block;
+  margin: 0 0 -0.34em -0.04em;
+  color: rgba(241, 238, 231, 0.085);
+  font-family: var(--app-font-serif);
+  font-size: clamp(6rem, 11vw, 11.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+/* A short red tick drops from the numeral's baseline into the
+   eyebrow row -- the same mechanic Section 02's .archive-year uses,
+   giving "08" a physical connection to the copy beneath it rather
+   than floating as a watermark. */
+.numeral::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 30px;
+  margin-top: 6px;
+  background: linear-gradient(180deg, var(--red), transparent);
+  opacity: 0.55;
+}
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.7rem, 4.4vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.06;
+}
+.title span {
+  color: var(--red);
+  font-style: italic;
+}
+.lede {
+  max-width: 480px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+/* ---- Branch plates -------------------------------------------------
+   Editorial information plates, never cards: a top hairline, quiet
+   index label, strong branch name, muted meta, a highly legible
+   phone number, then two text-arrow actions. Two columns on desktop,
+   separated by a single vertical hairline rather than a gutter of
+   empty space, so the pair reads as one registered composition. */
+.branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 clamp(40px, 5vw, 72px);
+  margin-top: clamp(52px, 6vw, 84px);
+  position: relative;
+}
+/* The dividing hairline carries a small red node at its centre --
+   the exact point where the atmosphere's axis line lands -- so the
+   two branches read as converging on one shared standard rather than
+   two independent columns split by a plain rule. */
+.branches::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(241, 238, 231, 0.16) 10%,
+    rgba(241, 238, 231, 0.16) 90%,
+    transparent
+  );
+}
+.branches::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--red);
+  opacity: 0.7;
+}
+
+/* Mehdipatnam keeps standard left alignment; Nampally mirrors it
+   (right-aligned index/rule, content flush to the divider) so the
+   pair converges visually on the central axis instead of reading as
+   two identical repeated blocks. */
+.branch {
+  position: relative;
+  padding: 26px 0 0;
+  border-top: 1px solid rgba(241, 238, 231, 0.16);
+}
+.branch::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 44px;
+  height: 1px;
+  background: var(--red);
+}
+.branchAlt {
+  text-align: right;
+}
+.branchAlt::before {
+  left: auto;
+  right: 0;
+}
+.branchAlt .branchActions {
+  align-items: flex-end;
+}
+.branchAlt .actionPrimary,
+.branchAlt .actionSecondary {
+  flex-direction: row-reverse;
+}
+/* Mirror the growing underline too, so it reads outward from the
+   divider rather than against Nampally's reversed reading direction. */
+.branchAlt .actionPrimary::after,
+.branchAlt .actionSecondary::after {
+  left: 100%;
+  right: 0;
+}
+.branchAlt .actionPrimary:hover::after,
+.branchAlt .actionPrimary:focus-visible::after,
+.branchAlt .actionSecondary:hover::after,
+.branchAlt .actionSecondary:focus-visible::after {
+  left: 0;
+}
+
+.branchIndex {
+  margin: 0 0 16px;
+  color: rgba(241, 238, 231, 0.4);
+  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+}
+.branchName {
+  margin: 0 0 8px;
+  color: var(--ivory);
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+.branchMeta {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.14em;
+}
+
+/* The phone number is the most actionable element on the plate --
+   sized and weighted above the metadata so it reads immediately as
+   the primary piece of information, not a footnote. */
+.branchPhone {
+  display: inline-block;
+  margin: 0 0 26px;
+  color: var(--ivory);
+  font-family: var(--app-font-mono, "Manrope", sans-serif);
+  font-size: clamp(22px, 2.2vw, 27px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.branchPhone:hover,
+.branchPhone:focus-visible {
+  color: var(--red);
+}
+.branchPhone:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+
+.branchActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(241, 238, 231, 0.12);
+}
+
+/* CALL -- primary action. GET DIRECTIONS -- secondary, quieter. Both
+   share the same interaction language (text colour shift + an
+   underline that grows from the left + arrow nudges right) so state
+   is never carried by colour alone -- the underline and arrow motion
+   are the accessible signal. */
+.actionPrimary,
+.actionSecondary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding-bottom: 3px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+.actionPrimary {
+  color: var(--ivory);
+  font-size: 12px;
+}
+.actionSecondary {
+  color: var(--muted);
+  font-size: 10.5px;
+}
+.actionPrimary::after,
+.actionSecondary::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--red);
+  transition: left 0.3s cubic-bezier(0.22, 1, 0.36, 1), right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.actionPrimary:hover,
+.actionPrimary:focus-visible {
+  color: var(--red);
+  gap: 11px;
+}
+.actionSecondary:hover,
+.actionSecondary:focus-visible {
+  color: var(--ivory);
+  gap: 10px;
+}
+.actionPrimary:hover::after,
+.actionPrimary:focus-visible::after,
+.actionSecondary:hover::after,
+.actionSecondary:focus-visible::after {
+  right: 0;
+}
+.actionPrimary:focus-visible,
+.actionSecondary:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+.actionPrimary svg,
+.actionSecondary svg {
+  transition: transform 0.2s ease;
+}
+.actionPrimary:hover svg,
+.actionPrimary:focus-visible svg,
+.actionSecondary:hover svg,
+.actionSecondary:focus-visible svg {
+  transform: translateX(3px);
+}
+
+/* ---- Signature line -------------------------------------------------
+   The homepage's final sentence -- given real typographic weight
+   (small serif, not mono metadata) rather than reading as a footer
+   caption. Centred on the branch grid's own axis so it closes the
+   composition the two branches opened, with a red tick standing in
+   for the same seam device used at the foot of Section 07. */
+.signature {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: clamp(48px, 5.5vw, 72px) 0 0;
+  padding-top: 26px;
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+  text-align: center;
+}
+.signatureTick {
+  width: 14px;
+  height: 1px;
+  margin-bottom: 6px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.signatureLine {
+  color: var(--muted);
+  font-family: var(--app-font-serif);
+  font-size: clamp(15px, 1.4vw, 18px);
+  letter-spacing: 0.01em;
+}
+.signatureEmphasis {
+  color: var(--red);
+  font-family: var(--app-font-serif);
+  font-style: italic;
+  font-size: clamp(15px, 1.4vw, 18px);
+  letter-spacing: 0.01em;
+}
+
+/* ---- Restrained staggered entrance ----------------------------------
+   Emotional sequence: 08 -> eyebrow -> headline -> supporting copy ->
+   Mehdipatnam -> Nampally -> closing statement. Each header element
+   gets its own delay (rather than the header fading in as one block)
+   so the numeral genuinely reads as the first beat, not simultaneous
+   with the eyebrow/heading. Opacity + translateY only. */
+.numeral,
+.eyebrow,
+.title,
+.lede,
+.branch,
+.signature {
+  transition:
+    opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section:not(.visible) .numeral,
+.section:not(.visible) .eyebrow,
+.section:not(.visible) .title,
+.section:not(.visible) .lede,
+.section:not(.visible) .branch,
+.section:not(.visible) .signature {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.numeral { transition-delay: 0ms; }
+.eyebrow { transition-delay: 90ms; }
+.title { transition-delay: 160ms; }
+.lede { transition-delay: 240ms; }
+.branches .branch:nth-child(1) { transition-delay: 340ms; }
+.branches .branch:nth-child(2) { transition-delay: 420ms; }
+.signature { transition-delay: 520ms; }
+
+.section:not(.visible) .atmosphere {
+  opacity: 0;
+  transition: opacity 900ms ease;
+  transition-delay: 380ms;
+}
+.section.visible .atmosphere {
+  opacity: 1;
+  transition: opacity 900ms ease;
+  transition-delay: 380ms;
+}
+
+@media (max-width: 1024px) {
+  .branches { gap: 0 44px; }
+}
+
+@media (max-width: 900px) {
+  .branches { grid-template-columns: 1fr; gap: 40px; margin-top: 44px; }
+  .branches::before,
+  .branches::after { display: none; }
+  .branch { padding-top: 24px; }
+  /* Stacked mobile/tablet reading order has no divider to converge
+     on, so both branches revert to the same left-aligned grammar. */
+  .branchAlt { text-align: left; }
+  .branchAlt::before { left: 0; right: auto; }
+  .branchAlt .branchActions { align-items: flex-start; }
+  .branchAlt .actionPrimary,
+  .branchAlt .actionSecondary { flex-direction: row; }
+  .branchAlt .actionPrimary::after,
+  .branchAlt .actionSecondary::after { left: 0; right: 100%; }
+  .branchAlt .actionPrimary:hover::after,
+  .branchAlt .actionPrimary:focus-visible::after,
+  .branchAlt .actionSecondary:hover::after,
+  .branchAlt .actionSecondary:focus-visible::after { right: 0; }
+  .axisLine { display: none; }
+  .registrationDot { left: 50%; top: 4%; }
+  .registrationLine { top: 3%; }
+}
+
+@media (max-width: 767px) {
+  .container { width: min(100% - 32px, 600px); }
+  .numeral { font-size: clamp(4rem, 20vw, 6rem); }
+  .arc { top: -18%; right: -30%; width: 80vw; height: 80vw; }
+  .title { font-size: clamp(2.15rem, 9vw, 2.7rem); }
+  .lede { max-width: none; }
+  .branches { margin-top: 36px; gap: 34px; }
+  .branchName { font-size: 23px; }
+  .branchPhone { font-size: 22px; }
+  .signature { margin-top: 32px; }
+}
+
+@media (max-width: 430px) {
+  .branchPhone { font-size: 20px; margin-bottom: 22px; }
+  .branchActions { gap: 14px; }
+  .actionPrimary { font-size: 11.5px; }
+  .actionSecondary { font-size: 10px; }
+  .signature { gap: 8px 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .numeral,
+  .eyebrow,
+  .title,
+  .lede,
+  .branch,
+  .signature,
+  .branchPhone,
+  .actionPrimary,
+  .actionSecondary,
+  .actionPrimary::after,
+  .actionSecondary::after,
+  .actionPrimary svg,
+  .actionSecondary svg,
+  .atmosphere {
+    transition: none;
+  }
+  .section:not(.visible) .numeral,
+  .section:not(.visible) .eyebrow,
+  .section:not(.visible) .title,
+  .section:not(.visible) .lede,
+  .section:not(.visible) .branch,
+  .section:not(.visible) .signature {
+    opacity: 1;
+    transform: none;
+  }
+  .section:not(.visible) .atmosphere,
+  .section.visible .atmosphere {
+    opacity: 1;
+  }
+}

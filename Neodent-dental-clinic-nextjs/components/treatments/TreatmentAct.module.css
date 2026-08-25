@@ -1,0 +1,251 @@
+/* Treatment Act — Editorial treatment row for Section 02 Treatment Atlas.
+   
+   Matches About page editorial act pattern:
+   - Act eyebrow (uppercase, tracked, quiet)
+   - Act title (serif, editorial weight)
+   - Act text (readable measure, muted)
+   - Optional metadata (compact, uppercase)
+   - Optional before/after case evidence (compact editorial plates, not photo gallery)
+   
+   Text-led by default; compact evidence for verified cases only. */
+
+.act {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(40px, 5vw, 56px);
+  align-items: start;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Text-led layout (no evidence): single column */
+.act:not(.withEvidence) {
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Content column */
+.actContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---- Act Header --------------------------------------------------------- */
+
+.actHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.actEyebrow {
+  color: var(--neodent-muted, #657173);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.actTitle {
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--neodent-ink, #263033);
+  margin: 0;
+}
+
+/* ---- Act Text ----------------------------------------------------------- */
+
+.actText {
+  color: var(--neodent-muted, #657173);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 65ch; /* Optimal reading measure */
+}
+
+.actText p {
+  margin: 0 0 1em;
+}
+
+.actText p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Metadata ----------------------------------------------------------- */
+
+.metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.metadataItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metadataLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--neodent-red, #d71920);
+  opacity: 0.8;
+}
+
+.metadataValue {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--neodent-muted, #657173);
+  margin: 0;
+}
+
+/* ---- Evidence Plate: Compact Before/After Editorial Plates -------------- */
+
+.evidencePlate {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: start;
+}
+
+/* Before/After compact editorial composition — controlled height frames */
+.beforeAfter {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: rgba(38, 48, 51, 0.1);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.caseImage {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--neodent-surface, #fff);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.caseLabel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neodent-charcoal, #161c1e);
+  background: rgba(251, 250, 247, 0.92);
+  padding: 5px 8px;
+  border-radius: 2px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(38, 48, 51, 0.08);
+}
+
+.caption {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--neodent-muted, #657173);
+  font-style: italic;
+}
+
+/* ---- Responsive --------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+  /* Switch to single column, evidence below content */
+  .act {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .actTitle {
+    font-size: clamp(26px, 4vw, 32px);
+  }
+
+  /* Evidence plate becomes full-width but maintains compact height */
+  .evidencePlate {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 767px) {
+  .actHeader {
+    gap: 12px;
+  }
+
+  .actTitle {
+    font-size: clamp(24px, 5vw, 28px);
+  }
+
+  .actText {
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  .metadataValue {
+    font-size: 12.5px;
+  }
+
+  /* Evidence plate constrained on mobile */
+  .evidencePlate {
+    max-width: 100%;
+  }
+
+  /* Maintain side-by-side on larger mobile if space allows */
+  .beforeAfter {
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .caseLabel {
+    font-size: 7px;
+    padding: 4px 7px;
+    top: 8px;
+    left: 8px;
+  }
+}
+
+@media (max-width: 430px) {
+  .actTitle {
+    font-size: 22px;
+  }
+
+  .actText {
+    font-size: 14px;
+  }
+
+  /* Stack before/after vertically on small mobile */
+  .beforeAfter {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  /* Adjust aspect ratio for stacked mobile view */
+  .caseImage {
+    aspect-ratio: 4 / 3;
+  }
+}

@@ -1,0 +1,334 @@
+/* Interstitial brand-statement strip — Section 01 -> Section 02.
+
+   Not a fifth "chapter": both neighbours (.exp-intro / .archive) are
+   light ivory surfaces, so this strip takes the dark charcoal register
+   instead (Section 03/04's palette) purely to register as a deliberate
+   surface shift/pause between them, per design-system §8. It borrows
+   Section 02's typographic grammar directly -- serif heading, red
+   italic emphasis, tracked uppercase eyebrow with a red hairline,
+   compact mono metadata -- rather than inventing a new scale. Scoped
+   entirely to this module; globals.css and both neighbouring sections
+   are untouched.
+
+   Micro-polish pass: every spacing/opacity/size value below is tuned
+   as one deliberate vertical rhythm (14 / 2 / 18 / 14 / 6) rather than
+   independent numbers, and the two geometry clusters share one set of
+   --geo-* tokens so their stroke weight and opacity read as a single
+   registration system even though their shapes stay asymmetric (left
+   = registration point + lead-line, right = circular architectural
+   mark with its own edge tick, per the brief). */
+
+.strip {
+  --charcoal: #15171a;
+  --ivory: #f1eee7;
+  --muted: rgba(241, 238, 231, 0.56);
+  --muted-quiet: rgba(241, 238, 231, 0.4);
+  --red: #d71920;
+  /* Shared geometry tokens -- one stroke weight, one opacity family,
+     used by both the left registration cluster and the right circular
+     mark so they read as one system rather than two unrelated bits of
+     decoration. */
+  --geo-line: rgba(241, 238, 231, 0.08);
+  --geo-red: rgba(215, 25, 32, 0.46);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--charcoal);
+  color: var(--ivory);
+  /* -18% vs the previous clamp(48px, 6vw, 64px): a compact, controlled
+     presence -- "a powerful pause", not a mini section. */
+  padding: clamp(40px, 4.8vw, 52px) 0;
+  text-align: center;
+}
+
+/* Subtle tonal depth on the charcoal itself -- a barely-there vignette
+   toward the edges -- so the surface feels rich and tactile rather
+   than a flat black rectangle, without introducing a new colour or a
+   gradient that calls attention to itself. */
+.strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 70% 100% at 50% 50%,
+    rgba(255, 255, 255, 0.018),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Structural top/bottom rules -- the seam that visually stitches this
+   strip to the sections above and below, always present (not part of
+   the reveal choreography, which is reserved for the interior
+   geometry/copy). Red-accented at the ends, fading to ivory at centre,
+   the same recipe ClinicalLeadership's .seam uses for its own
+   chapter-start hairline. */
+.seamTop,
+.seamBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(215, 25, 32, 0.5) 14%,
+    rgba(241, 238, 231, 0.16) 50%,
+    rgba(215, 25, 32, 0.5) 86%,
+    transparent
+  );
+}
+.seamTop { top: 0; }
+.seamBottom { bottom: 0; }
+
+/* Background geometry -- extremely low-contrast, purely atmospheric.
+   Rebuilt as ONE registration system rather than two unrelated bits of
+   decoration: a red registration point on the LEFT sends a short lead
+   -line inward, and the circular architectural mark on the RIGHT
+   carries a matching red tick at the point where it faces the centre
+   -- so both sides visibly "point at" the statement between them
+   (LEFT registration -> CENTRE statement -> RIGHT circular mark, per
+   the brief), sharing one stroke weight/opacity family (--geo-line /
+   --geo-red) instead of two independent scales. The previous floating
+   dot-with-its-own-tick (which read as a stray arrow) and the
+   inert, invisible ghost quotation mark have both been removed. */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Circular architectural mark -- scaled down and dimmed further so it
+   is discovered rather than immediately read, with its own registration
+   tick on the edge facing the statement (mirrors .registerMark's red
+   accent so the two clusters read as one design grid). */
+.arc {
+  position: absolute;
+  top: 50%;
+  right: clamp(-52px, 3vw, 20px);
+  width: clamp(160px, 17vw, 230px);
+  height: clamp(160px, 17vw, 230px);
+  border: 1px solid var(--geo-line);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+.arc::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -1px;
+  width: 11px;
+  height: 1px;
+  background: var(--geo-red);
+  opacity: 0.75;
+  transform: translate(-100%, -50%);
+}
+.arc::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border: 1px solid var(--geo-red);
+  border-radius: 50%;
+  opacity: 0.75;
+  transform: translate(-50%, -50%);
+}
+
+/* Left registration point -- a small red-ringed mark with a short
+   lead-line trailing inward toward the statement, fading to nothing.
+   Reads as a deliberate drafting/registration device (point + measured
+   lead-line), not a stray arrow, and its red accent + hairline recipe
+   is the same one the circle's edge-tick uses on the opposite side. */
+.registerMark {
+  position: absolute;
+  top: 30%;
+  left: clamp(20px, 8vw, 86px);
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--geo-red);
+  border-radius: 50%;
+}
+.registerMark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: clamp(44px, 6vw, 84px);
+  height: 1px;
+  background: linear-gradient(90deg, var(--geo-red), transparent);
+  opacity: 0.75;
+  transform: translateY(-50%);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: min(720px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--red);
+}
+
+.statement {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  line-height: 1;
+}
+/* Slightly stronger than before (brighter, a touch larger, tighter
+   tracking) so it reads as a confident lead-in -- but its size and
+   weight are still deliberately a fraction of .statementEmphasis's,
+   so "peak performance" is never challenged for dominance. */
+.statementSupport {
+  display: block;
+  font-size: clamp(1.2rem, 1.85vw, 1.65rem);
+  color: rgba(241, 238, 231, 0.9);
+  letter-spacing: -0.015em;
+}
+/* Tucked in tight (2px, not the previous 4px) so the two lines read
+   as one continuous typographic statement rather than two separate
+   headings stacked on top of each other. */
+.statementEmphasis {
+  display: block;
+  margin-top: 2px;
+  color: var(--red);
+  font-style: italic;
+  font-size: clamp(2.5rem, 4.6vw, 4.05rem);
+  letter-spacing: -0.02em;
+}
+
+/* Signature interaction -- a single thin red rule that reveals via
+   scaleX once the strip enters the viewport. One-time only, no loop.
+   Narrower and closer to the statement than before so it reads as a
+   deliberate underline/signature rather than a generic divider, and
+   its role is explicit: it is the hinge between the statement above
+   and the attribution below. */
+.signatureLine {
+  display: block;
+  margin: 18px auto 0;
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: center;
+  opacity: 0;
+}
+
+.attribution {
+  margin: 14px 0 0;
+  color: rgba(241, 238, 231, 0.72);
+  font-family: var(--app-font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+.location {
+  margin: 6px 0 0;
+  color: var(--muted-quiet);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Staggered reveal -- geometry, then eyebrow, then "We maintain", then
+   "peak performance", then the signature rule, then attribution, then
+   location. Opacity + translateY/scale only, restrained easing, no
+   overshoot. */
+.atmosphere,
+.eyebrow,
+.statementSupport,
+.statementEmphasis,
+.attribution,
+.location {
+  transition:
+    opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.signatureLine {
+  transition:
+    opacity 460ms ease,
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.strip:not(.visible) .atmosphere { opacity: 0; }
+.strip:not(.visible) .eyebrow { opacity: 0; transform: translateY(8px); }
+.strip:not(.visible) .statementSupport { opacity: 0; transform: translateY(10px); }
+.strip:not(.visible) .statementEmphasis { opacity: 0; transform: translateY(13px); }
+.strip:not(.visible) .attribution,
+.strip:not(.visible) .location { opacity: 0; transform: translateY(7px); }
+
+.eyebrow { transition-delay: 80ms; }
+.statementSupport { transition-delay: 150ms; }
+.statementEmphasis { transition-delay: 230ms; }
+.signatureLine { transition-delay: 400ms; }
+.attribution { transition-delay: 460ms; }
+.location { transition-delay: 520ms; }
+
+.visible .signatureLine {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@media (max-width: 1024px) {
+  .statementEmphasis { font-size: clamp(2.2rem, 5.2vw, 3.2rem); }
+  .arc { opacity: 0.85; }
+}
+
+@media (max-width: 768px) {
+  .strip { padding: clamp(38px, 7vw, 48px) 0; }
+  .container { width: min(540px, calc(100% - 40px)); }
+  .arc { width: 170px; height: 170px; }
+  .registerMark::after { width: 36px; }
+}
+
+@media (max-width: 430px) {
+  .strip { padding: 36px 0; text-align: center; }
+  .container { width: calc(100% - 32px); }
+  .eyebrow { margin-bottom: 12px; }
+  .statementSupport { font-size: clamp(1rem, 4.4vw, 1.1rem); }
+  .statementEmphasis { font-size: clamp(1.9rem, 10vw, 2.4rem); margin-top: 1px; }
+  .signatureLine { margin-top: 15px; }
+  .attribution { margin-top: 12px; font-size: 11.5px; }
+  .location { margin-top: 6px; }
+  .registerMark { display: none; }
+  .arc { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere,
+  .eyebrow,
+  .statementSupport,
+  .statementEmphasis,
+  .attribution,
+  .location,
+  .signatureLine {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .visible .signatureLine,
+  .signatureLine {
+    transform: none;
+  }
+}

@@ -1,0 +1,495 @@
+/* Section 05 — Patient Experiences / Real Stories.
+
+   Design language inherited directly from Section 02's canonical
+   .archive-* system in globals.css: the same 10px/.2em uppercase
+   eyebrow with a 34px red hairline, DM Serif Display headings with a
+   red italic emphasis line, an oversized low-opacity serif chapter
+   numeral bleeding into the copy above it via negative margin (same
+   mechanic as .archive-year / ClinicalLeadership's .numeral), 15px/
+   1.7 muted body copy and the site's existing red/ink/ivory tokens.
+   Nothing here edits globals.css or any locked section.
+
+   Composition is original to this section: a single featured
+   testimonial stage (video + an overlapping quote plate, read as one
+   editorial object) paired with a slim rail carrying the 01/02/03
+   selector and one Google review annotation -- distinct from Section
+   02's archive fan, Section 03's drafting grid and Section 04's
+   portrait/annotation-rail pairing, while still reading as the same
+   brand system. */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(72px, 8vw, 108px) 0 clamp(64px, 7vw, 96px);
+}
+
+/* ---- Patient-story / quotation / dossier geometry ---------------- */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.quoteGlyph {
+  position: absolute;
+  top: clamp(-64px, -4vw, -30px);
+  right: clamp(-10px, 2vw, 40px);
+  font-family: var(--app-font-serif);
+  font-size: clamp(220px, 24vw, 420px);
+  line-height: 0.7;
+  color: rgba(38, 48, 51, 0.05);
+  user-select: none;
+}
+.arc {
+  position: absolute;
+  border: 1px solid rgba(38, 48, 51, 0.07);
+  border-radius: 50%;
+}
+/* Repositioned to frame the stage (video + rail) rather than sitting
+   purely behind the header -- the geometry now visually supports the
+   composition it shares the canvas with instead of floating above it
+   in isolation. */
+.arcOuter {
+  top: 30%;
+  right: -16%;
+  width: 42vw;
+  height: 42vw;
+  max-width: 560px;
+  max-height: 560px;
+}
+.arcInner {
+  top: 46%;
+  right: -7%;
+  width: 22vw;
+  height: 22vw;
+  max-width: 300px;
+  max-height: 300px;
+  border-color: rgba(215, 25, 32, 0.12);
+}
+/* Aligned to the container's left inset -- the same edge the frame
+   and quote plate sit against -- rather than an arbitrary offset. */
+.registration {
+  position: absolute;
+  left: max(24px, calc((100% - 1180px) / 2 + 24px));
+  bottom: 16%;
+  width: 1px;
+  height: 58px;
+  background: linear-gradient(180deg, transparent, var(--neodent-red), transparent);
+  opacity: 0.45;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Header -- numeral bleeds into eyebrow, matching Section 02 -- */
+.header {
+  max-width: 620px;
+  position: relative;
+}
+.numeral {
+  display: block;
+  margin: 0 0 -0.36em -0.04em;
+  color: rgba(38, 48, 51, 0.055);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5.5rem, 10vw, 10rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: rgba(38, 48, 51, 0.58);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red);
+  flex-shrink: 0;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.7rem, 4.4vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+.title span {
+  display: block;
+  color: var(--neodent-red);
+  font-style: italic;
+}
+.lede {
+  max-width: 380px;
+  margin: 18px 0 0;
+  color: rgba(38, 48, 51, 0.68);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ---- Stage -- film column (dominant) + rail (selector + review) --
+   Gap tightened ~10% from the previous clamp(48px, 6vw, 72px) so the
+   stage reads as a confident continuation of the opening statement
+   rather than a second, detached section beginning further down the
+   page. */
+.stage {
+  display: grid;
+  grid-template-columns: 1.5fr 0.86fr;
+  gap: 0 56px;
+  align-items: start;
+  margin-top: clamp(42px, 5.2vw, 62px);
+}
+
+.filmColumn { position: relative; }
+
+.film {
+  margin: 0;
+  position: relative;
+  transition: opacity 220ms ease;
+}
+.filmSwitching { opacity: 0; }
+
+.frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.22);
+  background: #e2ddd0;
+  box-shadow: 16px 18px 32px rgba(38, 48, 51, 0.1);
+}
+.frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.frameRegistration {
+  position: absolute;
+  top: -18px;
+  left: 30px;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, var(--neodent-red));
+  z-index: 2;
+}
+.frameTop {
+  position: absolute;
+  inset: 15px 17px auto;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+  color: #fbfaf7;
+  font: 9px/1.4 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+.control {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(251, 250, 247, 0.75);
+  border-radius: 50%;
+  background: rgba(22, 28, 30, 0.5);
+  color: #fbfaf7;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.control:hover { background: rgba(215, 25, 32, 0.72); }
+
+/* The quote plate overlaps the frame's bottom-left corner deeply
+   enough, and is bound to it by a red registration seam running from
+   the frame's border into the plate's top edge, that video + quote
+   read as ONE editorial patient-story plate rather than a video with
+   a separate card attached beneath it. Shadow is reduced and the
+   border is dropped in favour of the seam + a thin top-only red rule,
+   so the plate reads as a printed pull quote, not a UI card. */
+.quotePlate {
+  position: relative;
+  z-index: 3;
+  width: min(72%, 360px);
+  margin: -64px 0 0 clamp(28px, 4vw, 46px);
+  padding: 24px 26px 4px;
+  background: var(--paper);
+  border-top: 2px solid var(--neodent-red);
+  box-shadow: 8px 10px 20px rgba(38, 48, 51, 0.09);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+/* The seam: a short vertical red hairline rising out of the plate's
+   top-left corner to meet the frame above it, so the eye reads the
+   overlap as a deliberate join rather than a card that happens to sit
+   near the image. */
+.quotePlate::before {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 1px;
+  height: 22px;
+  background: linear-gradient(180deg, transparent, var(--neodent-red));
+}
+.quotePlateSwitching { opacity: 0; transform: translateY(6px); }
+.quotePlateGlyph {
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  font-family: var(--app-font-serif);
+  font-size: 56px;
+  line-height: 1;
+  color: rgba(215, 25, 32, 0.14);
+  user-select: none;
+}
+.quotePlateIndex {
+  display: block;
+  color: var(--neodent-red);
+  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+}
+.quotePlateTheme {
+  margin: 7px 0 16px;
+  color: rgba(38, 48, 51, 0.5);
+  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.quotePlateQuote {
+  position: relative;
+  margin: 0 0 22px;
+  max-width: 270px;
+  font-family: var(--app-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2.1vw, 25px);
+  line-height: 1.36;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+}
+
+/* ---- Rail -- selector, then a hairline break, then the Google
+   review annotation. Bound to the stage visually rather than reading
+   as an unrelated sidebar. */
+.rail {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+}
+
+.selector ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.selectorItem {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  width: 100%;
+  padding: 17px 2px 17px 16px;
+  border-top: 1px solid rgba(38, 48, 51, 0.14);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.selector li:last-child .selectorItem {
+  border-bottom: 1px solid rgba(38, 48, 51, 0.14);
+}
+/* The active rule is its own layer rather than a border, so its
+   height can animate independently (a quiet vertical reveal, not a
+   hard colour swap) when the selection changes. */
+.selectorItem::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background: var(--neodent-red);
+  transform: translateY(-50%);
+  transition: height 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.selectorIndex {
+  color: rgba(38, 48, 51, 0.38);
+  font: 11px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+}
+.selectorLabel {
+  color: rgba(38, 48, 51, 0.58);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+.selectorItem:hover .selectorLabel { color: var(--ink); }
+.selectorItem:hover .selectorIndex { color: rgba(38, 48, 51, 0.6); }
+.selectorItemActive::before { height: 70%; }
+.selectorItemActive .selectorIndex { color: var(--neodent-red); }
+.selectorItemActive .selectorLabel { color: var(--ink); letter-spacing: 0.05em; }
+.selectorItem:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+
+.review {
+  position: relative;
+  margin-top: 38px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(38, 48, 51, 0.14);
+}
+.reviewLabel {
+  margin: 0 0 14px;
+  color: var(--neodent-red);
+  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.reviewStars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  color: var(--neodent-red);
+}
+.reviewStars svg { fill: currentColor; }
+.reviewExcerpt {
+  margin: 0;
+  max-width: 300px;
+  font-family: var(--app-font-serif);
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: rgba(38, 48, 51, 0.78);
+}
+.reviewAuthor {
+  margin: 14px 0 0;
+  color: rgba(38, 48, 51, 0.5);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+}
+
+/* ---- CTA ----------------------------------------------------------- */
+.ctaRow {
+  margin-top: clamp(40px, 5vw, 60px);
+  padding-top: 22px;
+  border-top: 1px solid rgba(38, 48, 51, 0.14);
+  display: flex;
+  justify-content: flex-end;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+.cta:hover { color: var(--neodent-red); gap: 13px; }
+
+/* ---- Restrained staggered entrance --------------------------------- */
+.header,
+.stage,
+.ctaRow {
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section:not(.visible) .header,
+.section:not(.visible) .stage,
+.section:not(.visible) .ctaRow {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.stage { transition-delay: 110ms; }
+.ctaRow { transition-delay: 220ms; }
+
+@media (max-width: 1180px) {
+  .stage { grid-template-columns: 1.4fr 0.9fr; gap: 0 40px; }
+}
+
+@media (max-width: 980px) {
+  .stage { grid-template-columns: 1fr; gap: 40px 0; }
+  .rail { flex-direction: row; flex-wrap: wrap; gap: 32px 40px; padding-top: 0; }
+  .selector { flex: 1 1 260px; }
+  .review { flex: 1 1 240px; margin-top: 0; padding-top: 0; border-top: none; border-left: 1px solid rgba(38, 48, 51, 0.16); padding-left: 28px; }
+  .quotePlate { width: min(70%, 380px); }
+}
+
+@media (max-width: 767px) {
+  .container { width: min(100% - 32px, 600px); }
+  .numeral { font-size: clamp(4rem, 20vw, 6rem); }
+  .title { font-size: clamp(2.2rem, 9vw, 2.8rem); }
+  .lede { max-width: none; }
+  .stage { margin-top: 30px; }
+  .frame { aspect-ratio: 4 / 5; }
+  .quotePlate {
+    width: calc(100% - 20px);
+    margin: -40px 0 0 10px;
+    padding: 20px 20px 4px;
+  }
+  .quotePlateGlyph { left: 18px; font-size: 46px; }
+  .quotePlateQuote { max-width: none; font-size: 18px; margin-bottom: 18px; }
+  .rail { flex-direction: column; gap: 28px 0; margin-top: 30px; }
+  .review { border-left: none; border-top: 1px solid rgba(38, 48, 51, 0.14); padding-left: 0; padding-top: 24px; margin-top: 0; }
+  .ctaRow { justify-content: flex-start; }
+  .arcOuter, .arcInner { display: none; }
+  .quoteGlyph { font-size: clamp(160px, 40vw, 240px); top: -20px; }
+  .registration { display: none; }
+}
+
+@media (max-width: 430px) {
+  .selectorItem { padding: 15px 2px 15px 14px; }
+  .quotePlate { margin-left: 6px; width: calc(100% - 12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .stage,
+  .ctaRow,
+  .film,
+  .quotePlate,
+  .cta,
+  .control,
+  .selectorItem,
+  .selectorItem::before,
+  .selectorIndex,
+  .selectorLabel {
+    transition: none;
+  }
+  .section:not(.visible) .header,
+  .section:not(.visible) .stage,
+  .section:not(.visible) .ctaRow {
+    opacity: 1;
+    transform: none;
+  }
+}

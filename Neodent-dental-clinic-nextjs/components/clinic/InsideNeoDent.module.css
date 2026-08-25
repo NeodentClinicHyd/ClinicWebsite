@@ -1,0 +1,437 @@
+/* Clinic page — Section 03 — Inside NeoDent.
+   POLISH PASS: stronger heading scale, improved copy presence, dominant
+   image hierarchy reinforced, supporting plates kept as references,
+   geographic signature elevated, vertical rhythm tightened throughout. */
+
+.section {
+  --ink: var(--neodent-ink, #263033);
+  --muted: var(--neodent-muted, #657173);
+  --red: var(--neodent-red, #d71920);
+  --paper: var(--neodent-ivory, #f8f6ef);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--paper);
+  color: var(--ink);
+  padding: clamp(80px, 9vw, 116px) 0 clamp(80px, 9vw, 108px);
+}
+
+/* ---- Chapter-start seam — container-constrained ------------------- */
+.seam {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.seam::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: max(0px, calc((100% - 1180px) / 2 + 32px));
+  right: max(0px, calc((100% - 1180px) / 2 + 32px));
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(215, 25, 32, 0.34) 12%,
+    rgba(38, 48, 51, 0.12) 50%,
+    rgba(215, 25, 32, 0.34) 88%,
+    transparent
+  );
+}
+.seam::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 14px;
+  background: linear-gradient(180deg, rgba(215, 25, 32, 0.46), transparent);
+  transform: translateX(-50%);
+}
+
+/* ---- Atmosphere geometry ------------------------------------------- */
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.draftHorizontal {
+  position: absolute;
+  top: 34%;
+  left: 3%;
+  right: 3%;
+  height: 1px;
+  background: rgba(38, 48, 51, 0.065);
+}
+.registrationDot {
+  position: absolute;
+  top: 34%;
+  right: 6%;
+  width: 12px;
+  height: 12px;
+  margin: -6px -6px;
+  border: 1px solid rgba(215, 25, 32, 0.22);
+  border-radius: 50%;
+}
+.registrationDotSmall {
+  position: absolute;
+  bottom: 12%;
+  left: 6%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(215, 25, 32, 0.18);
+}
+
+/* ---- Container ---------------------------------------------------- */
+.container {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Header + copy — full width, gallery follows below ------------ */
+.copyCol {
+  max-width: 720px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1) 60ms;
+}
+.header {
+  position: relative;
+  margin: 0;
+}
+.numeral {
+  display: block;
+  margin: 0 0 -0.34em -0.05em;
+  color: rgba(38, 48, 51, 0.065);
+  font-family: var(--app-font-serif);
+  font-size: clamp(6.5rem, 12vw, 12rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrowRule {
+  display: inline-block;
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+/* Heading — increased from 4.3rem ceiling to 4.6rem to match section authority */
+.title {
+  margin: 0 0 clamp(20px, 2.8vw, 32px);
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.8rem, 4.6vw, 4.6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+.title span {
+  color: var(--red);
+  font-style: italic;
+}
+/* Paragraph — no max-width cap so it fills its natural column width */
+.paragraph {
+  margin: 0;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.72;
+  max-width: none;
+}
+
+/* ---- Photo mosaic — every available branch photograph ------------- */
+/* A 4-column editorial bento grid, not a mechanical masonry wall. Two
+   photographs (each branch's strongest interior) carry `.feature`
+   weight — a 2x2 span — and one photograph carries `.wide` weight (a
+   2-column span) to break the rhythm, echoing the archive-plate
+   "not equal cards" convention used across the site (LegacyAndPeople's
+   .archivePlates, BeyondTheClinic's mosaic). Tiles reveal with a short
+   per-tile stagger (inline transition-delay set from the component)
+   rather than a single simultaneous fade. */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 190px;
+  gap: clamp(10px, 1.4vw, 16px);
+  margin-top: clamp(36px, 4.4vw, 56px);
+}
+.tile {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.14);
+  background: #ece7dc;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gallery.galleryVisible .tile {
+  opacity: 1;
+  transform: none;
+}
+/* Button fills the tile completely — the whole photograph is
+   clickable, not just a small affordance in the corner. */
+.tileButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+.tileButton:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: -2px;
+}
+.tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.88) contrast(1.02);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tileButton:hover img,
+.tileButton:focus-visible img {
+  transform: scale(1.045);
+}
+.tileShade {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  height: 46%;
+  background: linear-gradient(180deg, transparent, rgba(20, 22, 20, 0.66) 62%, rgba(15, 17, 15, 0.8));
+  pointer-events: none;
+}
+.tileTag {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.tileTagBranch {
+  color: var(--red);
+  font: 700 9px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.tileTagLabel {
+  color: rgba(248, 246, 239, 0.92);
+  font: 12px var(--app-font-serif);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+/* Zoom hint — quiet corner affordance signalling the tile is
+   clickable, fades in on hover/focus rather than sitting on the
+   photograph permanently. Matches Gallery.tsx's .gallery-zoom-hint
+   convention (a circle + diagonal line "magnifier" glyph). */
+.tileZoomHint {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(15, 17, 15, 0.5);
+  color: rgba(248, 246, 239, 0.92);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  pointer-events: none;
+}
+.tileButton:hover .tileZoomHint,
+.tileButton:focus-visible .tileZoomHint {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Feature tiles — 2x2 span for each branch's strongest interior */
+.feature {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+/* Wide tile — 2-column span, breaks the grid rhythm once */
+.wide {
+  grid-column: span 2;
+}
+
+/* ---- Closing geographic signature — elevated from tiny metadata --- */
+/* Previously barely visible at 10px/0.2em. Now reads as a proper
+   editorial closing note without competing with the images. */
+.signature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  /* Tighter than before — the page should flow into footer cleanly */
+  margin-top: clamp(44px, 5.5vw, 64px);
+  padding-top: clamp(24px, 3vw, 36px);
+  border-top: 1px solid rgba(38, 48, 51, 0.13);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1) 100ms,
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1) 100ms;
+}
+.signatureTick {
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+/* Stepped up from 10px → 11px, slightly more tracked for legibility */
+.signatureText {
+  color: var(--muted);
+  font: 11px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.signatureDot {
+  margin: 0 0.45em;
+  color: rgba(215, 25, 32, 0.5);
+}
+
+/* ---- Reveal state ------------------------------------------------- */
+.blockVisible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ---- Responsive --------------------------------------------------- */
+@media (max-width: 1024px) {
+  .gallery {
+    grid-auto-rows: 170px;
+  }
+  .registrationDot {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Three columns — feature tiles drop to a 2x1 span so nothing
+     stretches taller than the grid can comfortably support. */
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 150px;
+  }
+  .feature {
+    grid-row: span 1;
+  }
+  .wide {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .numeral {
+    font-size: clamp(4.4rem, 22vw, 6.8rem);
+  }
+  .title {
+    font-size: clamp(2.1rem, 8.8vw, 2.8rem);
+  }
+  .paragraph {
+    font-size: 15.5px;
+  }
+  .copyCol {
+    max-width: none;
+  }
+  /* Two columns on mobile — every tile is equal height; the "feature"
+     and "wide" weighting steps aside so nothing crops awkwardly on a
+     narrow viewport, per the responsive rule (intentional
+     re-composition, not a stacked desktop grid). */
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 168px;
+    gap: 8px;
+    margin-top: 28px;
+  }
+  .feature,
+  .wide {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .tileTagLabel {
+    font-size: 11px;
+  }
+  .signature {
+    margin-top: clamp(36px, 5vw, 52px);
+  }
+  .signatureText {
+    letter-spacing: 0.16em;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px;
+  }
+  .feature,
+  .wide {
+    grid-column: span 1;
+  }
+  .signatureText {
+    font-size: 9.5px;
+    letter-spacing: 0.13em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copyCol,
+  .signature {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .tile {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .tile img {
+    transition: none;
+  }
+}

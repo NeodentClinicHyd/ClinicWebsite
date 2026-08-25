@@ -1,0 +1,816 @@
+/* Section 04 — Clinical Leadership / NeoDent profile.
+
+   Design language is inherited from Section 02 (.archive-* in
+   globals.css / LegacyStory.tsx), the canonical homepage style
+   reference: serif display headings with an italic red emphasis
+   span, a 10px/.2em uppercase eyebrow with a 34px red hairline, 15px/
+   1.7 muted sans body copy, and an oversized low-opacity serif
+   numeral that bleeds into the copy that follows it via a negative
+   margin in normal document flow (the same mechanic .archive-year
+   uses against .archive-intro), not a z-index overlay trick. Values
+   are copied from the exact Section 02 tokens and adapted for this
+   section's dark surface and its own composition. Nothing here edits
+   globals.css or Section 02.
+
+   The Dr. Miftah profile is composed as: real NeoDent portrait plate
+   bound to the numbered credential rail -> narrative -> a staggered
+   portfolio field (dominant teaching plate, medium recognition plate,
+   small academic plate, profile film) built on the same 12-column
+   offset-plate grammar the /about press archive uses. The supporting
+   roster below (.teamHeader / .team / .member / .identityPlate and
+   their media queries) is carried over untouched. */
+
+.section {
+  --charcoal: #242628;
+  --ivory: #f1eee7;
+  --muted: rgba(241, 238, 231, 0.58);
+  --red: #d71920;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* Moderate step down from Section 03's #242628 -- a genuinely
+     distinct dark value, so the two adjacent dark sections read as
+     separate chapters rather than one continuous surface. */
+  background: #15171a;
+  color: var(--ivory);
+  padding: clamp(64px, 7vw, 96px) 0 clamp(88px, 10vw, 140px);
+}
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 84% 3%, rgba(215, 25, 32, 0.1), transparent 44%),
+    radial-gradient(ellipse at 6% 96%, rgba(241, 238, 231, 0.035), transparent 55%),
+    #15171a;
+}
+
+/* Chapter-start seam: a compact top hairline (red-accented at the
+   edges, ivory at the centre), a short registration tick bleeding
+   down from its centre, and the section's own micro-label carried on
+   the seam itself (rather than floating separately above the
+   eyebrow, which previously read as a redundant second label). */
+.seam {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.seam::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(215, 25, 32, 0.55) 12%,
+    rgba(241, 238, 231, 0.2) 50%,
+    rgba(215, 25, 32, 0.55) 88%,
+    transparent
+  );
+}
+.seam::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 15px;
+  background: linear-gradient(180deg, rgba(215, 25, 32, 0.6), transparent);
+  transform: translateX(-50%);
+}
+.seamLabel {
+  position: absolute;
+  top: 20px;
+  left: max(0px, calc((100% - 1180px) / 2 + 24px));
+  color: rgba(241, 238, 231, 0.3);
+  font: 9px/1 var(--app-font-mono, monospace);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Leadership-specific drafting motif: vertical registration lines +
+   two mirrored corner crosshairs, standing for portrait framing --
+   as if two corners of a photograph are being registered -- rather
+   than Section 03's treatment-atlas grid geometry. */
+.guide {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0 12%,
+    rgba(241, 238, 231, 0.08) 12% calc(12% + 1px),
+    transparent calc(12% + 1px) 50%,
+    rgba(215, 25, 32, 0.15) 50% calc(50% + 1px),
+    transparent calc(50% + 1px) 88%,
+    rgba(241, 238, 231, 0.08) 88% calc(88% + 1px),
+    transparent calc(88% + 1px)
+  );
+}
+.guide span {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  border-top: 1px solid rgba(241, 238, 231, 0.1);
+}
+.guide span:first-child { top: 18%; }
+.guide span:nth-child(2) { bottom: 18%; }
+.guide i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  top: 18%;
+  left: 12%;
+  border-left: 1px solid var(--red);
+  border-top: 1px solid var(--red);
+}
+.guide b {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  bottom: 18%;
+  right: 12%;
+  border-right: 1px solid var(--red);
+  border-bottom: 1px solid var(--red);
+}
+
+/* Header -- eyebrow + heading inherit Section 02's .archive-eyebrow /
+   .archive-title tokens directly. The numeral is a normal-flow block
+   above the eyebrow with a large negative bottom margin, exactly like
+   .archive-year bleeding into .archive-intro: the eyebrow paints on
+   top of the numeral's lower portion simply because it comes later in
+   document order, so the "04" now reads as structurally connected to
+   the opening title rather than floating in a remote corner, with no
+   risk to text contrast. */
+.header {
+  position: relative;
+  max-width: 700px;
+}
+.numeral {
+  display: block;
+  margin: 0 0 -0.4em -0.05em;
+  color: rgba(241, 238, 231, 0.075);
+  font-family: var(--app-font-serif);
+  font-size: clamp(5.5rem, 9.5vw, 9.5rem);
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+.metaLine {
+  position: relative;
+  margin: 0 0 20px;
+  color: rgba(241, 238, 231, 0.4);
+  font: 10px/1.4 var(--app-font-mono, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.header h2 {
+  position: relative;
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.5rem, 3.8vw, 3.9rem);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+.header h2 span {
+  display: block;
+  color: var(--red);
+  font-style: italic;
+}
+
+/* Feature -- Miftah's identity stays a spacious, narrower left column;
+   the portrait plate (real NeoDent photograph + its bound credential
+   rail) is pushed hard toward the container's right edge instead of
+   centring in its track, so the composition reads as deliberately
+   asymmetric rather than a generic two-column block.
+
+   Three grid children rather than two (head / plate / body) exist for
+   one reason: on mobile they can be re-ordered into name -> real
+   photograph -> credentials -> story. On desktop the head sits
+   directly above the body in the same left track, so the left column
+   still reads as one continuous piece of copy. */
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  grid-template-rows: auto auto;
+  column-gap: 48px;
+  align-items: start;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.identityHead { grid-column: 1; grid-row: 1; padding-top: 6px; }
+.identityBody { grid-column: 1; grid-row: 2; }
+.kicker, .teamHeader span, .filmTop, .member > span { color: var(--red); font: 10px/1.4 var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
+.identityHead h3 { margin: 18px 0 16px; font-family: var(--app-font-serif); font-size: clamp(24px, 2.6vw, 40px); font-weight: 400; line-height: 1; letter-spacing: -.03em; }
+.role { margin: 0 0 26px; color: var(--ivory); font-size: 14px; line-height: 1.55; }
+.copy { max-width: 380px; margin: 0 0 22px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+.link { display: inline-flex; align-items: center; gap: 9px; margin-top: 6px; color: var(--ivory); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; transition: color .2s ease, gap .2s ease; }
+.link:hover { color: var(--red); gap: 13px; }
+
+/* Portrait plate -- the real NeoDent operatory photograph is the
+   section's information anchor. The credential rail sits immediately
+   left of the frame, sharing its height, with a vertical spine
+   hairline (.rail::after) running the full height of the rail and
+   touching the frame's left edge, plus a short horizontal tick per
+   annotation (.annotation::after) that reaches from the spine into
+   the frame border. This is what binds the four proof points to the
+   photograph as one system instead of an independent list beside it.
+
+   The aside around it stretches across both grid rows, so it is exactly
+   as tall as the narrative column: the plate takes its natural height
+   and the profile index takes the remainder. That is what stops the
+   right column from simply ending under the photograph and leaving a
+   void beside the closing paragraphs. */
+.profileAside {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.portraitPlate {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 0;
+  margin-left: auto;
+  width: 100%;
+}
+.rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px 22px 4px 0;
+  width: clamp(150px, 17vw, 200px);
+  flex-shrink: 0;
+}
+.rail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(215, 25, 32, 0.5) 12%, rgba(215, 25, 32, 0.5) 88%, transparent);
+}
+.annotation { position: relative; display: grid; grid-template-columns: 20px 1fr; gap: 9px; }
+.annotation::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -22px;
+  width: 22px;
+  height: 1px;
+  background: rgba(215, 25, 32, 0.55);
+}
+.annotationNumber { color: var(--red); font: 10px var(--app-font-mono, monospace); }
+.annotation small { display: block; margin-bottom: 5px; color: var(--muted); font: 9px var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
+.annotation strong { color: var(--ivory); font-size: 12.5px; font-weight: 400; line-height: 1.4; }
+
+/* Same clamp as .practiceIndex below, so the index sits flush to the
+   photograph's own left and right edges rather than to its grid track. */
+.portrait { position: relative; margin: 0; flex-shrink: 1; min-width: 0; width: clamp(260px, 36vw, 480px); }
+/* 3/4 is the source photograph's own ratio (960x1280), so the primary
+   Dr. Miftah image is framed with no crop at all: his face stays
+   unambiguous and enough of the NeoDent operatory around him survives
+   to show the photograph is genuinely from the hospital. */
+.portraitFrame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.24);
+  background: #17191a;
+}
+.portraitCaption {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 11px;
+  color: var(--muted);
+  font: 10px/1.4 var(--app-font-mono, monospace);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.portraitCaption b { color: var(--red); font-size: 9.5px; font-weight: 700; }
+
+/* Profile index -- verified metadata the credential rail deliberately
+   does not carry (locations, clinical focus, academic post), set as a
+   thin annotation table bound to the portrait plate's own width. It
+   takes all remaining aside height and distributes it between its rows
+   with space-between, exactly as .rail does against the frame, so a
+   tall narrative column produces measured rhythm instead of a void. */
+.practiceIndex {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  width: clamp(260px, 36vw, 480px);
+  margin: clamp(28px, 3.2vw, 42px) 0 0 auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(215, 25, 32, 0.3);
+}
+.practiceIndexLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font: 9px/1 var(--app-font-mono, monospace);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.practiceIndexLabel::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--red);
+  opacity: .8;
+  flex-shrink: 0;
+}
+.practiceRows {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0;
+}
+.practiceRow {
+  display: grid;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  gap: 8px 18px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(241, 238, 231, 0.1);
+}
+.practiceRow:last-child { padding-bottom: 0; border-bottom: 0; }
+.practiceRow dt {
+  color: var(--red);
+  font: 9px/1.5 var(--app-font-mono, monospace);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.practiceRow dd { margin: 0; color: rgba(241, 238, 231, 0.78); font-size: 12.5px; line-height: 1.55; }
+
+/* Faint focus-ring arc behind a plate -- editorial portrait-framing
+   geometry, not a decorative blob: a single offset circle, very low
+   opacity, sitting fully behind the frame's own border. */
+.plateFocusRing {
+  position: absolute;
+  top: -22px;
+  right: -26px;
+  width: 130px;
+  height: 130px;
+  border: 1px solid rgba(215, 25, 32, 0.16);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Registration tick bleeding down into a plate's top edge. Sits
+   outside the frame (which clips its own overflow) so it actually
+   renders as the drafting mark it is meant to be. */
+.frameRegistration {
+  position: absolute;
+  top: -18px;
+  left: 24px;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, var(--red));
+  z-index: 2;
+  pointer-events: none;
+}
+/* Portfolio plates carry a roman index badge in the same top-left
+   corner, so the tick steps clear of it rather than crossing it. */
+.folioPlate .frameRegistration { left: 58px; }
+
+/* Shared next/image treatment for every real photograph in this
+   section: cover-cropped inside its own fixed-ratio frame, with the
+   same restrained desaturation the profile film already uses so the
+   photography sits on the charcoal surface without being
+   over-processed. Per-plate object-position keeps each subject
+   correctly framed rather than centre-cropped by default. */
+.plateImage { object-fit: cover; filter: saturate(.84) contrast(1.03); }
+.portraitFrame .plateImage { object-position: center; }
+.folioLead .plateImage { object-position: center 12%; }
+.folioRecognition .plateImage { object-position: center 20%; }
+.folioAcademic .plateImage { object-position: center 25%; }
+
+/* ---- Portfolio / professional moments -------------------------------
+   Offset, unequal plates on a shared 12-column field -- deliberately
+   not a masonry grid and not four equal cards. One dominant teaching
+   plate, a medium recognition plate offset downward, a small academic
+   plate and the profile film, with a factual index note holding the
+   left of the second row. Same mechanic as the /about press archive
+   (.archivePlates / .plateMain / .plateA-D), tuned for a dark
+   surface. */
+.folio { margin-top: clamp(56px, 7vw, 92px); }
+.folioHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(241, 238, 231, 0.2);
+}
+.folioHeader span { color: var(--red); font: 10px/1.4 var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
+.folioHeader em { color: var(--muted); font: 10px var(--app-font-mono, monospace); font-style: normal; letter-spacing: .14em; text-transform: uppercase; }
+
+.folioGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  column-gap: clamp(16px, 2vw, 28px);
+  row-gap: clamp(30px, 3.4vw, 46px);
+  margin-top: clamp(28px, 3.2vw, 44px);
+  align-items: start;
+}
+/* Plate shell first, placement/offsets after -- .folioPlate resets the
+   browser's default <figure> margin, so it has to come before the
+   per-plate margin-top offsets below or it would flatten them. */
+.folioPlate { position: relative; margin: 0; }
+.folioFrame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.18);
+  background: #1b1d1f;
+}
+.folioLead .folioFrame { aspect-ratio: 4 / 3; }
+.folioRecognition .folioFrame { aspect-ratio: 1 / 1; }
+.folioAcademic .folioFrame { aspect-ratio: 3 / 4; }
+
+/* Unequal, offset plates: dominant teaching frame, medium recognition
+   frame dropped 8% down its track, small academic frame nudged up, and
+   the profile film closing the field. */
+.folioLead { grid-column: 1 / 8; grid-row: 1 / 2; }
+.folioRecognition { grid-column: 8 / 13; grid-row: 1 / 2; margin-top: 8%; }
+.folioNote { grid-column: 1 / 5; grid-row: 2 / 3; }
+.folioAcademic { grid-column: 5 / 9; grid-row: 2 / 3; margin-top: -4%; }
+.film { grid-column: 9 / 13; grid-row: 2 / 3; margin-top: 3%; }
+
+.folioIndex {
+  position: absolute;
+  top: -11px;
+  left: 14px;
+  z-index: 3;
+  padding: 2px 6px;
+  background: #15171a;
+  border: 1px solid rgba(215, 25, 32, 0.45);
+  color: var(--red);
+  font: 9px var(--app-font-mono, monospace);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+.folioPlate figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 11px;
+  color: var(--muted);
+  font: 10px/1.5 var(--app-font-mono, monospace);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.folioPlate figcaption b { color: var(--red); font-size: 9.5px; font-weight: 700; }
+
+.folioNote { padding-top: 2px; }
+.folioNoteCopy { margin: 0 0 22px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.folioIndexList { margin: 0; padding-top: 18px; border-top: 1px solid rgba(215, 25, 32, 0.3); }
+.folioIndexList > div { display: grid; gap: 4px; padding: 9px 0; border-bottom: 1px solid rgba(241, 238, 231, 0.09); }
+.folioIndexList > div:last-child { border-bottom: 0; }
+.folioIndexList dt { color: var(--red); font: 9px var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
+.folioIndexList dd { margin: 0; color: rgba(241, 238, 231, 0.72); font-size: 11.5px; line-height: 1.5; }
+
+/* Profile film -- existing editorial treatment kept intact (offset
+   focus ring, thin frame, registration tick, micro-labels, circular
+   control, mono caption). It is simply no longer the section's primary
+   representation of Dr. Miftah: it closes the portfolio field as
+   supporting evidence of his clinical work. */
+.filmFrame { position: relative; z-index: 1; aspect-ratio: 4 / 5; overflow: hidden; border: 1px solid rgba(241,238,231,.24); background: #17191a; }
+.filmFrame video { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.04); }
+/* Minimal, temporary mitigation for the burned-in caption baked into
+   the only available Miftah profile clip (see TODO in
+   ClinicalLeadership.tsx). Confined to a modest lower band and tinted
+   to the frame's own charcoal rather than pure black, so the clip does
+   not read as noticeably darker overall and no clinical content above
+   the caption band is obscured. Remove once a caption-free clip is
+   supplied. */
+.filmCaptionMask { position: absolute; left: 0; right: 0; bottom: 0; height: 19%; z-index: 1; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(23, 25, 26, 0.5) 55%, rgba(23, 25, 26, 0.68)); }
+.filmTop { position: absolute; inset: 17px 18px auto; display: flex; justify-content: space-between; gap: 10px; color: var(--ivory); z-index: 2; }
+.filmTop span:last-child { color: rgba(241,238,231,.46); }
+.control { position: absolute; right: 17px; bottom: 17px; z-index: 2; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(241,238,231,.7); border-radius: 50%; background: rgba(36,38,40,.72); color: var(--ivory); cursor: pointer; }
+
+.teamHeader { display: flex; justify-content: space-between; align-items: center; margin-top: clamp(56px, 7vw, 92px); padding-bottom: 14px; border-bottom: 1px solid rgba(241,238,231,.2); }
+.teamHeader em { color: var(--muted); font: 10px var(--app-font-mono, monospace); letter-spacing: .14em; text-transform: uppercase; }
+
+/* Editorial roster -- four consistent team cards. Same frame, same
+   image aspect ratio, same label / name / degrees stack on every
+   card, so the roster reads as one coherent design system rather than
+   a large hero card followed by three unrelated treatments.
+   Hierarchy between Siraj (senior leadership) and the rest is carried
+   by order and by the label text itself, not by unequal card or
+   portrait sizes. */
+.team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.member {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  border-top: 1px solid rgba(215, 25, 32, 0.3);
+  transition: transform .25s ease, border-color .25s ease;
+}
+.member:hover, .member:focus-within { transform: translateY(-5px); border-color: var(--red); }
+.memberImage {
+  aspect-ratio: 3 / 4;
+  margin-bottom: 18px;
+  overflow: hidden;
+  background: #1b1d1f;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+}
+.memberImage img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(.15) saturate(.75); }
+/* Editorial identity plate for team members with no authentic portrait
+   on file yet. Deliberately not a photograph and not a bust icon: an
+   oversized ghost-serif initials mark carries the identity, an
+   extremely faint abstract head-and-shoulders line sits far behind it
+   (no facial features, no skin tone, no hair -- a pure architectural
+   outline), and the same registration-dot / hairline / arc vocabulary
+   used elsewhere in this section (.guide, .plateFocusRing,
+   .frameRegistration) dresses the frame so it reads as an intentional
+   NeoDent object rather than a missing image. Fills the exact same
+   frame as a real photograph so all four cards stay visually
+   consistent. */
+.identityPlate {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(241, 238, 231, 0.05), transparent 60%),
+    #1b1d1f;
+}
+.plateSilhouette {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68%;
+  transform: translate(-50%, -46%);
+  stroke: rgba(241, 238, 231, 0.05);
+  fill: none;
+  z-index: 0;
+}
+.plateInitials {
+  position: relative;
+  z-index: 1;
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  letter-spacing: -.02em;
+  color: rgba(241, 238, 231, 0.32);
+  line-height: 1;
+}
+.plateLabel {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  font: 8px var(--app-font-mono, monospace);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(241, 238, 231, 0.24);
+}
+/* Restrained NeoDent drafting geometry, matching .guide /
+   .plateFocusRing / .frameRegistration elsewhere in this section -- a
+   thin rule, a vertical axis, one registration dot and a faint arc,
+   never purely decorative additions. */
+.plateRule {
+  position: absolute;
+  top: 26px;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: rgba(241, 238, 231, 0.14);
+  z-index: 1;
+}
+.plateAxis {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: rgba(241, 238, 231, 0.06);
+  z-index: 0;
+}
+.plateDot {
+  position: absolute;
+  top: 26px;
+  right: 16px;
+  width: 4px;
+  height: 4px;
+  margin-top: -1.5px;
+  margin-right: -2px;
+  border-radius: 50%;
+  background: var(--red);
+  opacity: .55;
+  z-index: 1;
+}
+.plateArc {
+  position: absolute;
+  bottom: -34px;
+  right: -34px;
+  width: 84px;
+  height: 84px;
+  border: 1px solid rgba(215, 25, 32, 0.14);
+  border-radius: 50%;
+  z-index: 0;
+}
+.member > span { display: block; color: var(--muted); font-size: 9px; }
+.member h3 { margin: 13px 0 10px; font-family: var(--app-font-serif); font-size: 19px; font-weight: 400; line-height: 1.02; letter-spacing: -.01em; }
+.member p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+
+/* Restrained staggered entrance: seam/header, then Miftah identity,
+   then the portrait plate (photograph + bound credential rail), then
+   the team heading and roster. The portfolio field carries its own
+   reveal (.folioVisible) so it still animates on its own scroll beat
+   now that it sits well below the fold. Opacity + translateY only, no
+   bounce/parallax. */
+.header,
+.identityHead,
+.identityBody,
+.portraitPlate,
+.practiceIndex,
+.folio,
+.teamHeader,
+.team {
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section:not(.visible) .header,
+.section:not(.visible) .identityHead,
+.section:not(.visible) .identityBody,
+.section:not(.visible) .portraitPlate,
+.section:not(.visible) .practiceIndex,
+.section:not(.visible) .teamHeader,
+.section:not(.visible) .team,
+.folio:not(.folioVisible) {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.identityHead { transition-delay: 90ms; }
+.portraitPlate { transition-delay: 170ms; }
+.identityBody { transition-delay: 230ms; }
+.practiceIndex { transition-delay: 290ms; }
+.teamHeader { transition-delay: 260ms; }
+.team { transition-delay: 340ms; }
+
+@media (max-width: 1100px) {
+  .feature { column-gap: 32px; }
+  .rail { width: clamp(130px, 15vw, 170px); }
+  .copy { max-width: none; }
+}
+
+/* Tablet -- the portfolio steps down to a two-column editorial
+   collage: the dominant teaching plate goes full width, the medium
+   recognition and academic plates pair off, and the index note pairs
+   with the film. Plates stay large; nothing shrinks to thumbnail
+   size. */
+@media (max-width: 1024px) {
+  .folioGrid { grid-template-rows: auto auto auto; }
+  .folioLead { grid-column: 1 / 13; grid-row: 1; }
+  .folioRecognition { grid-column: 1 / 8; grid-row: 2; margin-top: 0; }
+  .folioNote { grid-column: 8 / 13; grid-row: 2; }
+  .folioAcademic { grid-column: 1 / 5; grid-row: 3; margin-top: 0; }
+  .film { grid-column: 5 / 10; grid-row: 3; margin-top: 0; }
+  .folioLead .folioFrame { aspect-ratio: 3 / 2; }
+}
+
+@media (max-width: 900px) {
+  .team { grid-template-columns: 1fr 1fr; gap: 24px 18px; }
+}
+
+@media (max-width: 800px) {
+  .container { width: min(100% - 32px, 600px); }
+  .header h2 { max-width: 100%; }
+  .numeral { font-size: clamp(4.2rem, 20vw, 6.5rem); }
+  /* Mobile re-composition, not a stacked desktop layout: identity head
+     (name + role) -> the real Dr. Miftah photograph -> the numbered
+     credentials -> the profile narrative. The photograph arrives before
+     any body copy. */
+  .feature { display: flex; flex-direction: column; gap: 30px; margin-top: 32px; }
+  /* display: contents lifts the portrait plate and the profile index out
+     of the aside so all four blocks become siblings in one flex column
+     and can be ordered independently: name -> photograph -> credentials
+     -> story -> index metadata. */
+  .profileAside { display: contents; }
+  .identityHead { order: 1; padding-top: 0; }
+  .portraitPlate { order: 2; }
+  .identityBody { order: 3; }
+  .practiceIndex { order: 4; flex: 0 0 auto; width: 100%; max-width: 460px; margin: 0 auto; }
+  .practiceRows { gap: 16px; }
+  .role { margin-bottom: 0; }
+  /* Portrait plate flips to a compact vertical stack: photograph first,
+     then the credential rail directly beneath it as a 2x2 grid with a
+     horizontal spine touching the frame's bottom edge -- proofs stay
+     visually bound to the photograph rather than reverting to a plain
+     list. */
+  .portraitPlate { flex-direction: column-reverse; justify-content: flex-start; width: 100%; }
+  .portrait { width: 100%; max-width: 460px; margin: 0 auto; }
+  .rail {
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 18px 0 0;
+    gap: 16px 20px;
+  }
+  .rail::after { top: 0; bottom: auto; left: 0; right: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(215,25,32,.5) 12%, rgba(215,25,32,.5) 88%, transparent); }
+  .annotation { width: calc(50% - 10px); }
+  .annotation::after { top: -18px; right: auto; left: 0; width: 1px; height: 18px; background: rgba(215, 25, 32, 0.55); }
+
+  /* Portfolio becomes a single editorial column at full container
+     width -- the index note (captions + recognition/teaching metadata)
+     first, then the professional moments, closing on the film. */
+  .folioHeader { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .folioGrid { display: flex; flex-direction: column; gap: 34px; }
+  .folioNote, .folioLead, .folioRecognition, .folioAcademic, .film {
+    grid-column: auto;
+    grid-row: auto;
+    margin-top: 0;
+    width: 100%;
+  }
+  .folioNote { order: 1; }
+  .folioLead { order: 2; }
+  .folioRecognition { order: 3; }
+  .folioAcademic { order: 4; max-width: 400px; }
+  .film { order: 5; max-width: 440px; }
+  .folioLead .folioFrame { aspect-ratio: 4 / 3; }
+
+  .teamHeader { align-items: flex-start; flex-direction: column; gap: 8px; margin-top: 56px; }
+  .team { grid-template-columns: 1fr 1fr; gap: 24px 16px; }
+}
+
+@media (max-width: 430px) {
+  .team { grid-template-columns: 1fr; }
+  .annotation { width: 100%; }
+  .plateFocusRing { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link, .member { transition: none; }
+  .header,
+  .identityHead,
+  .identityBody,
+  .portraitPlate,
+  .practiceIndex,
+  .folio,
+  .teamHeader,
+  .team {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
