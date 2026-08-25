@@ -380,6 +380,74 @@
   border: 0;
 }
 
+/* Inline consent gate — shown in the video frame after a visitor
+   requests playback but hasn't allowed embedded media yet. Replaces
+   the facade in place rather than opening a separate overlay, so the
+   archive layout never shifts. */
+.consentGate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+  background: #1b1d1f;
+}
+.consentGateText {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.78);
+  font-size: 12.5px;
+  line-height: 1.55;
+  max-width: 220px;
+}
+.consentGateActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 200px;
+}
+.consentGateAllow {
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: var(--ivory);
+  font: 700 11px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+.consentGateAllow:hover {
+  background: rgba(215, 25, 32, 0.85);
+}
+.consentGateAllow:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+.consentGateManage {
+  border: 1px solid rgba(241, 238, 231, 0.28);
+  background: transparent;
+  color: rgba(241, 238, 231, 0.85);
+  font: 700 10px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+.consentGateManage:hover {
+  border-color: rgba(241, 238, 231, 0.6);
+  color: var(--ivory);
+}
+.consentGateManage:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
 /* ---- Act 04 — Community + interview ------------------------------------ */
 .community {
   display: grid;

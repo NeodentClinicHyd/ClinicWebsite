@@ -28,7 +28,7 @@ export function BrandLockup({
   testId: string;
 }) {
   return (
-    <a className="brand" href="#home" onClick={onClick} data-testid={testId}>
+    <a className="brand" href="/" onClick={onClick} data-testid={testId}>
       <span className="brand-mark">
         <Image src={neodentMark} alt="" width={40} height={40} priority />
       </span>

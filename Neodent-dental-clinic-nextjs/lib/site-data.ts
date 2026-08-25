@@ -3,6 +3,19 @@
 // Keep this content in sync with the source of truth until the
 // post-migration content/SEO pass.
 
+/* ------------------------------------------------------------------
+   SEO / site identity — single source of truth for the technical SEO
+   layer (app/sitemap.ts, app/robots.ts, app/manifest.ts, app/layout.tsx
+   metadata, and per-page metadata exports).
+
+   SITE_URL is the real production domain (confirmed with the client),
+   not a placeholder or preview URL. No trailing slash, so it composes
+   cleanly with relative paths ("" + "/about" -> ".../about") and with
+   Next's `metadataBase`.
+   ------------------------------------------------------------------ */
+export const SITE_URL = "https://www.neodentdentalhospitals.com";
+export const SITE_NAME = "NeoDent Dental Hospitals";
+
 export const entranceImage = "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg";
 export const waitingImage = "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg";
 export const doctorImage = "/assets/dr-miftah/Dr. Md. Miftah Ur Rahman - Neodent Dental Hospital.png";
@@ -34,12 +47,17 @@ export const officialLogo = "/assets/Neodent dental hospital hyderabad logo.jpeg
 
 export const phone = "+91 9030648393";
 export const telPhone = "tel:+919030648393";
-export const whatsappLink = `https://wa.me/919030648393?text=${encodeURIComponent(
-  "Hi, I'd like to book an appointment at Neodent Dental Hospitals.",
-)}`;
-export const whatsappConsultLink = `https://wa.me/919030648393?text=${encodeURIComponent(
-  "Hi, I'd like to enquire about a consultation at Neodent Dental Hospitals.",
-)}`;
+/* ------------------------------------------------------------------
+   Generic "Call" CTA number — used by standalone call-to-action
+   buttons that are not attributed to a specific branch (floating CTA,
+   hero button, mobile bars, lead-capture popup, contact-card "Call
+   NeoDent" buttons, etc). Deliberately separate from `phone`/
+   `telPhone` above, which remain the Mehdipatnam BRANCH contact
+   number shown in branch directory listings (Footer, ContactNextStep,
+   ClinicalSettings, the /contact branch directory) and must not
+   change alongside the CTA number. ------------------------------------------------------------------ */
+export const ctaPhone = "+91 9246348485";
+export const ctaTelPhone = "tel:+919246348485";
 export const address =
   "Masjid-e-Azizia, Humayun Nagar Road, Royal Colony, Humayun Nagar, Hyderabad, Telangana, India";
 export const shortLocation = "Humayun Nagar, Hyderabad";
@@ -67,11 +85,51 @@ export const nampallyPhone = "+91 9030598081";
 export const nampallyTelPhone = "tel:+919030598081";
 export const nampallyDirections =
   "https://www.google.com/maps/search/?api=1&query=NeoDent%20Dental%20Hospital%2C%20Medwin%20Hospital%20Complex%2C%20Nampally%2C%20Hyderabad%2C%20Telangana%2C%20India";
+
+/* ------------------------------------------------------------------
+   Branch opening hours — the two branches keep different timings, so
+   each is tracked separately rather than a single sitewide string.
+   Source of truth for the /clinic and /contact branch listings, and
+   for Section 08 (QuestionsContact) which already displayed these.
+   ------------------------------------------------------------------ */
+export const mehdipatnamHours = "4:00 PM – 8:00 PM";
+export const nampallyHours = "10:30 AM – 5:00 PM";
 export const LEAD_CAPTURE_SESSION_KEY = "neodent-lead-capture-shown";
+
+/* ------------------------------------------------------------------
+   Social profiles -- client-supplied, verified URLs only. Used by the
+   Footer's brand column social icon row.
+   ------------------------------------------------------------------ */
+export type SocialLink = { label: string; href: string };
+export const socialLinks: readonly SocialLink[] = [
+  { label: "Instagram", href: "https://www.instagram.com/neodent.dental/" },
+  { label: "Facebook", href: "https://www.facebook.com/drmdsiraj/photos" },
+] as const;
 
 export type NavItem = { label: string; href: string };
 export const nampallyAddress = "Medwin Hospital Complex, Pillar #A1270, Nampally, Hyderabad, Telangana 500001";
 export const mehdipatnamAddress = "10-3-14B/11/1, Humayun Nagar Rd, near Azzia Masjid, Royal Colony, Humayun Nagar, Hyderabad, Telangana 500006";
+
+/* ------------------------------------------------------------------
+   Structured (schema.org PostalAddress-shaped) versions of the two
+   verified branch addresses above, split into parts for JSON-LD.
+   Derived directly from `mehdipatnamAddress` / `nampallyAddress` --
+   no new address information is introduced. ------------------------------------------------------------------ */
+export const mehdipatnamStructuredAddress = {
+  streetAddress:
+    "10-3-14B/11/1, Humayun Nagar Rd, near Azzia Masjid, Royal Colony, Humayun Nagar",
+  addressLocality: "Hyderabad",
+  addressRegion: "Telangana",
+  postalCode: "500006",
+  addressCountry: "IN",
+} as const;
+export const nampallyStructuredAddress = {
+  streetAddress: "Medwin Hospital Complex, Pillar #A1270, Nampally",
+  addressLocality: "Hyderabad",
+  addressRegion: "Telangana",
+  postalCode: "500001",
+  addressCountry: "IN",
+} as const;
 
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },

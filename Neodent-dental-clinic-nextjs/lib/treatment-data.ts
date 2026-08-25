@@ -21,6 +21,17 @@ export interface BeforeAfterCase {
   caption: string;
 }
 
+export interface TreatmentVideoCase {
+  src: string;
+  caption: string;
+}
+
+export interface TreatmentImageCase {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
 export interface Treatment {
   id: string;
   number: string;
@@ -29,6 +40,8 @@ export interface Treatment {
   description: ReactNode;
   metadata?: TreatmentMetadata[];
   beforeAfter?: BeforeAfterCase;
+  video?: TreatmentVideoCase;
+  image?: TreatmentImageCase;
 }
 
 export const featuredTreatment: Treatment = {
@@ -89,7 +102,13 @@ export const treatmentAtlas: Treatment[] = [
         value: "Tooth alignment, spacing, crowding, bite irregularities",
       },
     ],
-    // No verified before/after case — intentionally text-led
+    beforeAfter: {
+      beforeSrc: "/assets/treatment/Orthodontics before treatment - neodent dental hospital nampally.jpeg",
+      afterSrc: "/assets/treatment/Orthodontics after treatment - neodent dental hospital nampally.jpeg",
+      beforeLabel: "Before Treatment",
+      afterLabel: "After Treatment",
+      caption: "Orthodontics treatment — NeoDent Dental Hospital Nampally",
+    },
   },
   {
     id: "root-canal-treatment",
@@ -103,7 +122,10 @@ export const treatmentAtlas: Treatment[] = [
         value: "Tooth preservation where appropriate",
       },
     ],
-    // No verified before/after case — intentionally text-led
+    video: {
+      src: "/assets/treatment-video/Dr. Miftah Neodent dental clinic Hyderabad-Root canal treatment.mp4",
+      caption: "Root canal treatment — Dr. Md. Miftah Ur Rahman, NeoDent Dental Hospitals",
+    },
   },
   {
     id: "smile-design",
@@ -137,7 +159,11 @@ export const treatmentAtlas: Treatment[] = [
         value: "Complete dentures, partial dentures, implant-supported prostheses",
       },
     ],
-    // No verified before/after case — intentionally text-led
+    image: {
+      src: "/assets/Dentures & Prosthodontics.jpg",
+      alt: "Dentures and prosthodontic treatment at NeoDent Dental Hospitals",
+      caption: "Dentures & Prosthodontics — NeoDent Dental Hospitals",
+    },
   },
   {
     id: "veneers",
@@ -151,7 +177,11 @@ export const treatmentAtlas: Treatment[] = [
         value: "Porcelain veneers, composite resin veneers",
       },
     ],
-    // No verified before/after case — intentionally text-led
+    image: {
+      src: "/assets/Veneers treatment.jpg",
+      alt: "Veneers treatment at NeoDent Dental Hospitals",
+      caption: "Veneers — NeoDent Dental Hospitals",
+    },
   },
 ];
 

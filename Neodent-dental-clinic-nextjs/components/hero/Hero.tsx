@@ -2,19 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, ChevronLeft, ChevronRight, MapPin, MessageCircle, Phone, Star } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, MapPin, Phone, Star } from "lucide-react";
 import { AppButton } from "@/components/ui/AppButton";
 import {
   HERO_AUTOPLAY_MS,
   type HeroRecordItem,
+  ctaPhone,
+  ctaTelPhone,
   googleRating,
   heroBranches,
   heroRecordItems,
   heroSlideMeta,
-  phone,
   recognitionImage,
-  telPhone,
-  whatsappConsultLink,
 } from "@/lib/site-data";
 
 const inertAttr = (isInert: boolean) =>
@@ -139,11 +138,8 @@ export function Hero() {
                   <span>Nampally</span>
                 </div>
                 <div className="hero-actions">
-                  <AppButton href={telPhone} variant="primary">
+                  <AppButton href={ctaTelPhone} variant="primary">
                     Call for Consultation <ArrowRight size={15} />
-                  </AppButton>
-                  <AppButton href={whatsappConsultLink} variant="ghost">
-                    WhatsApp the Clinic <MessageCircle size={14} />
                   </AppButton>
                 </div>
               </div>
@@ -176,11 +172,11 @@ export function Hero() {
                   </span>
                   <a
                     className="hero-founder-phone"
-                    href={telPhone}
+                    href={ctaTelPhone}
                     data-testid="link-hero-phone"
                   >
                     <Phone size={16} aria-hidden="true" />
-                    {phone}
+                    {ctaPhone}
                   </a>
                 </div>
               </div>

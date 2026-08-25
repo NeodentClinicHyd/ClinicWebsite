@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { Clock3, MapPin, MessageCircle, Phone, X } from "lucide-react";
+import { Clock3, MapPin, Phone, X } from "lucide-react";
 import { AppButton } from "@/components/ui/AppButton";
-import { directions, telPhone, whatsappLink } from "@/lib/site-data";
+import { ctaTelPhone, directions } from "@/lib/site-data";
 
 export function LeadCapture({
   onClose,
@@ -39,7 +39,7 @@ export function LeadCapture({
         <div className="eyebrow lead-eyebrow">Before you go</div>
         <h2 id="lead-capture-title">Let&apos;s make it easy to visit.</h2>
         <p className="lead-sub">
-          Message us on WhatsApp, call the clinic, or find your way to
+          Call the clinic, or find your way to
           Humayun Nagar — whichever feels right.
         </p>
         <div className="lead-hours">
@@ -47,10 +47,7 @@ export function LeadCapture({
           <span>Open today, 10:00 AM – 08:00 PM</span>
         </div>
         <div className="lead-actions">
-          <AppButton href={whatsappLink} variant="primary">
-            <MessageCircle size={14} /> WhatsApp the Clinic
-          </AppButton>
-          <AppButton href={telPhone} variant="ghost">
+          <AppButton href={ctaTelPhone} variant="primary">
             <Phone size={14} /> Call the Clinic
           </AppButton>
         </div>

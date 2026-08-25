@@ -247,6 +247,37 @@
   text-transform: uppercase;
 }
 
+/* Social icon row -- sits beneath the branch locations, same quiet
+   hairline-separated rhythm as the rest of the brand column. Icon-only
+   circular targets, colour-shift on hover matching .linkList/.credit. */
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(241, 238, 231, 0.22);
+  color: var(--muted);
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.socialLink:hover,
+.socialLink:focus-visible {
+  color: var(--ivory);
+  border-color: var(--red);
+  background-color: rgba(215, 25, 32, 0.12);
+}
+.socialLink:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
 /* Columns 02/03 -- link lists ----------------------------------------
    Text links only, never buttons/pills -- colour shift + a thin
    underline that grows from the left, the same interaction language
@@ -443,6 +474,37 @@
   display: flex;
   align-items: center;
   gap: 14px;
+}
+.legalLinks a,
+.legalLinkButton {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(241, 238, 231, 0.3);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.legalLinks a:hover,
+.legalLinks a:focus-visible,
+.legalLinkButton:hover,
+.legalLinkButton:focus-visible {
+  color: var(--red);
+  border-color: var(--red);
+}
+.legalLinks a:focus-visible,
+.legalLinkButton:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+/* Reset — .legalLinkButton is a <button>, not an <a>, so it needs the
+   plain link visuals above applied on top of a cleared button style. */
+.legalLinkButton {
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
 }
 .legalRow span[aria-hidden="true"] {
   opacity: 0.5;

@@ -7,6 +7,7 @@ import {
   nampallyInteriorImage,
 } from "@/lib/site-data";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
+import { useCookieConsent } from "@/components/consent/CookieConsentContext";
 import styles from "./BeyondTheClinic.module.css";
 
 /* ------------------------------------------------------------------
@@ -134,8 +135,15 @@ const mediaArchive: MediaArchiveItem[] = [
 ];
 
 function MediaArchiveCard({ item }: { item: MediaArchiveItem }) {
-  const [activated, setActivated] = useState(false);
+  // requestedPlay: visitor clicked the thumbnail facade at least once.
+  // The actual YouTube iframe only renders once that click AND consent
+  // for embedded media both exist — otherwise a small inline consent
+  // gate is shown in place of the facade so the visitor can allow it
+  // (or open full preferences) without leaving the archive.
+  const [requestedPlay, setRequestedPlay] = useState(false);
+  const { consent, acceptAll, openPreferences } = useCookieConsent();
   const thumbnail = `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`;
+  const mediaAllowed = consent?.media === true;
 
   return (
     <article className={styles.videoCard} role="listitem">
@@ -148,7 +156,7 @@ function MediaArchiveCard({ item }: { item: MediaArchiveItem }) {
       </div>
       <figure className={styles.videoFrame}>
         <span className={styles.videoRegistration} aria-hidden="true" />
-        {activated ? (
+        {requestedPlay && mediaAllowed ? (
           <iframe
             className={styles.mediaIframe}
             src={`https://www.youtube-nocookie.com/embed/${item.id}?rel=0`}
@@ -157,12 +165,36 @@ function MediaArchiveCard({ item }: { item: MediaArchiveItem }) {
             allow="accelerometer; encrypted-media; picture-in-picture; fullscreen"
             allowFullScreen
           />
+        ) : requestedPlay ? (
+          <div className={styles.consentGate} role="group" aria-label="Allow embedded YouTube content">
+            <p className={styles.consentGateText}>
+              This video is hosted by YouTube. Allow embedded media to play it.
+            </p>
+            <div className={styles.consentGateActions}>
+              <button
+                type="button"
+                className={styles.consentGateAllow}
+                onClick={acceptAll}
+                data-testid={`button-allow-media-${item.id}`}
+              >
+                Allow &amp; play
+              </button>
+              <button
+                type="button"
+                className={styles.consentGateManage}
+                onClick={openPreferences}
+                data-testid={`button-manage-media-${item.id}`}
+              >
+                Manage preferences
+              </button>
+            </div>
+          </div>
         ) : (
           <>
             <button
               type="button"
               className={styles.mediaFacade}
-              onClick={() => setActivated(true)}
+              onClick={() => setRequestedPlay(true)}
               aria-label={`Play: ${item.ariaLabel}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

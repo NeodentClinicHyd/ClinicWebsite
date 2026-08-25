@@ -96,6 +96,13 @@ const team: TeamMember[] = [
     alt: "Dr. Safoora Talha",
     initials: "ST",
   },
+  {
+    label: "05 / CLINICAL TEAM",
+    name: <>Dr. Muqeet<br />Ur Rahman</>,
+    degrees: <>BDS (OSM) · Dental Surgeon<br />4+ years</>,
+    image: "/assets/Dr.Muqeet-ur-Rahman.png",
+    alt: "Dr. Muqeet Ur Rahman",
+  },
 ];
 
 /* Editorial identity plate used only where no authentic NeoDent

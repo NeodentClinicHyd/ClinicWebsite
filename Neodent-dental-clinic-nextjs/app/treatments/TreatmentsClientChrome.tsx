@@ -12,7 +12,7 @@ import { ExperienceEvidenceLocations } from "@/components/treatments/ExperienceE
 import { QuestionsContact } from "@/components/treatments/QuestionsContact";
 import { EditorialSeam } from "@/components/treatments/EditorialSeam";
 import { AppButton } from "@/components/ui/AppButton";
-import { telPhone, whatsappConsultLink } from "@/lib/site-data";
+import { ctaTelPhone } from "@/lib/site-data";
 
 export function TreatmentsClientChrome() {
   return (
@@ -46,11 +46,8 @@ export function TreatmentsClientChrome() {
       </main>
       <Footer />
       <div className="mobile-bar">
-        <AppButton href={telPhone} variant="ghost">
-          <Phone size={14} /> Call
-        </AppButton>
-        <AppButton href={whatsappConsultLink} variant="primary">
-          WhatsApp NeoDent <ArrowRight size={14} />
+        <AppButton href={ctaTelPhone} variant="primary">
+          <Phone size={14} /> Call NeoDent <ArrowRight size={14} />
         </AppButton>
       </div>
     </div>
