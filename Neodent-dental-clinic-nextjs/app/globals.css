@@ -8292,15 +8292,21 @@ button {
   margin: 0 auto 24px;
 }
 
-/* Floating CTA tray — persistent Call + WhatsApp, bottom-right */
+/* Floating CTA tray — persistent Call button, bottom-right.
+   --cookie-banner-space is written by CookieConsentBanner (see
+   components/consent/CookieConsentBanner.tsx) while the cookie
+   banner is visible, and removed once a decision is made — so this
+   button lifts clear of the banner instead of being covered by it,
+   and returns to its normal position everywhere else. */
 .floating-cta {
   position: fixed;
   right: 24px;
-  bottom: 24px;
+  bottom: calc(24px + var(--cookie-banner-space, 0px));
   z-index: 45;
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: bottom 0.25s ease;
 }
 .floating-cta-icon {
   position: relative;
@@ -8325,18 +8331,6 @@ button {
 }
 .floating-cta-call:hover {
   background: var(--ink-deep);
-}
-.floating-cta-whatsapp {
-  width: 54px;
-  height: 54px;
-  background: #3f6b52;
-}
-.floating-cta-whatsapp:hover {
-  background: #345a44;
-}
-.floating-cta-whatsapp-mark {
-  width: 25px;
-  height: 25px;
 }
 .floating-cta-icon:active {
   transform: translateY(0) scale(0.97);
@@ -9440,14 +9434,13 @@ button {
     padding-bottom: 62px;
   }
 
-  /* Floating CTA remains a two-button contact utility on mobile */
+  /* Floating CTA remains a single-button contact utility on mobile */
   .floating-cta {
     right: 14px;
-    bottom: calc(18px + env(safe-area-inset-bottom));
+    bottom: calc(18px + env(safe-area-inset-bottom) + var(--cookie-banner-space, 0px));
     gap: 10px;
   }
-  .floating-cta-icon,
-  .floating-cta-whatsapp {
+  .floating-cta-icon {
     width: 52px;
     height: 52px;
   }

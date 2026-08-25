@@ -1,4 +1,16 @@
+import type { Metadata } from "next";
 import { AlertCircle } from "lucide-react";
+
+// Next serves this page with a 404 HTTP status automatically, but an
+// explicit noindex avoids any ambiguity for crawlers that inspect the
+// response body/meta tags rather than relying on status code alone.
+export const metadata: Metadata = {
+  title: "Page Not Found",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   return (

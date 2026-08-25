@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Facebook, Instagram } from "lucide-react";
 import { BrandLockup } from "@/components/layout/BrandLockup";
+import { useCookieConsent } from "@/components/consent/CookieConsentContext";
 import {
   directions,
   nampallyDirections,
   nampallyTelPhone,
   navItems,
+  socialLinks,
   telPhone,
 } from "@/lib/site-data";
 import styles from "./Footer.module.css";
@@ -34,6 +36,13 @@ import styles from "./Footer.module.css";
 // filtered out here rather than removed from the shared navItems
 // list, so nothing else that reads navItems is affected.
 const exploreLinks = navItems.filter((item) => item.label !== "Doctor");
+
+// Icon lookup for socialLinks (lib/site-data.ts) — kept local to the
+// Footer since it's currently the only consumer of these profiles.
+const socialIcons: Record<string, typeof Instagram> = {
+  Instagram,
+  Facebook,
+};
 
 const careLinks = [
   { label: "Treatments", href: "#expertise" },
@@ -73,6 +82,7 @@ const branches: Branch[] = [
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
+  const { openPreferences } = useCookieConsent();
 
   useEffect(() => {
     const node = footerRef.current;
@@ -130,6 +140,24 @@ export function Footer() {
             <div className={styles.brandLocations}>
               <span>Mehdipatnam · Hyderabad</span>
               <span>Nampally · Hyderabad</span>
+            </div>
+            <div className={styles.socialRow} aria-label="Social media">
+              {socialLinks.map((social) => {
+                const Icon = socialIcons[social.label];
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`NeoDent on ${social.label}`}
+                    className={styles.socialLink}
+                    data-testid={`link-footer-social-${social.label.toLowerCase()}`}
+                  >
+                    {Icon && <Icon size={16} aria-hidden="true" />}
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -211,9 +239,20 @@ export function Footer() {
           <div className={styles.legalRow}>
             <span>© {new Date().getFullYear()} NeoDent Dental Hospitals</span>
             <span className={styles.legalLinks}>
-              <span>Privacy</span>
+              <a href="/privacy-policy" data-testid="link-footer-privacy">
+                Privacy
+              </a>
               <span aria-hidden="true">·</span>
               <span>Terms</span>
+              <span aria-hidden="true">·</span>
+              <button
+                type="button"
+                className={styles.legalLinkButton}
+                onClick={openPreferences}
+                data-testid="button-footer-cookie-preferences"
+              >
+                Cookie Preferences
+              </button>
             </span>
           </div>
           <p className={styles.legalMeta}>Mehdipatnam · Nampally · Hyderabad</p>

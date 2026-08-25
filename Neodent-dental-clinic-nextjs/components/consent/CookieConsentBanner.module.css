@@ -1,0 +1,199 @@
+/* Cookie consent banner — compact editorial card, not a full-screen
+   takeover. Uses only NeoDent's existing tokens (ivory/paper, ink,
+   red) and the same eyebrow/button grammar as the rest of the site.
+   No backdrop/scrim: the page behind it stays fully visible and
+   interactive. */
+
+.wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  z-index: 70;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.card {
+  pointer-events: auto;
+  width: min(880px, 100%);
+  background: var(--neodent-surface);
+  border: 1px solid var(--neodent-border);
+  box-shadow:
+    0 18px 44px rgba(22, 28, 30, 0.16),
+    0 4px 14px rgba(22, 28, 30, 0.1);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  animation: rise 360ms cubic-bezier(0.16, 0.72, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  color: var(--neodent-ink);
+  font: 700 11px/1 var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--neodent-red);
+  flex-shrink: 0;
+}
+
+.text {
+  margin: 0;
+  color: var(--neodent-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+.link {
+  color: var(--neodent-ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid var(--neodent-red);
+  transition: color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+.link:hover,
+.link:focus-visible {
+  color: var(--neodent-red);
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.2s ease;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+
+.btnGhost {
+  background: transparent;
+  color: var(--neodent-ink);
+  border-color: var(--neodent-border);
+}
+.btnGhost:hover {
+  border-color: var(--neodent-ink);
+}
+
+.btnManage {
+  background: transparent;
+  color: var(--neodent-muted);
+  border-color: transparent;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-border);
+  padding: 0 6px;
+}
+.btnManage:hover {
+  color: var(--neodent-ink);
+  text-decoration-color: var(--neodent-red);
+}
+
+.btnPrimary {
+  background: var(--neodent-red);
+  color: var(--neodent-surface);
+  box-shadow: 0 4px 14px rgba(183, 18, 26, 0.16);
+}
+.btnPrimary:hover {
+  background: var(--neodent-red-dark);
+  box-shadow: 0 6px 18px rgba(183, 18, 26, 0.2);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .card {
+    gap: 20px;
+    padding: 22px 24px;
+  }
+}
+
+@media (max-width: 700px) {
+  .wrapper {
+    bottom: 14px;
+    padding: 0 14px;
+  }
+  .card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+  .actions {
+    flex-wrap: wrap;
+  }
+  .btn {
+    flex: 1 1 auto;
+  }
+  .btnManage {
+    flex: 0 0 auto;
+    order: 3;
+    width: 100%;
+    text-align: center;
+    padding: 8px 0 0;
+  }
+  .btnGhost {
+    order: 2;
+  }
+  .btnPrimary {
+    order: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+  .btnPrimary:hover {
+    transform: none;
+  }
+}

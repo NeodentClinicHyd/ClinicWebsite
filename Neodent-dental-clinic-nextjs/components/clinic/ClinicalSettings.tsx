@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Clock3, MapPin, Phone } from "lucide-react";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import {
   mehdipatnamExteriorImage,
@@ -12,6 +12,8 @@ import {
   nampallyTelPhone,
   directions,
   nampallyDirections,
+  mehdipatnamHours,
+  nampallyHours,
 } from "@/lib/site-data";
 import styles from "./ClinicalSettings.module.css";
 
@@ -186,6 +188,14 @@ export function ClinicalSettings() {
                 090306 48393
               </a>
 
+              {/* Hours */}
+              <p className={styles.branchHours}>
+                <span className={styles.branchHoursIcon} aria-hidden="true">
+                  <Clock3 size={11} />
+                </span>
+                {mehdipatnamHours}
+              </p>
+
               {/* Directions */}
               <a
                 href={directions}
@@ -266,6 +276,14 @@ export function ClinicalSettings() {
                 </span>
                 090305 98081
               </a>
+
+              {/* Hours */}
+              <p className={styles.branchHours}>
+                <span className={styles.branchHoursIcon} aria-hidden="true">
+                  <Clock3 size={11} />
+                </span>
+                {nampallyHours}
+              </p>
 
               {/* Directions */}
               <a

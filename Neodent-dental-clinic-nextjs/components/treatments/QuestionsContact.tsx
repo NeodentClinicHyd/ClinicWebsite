@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Phone, MessageCircle } from "lucide-react";
-import { telPhone, whatsappConsultLink } from "@/lib/site-data";
+import { ChevronDown, Phone } from "lucide-react";
+import { ctaTelPhone } from "@/lib/site-data";
 import styles from "./QuestionsContact.module.css";
 
 const faqs = [
@@ -106,18 +106,14 @@ export function QuestionsContact() {
               Ready to discuss your dental concerns?
             </h3>
             <p className={styles.contactDescription}>
-              Call or message us to arrange a consultation. You don't need to know which treatment you need before reaching out.
+              Call us to arrange a consultation. You don't need to know which treatment you need before reaching out.
             </p>
           </header>
 
           <div className={styles.actions}>
-            <a href={telPhone} className={`${styles.button} ${styles.buttonPrimary}`}>
+            <a href={ctaTelPhone} className={`${styles.button} ${styles.buttonPrimary}`}>
               <Phone size={18} />
               Call NeoDent
-            </a>
-            <a href={whatsappConsultLink} className={`${styles.button} ${styles.buttonSecondary}`}>
-              <MessageCircle size={18} />
-              WhatsApp
             </a>
           </div>
 
@@ -125,10 +121,10 @@ export function QuestionsContact() {
 
           <div className={styles.info}>
             <p className={styles.infoItem}>
-              <strong>Mehdipatnam:</strong> 4:30 PM–8:00 PM
+              <strong>Mehdipatnam:</strong> 4:00 PM – 8:00 PM
             </p>
             <p className={styles.infoItem}>
-              <strong>Nampally:</strong> 9:30 AM–8:00 PM
+              <strong>Nampally:</strong> 10:30 AM – 5:00 PM
             </p>
             <p className={styles.infoItem}>Sunday holiday</p>
           </div>

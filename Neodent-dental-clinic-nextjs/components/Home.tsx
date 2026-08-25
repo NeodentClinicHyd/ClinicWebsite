@@ -17,7 +17,7 @@ import { ContactNextStep } from "@/components/sections/ContactNextStep";
 import { AppointmentModal } from "@/components/ui/AppointmentModal";
 import { LeadCapture } from "@/components/ui/LeadCapture";
 import { AppButton } from "@/components/ui/AppButton";
-import { LEAD_CAPTURE_SESSION_KEY, telPhone } from "@/lib/site-data";
+import { ctaTelPhone, LEAD_CAPTURE_SESSION_KEY } from "@/lib/site-data";
 
 export function Home() {
   const [appointmentOpen, setAppointmentOpen] = useState(false);
@@ -81,7 +81,7 @@ export function Home() {
       </main>
       <Footer />
       <div className="mobile-bar">
-        <AppButton href={telPhone} variant="ghost">
+        <AppButton href={ctaTelPhone} variant="ghost">
           <Phone size={14} /> Call
         </AppButton>
         <AppButton onClick={() => setAppointmentOpen(true)} variant="primary">

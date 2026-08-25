@@ -33,11 +33,14 @@ export function TreatmentAct({ treatment, index }: TreatmentActProps) {
   }, []);
 
   const hasBeforeAfter = !!treatment.beforeAfter;
+  const hasVideo = !!treatment.video;
+  const hasImage = !!treatment.image;
+  const hasEvidence = hasBeforeAfter || hasVideo || hasImage;
 
   return (
     <article
       ref={actRef}
-      className={`${styles.act} ${visible ? styles.visible : ""} ${hasBeforeAfter ? styles.withEvidence : ""}`}
+      className={`${styles.act} ${visible ? styles.visible : ""} ${hasEvidence ? styles.withEvidence : ""}`}
       id={treatment.id}
       style={{ transitionDelay: `${index * 60}ms` }}
     >
@@ -91,6 +94,42 @@ export function TreatmentAct({ treatment, index }: TreatmentActProps) {
           </div>
           <figcaption className={styles.caption}>
             {treatment.beforeAfter!.caption}
+          </figcaption>
+        </figure>
+      )}
+
+      {hasVideo && (
+        <figure className={styles.evidencePlate}>
+          <div className={styles.videoFrame}>
+            <video
+              className={styles.video}
+              controls
+              playsInline
+              preload="metadata"
+              aria-label={treatment.video!.caption}
+            >
+              <source src={treatment.video!.src} type="video/mp4" />
+            </video>
+          </div>
+          <figcaption className={styles.caption}>
+            {treatment.video!.caption}
+          </figcaption>
+        </figure>
+      )}
+
+      {hasImage && (
+        <figure className={styles.evidencePlate}>
+          <div className={styles.singleImageFrame}>
+            <Image
+              src={treatment.image!.src}
+              alt={treatment.image!.alt}
+              fill
+              className={styles.image}
+              sizes="(max-width: 1023px) 90vw, 480px"
+            />
+          </div>
+          <figcaption className={styles.caption}>
+            {treatment.image!.caption}
           </figcaption>
         </figure>
       )}

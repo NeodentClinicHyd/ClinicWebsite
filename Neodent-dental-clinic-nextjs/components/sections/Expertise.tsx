@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } f
 import { ArrowRight, Play } from "lucide-react";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 const treatmentVideo = "/assets/treatment-video/dr-miftah-neodent-clinical-treatment-detailed.mp4";
+const rootCanalTreatmentVideo = "/assets/treatment-video/Dr. Miftah Neodent dental clinic Hyderabad-Root canal treatment.mp4";
 
 type Treatment = {
   number: string;
@@ -17,6 +18,7 @@ type Treatment = {
   before?: string;
   beforeAlt?: string;
   video?: boolean;
+  videoSrc?: string;
 };
 
 const treatments: Treatment[] = [
@@ -52,10 +54,10 @@ const treatments: Treatment[] = [
     summary: "Treat infection while preserving the tooth.",
     description: "Focused care to help preserve a natural tooth and bring comfort back to everyday life.",
     visual: "/assets/treatment/after treatment.jpg",
-    before: "/assets/treatment/before treatment.jpg",
-    alt: "Root canal treatment result at Neodent Dental Hospitals",
-    beforeAlt: "Dental condition before treatment at Neodent Dental Hospitals",
+    alt: "Root canal treatment at Neodent Dental Hospitals",
     proof: "REAL CASE / RESTORATIVE CARE",
+    video: true,
+    videoSrc: rootCanalTreatmentVideo,
   },
   {
     number: "04",
@@ -63,10 +65,10 @@ const treatments: Treatment[] = [
     intent: "ALIGN",
     summary: "Improve alignment and bite over time.",
     description: "Measured orthodontic care for a healthier bite and a smile that feels like your own.",
-    visual: "/assets/treatment/Neodent dental hospital Hyderabad - after treatment.jpg",
-    before: "/assets/treatment/Neodent dental hospital Hyderabad - before treatment.jpg",
-    alt: "Smile result after treatment at Neodent Dental Hospitals",
-    beforeAlt: "Smile before treatment at Neodent Dental Hospitals",
+    visual: "/assets/treatment/Orthodontics after treatment - neodent dental hospital nampally.jpeg",
+    before: "/assets/treatment/Orthodontics before treatment - neodent dental hospital nampally.jpeg",
+    alt: "Orthodontics result after treatment at Neodent Dental Hospital Nampally",
+    beforeAlt: "Orthodontics before treatment at Neodent Dental Hospital Nampally",
     proof: "REAL CASE / SMILE ALIGNMENT",
   },
   {
@@ -261,7 +263,7 @@ export function Expertise() {
             ) : (
               <div key={active.number} className="treatment-atlas-stage-media">
                 {active.video ? (
-                  <video ref={videoRef} src={treatmentVideo} muted loop playsInline autoPlay preload="metadata" aria-label="Neodent clinical treatment film" />
+                  <video ref={videoRef} src={active.videoSrc ?? treatmentVideo} muted loop playsInline autoPlay preload="metadata" aria-label="Neodent clinical treatment film" />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={active.visual} alt={active.alt} />

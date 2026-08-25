@@ -1,0 +1,323 @@
+/* Privacy Policy — editorial legal document.
+
+   Mirrors Contact's two-register structure (dark hero -> ivory
+   reading surface) but restrained for a formal document: no CTA
+   buttons in the hero, no marketing geometry beyond a single quiet
+   ghost word + two hairlines + a registration dot. Reading column is
+   capped narrower than Contact's editorial sections (680px) since
+   this page is continuous prose, not short marketing copy.
+
+   Uses the site's real design tokens (--app-font-serif/--app-font-
+   sans/--app-font-mono, --neodent-*) rather than the --font-serif/
+   --font-sans/--font-mono names contact.module.css mistakenly
+   references. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Hero -------------------------------------------------------- */
+.hero {
+  background: #171717;
+  color: #f4f0e8;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(140px, 16vw, 190px) 0 clamp(70px, 9vw, 100px);
+}
+.heroInner {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.kicker {
+  font: 11px/1.4 var(--app-font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--neodent-red);
+  margin: 0 0 20px;
+}
+.hero h1 {
+  font: clamp(2.8rem, 6vw, 5.4rem)/0.98 var(--app-font-serif);
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  margin: 0 0 18px;
+}
+.intro {
+  font: 17px/1.6 var(--app-font-sans);
+  color: #bcb9b1;
+  max-width: 420px;
+  margin: 0;
+}
+.geometry {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
+}
+.ghost {
+  position: absolute;
+  right: -3%;
+  top: 14%;
+  font: clamp(6rem, 13vw, 12rem)/0.9 var(--app-font-serif);
+  letter-spacing: -0.02em;
+  color: rgba(244, 240, 232, 0.05);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.verticalRail {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  left: 78%;
+  width: 1px;
+  background: rgba(244, 240, 232, 0.095);
+}
+.horizontalRail {
+  position: absolute;
+  left: 60%;
+  right: 0;
+  top: 62%;
+  height: 1px;
+  background: rgba(244, 240, 232, 0.095);
+}
+.registrationDot {
+  position: absolute;
+  left: calc(78% - 3px);
+  top: calc(62% - 3px);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neodent-red);
+  box-shadow: 0 0 0 4px rgba(193, 57, 47, 0.08);
+}
+
+/* ---- Reading surface ---------------------------------------------- */
+.body {
+  background: var(--neodent-ivory);
+  color: var(--neodent-ink);
+  padding: clamp(70px, 9vw, 110px) 0 clamp(90px, 10vw, 130px);
+}
+.bodyInner {
+  width: min(760px, calc(100% - 48px));
+  margin: 0 auto;
+}
+.leadParagraph {
+  font: 18px/1.7 var(--app-font-sans);
+  color: #4a5254;
+  max-width: 640px;
+  margin: 0 0 clamp(50px, 6vw, 76px);
+  padding-bottom: clamp(50px, 6vw, 76px);
+  border-bottom: 1px solid var(--neodent-border);
+}
+
+.chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.chapter {
+  display: flex;
+  gap: clamp(20px, 4vw, 40px);
+  padding: clamp(34px, 4vw, 48px) 0;
+  border-top: 1px solid var(--neodent-border);
+}
+.chapters > .chapter:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.chapterNumber {
+  flex-shrink: 0;
+  width: 40px;
+  font: 12px var(--app-font-mono);
+  letter-spacing: 0.1em;
+  color: var(--neodent-red);
+  padding-top: 3px;
+}
+.chapterContent {
+  min-width: 0;
+}
+.chapterContent h3 {
+  font: clamp(1.5rem, 2.4vw, 2rem) var(--app-font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+  color: var(--neodent-ink);
+}
+.chapterContent p {
+  font: 15px/1.7 var(--app-font-sans);
+  color: #4a5254;
+  margin: 0 0 14px;
+  max-width: 560px;
+}
+.chapterContent p:last-child {
+  margin-bottom: 0;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 560px;
+}
+.list li {
+  position: relative;
+  padding-left: 20px;
+  font: 15px/1.65 var(--app-font-sans);
+  color: #4a5254;
+}
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+.termList {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.termList dt {
+  font: 11px var(--app-font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neodent-red);
+  margin: 0 0 5px;
+}
+.termList dd {
+  font: 15px/1.65 var(--app-font-sans);
+  color: #4a5254;
+  margin: 0;
+  max-width: 560px;
+}
+
+/* Patient Confidentiality callout -- the single strongest statement
+   on the page, set apart with a left red rule rather than a boxed
+   card. */
+.callout {
+  font: clamp(1.4rem, 2.2vw, 1.8rem) var(--app-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--neodent-red);
+  border-left: 2px solid var(--neodent-red);
+  padding: 2px 0 2px 20px;
+  margin: 0 0 20px;
+  max-width: 500px;
+}
+
+.closing {
+  margin-top: clamp(50px, 6vw, 76px);
+  padding-top: clamp(50px, 6vw, 76px);
+  border-top: 1px solid var(--neodent-border);
+}
+.closing h3 {
+  font: clamp(1.5rem, 2.4vw, 2rem) var(--app-font-serif);
+  font-weight: 400;
+  margin: 0 0 14px;
+  color: var(--neodent-ink);
+}
+.closing p {
+  font: 15px/1.7 var(--app-font-sans);
+  color: #4a5254;
+  max-width: 560px;
+  margin: 0 0 26px;
+}
+.closingActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.closingActions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--neodent-ink);
+  text-decoration: none;
+  font: 12px var(--app-font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--neodent-red);
+  padding-bottom: 8px;
+  transition: color 0.2s ease;
+}
+.closingActions a:hover,
+.closingActions a:focus-visible {
+  color: var(--neodent-red);
+}
+.closingActions a:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+}
+.closingActions svg {
+  width: 15px;
+  height: 15px;
+}
+
+.lastUpdated {
+  margin: clamp(40px, 5vw, 60px) 0 0;
+  font: 11px var(--app-font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neodent-muted);
+}
+
+/* ---- Mobile -------------------------------------------------------- */
+@media (max-width: 700px) {
+  .heroInner,
+  .bodyInner {
+    width: calc(100% - 36px);
+  }
+  .hero {
+    padding-top: 120px;
+  }
+  .ghost {
+    display: none;
+  }
+  .verticalRail {
+    left: 88%;
+  }
+  .horizontalRail {
+    left: 40%;
+  }
+  .registrationDot {
+    left: calc(88% - 3px);
+    top: calc(62% - 3px);
+  }
+  .chapter {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .chapterNumber {
+    width: auto;
+  }
+  .callout {
+    padding-left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .body {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
