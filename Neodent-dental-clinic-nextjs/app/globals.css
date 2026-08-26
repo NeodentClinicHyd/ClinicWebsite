@@ -1603,6 +1603,76 @@ button {
   }
 }
 
+/* ---- Slide 01 — laptop short-viewport compaction ----
+   Wide desktop-class screens (>=1200px) that are too SHORT for the full
+   desktop composition to fit inside .hero's fixed-height/overflow:hidden
+   box — e.g. 1366x768, 1440x800, 1280x720 laptop panels, which never
+   trigger the width-based ≤1199px tablet tier above and never had any
+   height-based relief. Without this, the copy column's rating,
+   credentials and CTA, plus the portrait stage's bottom consultation
+   card, silently overflow .hero and get clipped by overflow:hidden
+   instead of reflowing.
+
+   Scoped narrowly on purpose:
+     - min-width:1200px means this can never overlap the ≤1199px tablet
+       rules above (mutually exclusive width ranges).
+     - max-height:800px means this never fires on a normal desktop
+       monitor (900px+ tall keeps the exact current composition).
+   Only Slide 01 selectors are touched. .hero's own height/overflow
+   model, Slides 02/03, and every other breakpoint are left untouched —
+   this block only trims Slide 01's internal type/spacing so its content
+   fits inside the box that already exists, instead of changing how
+   that box is sized. */
+@media (min-width: 1200px) and (max-height: 800px) {
+  .hero-founder-inner {
+    padding: calc(var(--nav-height-desktop) + 14px) 0 18px;
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .hero-founder-tagline {
+    margin: 8px 0 0;
+    font-size: 13px;
+  }
+  .hero-founder-title {
+    margin: 8px 0 12px;
+    font-size: clamp(40px, 8svh, 64px);
+    line-height: 0.94;
+  }
+  .hero-founder-identity {
+    margin-top: 2px;
+  }
+  .hero-founder-copy .hero-rating {
+    margin-top: 10px;
+    padding: 5px 12px;
+  }
+  .hero-slide-founder .hero-actions {
+    margin-top: 14px;
+  }
+  .hero-founder-visual {
+    --founder-frame-top: 2%;
+    --founder-frame-right: 2%;
+    --founder-frame-bottom: 8%;
+    --founder-frame-left: 6%;
+    --founder-frame-inner-gap: 12px;
+    --founder-portrait-width: 74%;
+  }
+  .hero-founder-mark {
+    top: 2%;
+    font-size: clamp(110px, 16svh, 220px);
+  }
+  .hero-founder-mark-caption {
+    bottom: 5%;
+  }
+  .hero-founder-visual-location,
+  .hero-founder-visual-contact {
+    max-width: 200px;
+    padding: 8px 12px 8px 11px;
+    gap: 4px;
+  }
+  .hero-founder-visual-contact .hero-founder-phone {
+    font-size: 15px;
+  }
+}
+
 /* This block governs Slide 2/3's stacking layout only. Slide 1's
    sizing at this width range is fully handled by the
    .hero:has(.hero-slide-founder...) rules above, which take
