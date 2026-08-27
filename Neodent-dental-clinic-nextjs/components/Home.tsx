@@ -14,25 +14,23 @@ import { PatientStories } from "@/components/sections/PatientStories";
 import { WhatToExpect } from "@/components/sections/WhatToExpect";
 import { SpacesDesignedAroundCare } from "@/components/sections/SpacesDesignedAroundCare";
 import { ContactNextStep } from "@/components/sections/ContactNextStep";
-import { AppointmentModal } from "@/components/ui/AppointmentModal";
 import { LeadCapture } from "@/components/ui/LeadCapture";
 import { AppButton } from "@/components/ui/AppButton";
 import { ctaTelPhone, LEAD_CAPTURE_SESSION_KEY } from "@/lib/site-data";
 
 export function Home() {
-  const [appointmentOpen, setAppointmentOpen] = useState(false);
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const [leadCaptureOpen, setLeadCaptureOpen] = useState(false);
   const leadCaptureShown = useRef(false);
 
   useEffect(() => {
     const original = document.body.style.overflow;
-    if (appointmentOpen || lightbox || leadCaptureOpen)
+    if (lightbox || leadCaptureOpen)
       document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = original;
     };
-  }, [appointmentOpen, lightbox, leadCaptureOpen]);
+  }, [lightbox, leadCaptureOpen]);
 
   useEffect(() => {
     try {
@@ -44,7 +42,7 @@ export function Home() {
     }
 
     const onScroll = () => {
-      if (leadCaptureShown.current || appointmentOpen) return;
+      if (leadCaptureShown.current) return;
       const doc = document.documentElement;
       const scrollable = doc.scrollHeight - window.innerHeight;
       if (scrollable <= 0) return;
@@ -62,7 +60,7 @@ export function Home() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [appointmentOpen]);
+  }, []);
 
   return (
     <div className="site">
@@ -81,15 +79,11 @@ export function Home() {
       </main>
       <Footer />
       <div className="mobile-bar">
-        <AppButton href={ctaTelPhone} variant="ghost">
-          <Phone size={14} /> Call
-        </AppButton>
-        <AppButton onClick={() => setAppointmentOpen(true)} variant="primary">
-          Book Appointment <ArrowRight size={14} />
+        <AppButton href={ctaTelPhone} variant="primary">
+          <Phone size={14} /> Call NeoDent <ArrowRight size={14} />
         </AppButton>
       </div>
-      {appointmentOpen && <AppointmentModal onClose={() => setAppointmentOpen(false)} />}
-      {!appointmentOpen && leadCaptureOpen && (
+      {leadCaptureOpen && (
         <LeadCapture onClose={() => setLeadCaptureOpen(false)} />
       )}
       {lightbox && (

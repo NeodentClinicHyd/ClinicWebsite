@@ -14,11 +14,9 @@ import { BeyondTheClinic } from "@/components/sections/about/BeyondTheClinic";
    "Explore our expertise" / "Visit our clinics" links, per the
    page's content rules. This wrapper reuses only the sitewide
    Navbar and Footer exactly as Home.tsx already wires them (neither
-   is modified). Navbar's "Book Appointment" button requires an
-   `onBook` handler to function at all -- wiring it to the existing,
-   already-approved AppointmentModal (rather than leaving it inert)
-   reuses established site behaviour instead of inventing anything
-   new. No floating CTA or sticky mobile booking bar is added here,
+   is modified). The site has no booking/appointment CTA anywhere --
+   Navbar links to /contact ("Talk to NeoDent"), and Call is the only
+   CTA. No floating CTA or sticky mobile booking bar is added here,
    since those were not part of the approved About page scope. ------------------------------------------------------------------ */
 
 export function AboutClientChrome() {

@@ -1567,34 +1567,40 @@ button {
 /* Slide 1 (founder) "no clipping, no nested scroll" sizing model.
    Scoped to Slide 1 only via :has(), so Slides 2/3 keep their exact
    existing hard height:100%/position:absolute stacking behavior
-   untouched. min-height still guarantees the normal one-viewport
-   composition (using the nav-height variable that matches whichever
-   navbar height is actually active at this width — see the nested
-   900px override below); height:auto lets the box grow taller than
-   that floor on unusually short/dense viewports instead of clipping
-   or forcing a nested scrollbar inside the hero — any residual
-   overflow scrolls the page itself.
-   This spans the full ≤1199px range (tablet + mobile tiers) because
-   both tiers removed their own overflow-y:auto fallback and therefore
-   both need this escape valve, not just the mobile tier. */
-@media (max-width: 1199px) {
-  .hero:has(.hero-slide-founder.hero-slide-active) {
-    height: auto;
-    align-items: flex-start;
-  }
-  .hero:has(.hero-slide-founder.hero-slide-active) .hero-slides {
-    height: auto;
-  }
-  .hero:has(.hero-slide-founder.hero-slide-active)
-    .hero-slide-founder.hero-slide-active {
-    position: relative;
-    height: auto;
-  }
-  .hero:has(.hero-slide-founder.hero-slide-active) .hero-founder,
-  .hero:has(.hero-slide-founder.hero-slide-active) .hero-founder-inner {
-    height: auto;
-    min-height: calc(100svh - var(--nav-height-desktop));
-  }
+   untouched (they already carry this same unconditional height:auto
+   treatment at their own :has() scopes — see .hero-slide-place and
+   .hero-slide-record below). min-height still guarantees the normal
+   one-viewport composition (using the nav-height variable that
+   matches whichever navbar height is actually active at this width
+   — see the 900px override below); height:auto lets the box grow
+   taller than that floor whenever the content needs more room than
+   the viewport currently offers, instead of clipping or forcing a
+   nested scrollbar inside the hero — any residual overflow scrolls
+   the page itself.
+   Deliberately UNGATED (no max-width here): the box is only ever
+   this tall on a fixed viewport-height formula, and content height
+   does not change with browser WIDTH. Gating this behind a width
+   media query (previously max-width:1199px) meant desktop-width/
+   short-height viewports (e.g. 1366x768) fell back to the hard
+   height:100% chain above and got clipped — the collision was a
+   viewport-HEIGHT problem, not a width one, so the fix must not be
+   width-gated either. */
+.hero:has(.hero-slide-founder.hero-slide-active) {
+  height: auto;
+  align-items: flex-start;
+}
+.hero:has(.hero-slide-founder.hero-slide-active) .hero-slides {
+  height: auto;
+}
+.hero:has(.hero-slide-founder.hero-slide-active)
+  .hero-slide-founder.hero-slide-active {
+  position: relative;
+  height: auto;
+}
+.hero:has(.hero-slide-founder.hero-slide-active) .hero-founder,
+.hero:has(.hero-slide-founder.hero-slide-active) .hero-founder-inner {
+  height: auto;
+  min-height: calc(100svh - var(--nav-height-desktop));
 }
 @media (max-width: 900px) {
   .hero:has(.hero-slide-founder.hero-slide-active) .hero-founder,
@@ -9415,7 +9421,7 @@ button {
     position: fixed;
     z-index: 50;
     display: grid;
-    grid-template-columns: 0.7fr 1.3fr;
+    grid-template-columns: 1fr;
     bottom: 0;
     left: 0;
     right: 0;
@@ -9426,9 +9432,6 @@ button {
   .mobile-bar .button {
     min-height: 43px;
     font-size: 12px;
-  }
-  .mobile-bar .button:first-child {
-    color: var(--paper);
   }
   .site {
     padding-bottom: 62px;
