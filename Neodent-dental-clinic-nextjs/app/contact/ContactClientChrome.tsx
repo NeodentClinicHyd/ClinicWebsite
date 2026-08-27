@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ArrowUpRight, Clock3, MapPin, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ContactEnquiryForm } from "@/components/contact/ContactEnquiryForm";
 import { address, ctaPhone, ctaTelPhone, directions, mehdipatnamHours, nampallyAddress, nampallyDirections, nampallyHours, nampallyTelPhone, phone, telPhone } from "@/lib/site-data";
 import styles from "./contact.module.css";
 
@@ -55,6 +56,24 @@ export function ContactClientChrome() {
 
         <section className={styles.visit} aria-labelledby="visit-title">
           <div className={styles.visitInner}><p className={styles.kicker}>Before your visit</p><h2 id="visit-title">A little clarity <em>goes a long way.</em></h2><div className={styles.steps}>{steps.map(([number, title, copy]) => <div className={styles.step} key={number}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></div>)}</div><a className={styles.finalLink} href={ctaTelPhone}>Start a conversation <ArrowUpRight aria-hidden="true" /></a><p className={styles.hours}><Clock3 aria-hidden="true" /> Consultation - Rs. 300 - Rs. 500</p></div>
+        </section>
+
+        <section className={styles.enquiry} aria-labelledby="enquiry-title">
+          <div className={styles.enquiryInner}>
+            <div className={styles.enquiryHead}>
+              <p className={styles.kicker}>Send an enquiry</p>
+              <h2 id="enquiry-title">Have a question? <em>Let&apos;s talk.</em></h2>
+              <p className={styles.enquiryIntro}>Have a question about a treatment, clinic location or your next step? Send us a message and the NeoDent team will get back to you.</p>
+            </div>
+            <div className={styles.enquiryFormWrap}>
+              <ContactEnquiryForm />
+            </div>
+          </div>
+          <div className={styles.enquiryGeometry} aria-hidden="true">
+            <span className={styles.enquiryGhost}>04</span>
+            <span className={styles.enquiryRule} />
+            <span className={styles.enquiryDot} />
+          </div>
         </section>
       </main>
       <Footer />

@@ -1,0 +1,171 @@
+/* ------------------------------------------------------------------
+   ContactEnquiryForm — field styling follows the same idiom as the
+   sitewide .field/.form-grid rules in app/globals.css (thin borders,
+   no radius, ivory fill, ink focus ring) but is scoped locally since
+   this form lives on a light surface inside contact.module.css's
+   .enquiry section, not inside a dark modal.
+   ------------------------------------------------------------------ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 24px;
+}
+.field {
+  display: grid;
+  gap: 8px;
+}
+.field.full {
+  grid-column: 1 / -1;
+}
+.field label {
+  font: 11px/1.4 var(--app-font-mono), monospace;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #171717;
+}
+.optional {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.55;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid #d9d2c6;
+  border-radius: 0;
+  background: #fdfcf9;
+  color: #171717;
+  padding: 14px 15px;
+  font: 15px/1.4 var(--app-font-sans), sans-serif;
+  appearance: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.field select {
+  background-image: linear-gradient(45deg, transparent 50%, #65625d 50%),
+    linear-gradient(135deg, #65625d 50%, transparent 50%);
+  background-position: calc(100% - 20px) center, calc(100% - 15px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 128px;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--neodent-red);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.1);
+}
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--neodent-red);
+}
+.errorText {
+  font: 12px var(--app-font-sans), sans-serif;
+  color: var(--neodent-red);
+}
+.privacyNote {
+  font: 12px/1.55 var(--app-font-sans), sans-serif;
+  color: #65625d;
+  margin: 2px 0 0;
+}
+
+/* Honeypot -- visually and structurally hidden. Off-screen rather
+   than display:none/visibility:hidden, which some spam bots skip when
+   scanning for fillable fields. */
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.formError {
+  font: 13px/1.6 var(--app-font-sans), sans-serif;
+  color: var(--neodent-red);
+  background: rgba(215, 25, 32, 0.06);
+  border-left: 2px solid var(--neodent-red);
+  padding: 12px 16px;
+  margin: 26px 0 0;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 30px;
+}
+
+/* ---- Success state -- replaces the form in place, no redirect ---- */
+.successState {
+  padding: 12px 0 4px;
+}
+.successMark {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--neodent-red-soft);
+  color: var(--neodent-red-dark);
+  margin-bottom: 18px;
+}
+.kicker {
+  font: 11px/1.4 var(--app-font-mono), monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--neodent-red);
+  margin: 0 0 10px;
+}
+.successState h3 {
+  font: 2rem/1.05 var(--app-font-serif), serif;
+  font-weight: 400;
+  color: #171717;
+  margin: 0 0 14px;
+  max-width: 420px;
+}
+.successCopy {
+  font: 15px/1.65 var(--app-font-sans), sans-serif;
+  color: #65625d;
+  max-width: 380px;
+  margin: 0 0 26px;
+}
+.sendAnother {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #171717;
+  font: 12px var(--app-font-mono), monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--neodent-red);
+  padding-bottom: 8px;
+}
+.sendAnother:hover {
+  color: var(--neodent-red);
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .field.full {
+    grid-column: auto;
+  }
+}
