@@ -1,4 +1,4 @@
-/* Section 04 — Clinical Leadership / NeoDent profile.
+/* Section 04 — Clinical Leadership / Neodent profile.
 
    Design language is inherited from Section 02 (.archive-* in
    globals.css / LegacyStory.tsx), the canonical homepage style
@@ -12,7 +12,7 @@
    section's dark surface and its own composition. Nothing here edits
    globals.css or Section 02.
 
-   The Dr. Miftah profile is composed as: real NeoDent portrait plate
+   The Dr. Miftah profile is composed as: real Neodent portrait plate
    bound to the numbered credential rail -> narrative -> a staggered
    portfolio field (dominant teaching plate, medium recognition plate,
    small academic plate, profile film) built on the same 12-column
@@ -216,7 +216,7 @@
 }
 
 /* Feature -- Miftah's identity stays a spacious, narrower left column;
-   the portrait plate (real NeoDent photograph + its bound credential
+   the portrait plate (real Neodent photograph + its bound credential
    rail) is pushed hard toward the container's right edge instead of
    centring in its track, so the composition reads as deliberately
    asymmetric rather than a generic two-column block.
@@ -243,7 +243,7 @@
 .link { display: inline-flex; align-items: center; gap: 9px; margin-top: 6px; color: var(--ivory); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; transition: color .2s ease, gap .2s ease; }
 .link:hover { color: var(--red); gap: 13px; }
 
-/* Portrait plate -- the real NeoDent operatory photograph is the
+/* Portrait plate -- the real Neodent operatory photograph is the
    section's information anchor. The credential rail sits immediately
    left of the frame, sharing its height, with a vertical spine
    hairline (.rail::after) running the full height of the rail and
@@ -311,7 +311,7 @@
 .portrait { position: relative; margin: 0; flex-shrink: 1; min-width: 0; width: clamp(260px, 36vw, 480px); }
 /* 3/4 is the source photograph's own ratio (960x1280), so the primary
    Dr. Miftah image is framed with no crop at all: his face stays
-   unambiguous and enough of the NeoDent operatory around him survives
+   unambiguous and enough of the Neodent operatory around him survives
    to show the photograph is genuinely from the hospital. */
 .portraitFrame {
   position: relative;
@@ -575,7 +575,7 @@
    outline), and the same registration-dot / hairline / arc vocabulary
    used elsewhere in this section (.guide, .plateFocusRing,
    .frameRegistration) dresses the frame so it reads as an intentional
-   NeoDent object rather than a missing image. Fills the exact same
+   Neodent object rather than a missing image. Fills the exact same
    frame as a real photograph so all four cards stay visually
    consistent. */
 .identityPlate {
@@ -620,7 +620,7 @@
   text-transform: uppercase;
   color: rgba(241, 238, 231, 0.24);
 }
-/* Restrained NeoDent drafting geometry, matching .guide /
+/* Restrained Neodent drafting geometry, matching .guide /
    .plateFocusRing / .frameRegistration elsewhere in this section -- a
    thin rule, a vertical axis, one registration dot and a faint arc,
    never purely decorative additions. */

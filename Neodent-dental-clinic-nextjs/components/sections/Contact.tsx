@@ -122,7 +122,7 @@ export function Contact({ onBook }: { onBook: () => void }) {
             </AppButton>
           </div>
         </div>
-        <div className="map-card" aria-label="Neodent Dental Hospitals location">
+        <div className="map-card" aria-label="Neodent Dental Hospital location">
           <div
             className="map-card-frame"
             style={{ "--parallax-y": `${parallaxY}px` } as CSSProperties}
@@ -130,7 +130,7 @@ export function Contact({ onBook }: { onBook: () => void }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={entranceImage}
-              alt="Neodent Dental Hospitals entrance on Humayun Nagar Road"
+              alt="Neodent Dental Hospital entrance on Humayun Nagar Road"
               loading="lazy"
             />
             <div className="location-panel">

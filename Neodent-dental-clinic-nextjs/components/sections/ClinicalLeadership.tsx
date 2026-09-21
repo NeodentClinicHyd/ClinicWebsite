@@ -11,12 +11,12 @@ const proofs = [
   ["01", "Credentials", "BDS · MDS · FICOI (U.S.A.)"],
   ["02", "Clinical role", "Prosthodontist & Implantologist"],
   ["03", "Recognition", "Gold Medallist"],
-  ["04", "Experience / leadership", "15+ years · Assistant Director · NeoDent"],
+  ["04", "Experience / leadership", "15+ years · Assistant Director · Neodent"],
 ];
 
 /* Authentic, client-supplied Dr. Miftah photography, all from
    /public/assets/dr-miftah. Nothing here is stock, generated or
-   re-processed: the primary plate is the real NeoDent operatory
+   re-processed: the primary plate is the real Neodent operatory
    photograph (preferred over the transparent cutout portrait, which
    already appears elsewhere on the site), and the three portfolio
    plates are the recognition, teaching and academic frames. Captions
@@ -37,7 +37,7 @@ const MIFTAH_MEDIA = {
   portrait: {
     src: "/assets/dr-miftah/Dr Miftah ur Rahman at Neodent Dental Hospital.jpeg",
     alt:
-      "Dr. Md. Miftah Ur Rahman, Prosthodontist and Implantologist, standing beside the dental chair in a treatment room at NeoDent Dental Hospital, Hyderabad, holding a dental study model",
+      "Dr. Md. Miftah Ur Rahman, Prosthodontist and Implantologist, standing beside the dental chair in a treatment room at Neodent Dental Hospital, Hyderabad, holding a dental study model",
   },
   teaching: {
     src: "/assets/dr-miftah/Dr Md Miftah at Dept of Prosthodontics at SB Patil Dental College condicting seminar.jpeg",
@@ -69,7 +69,7 @@ const team: TeamMember[] = [
   {
     label: "01 / SENIOR CLINICAL LEADERSHIP",
     name: <>Dr. Mohd. Siraj<br />Ur Rahman</>,
-    degrees: <>BDS · FCIP · MDS (Chennai)<br />Professor · Director, NeoDent · 35+ years</>,
+    degrees: <>BDS · FCIP · MDS (Chennai)<br />Professor · Director, Neodent · 35+ years</>,
     image: "/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png",
     alt: "Dr. Mohd. Siraj Ur Rahman",
   },
@@ -105,7 +105,7 @@ const team: TeamMember[] = [
   },
 ];
 
-/* Editorial identity plate used only where no authentic NeoDent
+/* Editorial identity plate used only where no authentic Neodent
    portrait exists yet (Dr. Asiya, Dr. Safoora). It intentionally does
    NOT imply a likeness: an abstract, feature-less head-and-shoulders
    line sits far behind a ghost-serif initials mark, dressed in the
@@ -232,7 +232,7 @@ export function ClinicalLeadership() {
               no z-index trick is needed and text stays fully readable. */}
           <span className={styles.numeral} aria-hidden="true">04</span>
           <div className={styles.eyebrow}>04 / The people behind the care</div>
-          <div className={styles.metaLine}>Clinical leadership / NeoDent profile</div>
+          <div className={styles.metaLine}>Clinical leadership / Neodent profile</div>
           <h2 id="leadership-title">A steady hand.<br /><span>A human approach.</span></h2>
         </header>
 
@@ -245,9 +245,9 @@ export function ClinicalLeadership() {
             before they ever see Dr. Miftah. */}
         <div className={styles.feature}>
           <div className={styles.identityHead}>
-            <p className={styles.kicker}>A trusted face of NeoDent</p>
+            <p className={styles.kicker}>A trusted face of Neodent</p>
             <h3>Dr. Md. Miftah<br />Ur Rahman</h3>
-            <p className={styles.role}>Prosthodontist &amp; Implantologist<br />Assistant Director · NeoDent</p>
+            <p className={styles.role}>Prosthodontist &amp; Implantologist<br />Assistant Director · Neodent</p>
           </div>
 
           {/* Right-hand aside: the portrait plate, then a profile index
@@ -262,7 +262,7 @@ export function ClinicalLeadership() {
               repeating it. */}
           <div className={styles.profileAside}>
             {/* The portrait plate is the section's information anchor: the
-                real NeoDent operatory photograph pushed to the container's
+                real Neodent operatory photograph pushed to the container's
                 right edge, with the four proof points bound to it as an
                 annotation rail rather than sitting beside it as an
                 independent list. Each annotation's connecting tick
@@ -300,7 +300,7 @@ export function ClinicalLeadership() {
                 </div>
                 <figcaption className={styles.portraitCaption}>
                   <b>Dr. Miftah Ur Rahman</b>
-                  <span>In the operatory · NeoDent Dental Hospital, Hyderabad</span>
+                  <span>In the operatory · Neodent Dental Hospital, Hyderabad</span>
                 </figcaption>
               </figure>
             </div>
@@ -335,14 +335,14 @@ export function ClinicalLeadership() {
               </EditorialHighlight>{" "}
               and{" "}
               <EditorialHighlight tone="secondary" onDark>
-                Assistant Director at NeoDent Dental Hospitals
+                Assistant Director at Neodent Dental Hospital
               </EditorialHighlight>
-              . He practises across both NeoDent locations in Hyderabad —{" "}
+              . He practises across both Neodent locations in Hyderabad —{" "}
               <EditorialHighlight tone="quiet" onDark>
                 Mehdipatnam and Nampally
               </EditorialHighlight>{" "}
               — alongside the practice&apos;s founder, Dr. Mohd. Siraj Ur
-              Rahman, in the same specialist disciplines NeoDent has been
+              Rahman, in the same specialist disciplines Neodent has been
               built around since 1994.
             </p>
             <p className={styles.copy}>
@@ -373,7 +373,7 @@ export function ClinicalLeadership() {
                 Department of Prosthodontics
               </EditorialHighlight>
               . That academic involvement is not separate from his practice
-              at NeoDent:{" "}
+              at Neodent:{" "}
               <EditorialHighlight tone="quiet" onDark>
                 teaching keeps the clinical reasoning current
               </EditorialHighlight>
@@ -391,12 +391,12 @@ export function ClinicalLeadership() {
               , with 15+ years in clinical dentistry. As Assistant Director
               he carries that experience into{" "}
               <EditorialHighlight tone="quiet" onDark>
-                how NeoDent plans and explains treatment
+                how Neodent plans and explains treatment
               </EditorialHighlight>{" "}
               — precision, clear conversations, and care that stays
               personal even when the work ahead is complex.
             </p>
-            <a className={styles.link} href="/about#legacy-and-people">
+            <a className={styles.link} href="/doctors/dr-miftah-ur-rahman">
               Explore Dr. Miftah <ArrowRight size={15} aria-hidden="true" />
             </a>
           </div>
@@ -468,7 +468,7 @@ export function ClinicalLeadership() {
                   specialist grounding
                 </EditorialHighlight>{" "}
                 sits behind all of them, whether Dr. Miftah is planning a
-                rehabilitation at NeoDent or{" "}
+                rehabilitation at Neodent or{" "}
                 <EditorialHighlight tone="quiet" onDark>
                   taking a seminar for dental students
                 </EditorialHighlight>
@@ -489,7 +489,7 @@ export function ClinicalLeadership() {
                 </div>
                 <div>
                   <dt>iv · Clinical film</dt>
-                  <dd>NeoDent Dental Hospital, Hyderabad</dd>
+                  <dd>Neodent Dental Hospital, Hyderabad</dd>
                 </div>
               </dl>
             </div>

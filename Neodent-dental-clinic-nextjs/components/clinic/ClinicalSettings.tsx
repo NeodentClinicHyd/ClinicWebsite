@@ -8,6 +8,8 @@ import {
   mehdipatnamInteriorImage,
   nampallyExteriorImage,
   nampallyInteriorImage,
+  phone,
+  nampallyPhone,
   telPhone,
   nampallyTelPhone,
   directions,
@@ -114,12 +116,12 @@ export function ClinicalSettings() {
 
           <div className={styles.branchGrid}>
             {/* Image diptych — exterior (primary) + interior (secondary) */}
-            <figure className={styles.branchMedia} aria-label="NeoDent Mehdipatnam — exterior and interior">
+            <figure className={styles.branchMedia} aria-label="Neodent Mehdipatnam — exterior and interior">
               <div className={styles.branchPrimary}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={mehdipatnamExteriorImage}
-                  alt="NeoDent Dental Hospital Mehdipatnam — carved entrance doorway and exterior"
+                  alt="Neodent Dental Hospital Mehdipatnam — carved entrance doorway and exterior"
                   loading="lazy"
                   style={{ objectPosition: "50% 36%" }}
                 />
@@ -133,7 +135,7 @@ export function ClinicalSettings() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={mehdipatnamInteriorImage}
-                  alt="NeoDent Dental Hospital Mehdipatnam — patient waiting lounge interior"
+                  alt="Neodent Dental Hospital Mehdipatnam — patient waiting lounge interior"
                   loading="lazy"
                   style={{ objectPosition: "68% 42%" }}
                 />
@@ -145,11 +147,11 @@ export function ClinicalSettings() {
             <div className={styles.branchInfo}>
               <div className={styles.branchMeta}>
                 <span className={styles.branchMetaLocation}>Mehdipatnam · Hyderabad</span>
-                <span className={styles.branchMetaName}>NeoDent Dental Hospital</span>
+                <span className={styles.branchMetaName}>Neodent Dental Hospital</span>
               </div>
 
               <p className={styles.branchDescription}>
-                NeoDent&apos;s{" "}
+                Neodent&apos;s{" "}
                 <EditorialHighlight tone="primary" onDark>
                   Mehdipatnam clinic
                 </EditorialHighlight>{" "}
@@ -166,26 +168,35 @@ export function ClinicalSettings() {
                 and continues today.
               </p>
 
+              {/* Doctor named at this branch — deep link to his profile */}
+              <a
+                href="/doctors/dr-miftah-ur-rahman"
+                className={styles.branchDoctorLink}
+              >
+                Dr. Md. Miftah Ur Rahman practises here
+                <ArrowRight size={12} aria-hidden="true" />
+              </a>
+
               {/* Address block */}
               <address className={styles.branchAddress}>
                 <span className={styles.branchAddressIcon} aria-hidden="true">
                   <MapPin size={11} />
                 </span>
                 <span>
-                  10-3-14B/11/1, Humayun Nagar Rd
+                  10-3-14B/11/1, near Masjid-e-Azizia
                   <br />
-                  near Azzia Masjid, Royal Colony
+                  Humayun Nagar, Royal Colony, Mehdipatnam
                   <br />
-                  Humayun Nagar, Hyderabad 500006
+                  Hyderabad, Telangana 500006
                 </span>
               </address>
 
               {/* Phone */}
-              <a href={telPhone} className={styles.branchPhone} aria-label="Call NeoDent Mehdipatnam">
+              <a href={telPhone} className={styles.branchPhone} aria-label="Call Neodent Mehdipatnam">
                 <span className={styles.branchPhoneIcon} aria-hidden="true">
                   <Phone size={11} />
                 </span>
-                090306 48393
+                {phone}
               </a>
 
               {/* Hours */}
@@ -202,7 +213,7 @@ export function ClinicalSettings() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.branchDirections}
-                aria-label="Get directions to NeoDent Mehdipatnam"
+                aria-label="Get directions to Neodent Mehdipatnam"
               >
                 Get Directions
                 <ArrowRight size={12} aria-hidden="true" />
@@ -235,7 +246,7 @@ export function ClinicalSettings() {
             <div className={styles.branchInfo}>
               <div className={styles.branchMeta}>
                 <span className={styles.branchMetaLocation}>Nampally · Hyderabad</span>
-                <span className={styles.branchMetaName}>NeoDent Dental Hospital</span>
+                <span className={styles.branchMetaName}>Neodent Dental Hospital</span>
               </div>
 
               <p className={styles.branchDescription}>
@@ -243,7 +254,7 @@ export function ClinicalSettings() {
                 <EditorialHighlight tone="primary" onDark>
                   Nampally clinic
                 </EditorialHighlight>{" "}
-                brings the same NeoDent clinical approach to central Hyderabad,
+                brings the same Neodent clinical approach to central Hyderabad,
                 supporting patients through{" "}
                 <EditorialHighlight tone="secondary" onDark>
                   consultation, treatment planning, treatment and follow-up
@@ -255,6 +266,15 @@ export function ClinicalSettings() {
                 .
               </p>
 
+              {/* Doctor named at this branch — deep link to his profile */}
+              <a
+                href="/doctors/dr-miftah-ur-rahman"
+                className={styles.branchDoctorLink}
+              >
+                Dr. Md. Miftah Ur Rahman practises here
+                <ArrowRight size={12} aria-hidden="true" />
+              </a>
+
               {/* Address block */}
               <address className={styles.branchAddress}>
                 <span className={styles.branchAddressIcon} aria-hidden="true">
@@ -263,18 +283,18 @@ export function ClinicalSettings() {
                 <span>
                   Medwin Hospital Complex
                   <br />
-                  Pillar #A1270, Nampally
+                  Pillar #A1270, Raghav Ratna Towers, Chirag Ali Lane
                   <br />
-                  Hyderabad, Telangana 500001
+                  Mahesh Nagar Colony, Nampally, Hyderabad, Telangana 500001
                 </span>
               </address>
 
               {/* Phone */}
-              <a href={nampallyTelPhone} className={styles.branchPhone} aria-label="Call NeoDent Nampally">
+              <a href={nampallyTelPhone} className={styles.branchPhone} aria-label="Call Neodent Nampally">
                 <span className={styles.branchPhoneIcon} aria-hidden="true">
                   <Phone size={11} />
                 </span>
-                090305 98081
+                {nampallyPhone}
               </a>
 
               {/* Hours */}
@@ -291,7 +311,7 @@ export function ClinicalSettings() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.branchDirections}
-                aria-label="Get directions to NeoDent Nampally"
+                aria-label="Get directions to Neodent Nampally"
               >
                 Get Directions
                 <ArrowRight size={12} aria-hidden="true" />
@@ -299,12 +319,12 @@ export function ClinicalSettings() {
             </div>
 
             {/* Image diptych — exterior + interior */}
-            <figure className={styles.branchMedia} aria-label="NeoDent Nampally — exterior and interior">
+            <figure className={styles.branchMedia} aria-label="Neodent Nampally — exterior and interior">
               <div className={styles.branchPrimary}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={nampallyExteriorImage}
-                  alt="NeoDent Dental Hospital Nampally — street frontage and signage"
+                  alt="Neodent Dental Hospital Nampally — street frontage and signage"
                   loading="lazy"
                   style={{ objectPosition: "50% 38%" }}
                 />
@@ -318,7 +338,7 @@ export function ClinicalSettings() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={nampallyInteriorImage}
-                  alt="NeoDent Dental Hospital Nampally — reception and consultation wing interior"
+                  alt="Neodent Dental Hospital Nampally — reception and consultation wing interior"
                   loading="lazy"
                   style={{ objectPosition: "50% 26%" }}
                 />

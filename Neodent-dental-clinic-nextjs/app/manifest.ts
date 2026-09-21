@@ -11,7 +11,7 @@ import { SITE_NAME } from "@/lib/site-data";
  * conventional value browsers expect even for this lighter use, and
  * it degrades gracefully to a normal browser tab).
  *
- * Icons reuse the real NeoDent logo artwork already shipped in
+ * Icons reuse the real Neodent logo artwork already shipped in
  * `app/` (android-chrome-192x192.png / android-chrome-512x512.png),
  * the same files already wired into `<head>` via Next's automatic
  * icon file convention — no new image asset is created here.
@@ -19,9 +19,9 @@ import { SITE_NAME } from "@/lib/site-data";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: SITE_NAME,
-    short_name: "NeoDent",
+    short_name: "Neodent",
     description:
-      "Specialist-led dental care in Hyderabad, at NeoDent Dental Hospitals — Mehdipatnam and Nampally.",
+      "Specialist-led dental care in Hyderabad, at Neodent Dental Hospital — Mehdipatnam and Nampally.",
     start_url: "/",
     display: "standalone",
     background_color: "#f8f6ef",

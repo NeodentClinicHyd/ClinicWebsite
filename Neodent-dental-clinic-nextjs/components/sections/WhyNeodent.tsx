@@ -54,7 +54,7 @@ const principles = [
     number: "04",
     title: "Two Hyderabad locations",
     description:
-      "Convenient access to NeoDent Dental Hospitals in Humayun Nagar and Nampally.",
+      "Convenient access to Neodent Dental Hospital in Humayun Nagar and Nampally.",
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path

@@ -35,25 +35,25 @@ export const ARCHIVE_IMAGES: ArchiveImage[] = [
   },
   {
     src: "/assets/news-articles/Dr siraj neodent dental clinic Mehdipatnam news article.jpg",
-    alt: "The Siasat Daily — feature article on NeoDent Dental Hospital, Mehdipatnam",
+    alt: "The Siasat Daily — feature article on Neodent Dental Hospital, Mehdipatnam",
     caption: "Feature article",
     source: "The Siasat Daily · Mehdipatnam",
   },
   {
     src: "/assets/news-articles/Dr siraj and dr. Miftah neodent dental clinic Nampally news post.jpg",
-    alt: "The Siasat Daily — feature on modern orthodontic treatment involving NeoDent's clinical team",
+    alt: "The Siasat Daily — feature on modern orthodontic treatment involving Neodent's clinical team",
     caption: "Orthodontic treatment feature",
     source: "The Siasat Daily · Nampally",
   },
   {
     src: "/assets/news-articles/Dr siraj neodent dental clinic Nampally news about health.jpg",
-    alt: "The Siasat Daily — coverage of a NeoDent dental implant awareness camp",
+    alt: "The Siasat Daily — coverage of a Neodent dental implant awareness camp",
     caption: "Dental implant awareness camp",
     source: "The Siasat Daily · Nampally",
   },
   {
     src: "/assets/news-articles/Dr siraj neodent dental clinic Nampally news.jpg",
-    alt: "The Siasat Daily — front-page feature on dental care at NeoDent Nampally",
+    alt: "The Siasat Daily — front-page feature on dental care at Neodent Nampally",
     caption: "Front-page dental care feature",
     source: "The Siasat Daily · Nampally",
   },
@@ -71,55 +71,55 @@ export const ARCHIVE_IMAGES: ArchiveImage[] = [
   },
   {
     src: "/assets/news-articles/Dr siraj and Dr Miftah neodent dental clinic Nampally news.jpg",
-    alt: "The Siasat Daily — coverage of NeoDent's clinical team at Nampally",
+    alt: "The Siasat Daily — coverage of Neodent's clinical team at Nampally",
     caption: "Clinical team coverage",
     source: "The Siasat Daily · Nampally",
   },
   {
     src: "/assets/news-articles/Dr siraj and dr. Miftah neodent dental clinic Nampally news article.jpg",
-    alt: "The Siasat Daily — article on NeoDent's specialist dental services at Nampally",
+    alt: "The Siasat Daily — article on Neodent's specialist dental services at Nampally",
     caption: "Specialist services article",
     source: "The Siasat Daily · Nampally",
   },
   {
     src: "/assets/news-articles/Dr siraj and dr. Miftah neodent dental clinic Nampally news.jpg",
-    alt: "The Siasat Daily — press report on Dr. Siraj and Dr. Miftah at NeoDent Nampally",
+    alt: "The Siasat Daily — press report on Dr. Siraj and Dr. Miftah at Neodent Nampally",
     caption: "Clinical team press report",
     source: "The Siasat Daily · Nampally",
   },
   {
     src: "/assets/news-articles/Dr miftah neodent dental clinic hyderabad news article.jpg",
-    alt: "The Siasat Daily — article covering Dr. Md. Miftah Ur Rahman, NeoDent Hyderabad",
+    alt: "The Siasat Daily — article covering Dr. Md. Miftah Ur Rahman, Neodent Hyderabad",
     caption: "Dr. Miftah — press article",
     source: "The Siasat Daily · Hyderabad",
   },
   {
     src: "/assets/news-articles/Dr miftah neodent dental clinic hyderabad news.jpg",
-    alt: "The Siasat Daily — news item on Dr. Md. Miftah Ur Rahman and NeoDent",
+    alt: "The Siasat Daily — news item on Dr. Md. Miftah Ur Rahman and Neodent",
     caption: "Dr. Miftah — press coverage",
     source: "The Siasat Daily · Hyderabad",
   },
   {
     src: "/assets/news-articles/Dr miftah neodent dental clinic hyderabad newspress.jpg",
-    alt: "The Siasat Daily — press feature on NeoDent Dental Hospital, Hyderabad",
-    caption: "NeoDent press feature",
+    alt: "The Siasat Daily — press feature on Neodent Dental Hospital, Hyderabad",
+    caption: "Neodent press feature",
     source: "The Siasat Daily · Hyderabad",
   },
   {
     src: "/assets/news-articles/Dr siraj neodent dental clinic Nampally news hyderabad.jpg",
-    alt: "The Siasat Daily — report on NeoDent Nampally, Hyderabad",
+    alt: "The Siasat Daily — report on Neodent Nampally, Hyderabad",
     caption: "Nampally clinic report",
     source: "The Siasat Daily · Hyderabad",
   },
   {
     src: "/assets/news-articles/Dr siraj neodent dental clinic Nampally news press.jpg",
-    alt: "The Siasat Daily — press coverage of NeoDent's Nampally practice",
+    alt: "The Siasat Daily — press coverage of Neodent's Nampally practice",
     caption: "Nampally press coverage",
     source: "The Siasat Daily · Nampally",
   },
   {
     src: "/assets/news-articles/neodent-media-siasat-01.jpg",
-    alt: "The Siasat Daily — archival press coverage of NeoDent Dental Hospital",
+    alt: "The Siasat Daily — archival press coverage of Neodent Dental Hospital",
     caption: "Archival press coverage",
     source: "The Siasat Daily",
   },
@@ -220,7 +220,7 @@ export function ArchiveViewer({ initialIndex = 0, onClose }: ArchiveViewerProps)
         className={styles.dialog}
         role="dialog"
         aria-modal="true"
-        aria-label={`NeoDent press archive — image ${index + 1} of ${TOTAL}`}
+        aria-label={`Neodent press archive — image ${index + 1} of ${TOTAL}`}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
@@ -228,7 +228,7 @@ export function ArchiveViewer({ initialIndex = 0, onClose }: ArchiveViewerProps)
         <div className={styles.topBar}>
           <span className={styles.eyebrow}>
             <span className={styles.eyebrowLine} aria-hidden="true" />
-            The NeoDent Archive
+            The Neodent Archive
           </span>
           <span className={styles.counter} aria-live="polite" aria-atomic="true">
             {pad(index + 1)}&thinsp;/&thinsp;{pad(TOTAL)}

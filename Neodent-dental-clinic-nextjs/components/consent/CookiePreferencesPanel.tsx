@@ -107,7 +107,7 @@ export function CookiePreferencesPanel({
           Manage your preferences
         </h2>
         <p className={styles.intro}>
-          Choose which optional technologies NeoDent can use. Essential
+          Choose which optional technologies Neodent can use. Essential
           functionality is always active and cannot be turned off here.
         </p>
 

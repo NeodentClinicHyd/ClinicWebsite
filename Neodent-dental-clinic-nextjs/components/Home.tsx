@@ -80,7 +80,7 @@ export function Home() {
       <Footer />
       <div className="mobile-bar">
         <AppButton href={ctaTelPhone} variant="primary">
-          <Phone size={14} /> Call NeoDent <ArrowRight size={14} />
+          <Phone size={14} /> Call Neodent <ArrowRight size={14} />
         </AppButton>
       </div>
       {leadCaptureOpen && (

@@ -37,7 +37,7 @@ export function BrandStatementStrip() {
     <section
       ref={stripRef}
       className={`${styles.strip} ${isVisible ? styles.visible : ""}`}
-      aria-label="NeoDent brand statement"
+      aria-label="Neodent brand statement"
     >
       <span className={styles.seamTop} aria-hidden="true" />
       <span className={styles.seamBottom} aria-hidden="true" />
@@ -47,13 +47,13 @@ export function BrandStatementStrip() {
       </div>
 
       <div className={styles.container}>
-        <p className={styles.eyebrow}>NeoDent Standard</p>
+        <p className={styles.eyebrow}>Neodent Standard</p>
         <p className={styles.statement}>
           <span className={styles.statementSupport}>We maintain</span>
           <span className={styles.statementEmphasis}>peak performance</span>
         </p>
         <span className={styles.signatureLine} aria-hidden="true" />
-        <p className={styles.attribution}>— NeoDent Dental Clinic</p>
+        <p className={styles.attribution}>— Neodent Dental Clinic</p>
         <p className={styles.location}>Mehdipatnam · Nampally</p>
       </div>
     </section>

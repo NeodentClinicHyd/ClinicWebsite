@@ -148,7 +148,7 @@ export function Recognition() {
 
         <div className="recognition-footer">
           <Clock3 size={18} strokeWidth={2} aria-hidden="true" />
-          Evening appointments available at NeoDent Dental Hospitals: 04:00 PM – 09:00 PM
+          Evening appointments available at Neodent Dental Hospital: 04:00 PM – 09:00 PM
         </div>
       </div>
     </section>

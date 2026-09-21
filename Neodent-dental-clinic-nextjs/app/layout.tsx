@@ -5,9 +5,9 @@ import { CookieConsentProvider } from "@/components/consent/CookieConsentContext
 import { SITE_NAME, SITE_URL } from "@/lib/site-data";
 import { siteJsonLd } from "@/lib/structured-data";
 
-const defaultTitle = "NeoDent Dental Hospitals | Specialist Dental Care in Hyderabad";
+const defaultTitle = "Neodent Dental Hospital | Specialist Dental Care in Hyderabad";
 const defaultDescription =
-  "NeoDent Dental Hospitals offers specialist-led dental care in Hyderabad, with clinics in Mehdipatnam and Nampally covering implants, prosthodontics, orthodontics and restorative dentistry.";
+  "Neodent Dental Hospital offers specialist-led dental care in Hyderabad, with clinics in Mehdipatnam and Nampally covering implants, prosthodontics, orthodontics and restorative dentistry.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,15 +37,13 @@ export const metadata: Metadata = {
     title: defaultTitle,
     description: defaultDescription,
   },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
+  /* favicon.ico and apple-icon.png are served automatically via
+     Next file conventions (see app/). */
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <head>
         {siteJsonLd.map((entry) => (
           <script

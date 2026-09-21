@@ -7,8 +7,10 @@ import { useCookieConsent } from "@/components/consent/CookieConsentContext";
 import {
   directions,
   nampallyDirections,
+  nampallyPhone,
   nampallyTelPhone,
   navItems,
+  phone,
   socialLinks,
   telPhone,
 } from "@/lib/site-data";
@@ -45,10 +47,10 @@ const socialIcons: Record<string, typeof Instagram> = {
 };
 
 const careLinks = [
-  { label: "Treatments", href: "#expertise" },
-  { label: "Patient Stories", href: "#stories" },
-  { label: "What to Expect", href: "#visit" },
-  { label: "Our Clinics", href: "#clinics" },
+  { label: "Dr. Miftah Ur Rahman", href: "/doctors/dr-miftah-ur-rahman" },
+  { label: "Dental Treatments", href: "/treatments" },
+  { label: "Our Clinics", href: "/clinic" },
+  { label: "Contact & Directions", href: "/contact" },
 ];
 
 type Branch = {
@@ -65,7 +67,7 @@ const branches: Branch[] = [
     index: "01",
     name: "Mehdipatnam",
     meta: "Mehdipatnam · Hyderabad",
-    phoneLabel: "090306 48393",
+    phoneLabel: phone,
     tel: telPhone,
     directionsHref: directions,
   },
@@ -73,7 +75,7 @@ const branches: Branch[] = [
     index: "02",
     name: "Nampally",
     meta: "Nampally · Hyderabad",
-    phoneLabel: "090305 98081",
+    phoneLabel: nampallyPhone,
     tel: nampallyTelPhone,
     directionsHref: nampallyDirections,
   },
@@ -123,7 +125,7 @@ export function Footer() {
           <span className={styles.numeral} aria-hidden="true">
             1994
           </span>
-          <div className={styles.eyebrow}>NeoDent Dental Hospitals</div>
+          <div className={styles.eyebrow}>Neodent Dental Hospital</div>
         </header>
 
         <p id="footer-title" className={styles.statement}>
@@ -150,7 +152,7 @@ export function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`NeoDent on ${social.label}`}
+                    aria-label={`Neodent on ${social.label}`}
                     className={styles.socialLink}
                     data-testid={`link-footer-social-${social.label.toLowerCase()}`}
                   >
@@ -237,7 +239,7 @@ export function Footer() {
 
         <div className={styles.legal}>
           <div className={styles.legalRow}>
-            <span>© {new Date().getFullYear()} NeoDent Dental Hospitals</span>
+            <span>© {new Date().getFullYear()} Neodent Dental Hospital</span>
             <span className={styles.legalLinks}>
               <a href="/privacy-policy" data-testid="link-footer-privacy">
                 Privacy

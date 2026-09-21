@@ -522,7 +522,7 @@
 .frameSwitching { opacity: 0; transform: translateY(6px) scale(0.985); }
 
 /* ---- Closing row -- brand line + CTA share one horizontal beat
-   under a single rule: "Two locations. One NeoDent standard." on the
+   under a single rule: "Two locations. One Neodent standard." on the
    left, "Explore our clinics" on the right. .mediaCol's own bottom
    padding already reserves clearance for the secondary plate's
    overhang, so this only needs a small top margin on top of that. */

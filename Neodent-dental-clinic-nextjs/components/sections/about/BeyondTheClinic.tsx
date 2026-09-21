@@ -13,7 +13,7 @@ import styles from "./BeyondTheClinic.module.css";
 /* ------------------------------------------------------------------
    About page — Section 02 — "Beyond The Clinic".
 
-   Deep NeoDent charcoal surface, mirroring the dark-surface pattern
+   Deep Neodent charcoal surface, mirroring the dark-surface pattern
    already established by ClinicalLeadership / SpacesDesignedAroundCare
    / ContactNextStep: local --charcoal/--ivory/--muted/--red tokens
    layered over the same global type system (DM Serif Display + red
@@ -24,7 +24,7 @@ import styles from "./BeyondTheClinic.module.css";
    television/education appearances (10 YouTube videos, thumbnail
    facade -> inline iframe on click, no local MP4s), the Republic Day
    community address with a supporting interview plate, a short press
-   archive continuation, and a return to present-day NeoDent across
+   archive continuation, and a return to present-day Neodent across
    Mehdipatnam and Nampally — closing on two editorial links (no
    appointment booking). ------------------------------------------------------------------ */
 
@@ -362,7 +362,7 @@ export function BeyondTheClinic() {
           </p>
           <p>
             These appearances sit alongside, rather than apart from,
-            NeoDent&apos;s clinical work: the same{" "}
+            Neodent&apos;s clinical work: the same{" "}
             <EditorialHighlight tone="secondary" onDark>
               patient-focused approach
             </EditorialHighlight>{" "}
@@ -418,7 +418,7 @@ export function BeyondTheClinic() {
                 televised interviews
               </EditorialHighlight>{" "}
               discussing dental health with the public, extending his
-              clinical voice beyond NeoDent&apos;s own patients.
+              clinical voice beyond Neodent&apos;s own patients.
             </p>
             <figure className={styles.interviewPlate}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -440,10 +440,10 @@ export function BeyondTheClinic() {
           <div className={styles.archiveCopy}>
             <p className={styles.actEyebrow}>Media Continuation</p>
             <p className={styles.actText}>
-              The same press coverage that documents NeoDent&apos;s clinical
+              The same press coverage that documents Neodent&apos;s clinical
               history also records this public dimension of its work —
               lectures, health camps and media appearances that carried
-              NeoDent&apos;s name from the clinic into the wider community.
+              Neodent&apos;s name from the clinic into the wider community.
             </p>
           </div>
           <div className={styles.archiveContinuationPlates}>
@@ -459,7 +459,7 @@ export function BeyondTheClinic() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/news-articles/Dr siraj and Dr Miftah neodent dental clinic Nampally news.jpg"
-                alt="The Siasat Daily — coverage of NeoDent's clinical team at Nampally"
+                alt="The Siasat Daily — coverage of Neodent's clinical team at Nampally"
                 loading="lazy"
               />
             </figure>
@@ -476,7 +476,7 @@ export function BeyondTheClinic() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={mehdipatnamInteriorImage}
-                alt="NeoDent Dental Hospital, Mehdipatnam — the patient waiting lounge"
+                alt="Neodent Dental Hospital, Mehdipatnam — the patient waiting lounge"
                 loading="lazy"
               />
               <figcaption>Mehdipatnam</figcaption>
@@ -485,7 +485,7 @@ export function BeyondTheClinic() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={nampallyInteriorImage}
-                alt="NeoDent Dental Hospital, Nampally — the reception and consultation wing"
+                alt="Neodent Dental Hospital, Nampally — the reception and consultation wing"
                 loading="lazy"
               />
               <figcaption>Nampally</figcaption>
@@ -493,9 +493,9 @@ export function BeyondTheClinic() {
           </div>
           <div className={styles.todayCopy}>
             <p className={styles.actEyebrow}>06 / The Practice Today</p>
-            <h2 className={styles.actTitle}>NeoDent today.</h2>
+            <h2 className={styles.actTitle}>Neodent today.</h2>
             <p className={styles.actText}>
-              More than three decades after its founding, NeoDent Dental
+              More than three decades after its founding, Neodent Dental
               Hospital continues to practise across{" "}
               <EditorialHighlight tone="primary" onDark>
                 two Hyderabad locations
@@ -507,7 +507,7 @@ export function BeyondTheClinic() {
             <p className={styles.actText}>
               Day-to-day care is carried by{" "}
               <EditorialHighlight tone="secondary" onDark>
-                the wider NeoDent clinical team
+                the wider Neodent clinical team
               </EditorialHighlight>
               , working alongside Dr. Siraj and Dr. Miftah, with{" "}
               <EditorialHighlight tone="quiet" onDark>
@@ -516,8 +516,8 @@ export function BeyondTheClinic() {
               carried into every consultation.
             </p>
             <p className={styles.actText}>
-              To learn more about what NeoDent treats, visit{" "}
-              <a className={styles.inlineLink} href="/expertise">
+              To learn more about what Neodent treats, visit{" "}
+              <a className={styles.inlineLink} href="/treatments">
                 our clinical expertise
               </a>
               , or see both locations in detail on{" "}
@@ -534,11 +534,14 @@ export function BeyondTheClinic() {
           ref={ctaRef}
           className={`${styles.ctaRow} ${ctaVisible ? styles.blockVisible : ""}`}
         >
-          <a className={styles.cta} href="/expertise">
+          <a className={styles.cta} href="/treatments">
             Explore our expertise <ArrowRight size={14} aria-hidden="true" />
           </a>
           <a className={styles.cta} href="/clinic">
             Visit our clinics <ArrowRight size={14} aria-hidden="true" />
+          </a>
+          <a className={styles.cta} href="/doctors/dr-miftah-ur-rahman">
+            Meet our clinical team <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>
       </div>

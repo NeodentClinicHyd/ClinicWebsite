@@ -5,7 +5,7 @@ import { ArrowUpRight, Clock3, MapPin, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ContactEnquiryForm } from "@/components/contact/ContactEnquiryForm";
-import { address, ctaPhone, ctaTelPhone, directions, mehdipatnamHours, nampallyAddress, nampallyDirections, nampallyHours, nampallyTelPhone, phone, telPhone } from "@/lib/site-data";
+import { address, ctaPhone, ctaTelPhone, directions, mehdipatnamHours, nampallyAddress, nampallyDirections, nampallyHours, nampallyPhone, nampallyTelPhone, phone, telPhone } from "@/lib/site-data";
 import styles from "./contact.module.css";
 
 const steps = [
@@ -23,7 +23,7 @@ export function ContactClientChrome() {
           <div className={styles.heroInner}>
             <p className={styles.kicker}>Contact / Begin here</p>
             <h1 id="contact-title">Let&apos;s make a <em>beginning.</em></h1>
-            <p className={styles.intro}>Good care starts with a conversation. Reach the NeoDent team at the branch that suits you, and we&apos;ll take it from there.</p>
+            <p className={styles.intro}>Good care starts with a conversation. Reach the Neodent team at the branch that suits you, and we&apos;ll take it from there.</p>
             <div className={styles.actions}>
               <a href={ctaTelPhone}><Phone aria-hidden="true" /> Call {ctaPhone}</a>
             </div>
@@ -39,7 +39,7 @@ export function ContactClientChrome() {
         </section>
 
         <section className={styles.directory} aria-labelledby="directory-title">
-          <div className={styles.sectionHead}><p className={styles.kicker}>The directory</p><h2 id="directory-title">Two doors into <em>NeoDent.</em></h2></div>
+          <div className={styles.sectionHead}><p className={styles.kicker}>The directory</p><h2 id="directory-title">Two doors into <em>Neodent.</em></h2></div>
           <div className={styles.branches}>
             <article className={styles.branch}>
               <p className={styles.branchNo}>01 / Mehdipatnam</p><h3>Humayun Nagar</h3><p>{address}</p>
@@ -49,7 +49,7 @@ export function ContactClientChrome() {
             <article className={styles.branch}>
               <p className={styles.branchNo}>02 / Nampally</p><h3>Medwin Hospital Complex</h3><p>{nampallyAddress}</p>
               <div className={styles.branchHours}><Clock3 aria-hidden="true" /> {nampallyHours}</div>
-              <div className={styles.branchLinks}><a href={nampallyTelPhone}><Phone aria-hidden="true" /> +91 9030598081</a><a href={nampallyDirections} target="_blank" rel="noreferrer"><MapPin aria-hidden="true" /> Directions <ArrowUpRight aria-hidden="true" /></a></div>
+              <div className={styles.branchLinks}><a href={nampallyTelPhone}><Phone aria-hidden="true" /> {nampallyPhone}</a><a href={nampallyDirections} target="_blank" rel="noreferrer"><MapPin aria-hidden="true" /> Directions <ArrowUpRight aria-hidden="true" /></a></div>
             </article>
           </div>
         </section>
@@ -63,7 +63,7 @@ export function ContactClientChrome() {
             <div className={styles.enquiryHead}>
               <p className={styles.kicker}>Send an enquiry</p>
               <h2 id="enquiry-title">Have a question? <em>Let&apos;s talk.</em></h2>
-              <p className={styles.enquiryIntro}>Have a question about a treatment, clinic location or your next step? Send us a message and the NeoDent team will get back to you.</p>
+              <p className={styles.enquiryIntro}>Have a question about a treatment, clinic location or your next step? Send us a message and the Neodent team will get back to you.</p>
             </div>
             <div className={styles.enquiryFormWrap}>
               <ContactEnquiryForm />

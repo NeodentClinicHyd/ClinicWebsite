@@ -27,7 +27,7 @@ export const enquiryTypeOptions = [
 
 // Loose but real-world phone validation: digits, spaces, +, -, ( ) only,
 // 7-20 characters. Deliberately not stricter (no country-specific
-// pattern) since NeoDent serves walk-in/phone patients with varied
+// pattern) since Neodent serves walk-in/phone patients with varied
 // number formats.
 const PHONE_PATTERN = /^[0-9+\-()\s]{7,20}$/;
 

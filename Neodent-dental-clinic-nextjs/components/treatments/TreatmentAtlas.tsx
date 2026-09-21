@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import { TreatmentAct } from "./TreatmentAct";
 import { featuredTreatment, treatmentAtlas, additionalServices } from "@/lib/treatment-data";
@@ -62,7 +63,7 @@ const enrichedTreatmentAtlas = [
         <EditorialHighlight tone="quiet">
           full-arch rehabilitation
         </EditorialHighlight>
-        . At NeoDent Dental Hospitals, Mehdipatnam and Nampally, implant
+        . At Neodent Dental Hospital, Mehdipatnam and Nampally, implant
         treatment follows careful planning to support appropriate placement.
       </p>
     ),
@@ -83,7 +84,7 @@ const enrichedTreatmentAtlas = [
         that apply controlled pressure to gradually move teeth into improved
         positions. The duration and approach depend on the severity of
         misalignment, the patient's age and specific treatment goals.
-        Orthodontic care at NeoDent begins with{" "}
+        Orthodontic care at Neodent begins with{" "}
         <EditorialHighlight tone="quiet">
           clinical assessment, imaging and treatment planning
         </EditorialHighlight>{" "}
@@ -135,7 +136,7 @@ const enrichedTreatmentAtlas = [
         , selected based on the specific concern and the patient's aesthetic
         goals. Smile design planning considers tooth proportions, gum line
         symmetry and facial features to create natural-looking results. At
-        NeoDent Dental Hospitals, cosmetic treatment is planned through{" "}
+        Neodent Dental Hospital, cosmetic treatment is planned through{" "}
         <EditorialHighlight tone="quiet">
           careful assessment and communication
         </EditorialHighlight>{" "}
@@ -163,7 +164,7 @@ const enrichedTreatmentAtlas = [
         <EditorialHighlight tone="quiet">
           chewing ability and support facial structure
         </EditorialHighlight>
-        . At NeoDent, denture and prosthodontic care includes impression-taking,
+        . At Neodent, denture and prosthodontic care includes impression-taking,
         bite registration and adjustments to support comfortable function.
       </p>
     ),
@@ -301,7 +302,7 @@ export function TreatmentAtlas() {
             Seven areas of <span>clinical focus.</span>
           </h2>
           <p className={styles.lede}>
-            NeoDent approaches different dental concerns through{" "}
+            Neodent approaches different dental concerns through{" "}
             <EditorialHighlight tone="primary">
               clinical assessment and treatment planning
             </EditorialHighlight>
@@ -313,7 +314,7 @@ export function TreatmentAtlas() {
             . The seven areas outlined below represent the primary clinical
             focuses at{" "}
             <EditorialHighlight tone="quiet">
-              NeoDent Dental Hospitals, Mehdipatnam and Nampally
+              Neodent Dental Hospital, Mehdipatnam and Nampally
             </EditorialHighlight>
             .
           </p>
@@ -338,6 +339,12 @@ export function TreatmentAtlas() {
             <div className={styles.featuredText}>
               {enrichedFeaturedTreatment.description}
             </div>
+
+            {enrichedFeaturedTreatment.doctorHref && (
+              <a className={styles.featuredDoctorLink} href={enrichedFeaturedTreatment.doctorHref}>
+                Treated by Dr. Md. Miftah Ur Rahman <ArrowRight size={13} aria-hidden="true" />
+              </a>
+            )}
 
             {enrichedFeaturedTreatment.metadata && (
               <dl className={styles.featuredMetadata}>
@@ -412,7 +419,7 @@ export function TreatmentAtlas() {
               Beyond the featured <span>seven.</span>
             </h3>
             <p className={styles.additionalLede}>
-              Beyond the primary treatment areas, NeoDent provides a broader
+              Beyond the primary treatment areas, Neodent provides a broader
               range of restorative, cosmetic, preventive and surgical dental
               services. These supporting services can form part of routine care
               or be considered alongside more comprehensive treatment, depending
@@ -451,14 +458,14 @@ export function TreatmentAtlas() {
             <div className={styles.closingCardContent}>
               <p className={styles.closingCardEyebrow}>
                 <span className={styles.closingCardRule} aria-hidden="true" />
-                NeoDent Legacy
+                Neodent Legacy
               </p>
               <p className={styles.closingCardStatement}>
                 <span className={styles.closingCardSupport}>Changing smiles</span>
                 <span className={styles.closingCardEmphasis}>since decades</span>
               </p>
               <span className={styles.closingCardSignature} aria-hidden="true" />
-              <p className={styles.closingCardAttribution}>— NeoDent Dental Hospitals</p>
+              <p className={styles.closingCardAttribution}>— Neodent Dental Hospital</p>
               <p className={styles.closingCardLocation}>Mehdipatnam · Nampally</p>
             </div>
           </div>

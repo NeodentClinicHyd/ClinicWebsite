@@ -32,7 +32,7 @@ const chapters: Chapter[] = [
     title: "Information We May Collect",
     body: (
       <>
-        <p>Depending on how you interact with NeoDent, this may include:</p>
+        <p>Depending on how you interact with Neodent, this may include:</p>
         <dl className={styles.termList}>
           <div>
             <dt>Contact information</dt>
@@ -79,7 +79,7 @@ const chapters: Chapter[] = [
       <>
         <p className={styles.callout}>Your dental treatment is private.</p>
         <p>
-          NeoDent does not publicly disclose or publish identifiable information about a patient&apos;s
+          Neodent does not publicly disclose or publish identifiable information about a patient&apos;s
           diagnosis, treatment, clinical records, treatment plans, clinical photographs or treatment
           journey without appropriate authorization, except where disclosure is required or permitted by
           applicable law.
@@ -111,7 +111,7 @@ const chapters: Chapter[] = [
     title: "When Information May Be Shared",
     body: (
       <>
-        <p>NeoDent does not sell personal or patient information.</p>
+        <p>Neodent does not sell personal or patient information.</p>
         <p>Information may be shared where reasonably necessary with:</p>
         <ul className={styles.list}>
           <li>Authorised clinic staff.</li>
@@ -150,7 +150,7 @@ const chapters: Chapter[] = [
     title: "Data Security",
     body: (
       <p>
-        NeoDent takes reasonable technical and organisational measures intended to protect personal
+        Neodent takes reasonable technical and organisational measures intended to protect personal
         information from unauthorized access, misuse, loss, alteration or disclosure.
       </p>
     ),
@@ -171,7 +171,7 @@ const chapters: Chapter[] = [
     title: "Privacy Requests",
     body: (
       <p>
-        You may contact NeoDent regarding your personal information or any privacy concerns, including
+        You may contact Neodent regarding your personal information or any privacy concerns, including
         requests relating to access, correction, withdrawal of consent, questions about processing, or
         privacy complaints. See &ldquo;Questions About Privacy?&rdquo; below for how to reach us.
       </p>
@@ -193,7 +193,7 @@ const chapters: Chapter[] = [
     body: (
       <p>
         Public reviews and testimonials are treated separately from confidential clinical records.
-        NeoDent does not publicly disclose a patient&apos;s treatment details merely because the person
+        Neodent does not publicly disclose a patient&apos;s treatment details merely because the person
         has visited the clinic. Identifiable patient stories, photographs or treatment information used
         for public-facing content are supported by appropriate authorization.
       </p>
@@ -204,7 +204,7 @@ const chapters: Chapter[] = [
     title: "Changes to This Privacy Policy",
     body: (
       <p>
-        NeoDent may update this Privacy Policy from time to time to reflect changes in our services,
+        Neodent may update this Privacy Policy from time to time to reflect changes in our services,
         technology, legal requirements or privacy practices. The updated version will be published on
         this page with a revised date.
       </p>
@@ -221,7 +221,7 @@ export function PrivacyPolicyClientChrome() {
           <div className={styles.heroInner}>
             <p className={styles.kicker}>Privacy policy</p>
             <h1 id="privacy-title">Privacy Policy</h1>
-            <p className={styles.intro}>Your privacy matters to NeoDent.</p>
+            <p className={styles.intro}>Your privacy matters to Neodent.</p>
           </div>
           <div className={styles.geometry} aria-hidden="true">
             <span className={styles.ghost}>Privacy</span>
@@ -237,7 +237,7 @@ export function PrivacyPolicyClientChrome() {
               Introduction
             </h2>
             <p className={styles.leadParagraph}>
-              NeoDent Dental Hospitals respects the privacy of patients, visitors and people who contact
+              Neodent Dental Hospital respects the privacy of patients, visitors and people who contact
               us through our website. This Privacy Policy explains, in clear terms, the types of
               information we may collect, why we use it, how we protect it, and the circumstances in
               which it may be shared.
@@ -261,7 +261,7 @@ export function PrivacyPolicyClientChrome() {
               <h3>Questions About Privacy?</h3>
               <p>
                 If you have questions or concerns about this Privacy Policy or how your information is
-                handled, you can reach the NeoDent team directly.
+                handled, you can reach the Neodent team directly.
               </p>
               <div className={styles.closingActions}>
                 <a href={ctaTelPhone}>

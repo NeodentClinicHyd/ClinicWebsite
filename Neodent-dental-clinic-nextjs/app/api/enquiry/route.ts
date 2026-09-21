@@ -4,7 +4,7 @@ import { validateEnquiry, type EnquiryInput } from "@/lib/enquiry-schema";
 /* ------------------------------------------------------------------
    POST /api/enquiry — receives the Contact page "Send an enquiry"
    form, validates it server-side (never trusting the client), applies
-   lightweight anti-abuse checks, and forwards it to the NeoDent team
+   lightweight anti-abuse checks, and forwards it to the Neodent team
    inbox via Resend.
 
    This is a public, unauthenticated, network-exposed endpoint (it has
@@ -73,7 +73,7 @@ function buildEmail(data: EnquiryInput) {
 
   const html = `
     <div style="font-family:Arial,sans-serif;color:#171717;max-width:560px">
-      <h2 style="font-size:18px;margin:0 0 16px">New NeoDent website enquiry</h2>
+      <h2 style="font-size:18px;margin:0 0 16px">New Neodent website enquiry</h2>
       <table style="width:100%;border-collapse:collapse;font-size:14px">
         ${rows
           .map(
@@ -92,7 +92,7 @@ function buildEmail(data: EnquiryInput) {
   `.trim();
 
   const text = [
-    "New enquiry received from the NeoDent website.",
+    "New enquiry received from the Neodent website.",
     "",
     `Name: ${data.name}`,
     `Phone: ${data.phone}`,
@@ -107,7 +107,7 @@ function buildEmail(data: EnquiryInput) {
   ].join("\n");
 
   return {
-    subject: `New NeoDent Website Enquiry — ${data.clinic}`,
+    subject: `New Neodent Website Enquiry — ${data.clinic}`,
     html,
     text,
   };
@@ -164,7 +164,7 @@ export async function POST(request: Request) {
         {
           ok: false,
           message:
-            "Something went wrong while sending your enquiry. Please try again or contact NeoDent directly.",
+            "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
         },
         { status: 500 },
       );
@@ -188,7 +188,7 @@ export async function POST(request: Request) {
         {
           ok: false,
           message:
-            "Something went wrong while sending your enquiry. Please try again or contact NeoDent directly.",
+            "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
         },
         { status: 502 },
       );
@@ -201,7 +201,7 @@ export async function POST(request: Request) {
       {
         ok: false,
         message:
-          "Something went wrong while sending your enquiry. Please try again or contact NeoDent directly.",
+          "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
       },
       { status: 500 },
     );

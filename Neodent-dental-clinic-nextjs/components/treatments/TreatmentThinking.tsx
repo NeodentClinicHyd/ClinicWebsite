@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
+import { ArrowRight, Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import styles from "./TreatmentThinking.module.css";
@@ -124,7 +124,7 @@ export function TreatmentThinking() {
 
           <div className={styles.philosophyBody}>
             <p className={styles.paragraph}>
-              Treatment at NeoDent begins with{" "}
+              Treatment at Neodent begins with{" "}
               <EditorialHighlight tone="primary" onDark>
                 understanding the patient's concern
               </EditorialHighlight>
@@ -158,7 +158,7 @@ export function TreatmentThinking() {
             </p>
 
             <p className={styles.paragraph}>
-              Treatment planning at NeoDent is not a fixed sequence — it is
+              Treatment planning at Neodent is not a fixed sequence — it is
               shaped by{" "}
               <EditorialHighlight tone="primary" onDark>
                 each patient's specific condition
@@ -199,7 +199,7 @@ export function TreatmentThinking() {
                 <span className={styles.portraitRegistration} aria-hidden="true" />
                 <Image
                   src="/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png"
-                  alt="Dr. Mohd. Siraj Ur Rahman, Prosthodontist and Implantologist, founder and director of NeoDent Dental Hospitals"
+                  alt="Dr. Mohd. Siraj Ur Rahman, Prosthodontist and Implantologist, founder and director of Neodent Dental Hospital"
                   width={320}
                   height={420}
                   className={styles.portraitImage}
@@ -214,7 +214,7 @@ export function TreatmentThinking() {
                 <p className={styles.doctorSpecialty}>Prosthodontist &amp; Implantologist</p>
                 <p className={styles.doctorContext}>
                   Specialist training in prosthodontics and implantology, and
-                  35+ years of clinical practice, inform how NeoDent assesses
+                  35+ years of clinical practice, inform how Neodent assesses
                   and plans treatment for each patient.
                 </p>
               </div>
@@ -232,7 +232,7 @@ export function TreatmentThinking() {
                 <span className={styles.portraitRegistration} aria-hidden="true" />
                 <Image
                   src="/assets/dr-miftah/Dr. Md. Miftah Ur Rahman - Neodent Dental Hospital.png"
-                  alt="Dr. Md. Miftah Ur Rahman, Prosthodontist and Implantologist, assistant director of NeoDent Dental Hospitals"
+                  alt="Dr. Md. Miftah Ur Rahman, Prosthodontist and Implantologist, assistant director of Neodent Dental Hospital"
                   width={320}
                   height={420}
                   className={styles.portraitImage}
@@ -249,8 +249,11 @@ export function TreatmentThinking() {
                 <p className={styles.doctorContext}>
                   Specialist qualifications in prosthodontics and implantology,
                   including FICOI (U.S.A.), underpin his approach to restorative
-                  and implant-based treatment at NeoDent.
+                  and implant-based treatment at Neodent.
                 </p>
+                <a className={styles.doctorProfileLink} href="/doctors/dr-miftah-ur-rahman">
+                  View Dr. Miftah&rsquo;s profile <ArrowRight size={13} aria-hidden="true" />
+                </a>
               </div>
             </article>
           </div>
@@ -285,7 +288,7 @@ export function TreatmentThinking() {
                 <EditorialHighlight tone="secondary" onDark>
                   masticatory efficiency
                 </EditorialHighlight>
-                {" "}and clinical strength. Part of NeoDent's approach to
+                {" "}and clinical strength. Part of Neodent's approach to
                 helping patients understand the{" "}
                 <EditorialHighlight tone="quiet" onDark>
                   materials and methods

@@ -1,0 +1,171 @@
+/* ------------------------------------------------------------------
+   Atmosphere.module.css — values copied verbatim from the existing
+   per-module implementations (see Atmosphere.tsx header).
+   ------------------------------------------------------------------ */
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dark {
+  /* Dark-surface line colour: ClinicalSettings rgba(241,238,231,.055-.06) */
+  --atm-line: rgba(241, 238, 231, 0.06);
+  --atm-ghost: rgba(241, 238, 231, 0.045);
+  --atm-label: rgba(241, 238, 231, 0.14);
+}
+
+.light {
+  /* Light-surface counterpart: ink lines at the same opacity band
+     (OurClinics/LegacyAndPeople use rgba(38,48,51,…) washes). */
+  --atm-line: rgba(38, 48, 51, 0.08);
+  --atm-ghost: rgba(38, 48, 51, 0.05);
+  --atm-label: rgba(38, 48, 51, 0.24);
+}
+
+.draftVertical {
+  position: absolute;
+  top: 5%;
+  bottom: 5%;
+  right: 38%;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--atm-line) 20%,
+    var(--atm-line) 80%,
+    transparent
+  );
+}
+
+.draftHorizontal {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--atm-line) 20%,
+    var(--atm-line) 80%,
+    transparent
+  );
+}
+
+.registrationDot {
+  position: absolute;
+  top: 50%;
+  right: 38%;
+  width: 6px;
+  height: 6px;
+  margin: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(215, 25, 32, 0.28);
+}
+
+.registrationDotSmall {
+  position: absolute;
+  bottom: 14%;
+  left: 6%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(215, 25, 32, 0.22);
+}
+
+/* /contact hero geometry — solid hairline circle */
+.arc {
+  position: absolute;
+  width: min(58vw, 760px);
+  height: min(58vw, 760px);
+  left: 49%;
+  top: 12%;
+  border: 1px solid var(--atm-line);
+  border-radius: 50%;
+}
+
+/* /contact .detail — partial arc, two borders transparent, rotated */
+.detailArc {
+  position: absolute;
+  left: 75%;
+  top: 33%;
+  width: 110px;
+  height: 110px;
+  border: 1px solid var(--atm-line);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  transform: rotate(28deg);
+}
+
+/* /contact .registrationDot — red dot with soft halo */
+.haloDot {
+  position: absolute;
+  left: calc(75% - 3px);
+  top: calc(55% - 3px);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neodent-red);
+  box-shadow: 0 0 0 4px rgba(193, 57, 47, 0.08);
+}
+
+/* /contact .ghost / .enquiryGhost — giant low-opacity serif numeral */
+.ghost {
+  position: absolute;
+  right: 4%;
+  top: 8%;
+  font-family: var(--app-font-serif);
+  font-size: clamp(9rem, 16vw, 16rem);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: var(--atm-ghost);
+  font-weight: 400;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* archive-atmosphere vertical label recipe */
+.verticalLabel {
+  position: absolute;
+  top: 12%;
+  left: 3%;
+  writing-mode: vertical-rl;
+  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  color: var(--atm-label);
+  pointer-events: none;
+}
+
+.coordTag {
+  position: absolute;
+  top: 12%;
+  right: 4%;
+  color: var(--atm-label);
+  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  letter-spacing: 0.22em;
+}
+
+@media (max-width: 767px) {
+  .arc,
+  .detailArc,
+  .verticalLabel {
+    display: none;
+  }
+
+  .ghost {
+    font-size: 7rem;
+    right: -4%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere {
+    transform: none !important;
+  }
+}

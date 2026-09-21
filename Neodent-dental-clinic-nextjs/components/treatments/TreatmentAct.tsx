@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import type { Treatment } from "@/lib/treatment-data";
 import styles from "./TreatmentAct.module.css";
 
@@ -51,6 +52,12 @@ export function TreatmentAct({ treatment, index }: TreatmentActProps) {
         </header>
 
         <div className={styles.actText}>{treatment.description}</div>
+
+        {treatment.doctorHref && (
+          <a className={styles.doctorLink} href={treatment.doctorHref}>
+            Treated by Dr. Md. Miftah Ur Rahman <ArrowRight size={13} aria-hidden="true" />
+          </a>
+        )}
 
         {treatment.metadata && treatment.metadata.length > 0 && (
           <dl className={styles.metadata}>

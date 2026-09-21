@@ -191,7 +191,7 @@ export function ExperienceIntro() {
             <span className="serif">you walk in.</span>
           </h2>
           <p className="exp-intro-lede">
-            From the first step inside to every stage of treatment, NeoDent is
+            From the first step inside to every stage of treatment, Neodent is
             designed around a{" "}
             <EditorialHighlight tone="primary">
               calmer, more reassuring
@@ -220,7 +220,7 @@ export function ExperienceIntro() {
               ref={videoRef}
               className="exp-intro-video"
               src={tourVideo}
-              aria-label="A short tour of NeoDent Dental Hospitals"
+              aria-label="A short tour of Neodent Dental Hospital"
               muted
               loop
               playsInline
@@ -257,7 +257,7 @@ export function ExperienceIntro() {
         </div>
       </div>
       <div className="container exp-intro-proof-wrap">
-        <div className="exp-intro-proof" aria-label="NeoDent experience facts">
+        <div className="exp-intro-proof" aria-label="Neodent experience facts">
           {experienceProof.map((item, index) => (
             <div className="exp-intro-proof-item" key={item.value}>
               <span className="exp-intro-proof-index">0{index + 1}</span>

@@ -87,7 +87,7 @@ export function OurClinics() {
               <h1 id="clinic-title" className={styles.title}>
                 Two locations.
                 <br />
-                <span>One NeoDent standard.</span>
+                <span>One Neodent standard.</span>
               </h1>
             </div>
 
@@ -96,7 +96,7 @@ export function OurClinics() {
               className={`${styles.body} ${bodyVisible ? styles.blockVisible : ""}`}
             >
               <p className={styles.paragraph}>
-                NeoDent Dental Hospitals provides{" "}
+                Neodent Dental Hospital provides{" "}
                 <EditorialHighlight tone="primary">
                   specialist-led dental care
                 </EditorialHighlight>{" "}
@@ -108,7 +108,7 @@ export function OurClinics() {
                 prosthodontic, preventive and smile-focused treatment within
                 the same{" "}
                 <EditorialHighlight tone="quiet">
-                  NeoDent clinical environment
+                  Neodent clinical environment
                 </EditorialHighlight>
                 .
               </p>
@@ -121,7 +121,7 @@ export function OurClinics() {
                 to consultation, treatment planning and follow-up care — the
                 approach that has{" "}
                 <EditorialHighlight tone="secondary">
-                  defined NeoDent since 1994
+                  defined Neodent since 1994
                 </EditorialHighlight>
                 , carried forward across{" "}
                 <EditorialHighlight tone="quiet">
@@ -131,7 +131,7 @@ export function OurClinics() {
               </p>
 
               {/* Location index */}
-              <div className={styles.locationIndex} aria-label="NeoDent clinic locations">
+              <div className={styles.locationIndex} aria-label="Neodent clinic locations">
                 <div className={styles.locationIndexSeam} aria-hidden="true" />
                 <ol className={styles.locationIndexList}>
                   <li className={styles.locationIndexItem}>
@@ -159,7 +159,7 @@ export function OurClinics() {
           <figure
             ref={mediaRef}
             className={`${styles.mediaCol} ${mediaVisible ? styles.blockVisible : ""}`}
-            aria-label="NeoDent clinic interior photographs"
+            aria-label="Neodent clinic interior photographs"
           >
             {/* Primary plate — Mehdipatnam interior */}
             <div className={styles.primaryWrap}>
@@ -168,7 +168,7 @@ export function OurClinics() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={mehdipatnamInteriorImage}
-                  alt="NeoDent Dental Hospital, Mehdipatnam — patient waiting lounge interior"
+                  alt="Neodent Dental Hospital, Mehdipatnam — patient waiting lounge interior"
                   loading="eager"
                   style={{ objectPosition: "68% 42%" }}
                 />
@@ -186,7 +186,7 @@ export function OurClinics() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={mehdipatnamExteriorImage}
-                alt="NeoDent Dental Hospital, Mehdipatnam — exterior entrance"
+                alt="Neodent Dental Hospital, Mehdipatnam — exterior entrance"
                 loading="eager"
                 style={{ objectPosition: "62% 32%" }}
               />
