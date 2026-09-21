@@ -14,7 +14,7 @@ import styles from "./SpacesDesignedAroundCare.module.css";
 /* ------------------------------------------------------------------
    Homepage Section 07 — "Spaces designed around care."
 
-   Answers where the NeoDent experience actually happens: the two
+   Answers where the Neodent experience actually happens: the two
    Hyderabad branches. An editorial location atlas rather than two
    generic location cards -- a single dominant image plate (large
    primary + an offset secondary plate) switches as one coordinated
@@ -63,10 +63,10 @@ const branches: Branch[] = [
     name: "Mehdipatnam",
     meta: "Mehdipatnam · Hyderabad",
     description:
-      "A long-established NeoDent location in Hyderabad, bringing the clinic's patient-focused approach into a familiar, dedicated dental setting.",
+      "A long-established Neodent location in Hyderabad, bringing the clinic's patient-focused approach into a familiar, dedicated dental setting.",
     primary: {
       src: mehdipatnamInteriorImage,
-      alt: "NeoDent Dental Hospital Mehdipatnam — the patient waiting lounge",
+      alt: "Neodent Dental Hospital Mehdipatnam — the patient waiting lounge",
       // Shifted right of centre so the crop favours the corridor's
       // converging perspective and chandelier rather than the
       // promotional wall posters on the far left.
@@ -75,7 +75,7 @@ const branches: Branch[] = [
     },
     secondary: {
       src: mehdipatnamExteriorImage,
-      alt: "NeoDent Dental Hospital Mehdipatnam — the carved entrance doorway",
+      alt: "Neodent Dental Hospital Mehdipatnam — the carved entrance doorway",
       position: "62% 32%",
       label: "Entrance",
     },
@@ -85,10 +85,10 @@ const branches: Branch[] = [
     name: "Nampally",
     meta: "Nampally · Hyderabad",
     description:
-      "A NeoDent location in Hyderabad offering the same patient-focused approach across consultation, treatment and follow-up care.",
+      "A Neodent location in Hyderabad offering the same patient-focused approach across consultation, treatment and follow-up care.",
     primary: {
       src: nampallyInteriorImage,
-      alt: "NeoDent Dental Hospital Nampally — the reception and consultation wing",
+      alt: "Neodent Dental Hospital Nampally — the reception and consultation wing",
       // Keeps the double-height ceiling and red staircase visible;
       // the busy tiled floor at the very bottom is the least
       // interesting part of the frame, so it is the first to crop.
@@ -97,7 +97,7 @@ const branches: Branch[] = [
     },
     secondary: {
       src: nampallyExteriorImage,
-      alt: "NeoDent Dental Hospital Nampally — the street frontage and signage",
+      alt: "Neodent Dental Hospital Nampally — the street frontage and signage",
       position: "50% 38%",
       label: "Street frontage",
     },
@@ -187,14 +187,14 @@ export function SpacesDesignedAroundCare() {
           <span className={styles.numeral} aria-hidden="true">
             07
           </span>
-          <div className={styles.eyebrow}>NeoDent / Our clinics</div>
+          <div className={styles.eyebrow}>Neodent / Our clinics</div>
           <h2 id="clinics-title" className={styles.title}>
             Spaces designed
             <br />
             <span>around care.</span>
           </h2>
           <p className={styles.lede}>
-            Across Mehdipatnam and Nampally, NeoDent brings the same{" "}
+            Across Mehdipatnam and Nampally, Neodent brings the same{" "}
             <EditorialHighlight tone="primary" onDark>
               patient-focused approach
             </EditorialHighlight>{" "}
@@ -204,7 +204,7 @@ export function SpacesDesignedAroundCare() {
 
         <div className={styles.composition}>
           <div className={styles.panel}>
-            <nav className={styles.selector} aria-label="Choose a NeoDent clinic location">
+            <nav className={styles.selector} aria-label="Choose a Neodent clinic location">
               <ol>
                 {branches.map((branch, index) => {
                   const isActive = index === activeIndex;
@@ -215,13 +215,13 @@ export function SpacesDesignedAroundCare() {
                         className={`${styles.selectorItem} ${isActive ? styles.selectorItemActive : ""}`}
                         onClick={() => selectBranch(index)}
                         aria-current={isActive ? "true" : undefined}
-                        aria-label={`${branch.index}: ${branch.name}, NeoDent Dental Hospital, Hyderabad`}
+                        aria-label={`${branch.index}: ${branch.name}, Neodent Dental Hospital, Hyderabad`}
                       >
                         <span className={styles.selectorIndex}>{branch.index}</span>
                         <span className={styles.selectorLabelGroup}>
                           <span className={styles.selectorName}>{branch.name}</span>
                           <span className={styles.selectorSub}>
-                            NeoDent Dental Hospital
+                            Neodent Dental Hospital
                             <br />
                             Hyderabad
                           </span>
@@ -243,7 +243,7 @@ export function SpacesDesignedAroundCare() {
               >
                 At{" "}
                 <EditorialHighlight tone="secondary" onDark>
-                  NeoDent Dental Hospital, Nampally
+                  Neodent Dental Hospital, Nampally
                 </EditorialHighlight>
                 , patients can access{" "}
                 <EditorialHighlight tone="primary" onDark>
@@ -253,7 +253,7 @@ export function SpacesDesignedAroundCare() {
                 personalised treatment. The team provides focused care across
                 preventive, restorative and more complex dental needs, with
                 attention to comfort and long-term oral health. Located in
-                Nampally, Hyderabad, the clinic extends the same NeoDent
+                Nampally, Hyderabad, the clinic extends the same Neodent
                 approach to{" "}
                 <EditorialHighlight tone="quiet" onDark>
                   specialist-led care and thoughtful patient support
@@ -309,13 +309,13 @@ export function SpacesDesignedAroundCare() {
         </div>
 
         {/* Closing beat -- brand line and CTA share one row bound by a
-            single top rule, so "Two locations. One NeoDent standard."
+            single top rule, so "Two locations. One Neodent standard."
             and "Explore our clinics" read as one intentional final
             statement rather than two separately-spaced elements. */}
         <div className={styles.ctaRow}>
           <p className={styles.brandLine}>
             <span className={styles.brandLineTick} aria-hidden="true" />
-            Two locations. One NeoDent standard.
+            Two locations. One Neodent standard.
           </p>
           <a href="/clinic" className={styles.cta}>
             Explore our clinics <ArrowRight size={14} aria-hidden="true" />

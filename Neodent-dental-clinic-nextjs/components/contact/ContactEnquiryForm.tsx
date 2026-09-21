@@ -80,7 +80,7 @@ export function ContactEnquiryForm() {
         setStatus("error");
         setErrorMessage(
           result?.message ||
-            "Something went wrong while sending your enquiry. Please try again or contact NeoDent directly.",
+            "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
         );
         if (result?.errors) setErrors(result.errors);
         return;
@@ -90,7 +90,7 @@ export function ContactEnquiryForm() {
     } catch {
       setStatus("error");
       setErrorMessage(
-        "Something went wrong while sending your enquiry. Please try again or contact NeoDent directly.",
+        "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
       );
     }
   };
@@ -109,7 +109,7 @@ export function ContactEnquiryForm() {
           <Check size={22} aria-hidden="true" />
         </div>
         <p className={styles.kicker}>Enquiry sent</p>
-        <h3>Thank you for reaching out to NeoDent.</h3>
+        <h3>Thank you for reaching out to Neodent.</h3>
         <p className={styles.successCopy}>
           Our team will review your message and get back to you.
         </p>

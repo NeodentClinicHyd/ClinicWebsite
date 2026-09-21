@@ -142,7 +142,7 @@ export function Doctor() {
               </div>
             ))}
           </div>
-          <p className="doctor-description">Director — Neodent Dental Hospitals</p>
+          <p className="doctor-description">Director — Neodent Dental Hospital</p>
           <a className="text-link doctor-link" href="#appointment">
             Book a consultation <ArrowRight size={14} aria-hidden="true" />
           </a>

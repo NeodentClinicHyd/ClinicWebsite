@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import ContactClientChrome from "./ContactClientChrome";
 
-const title = "Contact NeoDent Dental Hospitals | Hyderabad";
+const title = "Contact Neodent Dental Hospital | Hyderabad";
 const description =
-  "Begin your care journey with NeoDent Dental Hospitals. Reach either Hyderabad clinic — Mehdipatnam (Humayun Nagar) or Nampally (Medwin Hospital Complex) — by phone or in person.";
+  "Begin your care journey with Neodent Dental Hospital. Reach either Hyderabad clinic — Mehdipatnam (Humayun Nagar) or Nampally (Medwin Hospital Complex) — by phone or in person.";
 
 export const metadata: Metadata = {
   title: { absolute: title },

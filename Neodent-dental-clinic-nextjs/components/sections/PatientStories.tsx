@@ -9,7 +9,7 @@ import styles from "./PatientStories.module.css";
 
    The emotional-proof chapter: after clinic (01), legacy (02),
    treatments (03) and people (04), this section answers what the
-   experience actually feels like for patients. One of NeoDent's three
+   experience actually feels like for patients. One of Neodent's three
    authentic patient-testimonial films is visually dominant at a time
    -- video, story number, theme label and pull quote change together
    as a single unit when the visitor switches stories via the 01/02/03
@@ -175,7 +175,7 @@ export function PatientStories() {
             <span>In their own words.</span>
           </h2>
           <p className={styles.lede}>
-            Real experiences from patients who trusted NeoDent with their care.
+            Real experiences from patients who trusted Neodent with their care.
           </p>
         </header>
 

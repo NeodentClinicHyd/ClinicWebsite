@@ -1,0 +1,26 @@
+﻿node : (node:6464) [DEP0190] DeprecationWarning: Passing args to a 
+child process with shell option true can lead to security 
+vulnerabilities, as the arguments are not escaped, only 
+concatenated.
+At line:1 char:181
++ ... uild.txt -Encoding utf8; node scripts/doctor-page-qa.mjs 
+2>&1 | Out-F ...
++                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:6464) [DE...y c 
+   oncatenated.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-deprecation ...` to show where the warning was 
+created)
+desktop audit: {
+  "h1": 1,
+  "h2": 11,
+  "imgsWithoutAlt": 2,
+  "imgCount": 16,
+  "missingAltSrcs": [
+    "/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fneodent-mark.1gc_x19l40uan.png&w=96&q=75",
+    "/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fneodent-mark.1gc_x19l40uan.png&w=96&q=75"
+  ],
+  "breadcrumb": "Home / Doctors / Dr. Md. Miftah Ur Rahman"
+}
+done

@@ -84,7 +84,7 @@ export function CookieConsentBanner({
         <div className={styles.copy}>
           <p className={styles.eyebrow}>We use cookies</p>
           <p className={styles.text}>
-            NeoDent uses cookies and similar technologies to keep the website
+            Neodent uses cookies and similar technologies to keep the website
             working, understand how visitors use our site, and support
             certain embedded content. You can choose which optional
             technologies you allow.{" "}

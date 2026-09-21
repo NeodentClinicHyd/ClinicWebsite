@@ -1,0 +1,89 @@
+/* ------------------------------------------------------------------
+   OffsetImagePair.module.css — overlap recipe from BeyondTheClinic's
+   .today composition + OurClinics' offset frame / labels.
+   ------------------------------------------------------------------ */
+
+.pair {
+  position: relative;
+}
+
+.primaryWrap {
+  position: relative;
+}
+
+.offsetFrame {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 62%;
+  height: 58%;
+  border: 1px solid rgba(215, 25, 32, 0.3);
+  pointer-events: none;
+}
+
+.primaryFrame {
+  position: relative;
+  overflow: hidden;
+  background: var(--neodent-surface);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(22, 28, 30, 0.18));
+  pointer-events: none;
+}
+
+.primaryLabel,
+.secondaryLabel {
+  display: block;
+  margin-top: 10px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--neodent-muted);
+}
+
+.secondaryFrame {
+  position: relative;
+  width: 46%;
+  margin: -14% 0 0 auto;
+  translate: 0 -4%;
+  right: -6%;
+  z-index: 1;
+  border: 1px solid rgba(38, 48, 51, 0.16);
+  background: var(--neodent-surface);
+  box-shadow: 6px 8px 18px rgba(38, 48, 51, 0.18);
+}
+
+.onDark .secondaryFrame {
+  border-color: rgba(241, 238, 231, 0.22);
+  box-shadow: 6px 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+.onDark .primaryLabel,
+.onDark .secondaryLabel {
+  color: rgba(241, 238, 231, 0.45);
+}
+
+@media (max-width: 767px) {
+  .secondaryFrame {
+    width: 52%;
+    right: 0;
+    margin-left: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .secondaryFrame {
+    transition: none;
+  }
+}

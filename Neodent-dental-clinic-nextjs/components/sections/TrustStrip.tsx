@@ -26,7 +26,7 @@ const principles = [
     number: "04",
     title: "Two Hyderabad locations",
     description:
-      "Convenient access to NeoDent Dental Hospitals in Humayun Nagar and Nampally.",
+      "Convenient access to Neodent Dental Hospital in Humayun Nagar and Nampally.",
   },
 ];
 

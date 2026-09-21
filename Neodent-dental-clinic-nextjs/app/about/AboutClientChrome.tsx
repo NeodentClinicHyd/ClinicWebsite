@@ -15,7 +15,7 @@ import { BeyondTheClinic } from "@/components/sections/about/BeyondTheClinic";
    page's content rules. This wrapper reuses only the sitewide
    Navbar and Footer exactly as Home.tsx already wires them (neither
    is modified). The site has no booking/appointment CTA anywhere --
-   Navbar links to /contact ("Talk to NeoDent"), and Call is the only
+   Navbar links to /contact ("Talk to Neodent"), and Call is the only
    CTA. No floating CTA or sticky mobile booking bar is added here,
    since those were not part of the approved About page scope. ------------------------------------------------------------------ */
 

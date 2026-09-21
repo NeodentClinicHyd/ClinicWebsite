@@ -9,7 +9,7 @@ import { SITE_NAME } from "@/lib/site-data";
  * `app/twitter-image.tsx` so the two stay pixel-identical without
  * duplicating the JSX.
  *
- * Uses the real NeoDent logo (the same artwork already shipped as
+ * Uses the real Neodent logo (the same artwork already shipped as
  * `officialLogo` in lib/site-data.ts / used across the site) centred
  * on a brand ivory background, rather than inventing a new graphic.
  * No claims, ratings or stats are rendered into the image — just the
@@ -58,7 +58,7 @@ export async function renderDefaultOgImage() {
             letterSpacing: "-0.01em",
           }}
         >
-          NeoDent Dental Hospitals
+          Neodent Dental Hospital
         </div>
         <div
           style={{

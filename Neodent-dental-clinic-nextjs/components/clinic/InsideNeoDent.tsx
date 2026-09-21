@@ -7,7 +7,7 @@ import { ClinicGalleryViewer } from "./ClinicGalleryViewer";
 import styles from "./InsideNeoDent.module.css";
 
 /* ------------------------------------------------------------------
-   Clinic page — Section 03 — "Inside NeoDent".
+   Clinic page — Section 03 — "Inside Neodent".
 
    Warm ivory editorial surface. Design language inherits from the
    About page's LegacyAndPeople and the homepage's LegacyStory
@@ -87,7 +87,7 @@ export function InsideNeoDent() {
             </span>
             <div className={styles.eyebrow}>
               <span className={styles.eyebrowRule} aria-hidden="true" />
-              03 / Inside NeoDent
+              03 / Inside Neodent
             </div>
             <h2 id="inside-title" className={styles.title}>
               Spaces designed
@@ -101,7 +101,7 @@ export function InsideNeoDent() {
             <EditorialHighlight tone="secondary">
               Mehdipatnam and Nampally
             </EditorialHighlight>
-            , NeoDent&apos;s clinical spaces are shaped around the practical
+            , Neodent&apos;s clinical spaces are shaped around the practical
             needs of dental care — from{" "}
             <EditorialHighlight tone="primary">
               consultation and treatment
@@ -119,7 +119,7 @@ export function InsideNeoDent() {
         <div
           ref={galleryRef}
           className={`${styles.gallery} ${galleryVisible ? styles.galleryVisible : ""}`}
-          aria-label="Photographs of NeoDent Dental Hospital, Mehdipatnam and Nampally"
+          aria-label="Photographs of Neodent Dental Hospital, Mehdipatnam and Nampally"
         >
           {clinicGalleryImages.map((image, index) => (
             <figure
@@ -160,7 +160,7 @@ export function InsideNeoDent() {
         <div
           ref={sigRef}
           className={`${styles.signature} ${sigVisible ? styles.blockVisible : ""}`}
-          aria-label="NeoDent clinic locations"
+          aria-label="Neodent clinic locations"
         >
           <span className={styles.signatureTick} aria-hidden="true" />
           <span className={styles.signatureText}>

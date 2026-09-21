@@ -14,7 +14,7 @@
    Next's `metadataBase`.
    ------------------------------------------------------------------ */
 export const SITE_URL = "https://www.neodentdentalhospitals.com";
-export const SITE_NAME = "NeoDent Dental Hospitals";
+export const SITE_NAME = "Neodent Dental Hospital";
 
 export const entranceImage = "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg";
 export const waitingImage = "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg";
@@ -45,13 +45,13 @@ export const legacyAwardImage = "/assets/dr-miftah/dr-miftah-award-recognition.j
 export const visitImage = "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg";
 export const officialLogo = "/assets/Neodent dental hospital hyderabad logo.jpeg";
 
-export const phone = "+91 9030648393";
+export const phone = "+91 90306 48393";
 export const telPhone = "tel:+919030648393";
 /* ------------------------------------------------------------------
    Generic "Call" CTA number — used by standalone call-to-action
    buttons that are not attributed to a specific branch (floating CTA,
    hero button, mobile bars, lead-capture popup, contact-card "Call
-   NeoDent" buttons, etc). Deliberately separate from `phone`/
+   Neodent" buttons, etc). Deliberately separate from `phone`/
    `telPhone` above, which remain the Mehdipatnam BRANCH contact
    number shown in branch directory listings (Footer, ContactNextStep,
    ClinicalSettings, the /contact branch directory) and must not
@@ -59,7 +59,7 @@ export const telPhone = "tel:+919030648393";
 export const ctaPhone = "+91 9246348485";
 export const ctaTelPhone = "tel:+919246348485";
 export const address =
-  "Masjid-e-Azizia, Humayun Nagar Road, Royal Colony, Humayun Nagar, Hyderabad, Telangana, India";
+  "10-3-14B/11/1, near Masjid-e-Azizia, Humayun Nagar, Royal Colony, Mehdipatnam, Hyderabad, Telangana 500006";
 export const shortLocation = "Humayun Nagar, Hyderabad";
 export const heroLocations = [
   { number: "01", name: "Humayun Nagar", detail: "Humayun Nagar, Hyderabad" },
@@ -70,7 +70,7 @@ export const heroLocations = [
   },
 ] as const;
 export const directions =
-  "https://www.google.com/maps/search/?api=1&query=Masjid-e-Azizia%2C%20Humayun%20Nagar%20Road%2C%20Royal%20Colony%2C%20Humayun%20Nagar%2C%20Hyderabad%2C%20Telangana%2C%20India";
+  "https://www.google.com/maps/search/?api=1&query=10-3-14B%2F11%2F1%2C%20near%20Masjid-e-Azizia%2C%20Humayun%20Nagar%2C%20Royal%20Colony%2C%20Mehdipatnam%2C%20Hyderabad%2C%20Telangana%20500006%2C%20India";
 export const googleRating = { score: "4.3", count: 259 };
 
 /* ------------------------------------------------------------------
@@ -78,13 +78,13 @@ export const googleRating = { score: "4.3", count: 259 };
    Mehdipatnam reuses `phone` / `telPhone` / `directions` above
    (the primary branch number and address already established in this
    file). Nampally is client-supplied business information; the
-   Maps query text mirrors the already-verified `heroLocations`
-   Nampally detail ("Medwin Hospital Complex, Nampally") rather than
-   inventing a street address. ------------------------------------------------------------------ */
-export const nampallyPhone = "+91 9030598081";
+   Nampally phone/address are client-supplied business information,
+   kept verbatim for NAP (name/address/phone) consistency with the
+   Google Business Profile. ------------------------------------------------------------------ */
+export const nampallyPhone = "+91 90305 98081";
 export const nampallyTelPhone = "tel:+919030598081";
 export const nampallyDirections =
-  "https://www.google.com/maps/search/?api=1&query=NeoDent%20Dental%20Hospital%2C%20Medwin%20Hospital%20Complex%2C%20Nampally%2C%20Hyderabad%2C%20Telangana%2C%20India";
+  "https://www.google.com/maps/search/?api=1&query=Neodent%20Dental%20Hospital%2C%20Medwin%20Hospital%20Complex%2C%20Pillar%20%23A1270%2C%20Raghav%20Ratna%20Towers%2C%20Chirag%20Ali%20Lane%2C%20Mahesh%20Nagar%20Colony%2C%20Nampally%2C%20Hyderabad%2C%20Telangana%20500001%2C%20India";
 
 /* ------------------------------------------------------------------
    Branch opening hours — the two branches keep different timings, so
@@ -107,8 +107,8 @@ export const socialLinks: readonly SocialLink[] = [
 ] as const;
 
 export type NavItem = { label: string; href: string };
-export const nampallyAddress = "Medwin Hospital Complex, Pillar #A1270, Nampally, Hyderabad, Telangana 500001";
-export const mehdipatnamAddress = "10-3-14B/11/1, Humayun Nagar Rd, near Azzia Masjid, Royal Colony, Humayun Nagar, Hyderabad, Telangana 500006";
+export const nampallyAddress = "Medwin Hospital Complex, Pillar #A1270, Raghav Ratna Towers, Chirag Ali Lane, Mahesh Nagar Colony, Nampally, Hyderabad, Telangana 500001";
+export const mehdipatnamAddress = "10-3-14B/11/1, near Masjid-e-Azizia, Humayun Nagar, Royal Colony, Mehdipatnam, Hyderabad, Telangana 500006";
 
 /* ------------------------------------------------------------------
    Structured (schema.org PostalAddress-shaped) versions of the two
@@ -117,14 +117,14 @@ export const mehdipatnamAddress = "10-3-14B/11/1, Humayun Nagar Rd, near Azzia M
    no new address information is introduced. ------------------------------------------------------------------ */
 export const mehdipatnamStructuredAddress = {
   streetAddress:
-    "10-3-14B/11/1, Humayun Nagar Rd, near Azzia Masjid, Royal Colony, Humayun Nagar",
+    "10-3-14B/11/1, near Masjid-e-Azizia, Humayun Nagar, Royal Colony, Mehdipatnam",
   addressLocality: "Hyderabad",
   addressRegion: "Telangana",
   postalCode: "500006",
   addressCountry: "IN",
 } as const;
 export const nampallyStructuredAddress = {
-  streetAddress: "Medwin Hospital Complex, Pillar #A1270, Nampally",
+  streetAddress: "Medwin Hospital Complex, Pillar #A1270, Raghav Ratna Towers, Chirag Ali Lane, Mahesh Nagar Colony, Nampally",
   addressLocality: "Hyderabad",
   addressRegion: "Telangana",
   postalCode: "500001",
@@ -134,7 +134,7 @@ export const nampallyStructuredAddress = {
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Expertise", href: "/treatments" },
+  { label: "Treatments", href: "/treatments" },
   { label: "Clinic", href: "/clinic" },
   { label: "Contact", href: "/contact" },
 ];
@@ -143,12 +143,12 @@ export const galleryItems = [
   {
     src: entranceImage,
     label: "The Neodent entrance",
-    alt: "Entrance to Neodent Dental Hospitals",
+    alt: "Entrance to Neodent Dental Hospital",
   },
   {
     src: waitingImage,
     label: "A considered waiting room",
-    alt: "Neodent Dental Hospitals waiting area",
+    alt: "Neodent Dental Hospital waiting area",
   },
   {
     src: equipmentImage,
@@ -179,7 +179,7 @@ export const heroSlideMeta = [
 export const HERO_AUTOPLAY_MS = 7000;
 
 /* ------------------------------------------------------------------
-   Hero Slide 02 — "Where NeoDent is": the two Hyderabad locations.
+   Hero Slide 02 — "Where Neodent is": the two Hyderabad locations.
 
    Only branch names and location detail ALREADY VERIFIED inside this
    project are used here. Nampally's "Medwin Hospital Complex" comes
@@ -251,7 +251,7 @@ export type ClinicGalleryImage = {
 export const clinicGalleryImages: readonly ClinicGalleryImage[] = [
   {
     src: mehdipatnamInteriorImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — the patient waiting lounge with its blue chandelier",
+    alt: "Neodent Dental Hospital Mehdipatnam — the patient waiting lounge with its blue chandelier",
     branch: "Mehdipatnam",
     label: "Waiting lounge",
     position: "68% 42%",
@@ -259,7 +259,7 @@ export const clinicGalleryImages: readonly ClinicGalleryImage[] = [
   },
   {
     src: nampallyInteriorImage,
-    alt: "NeoDent Dental Hospital Nampally — the double-height reception and consultation wing",
+    alt: "Neodent Dental Hospital Nampally — the double-height reception and consultation wing",
     branch: "Nampally",
     label: "Reception & staircase",
     position: "50% 26%",
@@ -267,49 +267,49 @@ export const clinicGalleryImages: readonly ClinicGalleryImage[] = [
   },
   {
     src: mehdipatnamExteriorImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — the carved wooden entrance doorway",
+    alt: "Neodent Dental Hospital Mehdipatnam — the carved wooden entrance doorway",
     branch: "Mehdipatnam",
     label: "Entrance",
     position: "62% 30%",
   },
   {
     src: mehdipatnamReceptionImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — the front-desk reception counter",
+    alt: "Neodent Dental Hospital Mehdipatnam — the front-desk reception counter",
     branch: "Mehdipatnam",
     label: "Reception counter",
     position: "50% 38%",
   },
   {
     src: mehdipatnamDirectorOfficeImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — the director's consultation office",
+    alt: "Neodent Dental Hospital Mehdipatnam — the director's consultation office",
     branch: "Mehdipatnam",
     label: "Director's office",
     position: "50% 42%",
   },
   {
     src: mehdipatnamTreatmentRoomOneImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — a fully equipped dental treatment room",
+    alt: "Neodent Dental Hospital Mehdipatnam — a fully equipped dental treatment room",
     branch: "Mehdipatnam",
     label: "Treatment room",
     position: "50% 55%",
   },
   {
     src: mehdipatnamTreatmentRoomTwoImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — a second dental treatment chamber",
+    alt: "Neodent Dental Hospital Mehdipatnam — a second dental treatment chamber",
     branch: "Mehdipatnam",
     label: "Treatment chamber",
     position: "50% 48%",
   },
   {
     src: mehdipatnamPatientLoungeImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — a quiet patient lounge between chambers",
+    alt: "Neodent Dental Hospital Mehdipatnam — a quiet patient lounge between chambers",
     branch: "Mehdipatnam",
     label: "Patient lounge",
     position: "50% 55%",
   },
   {
     src: mehdipatnamWaitingHallImage,
-    alt: "NeoDent Dental Hospital Mehdipatnam — the main waiting hall outside the consultation chambers",
+    alt: "Neodent Dental Hospital Mehdipatnam — the main waiting hall outside the consultation chambers",
     branch: "Mehdipatnam",
     label: "Waiting hall",
     position: "50% 42%",
@@ -317,7 +317,7 @@ export const clinicGalleryImages: readonly ClinicGalleryImage[] = [
   },
   {
     src: nampallyExteriorImage,
-    alt: "NeoDent Dental Hospital Nampally — the street frontage and signage",
+    alt: "Neodent Dental Hospital Nampally — the street frontage and signage",
     branch: "Nampally",
     label: "Street frontage",
     position: "50% 38%",
@@ -351,11 +351,11 @@ export const heroBranches: readonly HeroBranch[] = [
     variant: "a",
     plate: {
       src: mehdipatnamInteriorImage,
-      alt: "NeoDent Dental Hospital Mehdipatnam interior — the patient waiting lounge",
+      alt: "Neodent Dental Hospital Mehdipatnam interior — the patient waiting lounge",
     },
     inset: {
       src: mehdipatnamExteriorImage,
-      alt: "NeoDent Dental Hospital Mehdipatnam exterior — the entrance doorway and registration counter",
+      alt: "Neodent Dental Hospital Mehdipatnam exterior — the entrance doorway and registration counter",
     },
   },
   {
@@ -365,11 +365,11 @@ export const heroBranches: readonly HeroBranch[] = [
     variant: "b",
     plate: {
       src: nampallyExteriorImage,
-      alt: "NeoDent Dental Hospital Nampally exterior — the street frontage and signage",
+      alt: "Neodent Dental Hospital Nampally exterior — the street frontage and signage",
     },
     inset: {
       src: nampallyInteriorImage,
-      alt: "NeoDent Dental Hospital Nampally interior — the reception and registration counter",
+      alt: "Neodent Dental Hospital Nampally interior — the reception and registration counter",
     },
   },
 ] as const;
@@ -448,7 +448,7 @@ export const heroRecordItems: readonly HeroRecordItem[] = [
     source: ["The Siasat Daily", "Hyderabad"],
     variant: "press",
     src: siasatPressImage,
-    alt: "The Siasat Daily, Hyderabad — newspaper coverage of a NeoDent Dental Hospitals dental implant camp and lecture.",
+    alt: "The Siasat Daily, Hyderabad — newspaper coverage of a Neodent Dental Hospital dental implant camp and lecture.",
     sizes: "(max-width: 767px) 46vw, (max-width: 1023px) 40vw, 30vw",
   },
   {
@@ -457,7 +457,7 @@ export const heroRecordItems: readonly HeroRecordItem[] = [
     source: ["News18 Urdu"],
     variant: "media",
     src: tvInterviewImage,
-    alt: "News18 Urdu television — a dental health segment on the programme Hello Parwaz featuring NeoDent Dental Hospitals.",
+    alt: "News18 Urdu television — a dental health segment on the programme Hello Parwaz featuring Neodent Dental Hospital.",
     sizes: "(max-width: 767px) 40vw, (max-width: 1023px) 36vw, 27vw",
   },
   {
@@ -466,7 +466,7 @@ export const heroRecordItems: readonly HeroRecordItem[] = [
     source: ["Institutional recognition"],
     variant: "award",
     src: awardsWallImage,
-    alt: "Awards, mementos and certificates received by NeoDent Dental Hospitals, on display at the hospital.",
+    alt: "Awards, mementos and certificates received by Neodent Dental Hospital, on display at the hospital.",
     /* Deliberately larger than this plate's rendered width. The plate
        applies a crop zoom on top of object-position (see
        --record-crop-zoom in globals.css), so only part of the served

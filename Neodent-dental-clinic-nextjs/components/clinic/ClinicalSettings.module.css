@@ -396,6 +396,26 @@
   line-height: 1.72;
 }
 
+/* Deep link to the doctor named at this branch — same quiet red
+   metadata-link grammar as the section's other links. */
+.branchDoctorLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 clamp(18px, 2.2vw, 24px);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neodent-red);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.branchDoctorLink:hover {
+  color: var(--neodent-ivory);
+}
+
 /* ---- Contact information — properly readable hierarchy ------------ */
 
 /* ADDRESS — slightly larger than before for a location page */

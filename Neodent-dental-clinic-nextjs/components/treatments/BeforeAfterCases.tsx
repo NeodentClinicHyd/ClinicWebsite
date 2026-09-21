@@ -12,7 +12,7 @@ const cases = [
     description: "Smile restoration following an accident, using zirconia crowns",
     before: "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -before treatment.jpg",
     after: "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -after treatment.jpg",
-    alt: "Anterior smile design case at NeoDent",
+    alt: "Anterior smile design case at Neodent",
   },
   {
     id: "full-mouth-mehdipatnam",
@@ -20,7 +20,7 @@ const cases = [
     description: "Comprehensive rehabilitation using dental implants at Mehdipatnam",
     before: "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - before surgery.jpg",
     after: "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - after surgery.jpg",
-    alt: "Full mouth rehabilitation case at NeoDent Mehdipatnam",
+    alt: "Full mouth rehabilitation case at Neodent Mehdipatnam",
   },
   {
     id: "upper-arch-nampally",
@@ -28,7 +28,7 @@ const cases = [
     description: "Upper arch restoration using implant-supported prosthetics at Nampally",
     before: "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - before surgery.jpg",
     after: "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - after surgery.jpg",
-    alt: "Upper arch rehabilitation case at NeoDent Nampally",
+    alt: "Upper arch rehabilitation case at Neodent Nampally",
   },
   {
     id: "scaling-polishing",
@@ -36,7 +36,7 @@ const cases = [
     description: "Professional cleaning and polishing treatment",
     before: "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment before.jpg",
     after: "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment after.jpg",
-    alt: "Scaling and polishing treatment at NeoDent",
+    alt: "Scaling and polishing treatment at Neodent",
   },
 ];
 
@@ -72,7 +72,7 @@ export function BeforeAfterCases() {
             Real cases.<br /><span>Visible outcomes.</span>
           </h2>
           <p className={styles.lead}>
-            Selected cases from NeoDent showing{" "}
+            Selected cases from Neodent showing{" "}
             <EditorialHighlight tone="primary">
               treatment outcomes
             </EditorialHighlight>{" "}
@@ -82,7 +82,7 @@ export function BeforeAfterCases() {
             </EditorialHighlight>
             . Each case reflects the{" "}
             <EditorialHighlight tone="quiet">
-              clinical work carried out at NeoDent
+              clinical work carried out at Neodent
             </EditorialHighlight>
             .
           </p>

@@ -93,7 +93,7 @@ export function Hero() {
             </span>
             <div className="container hero-founder-inner">
               <div className="hero-founder-copy">
-                <div className="hero-eyebrow">NeoDent Dental Hospitals</div>
+                <div className="hero-eyebrow">Neodent Dental Hospital</div>
                 <p className="hero-founder-tagline">
                   Changing smiles since 3 decades.
                 </p>
@@ -128,7 +128,7 @@ export function Hero() {
                 </div>
                 <div
                   className="hero-founder-locations"
-                  aria-label="Two NeoDent locations in Hyderabad"
+                  aria-label="Two Neodent locations in Hyderabad"
                 >
                   <MapPin size={13} aria-hidden="true" />
                   <span>2 Hyderabad locations</span>
@@ -159,10 +159,10 @@ export function Hero() {
                 <img
                   className="hero-founder-portrait"
                   src={recognitionImage}
-                  alt="Dr. Mohd. Siraj Ur Rahman, BDS, FCIP, MDS, Director of NeoDent Dental Hospitals, Hyderabad"
+                  alt="Dr. Mohd. Siraj Ur Rahman, BDS, FCIP, MDS, Director of Neodent Dental Hospital, Hyderabad"
                   loading="eager"
                 />
-                <div className="hero-founder-visual-location" aria-label="NeoDent Hyderabad locations">
+                <div className="hero-founder-visual-location" aria-label="Neodent Hyderabad locations">
                   <span>2 Hyderabad locations</span>
                   <strong>Mehdipatnam <i aria-hidden="true">·</i> Nampally</strong>
                 </div>
@@ -184,7 +184,7 @@ export function Hero() {
           </div>
         </article>
 
-        {/* Slide 02 — Where NeoDent is: the two Hyderabad locations.
+        {/* Slide 02 — Where Neodent is: the two Hyderabad locations.
             An editorial "location atlas": one copy column, then two
             staggered photographic plates whose scale, plate shape and
             frame offsets are mirrored rather than repeated, so the
@@ -205,10 +205,10 @@ export function Hero() {
             </span>
             <div className="container hero-place-inner">
               <div className="hero-place-copy">
-                <div className="hero-eyebrow">NeoDent Dental Hospitals</div>
+                <div className="hero-eyebrow">Neodent Dental Hospital</div>
                 <h2 id="hero-place-title" className="hero-title hero-place-title">
                   <span>Where</span>
-                  <span>NeoDent</span>
+                  <span>Neodent</span>
                   <span className="serif">is.</span>
                 </h2>
                 <p className="hero-place-tagline">
@@ -311,7 +311,7 @@ export function Hero() {
             </span>
             <div className="container hero-record-inner">
               <div className="hero-record-copy">
-                <div className="hero-eyebrow">NeoDent Dental Hospitals</div>
+                <div className="hero-eyebrow">Neodent Dental Hospital</div>
                 <h2 id="hero-record-title" className="hero-title hero-record-title">
                   <span>Recognised</span>
                   <span>beyond the</span>

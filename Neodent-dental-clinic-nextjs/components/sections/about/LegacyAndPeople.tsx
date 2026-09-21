@@ -90,7 +90,7 @@ export function LegacyAndPeople() {
               <span className={styles.numeral} aria-hidden="true">
                 01
               </span>
-              <div className={styles.eyebrow}>The NeoDent Legacy</div>
+              <div className={styles.eyebrow}>The Neodent Legacy</div>
               <h1 id="legacy-title" className={styles.title}>
                 Decades of changing smiles.
                 <br />
@@ -108,12 +108,12 @@ export function LegacyAndPeople() {
               className={`${styles.intro} ${introVisible ? styles.blockVisible : ""}`}
             >
               <p>
-                NeoDent Dental Hospital was founded in Hyderabad in{" "}
+                Neodent Dental Hospital was founded in Hyderabad in{" "}
                 <EditorialHighlight tone="primary">1994</EditorialHighlight> by Dr.
                 Mohd. Siraj Ur Rahman, opening its first practice in Mehdipatnam.
                 In the decades since, that single clinic has grown into{" "}
                 <EditorialHighlight tone="secondary">
-                  NeoDent Dental Hospitals
+                  Neodent Dental Hospital
                 </EditorialHighlight>
                 , now practising across{" "}
                 <EditorialHighlight tone="quiet">
@@ -133,7 +133,7 @@ export function LegacyAndPeople() {
                 <EditorialHighlight tone="secondary">
                   the wider clinical team
                 </EditorialHighlight>{" "}
-                that now works alongside the practice&apos;s founder. NeoDent has
+                that now works alongside the practice&apos;s founder. Neodent has
                 always centred on{" "}
                 <EditorialHighlight tone="quiet">
                   the person in the chair
@@ -141,7 +141,7 @@ export function LegacyAndPeople() {
                 , not just the procedure ahead of them.
               </p>
               <p>
-                That continuity is what NeoDent asks every patient to trust: a{" "}
+                That continuity is what Neodent asks every patient to trust: a{" "}
                 <EditorialHighlight tone="secondary">
                   specialist-led clinical team
                 </EditorialHighlight>
@@ -159,7 +159,7 @@ export function LegacyAndPeople() {
             <div className={styles.openingMeta}>
               <span className={styles.openingMetaLabel}>Dr. Md. Miftah Ur Rahman</span>
               <span className={styles.openingMetaSub}>Prosthodontist &amp; Implantologist</span>
-              <span className={styles.openingMetaSub}>Assistant Director · NeoDent</span>
+              <span className={styles.openingMetaSub}>Assistant Director · Neodent</span>
             </div>
           </div>
 
@@ -169,7 +169,7 @@ export function LegacyAndPeople() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/assets/dr-miftah/Dr. Md. Miftah Ur Rahman during treatment- Neodent Dental Hospital.jpg"
-              alt="Dr. Md. Miftah Ur Rahman performing a dental treatment procedure at NeoDent Dental Hospital, Hyderabad"
+              alt="Dr. Md. Miftah Ur Rahman performing a dental treatment procedure at Neodent Dental Hospital, Hyderabad"
               loading="eager"
             />
           </figure>
@@ -195,7 +195,7 @@ export function LegacyAndPeople() {
             <p className={styles.actEyebrow}>01 / The Beginning</p>
             <h2 className={styles.actTitle}>A practice shaped by experience.</h2>
             <p className={styles.actText}>
-              NeoDent was founded in{" "}
+              Neodent was founded in{" "}
               <EditorialHighlight tone="primary">1994</EditorialHighlight> in
               Mehdipatnam, Hyderabad, at a time when specialist-led dental
               care of this kind was still uncommon in the city. Dr. Mohd.
@@ -203,11 +203,11 @@ export function LegacyAndPeople() {
               <EditorialHighlight tone="secondary">
                 dentistry, prosthodontics and implantology
               </EditorialHighlight>
-              , disciplines that would come to define NeoDent&apos;s approach
+              , disciplines that would come to define Neodent&apos;s approach
               for the following three decades.
             </p>
             <p className={styles.actText}>
-              Rather than following a fixed template, NeoDent&apos;s identity
+              Rather than following a fixed template, Neodent&apos;s identity
               took shape gradually, through years of{" "}
               <EditorialHighlight tone="quiet">
                 clinical practice
@@ -234,12 +234,12 @@ export function LegacyAndPeople() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png"
-              alt="Dr. Mohd. Siraj Ur Rahman, founder and director of NeoDent Dental Hospitals"
+              alt="Dr. Mohd. Siraj Ur Rahman, founder and director of Neodent Dental Hospital"
               loading="lazy"
             />
             <figcaption>
               <b>Dr. Mohd. Siraj Ur Rahman</b>
-              <span>Founder · Director · NeoDent</span>
+              <span>Founder · Director · Neodent</span>
             </figcaption>
           </figure>
 
@@ -253,12 +253,12 @@ export function LegacyAndPeople() {
               <EditorialHighlight tone="primary">
                 founder and director
               </EditorialHighlight>{" "}
-              of NeoDent Dental Hospitals. He established the practice in
+              of Neodent Dental Hospital. He established the practice in
               Hyderabad in 1994 and has led its clinical direction for{" "}
               <EditorialHighlight tone="secondary">
                 more than three decades
               </EditorialHighlight>
-              , building NeoDent around the disciplines of dentistry,
+              , building Neodent around the disciplines of dentistry,
               prosthodontics and implantology.
             </p>
             <p className={styles.actText}>
@@ -269,7 +269,7 @@ export function LegacyAndPeople() {
               , his specialisation lies in prosthodontics and implantology —
               the reconstruction and replacement of teeth, and the surgical
               placement of dental implants. That specialist grounding has
-              informed NeoDent&apos;s clinical approach since its earliest
+              informed Neodent&apos;s clinical approach since its earliest
               years.
             </p>
             <p className={styles.actText}>
@@ -292,20 +292,20 @@ export function LegacyAndPeople() {
               in dentistry, Dr. Siraj&apos;s clinical philosophy has always
               placed the patient conversation ahead of the procedure —
               understanding the concern before proposing the treatment. That
-              approach, established at NeoDent&apos;s founding, continues to
+              approach, established at Neodent&apos;s founding, continues to
               guide the practice today.
             </p>
             <p className={styles.actText}>
-              As Director, Dr. Siraj continues to oversee NeoDent&apos;s two
+              As Director, Dr. Siraj continues to oversee Neodent&apos;s two
               Hyderabad locations, Mehdipatnam and Nampally, while remaining
               directly involved in{" "}
               <EditorialHighlight tone="quiet">
                 clinical work
               </EditorialHighlight>{" "}
-              — a continuity that patients returning to NeoDent over many
+              — a continuity that patients returning to Neodent over many
               years have come to recognise. Learn more about{" "}
-              <a className={styles.inlineLink} href="/expertise">
-                NeoDent&apos;s clinical expertise
+              <a className={styles.inlineLink} href="/treatments">
+                Neodent&apos;s clinical expertise
               </a>
               .
             </p>
@@ -321,7 +321,7 @@ export function LegacyAndPeople() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/assets/Dr Siraj and Dr. Miftah Neodent dental clinic - during treatment.webp"
-              alt="Dr. Mohd. Siraj Ur Rahman and Dr. Md. Miftah Ur Rahman during treatment at NeoDent Dental Clinic"
+              alt="Dr. Mohd. Siraj Ur Rahman and Dr. Md. Miftah Ur Rahman during treatment at Neodent Dental Clinic"
               loading="lazy"
             />
             <span className={styles.continuityRegistration} aria-hidden="true" />
@@ -331,23 +331,23 @@ export function LegacyAndPeople() {
             <p className={styles.actEyebrow}>03 / Clinical Continuity</p>
             <h2 className={styles.actTitle}>Experience carried forward.</h2>
             <p className={styles.actText}>
-              At NeoDent, clinical experience is not held by one person
+              At Neodent, clinical experience is not held by one person
               alone. Dr. Md. Miftah Ur Rahman,{" "}
               <EditorialHighlight tone="secondary">
                 Prosthodontist and Implantologist
               </EditorialHighlight>{" "}
-              and Assistant Director at NeoDent, works alongside Dr. Siraj
+              and Assistant Director at Neodent, works alongside Dr. Siraj
               across both the Mehdipatnam and Nampally locations, extending
               the same specialist disciplines into the practice&apos;s
               day-to-day clinical work.
             </p>
             <p className={styles.actText}>
-              Alongside his role at NeoDent, Dr. Miftah is an{" "}
+              Alongside his role at Neodent, Dr. Miftah is an{" "}
               <EditorialHighlight tone="quiet">
                 Assistant Professor at SB Patil Dental College &amp; Hospital
               </EditorialHighlight>
               , echoing the academic dimension that has run through
-              NeoDent&apos;s clinical leadership since 1994. Together with{" "}
+              Neodent&apos;s clinical leadership since 1994. Together with{" "}
               <EditorialHighlight tone="primary">
                 the wider clinical team
               </EditorialHighlight>
@@ -358,17 +358,17 @@ export function LegacyAndPeople() {
           </div>
         </div>
 
-        {/* ---- Act 04 — The NeoDent Archive --------------------------- */}
+        {/* ---- Act 04 — The Neodent Archive --------------------------- */}
         <div
           ref={archiveRef}
           className={`${styles.archive} ${archiveVisible ? styles.blockVisible : ""}`}
         >
           <header className={styles.archiveHeader}>
-            <p className={styles.actEyebrow}>04 / The NeoDent Archive</p>
+            <p className={styles.actEyebrow}>04 / The Neodent Archive</p>
             <h2 className={styles.actTitle}>A history that can be seen.</h2>
           </header>
           <p className={styles.actText}>
-            Alongside its clinical work, NeoDent has been covered by the
+            Alongside its clinical work, Neodent has been covered by the
             Urdu press in Hyderabad, principally{" "}
             <EditorialHighlight tone="secondary">
               The Siasat Daily
@@ -376,13 +376,13 @@ export function LegacyAndPeople() {
             — coverage of professional lectures, dental health camps,
             orthodontic treatment and{" "}
             <EditorialHighlight tone="quiet">
-              academic recognition within NeoDent&apos;s clinical team
+              academic recognition within Neodent&apos;s clinical team
             </EditorialHighlight>
             .
           </p>
           <p className={styles.actText}>
             These clippings are not curated for effect — they are simply
-            what has been written about NeoDent and its doctors over the
+            what has been written about Neodent and its doctors over the
             years, kept as part of the practice&apos;s own record. Seen
             together, they trace{" "}
             <EditorialHighlight tone="primary">
@@ -416,7 +416,7 @@ export function LegacyAndPeople() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/news-articles/Dr siraj and dr. Miftah neodent dental clinic Nampally news post.jpg"
-                alt="The Siasat Daily — feature on modern orthodontic treatment involving NeoDent's clinical team"
+                alt="The Siasat Daily — feature on modern orthodontic treatment involving Neodent's clinical team"
                 loading="lazy"
               />
               <figcaption>Orthodontic treatment feature</figcaption>
@@ -429,7 +429,7 @@ export function LegacyAndPeople() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/news-articles/Dr siraj neodent dental clinic Nampally news about health.jpg"
-                alt="The Siasat Daily — coverage of a NeoDent dental implant awareness camp"
+                alt="The Siasat Daily — coverage of a Neodent dental implant awareness camp"
                 loading="lazy"
               />
               <figcaption>Dental implant awareness camp</figcaption>
@@ -442,7 +442,7 @@ export function LegacyAndPeople() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/news-articles/Dr siraj neodent dental clinic Mehdipatnam news article.jpg"
-                alt="The Siasat Daily — front-page feature on dental care at NeoDent"
+                alt="The Siasat Daily — front-page feature on dental care at Neodent"
                 loading="lazy"
               />
               <figcaption>Front-page dental care feature</figcaption>
@@ -488,13 +488,13 @@ export function LegacyAndPeople() {
             <p className={styles.actEyebrow}>05 / Recognition / Clinical Journey</p>
             <h2 className={styles.actTitle}>Recognition earned over time.</h2>
             <p className={styles.actText}>
-              Over the decades, NeoDent and its clinical team have received
+              Over the decades, Neodent and its clinical team have received
               a number of{" "}
               <EditorialHighlight tone="secondary">
                 certificates, mementos and professional recognitions
               </EditorialHighlight>{" "}
               — from dental societies, academic institutions and community
-              organisations. Rather than list them individually, NeoDent
+              organisations. Rather than list them individually, Neodent
               lets the record speak for itself:{" "}
               <EditorialHighlight tone="primary">
                 a practice that has stayed engaged with its professional
@@ -508,7 +508,7 @@ export function LegacyAndPeople() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/neodent-awards-recognition.jpg"
-                alt="Certificates, mementos and awards received by NeoDent Dental Hospitals, on display at the hospital"
+                alt="Certificates, mementos and awards received by Neodent Dental Hospital, on display at the hospital"
                 loading="lazy"
               />
               <figcaption>Institutional recognition</figcaption>

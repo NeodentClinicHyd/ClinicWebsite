@@ -198,6 +198,26 @@
   margin: 0;
 }
 
+/* Deep link to Dr. Miftah's profile — same grammar as TreatmentAct's
+   .doctorLink. */
+.featuredDoctorLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neodent-red);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.featuredDoctorLink:hover {
+  color: var(--neodent-red-dark);
+}
+
 /* Featured metadata */
 .featuredMetadata {
   display: flex;

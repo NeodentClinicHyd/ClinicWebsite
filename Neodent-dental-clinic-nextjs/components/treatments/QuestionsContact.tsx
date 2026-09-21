@@ -106,14 +106,17 @@ export function QuestionsContact() {
               Ready to discuss your dental concerns?
             </h3>
             <p className={styles.contactDescription}>
-              Call us to arrange a consultation. You don't need to know which treatment you need before reaching out.
+              Call us to arrange a consultation. You don't need to know which
+              treatment you need before reaching out. You can also{" "}
+              <a className={styles.contactLink} href="/contact">send an enquiry</a>
+              on our contact page.
             </p>
           </header>
 
           <div className={styles.actions}>
             <a href={ctaTelPhone} className={`${styles.button} ${styles.buttonPrimary}`}>
               <Phone size={18} />
-              Call NeoDent
+              Call Neodent
             </a>
           </div>
 

@@ -1,7 +1,7 @@
 /**
  * EditorialSeam — Architectural seam for treatments page.
  * 
- * Creates visual continuity between editorial acts using the NeoDent
+ * Creates visual continuity between editorial acts using the Neodent
  * design language: thin hairlines constrained to the same container
  * width as content, with proper horizontal inset matching the About
  * page's seam system.

@@ -56,7 +56,7 @@ export function TreatmentsHero() {
               Dental Expertise / Treatments
             </div>
             <h1 id="treatments-title" className={styles.title}>
-              Dental care for the concerns that <span>bring you to NeoDent.</span>
+              Dental care for the concerns that <span>bring you to Neodent.</span>
             </h1>
           </header>
 
@@ -74,7 +74,7 @@ export function TreatmentsHero() {
               <EditorialHighlight tone="quiet" onDark>
                 cosmetic dentistry
               </EditorialHighlight>
-              , NeoDent brings different areas of dental care together around the concerns that matter to each patient. Whether the concern is a missing tooth, damaged or worn teeth, tooth pain, difficulty chewing, changes in alignment or the appearance of a smile, the right treatment begins with understanding what is happening clinically and what the patient wants to achieve.
+              , Neodent brings different areas of dental care together around the concerns that matter to each patient. Whether the concern is a missing tooth, damaged or worn teeth, tooth pain, difficulty chewing, changes in alignment or the appearance of a smile, the right treatment begins with understanding what is happening clinically and what the patient wants to achieve.
             </p>
 
             <p className={styles.paragraph}>
@@ -98,7 +98,7 @@ export function TreatmentsHero() {
             </p>
 
             <p className={styles.paragraph}>
-              Across these treatments, NeoDent's approach remains focused on clear clinical explanation, thoughtful planning and care that considers{" "}
+              Across these treatments, Neodent's approach remains focused on clear clinical explanation, thoughtful planning and care that considers{" "}
               <EditorialHighlight tone="primary" onDark>
                 oral health, function and appearance
               </EditorialHighlight>

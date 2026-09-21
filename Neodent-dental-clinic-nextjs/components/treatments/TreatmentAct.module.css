@@ -81,6 +81,29 @@
   margin-bottom: 0;
 }
 
+/* ---- Doctor deep link ---------------------------------------------------
+   Shown on the treatments Dr. Md. Miftah Ur Rahman leads (implants,
+   full mouth rehabilitation, smile design); points at his profile
+   page. Quiet uppercase red, per the site's metadata link grammar. */
+
+.doctorLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neodent-red);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.doctorLink:hover {
+  color: var(--neodent-red-dark);
+}
+
 /* ---- Metadata ----------------------------------------------------------- */
 
 .metadata {

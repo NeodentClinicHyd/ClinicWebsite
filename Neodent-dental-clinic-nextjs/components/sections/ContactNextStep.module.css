@@ -574,3 +574,10 @@
     opacity: 1;
   }
 }
+
+/* Contextual inline link to /contact (added for internal-link depth). */
+.contactLink {
+  color: #d71920;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

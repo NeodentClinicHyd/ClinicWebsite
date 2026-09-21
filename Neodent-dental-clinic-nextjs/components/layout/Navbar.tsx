@@ -61,7 +61,7 @@ export function Navbar() {
           ))}
         </nav>
         <AppButton href="/contact" variant="primary">
-          Talk to NeoDent
+          Talk to Neodent
         </AppButton>
         <button
           className="menu-toggle"
@@ -87,7 +87,7 @@ export function Navbar() {
           </a>
         ))}
         <AppButton href="/contact" variant="dark" onClick={closeMenu}>
-          Talk to NeoDent
+          Talk to Neodent
         </AppButton>
       </div>
     </header>

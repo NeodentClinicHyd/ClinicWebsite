@@ -14,7 +14,7 @@ import styles from "./EditorialHighlight.module.css";
    unmodified paragraph -- SEO/crawlability and accessibility are
    unaffected by the decoration layer:
 
-   - primary   -> <strong>, NeoDent red, no background. One per
+   - primary   -> <strong>, Neodent red, no background. One per
                   paragraph. <strong> gives the single most important
                   phrase real semantic weight for assistive tech and
                   search engines, matching how sparingly the design

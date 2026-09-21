@@ -23,7 +23,7 @@ import {
  *
  * Both Mehdipatnam and Nampally are represented as distinct schema.org
  * Dentist entities (a specialization of MedicalBusiness/LocalBusiness)
- * so search engines can associate NeoDent with two real, separate
+ * so search engines can associate Neodent with two real, separate
  * physical locations rather than one generic business.
  *
  * `openingHours` uses the schema.org day-range + 24h time format
@@ -41,13 +41,17 @@ export const organizationJsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/assets/Neodent%20dental%20hospital%20hyderabad%20logo.jpeg`,
   foundingDate: "1994",
+  /* Instagram is the verified profile URL already rendered in the
+     footer. The footer Facebook URL is a /photos deep link - add it
+     here only after the client confirms the canonical profile URL. */
+  sameAs: ["https://www.instagram.com/neodent.dental/"],
 };
 
 export const mehdipatnamJsonLd = {
   "@context": "https://schema.org",
   "@type": "Dentist",
   "@id": `${SITE_URL}/clinic#mehdipatnam`,
-  name: `${SITE_NAME} — Mehdipatnam`,
+  name: SITE_NAME,
   parentOrganization: { "@id": organizationId },
   url: `${SITE_URL}/clinic`,
   telephone: telPhone.replace("tel:", ""),
@@ -62,7 +66,7 @@ export const nampallyJsonLd = {
   "@context": "https://schema.org",
   "@type": "Dentist",
   "@id": `${SITE_URL}/clinic#nampally`,
-  name: `${SITE_NAME} — Nampally`,
+  name: SITE_NAME,
   parentOrganization: { "@id": organizationId },
   url: `${SITE_URL}/clinic`,
   telephone: nampallyTelPhone.replace("tel:", ""),

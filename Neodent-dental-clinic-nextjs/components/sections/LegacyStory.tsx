@@ -10,7 +10,7 @@ import {
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 
 /* ------------------------------------------------------------------
-   Homepage Section 02 — "The NeoDent Archive".
+   Homepage Section 02 — "The Neodent Archive".
 
    An art-directed editorial composition, not a text+image block:
    an oversized "1994" numeral bleeds behind the intro copy, a
@@ -64,7 +64,7 @@ export function LegacyStory() {
         </p>
 
         <div className="archive-intro">
-          <p className="archive-eyebrow">The NeoDent Legacy</p>
+          <p className="archive-eyebrow">The Neodent Legacy</p>
           <h2 id="archive-title" className="archive-title">
             Decades of <span>changing smiles.</span>
           </h2>
@@ -76,7 +76,7 @@ export function LegacyStory() {
           <figure className="archive-founder">
             <img
               src={recognitionImage}
-              alt="Dr. Mohd. Siraj Ur Rahman, founder and director of NeoDent Dental Hospitals"
+              alt="Dr. Mohd. Siraj Ur Rahman, founder and director of Neodent Dental Hospital"
               loading="lazy"
             />
             <figcaption>
@@ -90,7 +90,7 @@ export function LegacyStory() {
           </figure>
 
           <p className="archive-narrative">
-            Established in 1994, NeoDent has grown through{" "}
+            Established in 1994, Neodent has grown through{" "}
             <EditorialHighlight tone="primary">
               decades of clinical practice
             </EditorialHighlight>
@@ -104,11 +104,11 @@ export function LegacyStory() {
             <EditorialHighlight tone="quiet">
               specialist-led approach
             </EditorialHighlight>{" "}
-            that shaped NeoDent from the beginning still guides treatment
+            that shaped Neodent from the beginning still guides treatment
             today.
           </p>
           <p className="archive-narrative">
-            Founded and led by Dr. Mohd. Siraj Ur Rahman, NeoDent&apos;s
+            Founded and led by Dr. Mohd. Siraj Ur Rahman, Neodent&apos;s
             clinical philosophy has been shaped by more than{" "}
             <EditorialHighlight tone="primary">
               35 years of experience
@@ -123,7 +123,7 @@ export function LegacyStory() {
               clinical practice and academic experience
             </EditorialHighlight>{" "}
             — a foundation that continues to guide the care delivered at
-            NeoDent.
+            Neodent.
           </p>
         </div>
 
@@ -138,7 +138,7 @@ export function LegacyStory() {
             </span>
             <img
               src={legacyPressImage}
-              alt="NeoDent feature in The Siasat Daily, Hyderabad"
+              alt="Neodent feature in The Siasat Daily, Hyderabad"
               loading="lazy"
             />
             <figcaption>
@@ -158,7 +158,7 @@ export function LegacyStory() {
             </span>
             <img
               src={legacyInterviewImage}
-              alt="NeoDent doctor during a News18 Urdu television interview"
+              alt="Neodent doctor during a News18 Urdu television interview"
               loading="lazy"
             />
             <figcaption>
@@ -178,7 +178,7 @@ export function LegacyStory() {
             </span>
             <img
               src={legacyAwardImage}
-              alt="NeoDent recognition archive"
+              alt="Neodent recognition archive"
               loading="lazy"
             />
             <figcaption>

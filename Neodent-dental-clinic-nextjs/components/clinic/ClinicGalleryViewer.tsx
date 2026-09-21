@@ -114,7 +114,7 @@ export function ClinicGalleryViewer({
         className={styles.dialog}
         role="dialog"
         aria-modal="true"
-        aria-label={`NeoDent clinic gallery — image ${index + 1} of ${total}`}
+        aria-label={`Neodent clinic gallery — image ${index + 1} of ${total}`}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
@@ -122,7 +122,7 @@ export function ClinicGalleryViewer({
         <div className={styles.topBar}>
           <span className={styles.eyebrow}>
             <span className={styles.eyebrowLine} aria-hidden="true" />
-            Inside NeoDent
+            Inside Neodent
           </span>
           <span className={styles.counter} aria-live="polite" aria-atomic="true">
             {pad(index + 1)}&thinsp;/&thinsp;{pad(total)}

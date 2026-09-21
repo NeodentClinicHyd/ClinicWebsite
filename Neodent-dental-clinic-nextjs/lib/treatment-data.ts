@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 /**
  * Treatment data for Section 02 — Treatment Atlas
  * 
- * Content verified against NeoDent source material.
+ * Content verified against Neodent source material.
  * General dental education used conservatively with appropriate qualifiers.
- * Real NeoDent before/after case evidence integrated where verified.
+ * Real Neodent before/after case evidence integrated where verified.
  */
 
 export interface TreatmentMetadata {
@@ -42,6 +42,13 @@ export interface Treatment {
   beforeAfter?: BeforeAfterCase;
   video?: TreatmentVideoCase;
   image?: TreatmentImageCase;
+  /**
+   * Doctor-profile deep link for treatments led by a named specialist.
+   * Only set where the doctor is named on the site (Dr. Miftah for
+   * implants, full mouth rehabilitation and smile design); the anchor
+   * renders in TreatmentAct when present.
+   */
+  doctorHref?: string;
 }
 
 export const featuredTreatment: Treatment = {
@@ -49,6 +56,7 @@ export const featuredTreatment: Treatment = {
   number: "01",
   eyebrow: "01 / FULL MOUTH REHABILITATION",
   title: "Full Mouth Rehabilitation",
+  doctorHref: "/doctors/dr-miftah-ur-rahman",
   description: null, // Will be filled with JSX including EditorialHighlight
   metadata: [
     {
@@ -75,6 +83,7 @@ export const treatmentAtlas: Treatment[] = [
     number: "02",
     eyebrow: "02 / DENTAL IMPLANTS",
     title: "Dental Implants",
+    doctorHref: "/doctors/dr-miftah-ur-rahman",
     description: null, // Will be filled with JSX
     metadata: [
       {
@@ -107,7 +116,7 @@ export const treatmentAtlas: Treatment[] = [
       afterSrc: "/assets/treatment/Orthodontics after treatment - neodent dental hospital nampally.jpeg",
       beforeLabel: "Before Treatment",
       afterLabel: "After Treatment",
-      caption: "Orthodontics treatment — NeoDent Dental Hospital Nampally",
+      caption: "Orthodontics treatment — Neodent Dental Hospital Nampally",
     },
   },
   {
@@ -124,7 +133,7 @@ export const treatmentAtlas: Treatment[] = [
     ],
     video: {
       src: "/assets/treatment-video/Dr. Miftah Neodent dental clinic Hyderabad-Root canal treatment.mp4",
-      caption: "Root canal treatment — Dr. Md. Miftah Ur Rahman, NeoDent Dental Hospitals",
+      caption: "Root canal treatment — Dr. Md. Miftah Ur Rahman, Neodent Dental Hospital",
     },
   },
   {
@@ -132,6 +141,7 @@ export const treatmentAtlas: Treatment[] = [
     number: "05",
     eyebrow: "05 / SMILE DESIGN & COSMETIC DENTISTRY",
     title: "Smile Design & Cosmetic Dentistry",
+    doctorHref: "/doctors/dr-miftah-ur-rahman",
     description: null, // Will be filled with JSX
     metadata: [
       {
@@ -161,8 +171,8 @@ export const treatmentAtlas: Treatment[] = [
     ],
     image: {
       src: "/assets/Dentures & Prosthodontics.jpg",
-      alt: "Dentures and prosthodontic treatment at NeoDent Dental Hospitals",
-      caption: "Dentures & Prosthodontics — NeoDent Dental Hospitals",
+      alt: "Dentures and prosthodontic treatment at Neodent Dental Hospital",
+      caption: "Dentures & Prosthodontics — Neodent Dental Hospital",
     },
   },
   {
@@ -179,8 +189,8 @@ export const treatmentAtlas: Treatment[] = [
     ],
     image: {
       src: "/assets/Veneers treatment.jpg",
-      alt: "Veneers treatment at NeoDent Dental Hospitals",
-      caption: "Veneers — NeoDent Dental Hospitals",
+      alt: "Veneers treatment at Neodent Dental Hospital",
+      caption: "Veneers — Neodent Dental Hospital",
     },
   },
 ];

@@ -25,7 +25,7 @@ mark.highlight {
   color: inherit;
 }
 
-/* Treatment A -- PRIMARY. Semibold, NeoDent red, no background. */
+/* Treatment A -- PRIMARY. Semibold, Neodent red, no background. */
 .primary {
   color: var(--neodent-red, #d71920);
   font-weight: 600;

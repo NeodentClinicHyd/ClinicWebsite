@@ -40,7 +40,7 @@ const reelFilms = [
     id: "clinical-detail",
     number: "01",
     title: "Clinical Treatment Detail",
-    context: "Real clinical treatment by the NeoDent team",
+    context: "Real clinical treatment by the Neodent team",
     src: "/assets/treatment-video/dr-miftah-neodent-clinical-treatment-detailed.mp4",
     poster: "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg",
   },
@@ -56,7 +56,7 @@ const reelFilms = [
     id: "procedure",
     number: "03",
     title: "Treatment in Practice",
-    context: "Clinical dental procedure at NeoDent",
+    context: "Clinical dental procedure at Neodent",
     src: "/assets/treatment-video/dr-miftah-neodent-dental-treatment-procedure.mp4",
     poster: "/assets/Dr Siraj and Dr. Miftah Neodent dental clinic - during treatment.webp",
   },
@@ -162,7 +162,7 @@ export function RealTreatmentWork() {
             <EditorialHighlight tone="primary">
               real clinical work
             </EditorialHighlight>
-            {" "}carried out at NeoDent Dental Hospitals, Hyderabad — procedures
+            {" "}carried out at Neodent Dental Hospital, Hyderabad — procedures
             performed by{" "}
             <EditorialHighlight tone="secondary">
               Dr. Md. Miftah Ur Rahman
@@ -193,7 +193,7 @@ export function RealTreatmentWork() {
                 <EditorialHighlight tone="primary">
                   full mouth rehabilitation procedure
                 </EditorialHighlight>
-                {" "}using dental implants at NeoDent Dental Hospital, Mehdipatnam. The footage
+                {" "}using dental implants at Neodent Dental Hospital, Mehdipatnam. The footage
                 offers a closer view of the{" "}
                 <EditorialHighlight tone="secondary">
                   clinical work involved
@@ -206,7 +206,7 @@ export function RealTreatmentWork() {
               <div className={styles.featureMeta}>
                 <span className={styles.featureMetaLabel}>Clinical Film</span>
                 <span className={styles.featureMetaSub}>Full Mouth Rehabilitation Using Dental Implants</span>
-                <span className={styles.featureMetaSub}>NeoDent Dental Hospital · Mehdipatnam</span>
+                <span className={styles.featureMetaSub}>Neodent Dental Hospital · Mehdipatnam</span>
               </div>
             </div>
 
@@ -221,7 +221,7 @@ export function RealTreatmentWork() {
                   preload="metadata"
                   playsInline
                   controls={featuredPlaying}
-                  aria-label="Full mouth rehabilitation using dental implants at NeoDent Dental Hospital Mehdipatnam"
+                  aria-label="Full mouth rehabilitation using dental implants at Neodent Dental Hospital Mehdipatnam"
                 >
                   <source
                     src="/assets/treatment-video/neodent-full-mouth-rehabilitation-using-dental-implants.mp4"
@@ -232,7 +232,7 @@ export function RealTreatmentWork() {
                 {!featuredPlaying && (
                   <div className={styles.featureVideoLabel} aria-hidden="true">
                     <span>Full Mouth Rehabilitation</span>
-                    <span>NeoDent · Mehdipatnam</span>
+                    <span>Neodent · Mehdipatnam</span>
                   </div>
                 )}
                 {/* Play control — bottom-right corner */}
@@ -248,7 +248,7 @@ export function RealTreatmentWork() {
                 )}
               </div>
               <figcaption className={styles.featureCaption}>
-                Full Mouth Rehabilitation Using Dental Implants / NeoDent Dental Hospital · Mehdipatnam
+                Full Mouth Rehabilitation Using Dental Implants / Neodent Dental Hospital · Mehdipatnam
               </figcaption>
             </figure>
           </div>

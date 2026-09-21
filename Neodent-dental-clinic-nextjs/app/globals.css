@@ -706,7 +706,7 @@ button {
 
 /* ========================================
    HERO — THREE-SLIDE EDITORIAL REDESIGN
-   Palette restricted to NeoDent red / white / charcoal.
+   Palette restricted to Neodent red / white / charcoal.
    ======================================== */
 
 .hero {
@@ -10331,7 +10331,7 @@ button {
   object-fit: cover;
   object-position: center 78%;
   /* Grayscale is relaxed from 0.85 to 0.4 and brightness lifted from
-     0.42 to 0.56 so the room's own NeoDent red -- the counter, the
+     0.42 to 0.56 so the room's own Neodent red -- the counter, the
      door frames, the upholstery -- survives as colour rather than being
      desaturated to grey. This is graded for RECOGNISABILITY, not for
      brightness: the veil below still does the heavy lifting of keeping
@@ -11357,7 +11357,7 @@ button {
 
 /* Section 01 art direction — an entrance sequence, not a feature grid.
    The existing video/content stays intact; this final layer only tunes
-   the composition so the section reads as the threshold into NeoDent:
+   the composition so the section reads as the threshold into Neodent:
    warm paper, an architectural frame, and a single dominant portrait. */
 .exp-intro {
   isolation: isolate;

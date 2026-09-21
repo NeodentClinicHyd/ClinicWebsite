@@ -5,7 +5,9 @@ import { ArrowRight } from "lucide-react";
 import {
   directions,
   nampallyDirections,
+  nampallyPhone,
   nampallyTelPhone,
+  phone,
   telPhone,
 } from "@/lib/site-data";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
@@ -17,7 +19,7 @@ import styles from "./ContactNextStep.module.css";
    The homepage's closing chapter: after the experience, legacy,
    treatments, people, patient stories, visit journey and clinics,
    this section answers one remaining question -- how do I actually
-   reach NeoDent? It is a CONTACT chapter, not a booking flow: no
+   reach Neodent? It is a CONTACT chapter, not a booking flow: no
    date/time picker, no calendar, no scheduling form. Booking already
    has its own dedicated entry points elsewhere on the page (navbar,
    floating CTA, sticky mobile bar); this section deliberately does
@@ -48,7 +50,7 @@ const branches: Branch[] = [
     index: "01",
     name: "Mehdipatnam",
     meta: "Mehdipatnam · Hyderabad",
-    phoneLabel: "090306 48393",
+    phoneLabel: phone,
     tel: telPhone,
     directionsHref: directions,
   },
@@ -56,7 +58,7 @@ const branches: Branch[] = [
     index: "02",
     name: "Nampally",
     meta: "Nampally · Hyderabad",
-    phoneLabel: "090305 98081",
+    phoneLabel: nampallyPhone,
     tel: nampallyTelPhone,
     directionsHref: nampallyDirections,
   },
@@ -122,7 +124,9 @@ export function ContactNextStep() {
             <EditorialHighlight tone="primary">
               speak with our team
             </EditorialHighlight>
-            , we&apos;re here to help you take the next step with clarity.
+            , we&apos;re here to help you take the next step with clarity. You
+            can also <a className={styles.contactLink} href="/contact">send an
+            enquiry</a> through our contact page.
           </p>
         </header>
 
@@ -135,7 +139,7 @@ export function ContactNextStep() {
               <p className={styles.branchIndex}>
                 {branch.index} / {branch.name.toUpperCase()}
               </p>
-              <h3 className={styles.branchName}>NeoDent Dental Hospital</h3>
+              <h3 className={styles.branchName}>Neodent Dental Hospital</h3>
               <p className={styles.branchMeta}>{branch.meta.toUpperCase()}</p>
               <a
                 href={branch.tel}
@@ -167,7 +171,7 @@ export function ContactNextStep() {
         <p className={styles.signature}>
           <span className={styles.signatureTick} aria-hidden="true" />
           <span className={styles.signatureLine}>Two locations.</span>
-          <span className={styles.signatureEmphasis}>One NeoDent standard.</span>
+          <span className={styles.signatureEmphasis}>One Neodent standard.</span>
         </p>
       </div>
     </section>

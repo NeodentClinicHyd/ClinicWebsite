@@ -148,7 +148,7 @@ export function WhatToExpect() {
           <h2 id="visit-title" className={styles.title}>
             What to expect from a visit
             <br />
-            to <span>NeoDent.</span>
+            to <span>Neodent.</span>
           </h2>
           <p className={styles.lede}>
             A considered{" "}
@@ -157,7 +157,7 @@ export function WhatToExpect() {
             to keep you informed, comfortable and clear about what comes
             next. At{" "}
             <EditorialHighlight tone="secondary">
-              NeoDent Dental Hospital
+              Neodent Dental Hospital
             </EditorialHighlight>
             ,{" "}
             <EditorialHighlight tone="quiet">specialist-led care</EditorialHighlight>{" "}
@@ -183,7 +183,7 @@ export function WhatToExpect() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={visitImage}
-                alt="A patient treatment room inside a NeoDent Dental Hospital"
+                alt="A patient treatment room inside a Neodent Dental Hospital"
                 loading="lazy"
               />
               <span className={styles.mediaRegistration} aria-hidden="true" />
