@@ -1,0 +1,30 @@
+/* ------------------------------------------------------------------
+   TurnstileWidget -- the verification step of the contact enquiry form.
+
+   Mirrors the form's own field idiom (see ContactEnquiryForm.module.css:
+   uppercase mono label, thin rules, no radius) so Cloudflare's widget
+   reads as one more field in the form rather than an embedded
+   third-party box. Nothing here restyles the widget itself.
+   ------------------------------------------------------------------ */
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin-top: 26px;
+}
+
+.label {
+  font: 11px/1.4 var(--app-font-mono), monospace;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #171717;
+}
+
+/* The widget's own height is reserved before Cloudflare's script
+   arrives, so the form does not jump when verification renders. */
+.widget {
+  display: flex;
+  align-items: center;
+  min-height: 65px;
+}

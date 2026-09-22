@@ -1,20 +1,28 @@
 import { Resend } from "resend";
 import { validateEnquiry, type EnquiryInput } from "@/lib/enquiry-schema";
+import { readTurnstileToken, verifyTurnstileToken } from "@/lib/turnstile";
 
 /* ------------------------------------------------------------------
    POST /api/enquiry — receives the Contact page "Send an enquiry"
    form, validates it server-side (never trusting the client), applies
-   lightweight anti-abuse checks, and forwards it to the Neodent team
-   inbox via Resend.
+   anti-abuse checks, and forwards it to the Neodent team inbox via
+   Resend.
 
    This is a public, unauthenticated, network-exposed endpoint (it has
-   to be -- it's a public contact form). Anti-abuse measures below are
-   deliberately lightweight (honeypot + best-effort in-memory rate
-   limit + strict field length caps) rather than a full CAPTCHA, per
-   the project's own requirements.
+   to be -- it's a public contact form). Anti-abuse layers, in order:
+   best-effort in-memory rate limit, strict field length caps, a
+   honeypot, and Cloudflare Turnstile verification.
 
-   RESEND_API_KEY is read only in this server-only module and is never
-   exposed to the client bundle.
+   Turnstile is the layer the email delivery depends on: the submitted
+   token is verified against Cloudflare's Siteverify API BEFORE anything
+   is handed to Resend, so a scripted POST that cannot produce a valid
+   token never reaches the email provider at all. The token is untrusted
+   input -- the client-side widget merely produces it (see
+   components/contact/TurnstileWidget.tsx); it proves nothing until
+   lib/turnstile.ts has confirmed it here.
+
+   RESEND_API_KEY and TURNSTILE_SECRET_KEY are read only in server-only
+   modules and are never exposed to the client bundle.
    ------------------------------------------------------------------ */
 
 export const runtime = "nodejs";
@@ -28,6 +36,18 @@ export const runtime = "nodejs";
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
 const requestLog = new Map<string, number[]>();
+
+// Wording shown to the visitor when Turnstile verification fails.
+// Deliberately identical for every failure mode (missing, forged,
+// expired, replayed or unexpected-hostname token) so the response tells
+// a bot nothing about how it was caught.
+const TURNSTILE_REJECTED_MESSAGE =
+  "Please complete the verification and try again.";
+
+// Used when Siteverify itself cannot be reached. Cloudflare's own error
+// text is never passed on to the visitor.
+const TURNSTILE_UNAVAILABLE_MESSAGE =
+  "We could not verify your submission right now. Please try again in a moment.";
 
 function isRateLimited(key: string): boolean {
   const now = Date.now();
@@ -144,9 +164,74 @@ export async function POST(request: Request) {
     const data = validation.data;
 
     // Honeypot tripped -- silently pretend success so the bot gets no
-    // signal that it was caught, but never send an email.
+    // signal that it was caught, but never send an email. Checked before
+    // Turnstile so a tripped trap still looks like an ordinary success.
     if (data.company) {
       return Response.json({ ok: true });
+    }
+
+    /* ---- Turnstile: bot protection, ahead of the email layer ------
+       Order matters. The token is verified with Cloudflare's Siteverify
+       API first and only a verified token lets the request continue to
+       Resend below. A missing token is rejected outright, so a scripted
+       POST can never produce an email in the first place. */
+    const turnstileToken = readTurnstileToken(body);
+    if (!turnstileToken) {
+      return Response.json(
+        { ok: false, message: TURNSTILE_REJECTED_MESSAGE },
+        { status: 403 },
+      );
+    }
+
+    const clientIp = getClientKey(request);
+    const turnstile = await verifyTurnstileToken(
+      turnstileToken,
+      clientIp === "unknown" ? undefined : clientIp,
+    );
+
+    if (!turnstile.success) {
+      if (turnstile.reason === "missing-secret") {
+        // Configuration problem. Logged server-side only -- the secret
+        // value itself is never printed.
+        console.error(
+          "Enquiry blocked: TURNSTILE_SECRET_KEY is not set, so Turnstile tokens cannot be verified.",
+        );
+        return Response.json(
+          {
+            ok: false,
+            message:
+              "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
+          },
+          { status: 500 },
+        );
+      }
+
+      if (turnstile.reason === "unavailable") {
+        // Fail closed: Siteverify could not be reached, so nothing is
+        // sent and the visitor is invited to try again.
+        console.error(
+          "Enquiry blocked: Cloudflare Siteverify could not be reached.",
+        );
+        return Response.json(
+          { ok: false, message: TURNSTILE_UNAVAILABLE_MESSAGE },
+          { status: 503 },
+        );
+      }
+
+      // Safe diagnostics only: a failure category and Cloudflare's error
+      // codes (e.g. invalid-input-response, timeout-or-duplicate). Never
+      // the token, the secret, or the form payload.
+      console.warn(
+        `Enquiry blocked: Turnstile verification failed (${turnstile.reason}${
+          turnstile.errorCodes.length
+            ? `: ${turnstile.errorCodes.join(", ")}`
+            : ""
+        }).`,
+      );
+      return Response.json(
+        { ok: false, message: TURNSTILE_REJECTED_MESSAGE },
+        { status: 403 },
+      );
     }
 
     const apiKey = process.env.RESEND_API_KEY;
