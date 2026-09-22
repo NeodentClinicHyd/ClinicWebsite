@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import {
   enquiryClinicOptions,
@@ -9,6 +9,7 @@ import {
   type EnquiryFieldErrors,
   type EnquiryInput,
 } from "@/lib/enquiry-schema";
+import { TurnstileWidget, type TurnstileWidgetHandle } from "./TurnstileWidget";
 import styles from "./ContactEnquiryForm.module.css";
 
 /* ------------------------------------------------------------------
@@ -18,10 +19,48 @@ import styles from "./ContactEnquiryForm.module.css";
    appointment-booking flow: no date/time picker, no scheduling.
 
    Submission flow: validate locally with the shared zod schema (UX
-   only) -> POST JSON to /api/enquiry -> the route handler re-validates
-   authoritatively and sends the notification via Resend. The API key
-   never reaches this component or the browser.
+   only) -> require a Cloudflare Turnstile token -> POST JSON to
+   /api/enquiry -> the route handler re-validates every field, verifies
+   the token against Cloudflare's Siteverify API, and only then sends the
+   notification via Resend. Neither the Resend API key nor the Turnstile
+   secret key ever reaches this component or the browser.
+
+   Turnstile is what stops automated submissions reaching the email
+   layer: this component only carries the widget's single-use token along
+   with the enquiry, and asks for a fresh one after every attempt.
    ------------------------------------------------------------------ */
+
+/* The public, browser-safe Turnstile sitekey, inlined at build time.
+   NEXT_PUBLIC_* variables are the only ones exposed to the client
+   bundle; the matching secret key is server-side only (lib/turnstile.ts). */
+const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+
+if (!turnstileSiteKey && process.env.NODE_ENV !== "production") {
+  // Fail loudly in development instead of quietly disabling bot
+  // protection. No credential value is ever printed.
+  console.warn(
+    "NEXT_PUBLIC_TURNSTILE_SITE_KEY is not set — Turnstile cannot render, so enquiry submissions will be blocked.",
+  );
+}
+
+// Mirrors the API route's 403 wording, so the visitor reads the same
+// message whether the missing token was caught here or server-side.
+const TURNSTILE_REQUIRED_MESSAGE =
+  "Please complete the verification and try again.";
+
+const TURNSTILE_UNAVAILABLE_MESSAGE =
+  "Verification is temporarily unavailable, so this enquiry cannot be sent right now. Please try again shortly or call the clinic directly.";
+
+/* Contract with /api/enquiry. The token travels alongside the validated
+   enquiry fields rather than inside them: the shared schema is about
+   visitor input only, and the route checks the token as its own step. */
+type EnquiryPayload = EnquiryInput & { turnstileToken: string };
+
+type EnquiryApiResponse = {
+  ok?: boolean;
+  message?: string;
+  errors?: EnquiryFieldErrors;
+};
 
 type FormState = {
   name: string;
@@ -50,9 +89,19 @@ export function ContactEnquiryForm() {
   const [errors, setErrors] = useState<EnquiryFieldErrors>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef<TurnstileWidgetHandle | null>(null);
 
   const update = (key: keyof FormState, value: string) =>
     setForm((current) => ({ ...current, [key]: value }));
+
+  /* Every completed attempt consumes its token -- they are single-use and
+     expire after five minutes -- so the old one is dropped and the
+     challenge re-run before the visitor can submit again. */
+  const resetTurnstile = () => {
+    setTurnstileToken("");
+    turnstileRef.current?.reset();
+  };
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,17 +113,40 @@ export function ContactEnquiryForm() {
       return;
     }
 
+    // Without a configured sitekey no token can ever be produced, so the
+    // form stays locked instead of posting something the server must
+    // reject.
+    if (!turnstileSiteKey) {
+      setErrors({});
+      setStatus("error");
+      setErrorMessage(TURNSTILE_UNAVAILABLE_MESSAGE);
+      return;
+    }
+
+    // Never post without a solved challenge: /api/enquiry rejects an
+    // unverified request anyway, and this spares the visitor a round-trip.
+    if (!turnstileToken) {
+      setErrors({});
+      setStatus("error");
+      setErrorMessage(TURNSTILE_REQUIRED_MESSAGE);
+      return;
+    }
+
     setErrors({});
     setStatus("submitting");
     setErrorMessage("");
+
+    const payload: EnquiryPayload = { ...validation.data, turnstileToken };
 
     try {
       const response = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(validation.data),
+        body: JSON.stringify(payload),
       });
-      const result = await response.json().catch(() => null);
+      const result = (await response.json().catch(() => null)) as
+        | EnquiryApiResponse
+        | null;
 
       if (!response.ok || !result?.ok) {
         setStatus("error");
@@ -83,15 +155,18 @@ export function ContactEnquiryForm() {
             "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
         );
         if (result?.errors) setErrors(result.errors);
+        resetTurnstile();
         return;
       }
 
+      setTurnstileToken("");
       setStatus("success");
     } catch {
       setStatus("error");
       setErrorMessage(
         "Something went wrong while sending your enquiry. Please try again or contact Neodent directly.",
       );
+      resetTurnstile();
     }
   };
 
@@ -99,6 +174,7 @@ export function ContactEnquiryForm() {
     setForm(initialForm);
     setErrors({});
     setErrorMessage("");
+    setTurnstileToken("");
     setStatus("idle");
   };
 
@@ -276,6 +352,19 @@ export function ContactEnquiryForm() {
           />
         </div>
       </div>
+
+      {/* Verification sits between the fields and the submit button. It is
+          only rendered when a sitekey is configured -- without one no
+          token can exist, so the form stays locked rather than sending an
+          unverified enquiry. */}
+      {turnstileSiteKey && (
+        <TurnstileWidget
+          ref={turnstileRef}
+          siteKey={turnstileSiteKey}
+          onToken={setTurnstileToken}
+          onTokenCleared={() => setTurnstileToken("")}
+        />
+      )}
 
       {status === "error" && (
         <p className={styles.formError} role="alert" data-testid="text-enquiry-error">
