@@ -47,5 +47,36 @@ console.log(
   profileEntry.mainEntity.medicalSpecialty,
 );
 
+// Regression guard: Search Console's strict validator rejects date-only
+// values with "Invalid datetime value ... missing an important
+// component, most often the time" -- schema.org accepts a bare Date,
+// Google's rich-result validator does not. The doctor profile
+// deliberately ships NO date property (see the comment in
+// app/doctors/dr-miftah-ur-rahman/page.tsx); if one is ever added it
+// must carry a time AND a timezone offset.
+const ISO_DATETIME =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/;
+const DATE_PROPERTIES = ["dateModified", "dateCreated", "datePublished"];
+const shippedDates = [];
+
+for (const entry of Array.isArray(parsed) ? parsed : [parsed]) {
+  for (const property of DATE_PROPERTIES) {
+    if (!(property in entry)) continue;
+    shippedDates.push(`${property}=${JSON.stringify(entry[property])}`);
+    if (
+      typeof entry[property] !== "string" ||
+      !ISO_DATETIME.test(entry[property])
+    ) {
+      throw new Error(
+        `${JSON.stringify(entry["@type"])}.${property} is ${JSON.stringify(entry[property])}, expected a full ISO 8601 datetime with a time and a timezone offset (e.g. "2026-09-21T23:09:33+05:30")`,
+      );
+    }
+  }
+}
+console.log(
+  "ASSERT: page date properties are full ISO 8601 datetimes or absent ->",
+  shippedDates.length ? shippedDates.join(", ") : "none shipped",
+);
+
 const orgRefs = [...html.matchAll(/#organization/g)].length;
 console.log("organization @id references:", orgRefs);

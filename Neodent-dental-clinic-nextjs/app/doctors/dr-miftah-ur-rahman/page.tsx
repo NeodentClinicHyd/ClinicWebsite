@@ -66,6 +66,21 @@ export const metadata: Metadata = {
  * Deliberately NO Review / AggregateRating / FAQPage /
  * MedicalProcedure schema (see also the patient-voices section copy,
  * which carries no structured data).
+ *
+ * Deliberately NO dateModified either. This project has no per-page
+ * content timestamp to draw from -- no CMS, API or database (the same
+ * note appears in app/sitemap.ts). dateModified is only *recommended*
+ * on ProfilePage; Google requires just mainEntity, so omitting it
+ * cannot raise a structured-data error. It claims nothing rather than
+ * inventing a build-time date.
+ *
+ * This replaces `new Date().toISOString().split("T")[0]`, whose
+ * date-only "YYYY-MM-DD" output Search Console's strict validator
+ * rejects: "Invalid datetime value" -- a datetime is expected to carry
+ * a time. If a real modification timestamp is ever tracked, emit a
+ * FULL ISO 8601 datetime including a time and a timezone offset, e.g.
+ * "2026-09-21T23:09:33+05:30". scripts/verify-jsonld.mjs enforces that
+ * shape and fails on any date-only value.
  */
 const doctorJsonLd = [
   {
@@ -73,7 +88,6 @@ const doctorJsonLd = [
     "@type": "ProfilePage",
     "@id": `${url}/#profilepage`,
     url,
-    dateModified: new Date().toISOString().split("T")[0],
     mainEntity: {
       "@type": ["Person", "Physician"],
       "@id": `${url}/#person`,
