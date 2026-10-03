@@ -34,6 +34,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# patient-identifiable clinical originals (never served, never committed)
+/private-assets/
+
 # vercel
 .vercel
 

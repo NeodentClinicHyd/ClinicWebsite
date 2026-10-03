@@ -10,6 +10,23 @@ import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import { AppButton } from "@/components/ui/AppButton";
 import { Atmosphere } from "@/components/ui/Atmosphere";
 import { OffsetImagePair } from "@/components/ui/OffsetImagePair";
+import { TreatmentEvidenceViewer } from "@/components/doctors/TreatmentEvidenceViewer";
+import type { EvidenceItem } from "@/components/doctors/TreatmentEvidenceViewer";
+import { SmileDesignStory } from "@/components/doctors/SmileDesignStory";
+import { TreatmentDossier } from "@/components/doctors/TreatmentDossier";
+import { TreatmentDetailDialog } from "@/components/doctors/TreatmentDetailDialog";
+import treatmentMedia from "@/lib/miftah-treatment-media.json";
+import {
+  RCT_FILMS,
+  RCT_STAGES,
+  RCT_XRAY_ITEMS,
+  pairItems,
+} from "@/lib/miftah-treatment-evidence";
+import {
+  TREATMENT_DOSSIERS,
+  dossierForCard,
+} from "@/lib/miftah-treatment-dossiers";
+import type { TreatmentDossier as Dossier } from "@/lib/miftah-treatment-dossiers";
 import {
   directions,
   nampallyDirections,
@@ -681,15 +698,89 @@ function Biography() {
 }
 
 /* ------------------------------------------------------------------
-   03 — SPECIALISATION (dark) — three numbered cards, each carrying a
-   rebuilt editorial clinical illustration: a cross-section (implant),
-   an occlusal arch plan (full mouth rehabilitation) and a front-
-   facing smile (cosmetic design). Shared system — 1.5px primary
-   strokes at 70% ivory fully visible at REST (meaning never waits
-   for hover), 1px details at 42%, dashed construction at 26%, soft
-   mass fills, one red markup accent per figure. aria-hidden — the
-   h3 + copy carry the meaning.
+   03 — SPECIALISATION (dark) — four featured specialties in one ruled
+   field, each card = number + editorial clinical illustration + title
+   + real treatment evidence + short copy + treatments link, aligned
+   row-by-row through CSS subgrid so the four read as one system.
+   Followed (same band, no new section number) by the Smile Design
+   case-story sub-chapter.
+
+   Illustration system — 1.5px primary strokes at 70% ivory fully
+   visible at REST (meaning never waits for hover), 1px details at
+   42%, dashed construction at 26%, soft mass fills, one red markup
+   accent per figure. aria-hidden — the h3 + copy carry the meaning.
    ------------------------------------------------------------------ */
+
+/* Root canal — a molar in cross-section between two natural teeth:
+   crown with its access restoration, pulp chamber, two roots in bone.
+   The single red accent is the sealed canal pair. Built from the
+   Section 04 ScopeIconRootCanal silhouette, redrawn at feature scale
+   on the ImplantsFigure gum/bone ground. */
+function RootCanalFigure() {
+  return (
+    <svg viewBox="0 0 200 128" fill="none" className={styles.specFigureSvg}>
+      {/* registration ticks */}
+      <path
+        className={styles.specFigConstruct}
+        d="M10 10 H15 M10 10 V15 M190 118 H185 M190 118 V113"
+      />
+      {/* gum band — soft mass with hairline crest */}
+      <path
+        className={styles.specFigMass}
+        d="M14 62 Q100 56 186 62 L186 70 Q100 64 14 70 Z"
+      />
+      <path className={styles.specFigDetail} d="M14 62 Q100 56 186 62" />
+      {/* bone texture */}
+      <path
+        className={styles.specFigConstruct}
+        d="M26 80 L34 74 M24 96 L32 90 M38 108 L46 102 M160 78 L168 72 M162 96 L170 90 M152 108 L160 102"
+      />
+      {/* flanking natural teeth */}
+      <path
+        className={styles.specFigDetail}
+        d="M44 62 C44 54 46 46 52 46 C58 46 60 54 60 62 C60 73 57 87 53 95 C51 98 49 97 48 93 C45 84 44 72 44 62 Z"
+      />
+      <path
+        className={styles.specFigDetail}
+        d="M140 62 C140 54 142 46 148 46 C154 46 156 54 156 62 C156 73 153 87 149 95 C147 98 145 97 144 93 C141 84 140 72 140 62 Z"
+      />
+      {/* the treated molar — crown + two roots */}
+      <path
+        className={styles.specFigMass}
+        d="M78 60 C77 48 77 37 82 30 C85 26 90 25 93 28 C96 31 98 31 100 29 C102 27 106 25 109 26 C114 27 118 32 120 38 C123 46 122 54 122 60 C122 73 120 88 117 101 C116 107 112 108 110 103 C108 95 107 84 104 77 C102 73 98 73 96 77 C93 84 92 95 90 103 C88 108 84 107 83 101 C80 88 78 73 78 60 Z"
+      />
+      <path
+        className={styles.specFigPrimary}
+        d="M78 60 C77 48 77 37 82 30 C85 26 90 25 93 28 C96 31 98 31 100 29 C102 27 106 25 109 26 C114 27 118 32 120 38 C123 46 122 54 122 60 C122 73 120 88 117 101 C116 107 112 108 110 103 C108 95 107 84 104 77 C102 73 98 73 96 77 C93 84 92 95 90 103 C88 108 84 107 83 101 C80 88 78 73 78 60 Z"
+      />
+      {/* access restoration in the crown */}
+      <rect
+        className={styles.specFigRestored}
+        x="93"
+        y="31"
+        width="14"
+        height="9"
+        rx="3"
+      />
+      {/* pulp chamber */}
+      <path
+        className={styles.specFigDetail}
+        d="M89 50 C91 45 96 43 100 45 C104 43 109 45 111 50 C109 55 104 57 100 57 C96 57 91 55 89 50 Z"
+      />
+      {/* apex reference — construction */}
+      <path
+        className={styles.specFigConstruct}
+        d="M76 112 H124"
+        strokeDasharray="2 5"
+      />
+      {/* red — the sealed canals, chamber to apex */}
+      <path
+        className={styles.specFigAccent}
+        d="M93 55 C92 70 90 86 87 101 M107 55 C108 70 110 86 113 101"
+      />
+    </svg>
+  );
+}
 
 function ImplantsFigure() {
   return (
@@ -913,80 +1004,360 @@ function SmileFigure() {
   );
 }
 
-const SPEC_FIGURES: Record<"implants" | "rehabilitation" | "smile", ReactNode> =
+type SpecFigureKey = "implants" | "rehabilitation" | "smile" | "rootCanal";
+
+const SPEC_FIGURES: Record<SpecFigureKey, ReactNode> =
   {
     implants: <ImplantsFigure />,
     rehabilitation: <RehabilitationFigure />,
     smile: <SmileFigure />,
+    rootCanal: <RootCanalFigure />,
   };
+
+type MediaKey = keyof typeof treatmentMedia;
+
+/* Real treatment evidence per card. Root canal carries the three
+   radiograph stages + two films; the other three share ONE before /
+   after component at identical dimensions. Copy is neutral: the
+   supplied images are described as supplied clinical photographs —
+   no claim is made about patients being the same or about outcomes.
+   The item builders live in lib/miftah-treatment-evidence (shared with
+   the treatment dossier dialog). */
+type SpecEvidence =
+  | { kind: "rct" }
+  | { kind: "pair"; before: MediaKey; after: MediaKey };
 
 const SPECIALISATION_CARDS: {
   number: string;
-  figure: "implants" | "rehabilitation" | "smile";
+  figure: SpecFigureKey;
   title: string;
+  titleSuffix?: string;
+  name: string;
   copy: string;
   href: string;
+  evidence: SpecEvidence;
 }[] = [
   {
     number: "01",
-    figure: "implants",
-    title: "DENTAL IMPLANTS",
-    copy: "Replacing a missing tooth at the root, so the replacement functions and is maintained like a natural tooth rather than resting on the teeth beside it.",
-    href: "/treatments#dental-implants",
+    figure: "rootCanal",
+    title: "SAVING NATURAL TEETH",
+    titleSuffix: "Root canal treatment",
+    name: "Root canal treatment",
+    copy: "Treatment within the tooth, aimed at keeping the natural tooth where appropriate rather than removing it.",
+    href: "/treatments#root-canal-treatment",
+    evidence: { kind: "rct" },
   },
   {
     number: "02",
-    figure: "rehabilitation",
-    title: "FULL MOUTH REHABILITATION",
-    copy: "Rebuilding an entire bite — function, alignment and appearance together — planned as one treatment rather than a series of separate repairs.",
-    href: "/treatments#full-mouth-rehabilitation",
+    figure: "smile",
+    title: "SMILE DESIGNING",
+    name: "Smile designing",
+    copy: "Restorative work where appearance matters as much as function: shape, shade and proportion planned around the patient's own face.",
+    href: "/treatments#smile-design",
+    evidence: { kind: "pair", before: "smileBefore", after: "smileAfter" },
   },
   {
     number: "03",
-    figure: "smile",
-    title: "SMILE DESIGN & COSMETIC",
-    copy: "Restorative work where appearance matters as much as function: shape, shade and proportion planned around the patient's own face.",
-    href: "/treatments#smile-design",
+    figure: "implants",
+    title: "DENTAL IMPLANTS",
+    name: "Dental implants",
+    copy: "Replacing a missing tooth at the root, so the replacement functions and is maintained like a natural tooth rather than resting on the teeth beside it.",
+    href: "/treatments#dental-implants",
+    evidence: { kind: "pair", before: "implantsBefore", after: "implantsAfter" },
+  },
+  {
+    number: "04",
+    figure: "rehabilitation",
+    title: "FULL MOUTH REHABILITATION",
+    name: "Full mouth rehabilitation",
+    copy: "Rebuilding an entire bite — function, alignment and appearance together — planned as one treatment rather than a series of separate repairs.",
+    href: "/treatments#full-mouth-rehabilitation",
+    evidence: {
+      kind: "pair",
+      before: "rehabBefore",
+      after: "rehabAfter",
+    },
   },
 ];
 
+type OpenViewer = (title: string, items: EvidenceItem[], index: number) => void;
+
+/* Card cell image — fixed-ratio cell, cover crop on the clinically
+   relevant focal point; the uncropped image opens in the viewer. */
+function EvidenceCell({
+  mediaKey,
+  alt,
+  label,
+  sizes,
+  onOpen,
+}: {
+  mediaKey: MediaKey;
+  alt: string;
+  label: string;
+  sizes: string;
+  onOpen: () => void;
+}) {
+  const image = treatmentMedia[mediaKey];
+  return (
+    <button
+      type="button"
+      className={styles.specCell}
+      onClick={onOpen}
+      aria-label={label}
+      data-evidence-open
+    >
+      <Image
+        src={image.src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        className={styles.specCellImage}
+        style={{ objectPosition: image.objectPosition }}
+      />
+    </button>
+  );
+}
+
+function BeforeAfterPair({
+  name,
+  before,
+  after,
+  onOpen,
+}: {
+  name: string;
+  before: MediaKey;
+  after: MediaKey;
+  onOpen: OpenViewer;
+}) {
+  const items = pairItems(name, before, after);
+  const open = (index: number) => onOpen(name, items, index);
+  const sizes = "(max-width: 767px) 44vw, (max-width: 1099px) 22vw, 130px";
+  return (
+    <>
+      <div className={`${styles.specPlate} ${styles.specPlatePair}`}>
+        <EvidenceCell
+          mediaKey={before}
+          alt={items[0].kind === "image" ? items[0].alt : ""}
+          label={`Open ${name.toLowerCase()} before-treatment image`}
+          sizes={sizes}
+          onOpen={() => open(0)}
+        />
+        <EvidenceCell
+          mediaKey={after}
+          alt={items[1].kind === "image" ? items[1].alt : ""}
+          label={`Open ${name.toLowerCase()} after-treatment image`}
+          sizes={sizes}
+          onOpen={() => open(1)}
+        />
+      </div>
+      <div
+        className={`${styles.specCaptions} ${styles.specCaptionsPair}`}
+        aria-hidden="true"
+      >
+        <span>Before</span>
+        <span>After</span>
+      </div>
+      <div className={styles.specActions}>
+        <button
+          type="button"
+          className={styles.specAction}
+          onClick={() => open(0)}
+          aria-label={`View ${name.toLowerCase()} before and after images`}
+          data-evidence-open
+        >
+          View images <ArrowRight size={11} aria-hidden="true" />
+        </button>
+      </div>
+    </>
+  );
+}
+
+function RootCanalEvidence({ onOpen }: { onOpen: OpenViewer }) {
+  const sizes = "(max-width: 767px) 30vw, (max-width: 1099px) 15vw, 90px";
+  return (
+    <>
+      <div className={`${styles.specPlate} ${styles.specPlateTriple}`}>
+        {RCT_STAGES.map(({ key, stage }, index) => (
+          <EvidenceCell
+            key={key}
+            mediaKey={key}
+            alt={`Root canal treatment radiograph — ${stage} stage`}
+            label={`Open root canal X-ray ${index + 1} of 3: ${stage} stage`}
+            sizes={sizes}
+            onOpen={() =>
+              onOpen("Root canal treatment · Radiographs", RCT_XRAY_ITEMS, index)
+            }
+          />
+        ))}
+      </div>
+      <div
+        className={`${styles.specCaptions} ${styles.specCaptionsTriple}`}
+        aria-hidden="true"
+      >
+        {RCT_STAGES.map(({ key, label }) => (
+          <span key={key}>{label}</span>
+        ))}
+      </div>
+      <div className={styles.specActions}>
+        {RCT_FILMS.map((film, index) => (
+          <button
+            key={film.short}
+            type="button"
+            className={styles.specAction}
+            onClick={() =>
+              onOpen(
+                "Root canal treatment · Films",
+                RCT_FILMS.map((f) => f.item),
+                index,
+              )
+            }
+            aria-label={`Play film: ${film.item.kind === "video" ? film.item.label : film.short}`}
+            data-evidence-open
+            data-film
+          >
+            <Play size={10} aria-hidden="true" /> {film.short}
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
 function Specialisation() {
   const [ref, visible] = useReveal<HTMLDivElement>(0.08);
+  const [viewer, setViewer] = useState<{
+    title: string;
+    items: EvidenceItem[];
+    index: number;
+  } | null>(null);
+
+  const openViewer: OpenViewer = (title, items, index) =>
+    setViewer({ title, items, index });
+
+  /* Treatment dossier dialog — the opener is kept so focus returns to
+     the exact card control that opened it. */
+  const [dossier, setDossier] = useState<{
+    dossier: Dossier;
+    opener: HTMLElement;
+  } | null>(null);
+
   return (
     <section
       className={`${styles.section} ${styles.dark}`}
       aria-labelledby="miftah-spec-title"
     >
       <div className={`container ${styles.container}`}>
-        <Eyebrow numeral="03" label="03 / SPECIALISATION" />
+        <div data-spec-chapter>
+          <Eyebrow numeral="03" label="03 / SPECIALISATION" />
+        </div>
         <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
-          <SectionHeading
-            id="miftah-spec-title"
-            line1="Where his work"
-            line2="goes deepest."
-          />
-          <p className={styles.lede}>
-            Three areas where his specialist training is most directly applied.
-          </p>
-          <div className={styles.specGrid}>
-            {SPECIALISATION_CARDS.map((card) => (
-              <a className={styles.specCard} key={card.number} href={card.href}>
-                <span className={styles.specCardNumber} aria-hidden="true">
-                  {card.number}
-                </span>
-                <h3 className={styles.specCardTitle}>{card.title}</h3>
-                <div className={styles.specFigure} aria-hidden="true">
-                  {SPEC_FIGURES[card.figure]}
+          <div className={styles.specHead}>
+            <SectionHeading
+              id="miftah-spec-title"
+              line1="Where his work"
+              line2="goes deepest."
+            />
+            <p className={styles.lede}>
+              Four areas where his specialist training is most directly
+              applied.
+            </p>
+          </div>
+          <div className={styles.specGrid} data-spec-grid>
+            {SPECIALISATION_CARDS.map((card, index) => (
+              <article
+                className={styles.specCard}
+                key={card.number}
+                aria-labelledby={`miftah-spec-card-${card.number}`}
+                style={{ animationDelay: `${index * 90}ms` }}
+                data-spec-card
+              >
+                <div className={styles.specCardTop}>
+                  <span className={styles.specCardNumber} aria-hidden="true">
+                    {card.number}
+                  </span>
+                  <div className={styles.specFigure} aria-hidden="true">
+                    {SPEC_FIGURES[card.figure]}
+                  </div>
                 </div>
+                <h3
+                  id={`miftah-spec-card-${card.number}`}
+                  className={styles.specCardTitle}
+                >
+                  {card.title}
+                  {card.titleSuffix && (
+                    <span className={styles.specCardTitleSub}>
+                      {card.titleSuffix}
+                    </span>
+                  )}
+                </h3>
+                {card.evidence.kind === "rct" ? (
+                  <RootCanalEvidence onOpen={openViewer} />
+                ) : (
+                  <BeforeAfterPair
+                    name={card.name}
+                    before={card.evidence.before}
+                    after={card.evidence.after}
+                    onOpen={openViewer}
+                  />
+                )}
                 <p className={styles.specCardCopy}>{card.copy}</p>
-                <span className={styles.specCardLink}>
-                  On treatments <ArrowRight size={13} aria-hidden="true" />
-                </span>
-              </a>
+                <div className={styles.specCardFoot}>
+                  {dossierForCard(card.number) && (
+                    <button
+                      type="button"
+                      className={styles.specExplore}
+                      aria-haspopup="dialog"
+                      aria-label={`Explore treatment — ${card.name}`}
+                      onClick={(e) =>
+                        setDossier({
+                          dossier: dossierForCard(card.number)!,
+                          opener: e.currentTarget,
+                        })
+                      }
+                      data-explore-treatment={card.number}
+                    >
+                      Explore treatment{" "}
+                      <ArrowRight size={13} aria-hidden="true" />
+                    </button>
+                  )}
+                </div>
+              </article>
             ))}
           </div>
+          {/* The four dossiers in the server-rendered document. The same
+              structured content is presented in the treatment dialog;
+              this copy is hidden from view and from assistive tech. */}
+          <div hidden data-dossier-source>
+            {TREATMENT_DOSSIERS.map((d) => (
+              <TreatmentDossier
+                key={d.id}
+                dossier={d}
+                idPrefix="dossier-src-"
+                sectionLevel={4}
+                title
+              />
+            ))}
+          </div>
+          <SmileDesignStory />
         </div>
       </div>
+      {viewer && (
+        <TreatmentEvidenceViewer
+          key={`${viewer.title}-${viewer.index}`}
+          title={viewer.title}
+          items={viewer.items}
+          initialIndex={viewer.index}
+          onClose={() => setViewer(null)}
+        />
+      )}
+      {dossier && (
+        <TreatmentDetailDialog
+          key={dossier.dossier.id}
+          dossier={dossier.dossier}
+          opener={dossier.opener}
+          onClose={() => setDossier(null)}
+        />
+      )}
     </section>
   );
 }
