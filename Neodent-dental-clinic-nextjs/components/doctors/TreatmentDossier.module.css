@@ -1,0 +1,202 @@
+/* Treatment dossier — editorial long-form on the Neodent dark surface.
+   Hairline section rules, serif red section numerals, ivory body copy
+   at a comfortable measure. No cards, shadows, gradients or radius. */
+
+.dossier {
+  --ivory: #fbfaf7;
+  --body: rgba(251, 250, 247, 0.78);
+  --muted: rgba(251, 250, 247, 0.52);
+  --rule: rgba(251, 250, 247, 0.12);
+  --red: var(--neodent-red, #d71920);
+  --serif: var(--app-font-serif, "DM Serif Display", serif);
+
+  color: var(--ivory);
+  min-width: 0;
+}
+
+.head {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.subtitle {
+  color: var(--muted);
+}
+
+.intro {
+  max-width: 64ch;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.7vw, 23px);
+  line-height: 1.45;
+  color: var(--ivory);
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  margin-top: clamp(32px, 4vw, 48px);
+  padding-top: clamp(20px, 2.4vw, 28px);
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 16px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.sectionNumber {
+  flex: 0 0 auto;
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1;
+  color: var(--red);
+}
+
+.sectionHeading {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivory);
+}
+
+.sectionBody {
+  container: dossier / inline-size;
+  display: grid;
+  gap: 14px;
+  max-width: 68ch;
+  min-width: 0;
+}
+
+.para {
+  margin: 0;
+  font-size: clamp(15px, 1.15vw, 16px);
+  line-height: 1.72;
+  color: var(--body);
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: clamp(15px, 1.15vw, 16px);
+  line-height: 1.65;
+  color: var(--body);
+}
+
+.list li::before {
+  content: "";
+  position: absolute;
+  top: 0.82em;
+  left: 0;
+  width: 10px;
+  height: 1px;
+  background: var(--red);
+}
+
+/* Treatment stages — a vertical ruled sequence; two columns on wide
+   reading columns. Numbers in the serif red numbering voice. */
+.steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 12px;
+  row-gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.stepNumber {
+  grid-row: span 2;
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--red);
+}
+
+.stepTitle {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivory);
+}
+
+.stepBody {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--body);
+}
+
+/* Facts documented about Dr. Miftah — set apart from general patient
+   education by a red hairline and their own label. */
+.documented {
+  display: grid;
+  gap: 12px;
+  padding-left: 18px;
+  border-left: 1px solid var(--red);
+}
+
+.documentedLabel {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.disclaimer {
+  max-width: 68ch;
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Wide reading column: stages read as a two-column ruled sequence. */
+@container dossier (min-width: 540px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+}

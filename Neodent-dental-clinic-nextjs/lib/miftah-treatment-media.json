@@ -1,0 +1,92 @@
+{
+  "rctPre": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-root-canal-treatment-pre-rct.webp",
+    "width": 1458,
+    "height": 1103,
+    "objectPosition": "60% 50%"
+  },
+  "rctMid": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-root-canal-treatment-mid-rct.webp",
+    "width": 1458,
+    "height": 1103,
+    "objectPosition": "100% 50%"
+  },
+  "rctPost": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-root-canal-treatment-post-rct.webp",
+    "width": 1458,
+    "height": 1103,
+    "objectPosition": "100% 50%"
+  },
+  "smileBefore": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-before.webp",
+    "width": 704,
+    "height": 563,
+    "objectPosition": "50% 45%"
+  },
+  "smileAfter": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-after.webp",
+    "width": 863,
+    "height": 690,
+    "objectPosition": "50% 45%"
+  },
+  "implantsBefore": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-dental-implants-before.webp",
+    "width": 315,
+    "height": 316,
+    "objectPosition": "50% 45%"
+  },
+  "implantsAfter": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-dental-implants-after.webp",
+    "width": 535,
+    "height": 413,
+    "objectPosition": "50% 40%"
+  },
+  "rehabBefore": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-full-mouth-rehabilitation-before.webp",
+    "width": 515,
+    "height": 486,
+    "objectPosition": "50% 40%"
+  },
+  "rehabAfter": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-full-mouth-rehabilitation-after.webp",
+    "width": 1600,
+    "height": 1280,
+    "objectPosition": "50% 55%"
+  },
+  "story01": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-case-step-01.webp",
+    "width": 632,
+    "height": 506,
+    "objectPosition": "50% 55%"
+  },
+  "story02": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-case-step-02.webp",
+    "width": 764,
+    "height": 611,
+    "objectPosition": "50% 55%"
+  },
+  "story03": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-case-step-03.webp",
+    "width": 766,
+    "height": 613,
+    "objectPosition": "50% 50%"
+  },
+  "story04": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-case-step-04.webp",
+    "width": 634,
+    "height": 508,
+    "objectPosition": "50% 50%"
+  },
+  "story05": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-case-step-05.webp",
+    "width": 620,
+    "height": 496,
+    "objectPosition": "50% 50%"
+  },
+  "story06": {
+    "src": "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-smile-design-case-step-06.webp",
+    "width": 465,
+    "height": 372,
+    "objectPosition": "50% 50%"
+  }
+}

@@ -1,0 +1,874 @@
+/* Section 03 sub-chapter — Smile design case story (folded journey).
+   Sits inside the Specialisation dark band, below the four specialty
+   cards, in the page's existing grammar only: hairline separators,
+   muted-ivory eyebrow, the two-line section heading scaled to a
+   sub-chapter, red serif frame index, red accent for the through-line.
+   No shadows, no radius, no gradients.
+
+   Geometry
+   --hero-w / --hero-h  Step 06 hero frame (CSS only, container units,
+                        so first paint needs no script).
+   --rail-*             rail geometry, written by the component's
+                        ResizeObserver (a length ÷ length scale factor
+                        is not expressible in calc()).
+   Every frame is laid out at hero size on the SAME box; expanding only
+   changes transform (scale down + translate), so the six photographs
+   travel continuously between stack and journey. */
+
+.story {
+  container: story / inline-size;
+  margin-top: clamp(48px, 6vw, 80px);
+  padding-top: clamp(28px, 3.4vw, 40px);
+  border-top: 1px solid rgba(251, 250, 247, 0.14);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --move: 440ms;
+  --bar: 52px;
+}
+
+.eyebrow {
+  margin-bottom: clamp(18px, 2.2vw, 26px);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(251, 250, 247, 0.55);
+}
+
+.body {
+  --hero-w: min(440px, 52cqw);
+  --hero-h: calc(var(--hero-w) * 0.8);
+  --line-y: calc(var(--hero-h) - 16px);
+  position: relative;
+}
+
+@container story (min-width: 900px) {
+  .body {
+    --hero-w: min(440px, 42cqw);
+  }
+}
+
+/* ---- Editorial intro --------------------------------------------- */
+.intro {
+  min-height: 0;
+}
+
+.story .title {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: inherit;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+/* Two editorial paragraphs — the clinical reasoning behind the result.
+   Always shown in full: the story may grow taller than Step 06 (the
+   stage keeps its own height; see .stage in the rail block). */
+.lede {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 18px 0 0;
+  max-width: 620px;
+  font-size: clamp(14px, 1.05vw, 15.5px);
+  line-height: 1.62;
+  color: rgba(251, 250, 247, 0.7);
+}
+
+.lede p {
+  margin: 0;
+}
+
+/* Case timeline: 01 ── 02 ── … ── 06. A six-stage clinical record,
+   not pagination: confident serif numerals (the specialty cards'
+   numbering voice) joined by long hairline rules; 06, the result on
+   view, carries the red accent, and the stretch into it is red. */
+.miniLine {
+  display: flex;
+  align-items: center;
+  max-width: 560px;
+  margin-top: clamp(24px, 2.6vw, 34px);
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.05vw, 28px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgba(251, 250, 247, 0.8);
+}
+
+.miniStep {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.miniStep + .miniStep {
+  flex: 1 1 0;
+}
+
+.miniStep + .miniStep::before {
+  content: "";
+  flex: 1 1 auto;
+  min-width: 20px;
+  height: 1px;
+  margin: 0 clamp(10px, 1.2vw, 18px);
+  background: rgba(251, 250, 247, 0.32);
+}
+
+.miniStepCurrent {
+  color: var(--neodent-red);
+}
+
+.miniStepCurrent::before {
+  background: var(--neodent-red) !important;
+  opacity: 0.75;
+}
+
+/* Narrow rail (copy column ~320px beside the hero): same numerals,
+   tighter connectors so the six stages still fit on one line. */
+@media (min-width: 768px) {
+  @container story (max-width: 899px) {
+    .miniStep + .miniStep::before {
+      min-width: 12px;
+      margin: 0 7px;
+    }
+  }
+}
+
+/* ---- Discovery CTA (collapsed) -------------------------------------
+   One editorial line, not a button slab: the red kicker CLICK TO VIEW,
+   a short rule + chevron that draws toward the title, and the ivory
+   title THE SMILE JOURNEY — all on a single baseline so the cue reads
+   as one phrase that belongs to the timeline above it. The directional
+   cue is a restrained transform/opacity nudge on the chevron only, so
+   the button's box never changes size (no layout shift). */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 8px 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--neodent-ivory);
+  font: inherit;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.1;
+  visibility: visible;
+  transition: visibility 0s linear 0s;
+}
+
+.ctaKicker {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--neodent-red);
+  transition: color 0.2s ease;
+}
+
+/* Integrated directional cue between kicker and title: a drawn rule
+   ending in a red chevron. Fixed box; only the chevron translates. */
+.ctaArrow {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 2px;
+  flex: 0 0 auto;
+}
+
+.ctaArrowLine {
+  position: absolute;
+  inset: 0;
+  background: var(--neodent-red);
+  transform-origin: left center;
+  animation: ctaDraw 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.ctaArrowHead {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid var(--neodent-red);
+  border-right: 2px solid var(--neodent-red);
+  transform: rotate(45deg);
+  animation: ctaNudge 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.ctaTitle {
+  font-size: clamp(19px, 1.7vw, 24px);
+  letter-spacing: 0.12em;
+  color: var(--neodent-ivory);
+}
+
+@keyframes ctaDraw {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  55% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  85%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.55;
+  }
+}
+
+/* Glide forward a few pixels, ease home — a directional pull, never a
+   bounce; transform/opacity only. */
+@keyframes ctaNudge {
+  0%,
+  14% {
+    translate: 0 0;
+    opacity: 1;
+  }
+  55% {
+    translate: 5px 0;
+    opacity: 0.6;
+  }
+  100% {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+/* Hover / keyboard focus settle the cue: rule fully drawn, chevron
+   resting forward, title underscored by the red accent. */
+.cta:hover .ctaArrowLine,
+.cta:focus-visible .ctaArrowLine {
+  animation: none;
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.cta:hover .ctaArrowHead,
+.cta:focus-visible .ctaArrowHead {
+  animation: none;
+  translate: 3px 0;
+  opacity: 1;
+}
+
+.cta:hover .ctaKicker,
+.cta:focus-visible .ctaKicker {
+  color: var(--neodent-ivory);
+}
+
+.cta:focus-visible {
+  outline: 1px solid var(--neodent-red);
+  outline-offset: 6px;
+}
+
+/* Expanded: the cue leaves with the copy, then drops out of the tab
+   order; the bar's "Close the journey" takes over. */
+.story[data-state="expanded"] .cta {
+  visibility: hidden;
+  transition: visibility 0s linear 220ms;
+}
+
+.story[data-state="expanded"] .ctaArrowLine,
+.story[data-state="expanded"] .ctaArrowHead {
+  animation-play-state: paused;
+}
+
+/* The bar's close control exists only in the expanded state. */
+.story[data-state="collapsed"] .toggle {
+  visibility: hidden;
+}
+
+/* ---- Stage + frames ----------------------------------------------- */
+.stage {
+  position: relative;
+  height: calc(var(--hero-h) + var(--bar));
+  pointer-events: none;
+}
+
+.frames {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  width: var(--hero-w);
+  height: var(--hero-h);
+  z-index: calc(var(--i) + 1);
+  transform-origin: 0 0;
+  visibility: hidden;
+  pointer-events: auto;
+}
+
+.frameHero {
+  visibility: visible;
+}
+
+.figure {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #17191a;
+  border: 1px solid rgba(251, 250, 247, 0.14);
+  transition: border-color 0.2s ease;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.index {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-family: var(--app-font-serif);
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--neodent-red);
+  text-shadow: 0 1px 6px rgba(23, 25, 26, 0.7);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.open {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: zoom-in;
+}
+
+.open:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+
+.story[data-state="expanded"] .frame:hover .figure {
+  border-color: rgba(251, 250, 247, 0.42);
+}
+
+/* ---- Through-line (expanded) -------------------------------------- */
+.timeline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.timelineLine {
+  position: absolute;
+  background: rgba(251, 250, 247, 0.18);
+  opacity: 0;
+}
+
+.timelineFill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--neodent-red);
+}
+
+.station {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.stationDot {
+  position: absolute;
+  left: -4.5px;
+  top: -4.5px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--neodent-red);
+  background: var(--neodent-charcoal);
+}
+
+.stationLabel {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: rgba(251, 250, 247, 0.6);
+  white-space: nowrap;
+}
+
+/* ---- Control bar under Step 06 ------------------------------------- */
+.bar {
+  position: absolute;
+  top: var(--hero-h);
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--bar);
+  pointer-events: auto;
+}
+
+.barLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(251, 250, 247, 0.45);
+  white-space: nowrap;
+}
+
+.toggle,
+.endClose {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--neodent-ivory);
+  transition: color 0.2s ease;
+}
+
+/* Red hairline underline — the one strong mark on the control. */
+.toggle {
+  position: relative;
+}
+
+.toggle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 19px;
+  bottom: 10px;
+  height: 1px;
+  background: var(--neodent-red);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.toggle svg,
+.endClose svg {
+  color: var(--neodent-red);
+  transition: translate 0.25s ease;
+}
+
+.toggle:hover svg {
+  translate: 2px 0;
+}
+
+.toggle:hover::after {
+  transform: scaleX(1.06);
+}
+
+.toggle:focus-visible,
+.endClose:focus-visible {
+  outline: 1px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+
+.endClose {
+  display: none;
+}
+
+/* ===================================================================
+   DESKTOP / TABLET (≥768) — horizontal unfold
+   =================================================================== */
+@media (min-width: 768px) {
+  /* Intro and stage share one grid cell: the rail unfolds INTO the
+     intro's territory while the copy is displaced to the left. */
+  .body {
+    display: grid;
+    grid-template-areas: "cell";
+  }
+
+  .introWrap,
+  .stage {
+    grid-area: cell;
+  }
+
+  .introWrap {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100cqw - var(--hero-w) - 48px);
+  }
+
+  /* Copy at the top; the discovery cue sits a measured beat beneath
+     the 01–06 timeline (not pushed to the column foot), so the collapsed
+     block reads as one composed sequence with no reserved gap under the
+     cue. Left-aligned to flow straight on from the timeline. */
+  .intro {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+
+  /* Beat between timeline and cue. */
+  .miniLine {
+    margin-bottom: clamp(22px, 2.4vw, 30px);
+  }
+
+  .cta {
+    align-self: flex-start;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  /* The stage keeps its own height (Step 06 + bar) even when the copy
+     column is taller, so the approved journey geometry is unchanged;
+     the story's height = max(copy, stage) in BOTH states (the copy
+     keeps its space at opacity 0), so expanding never jumps. */
+  .stage {
+    z-index: 2;
+    align-self: start;
+  }
+
+  .frame {
+    left: calc(100cqw - var(--hero-w));
+  }
+
+  .bar {
+    left: calc(100cqw - var(--hero-w));
+    width: var(--hero-w);
+  }
+
+  /* Expanded: the through-line, its labels and the control bar follow
+     the unfolded rail's actual foot (--rail-bottom), and the stage
+     shrinks to that content — so the journey ends on the last frame
+     instead of reserving the full Step-06 height below the rail.
+     Collapsed keeps the original geometry (bar under full Step 06). */
+  .story[data-state="expanded"] .body {
+    --line-y: calc(var(--rail-bottom) + 20px);
+  }
+
+  .story[data-state="expanded"] .bar {
+    top: calc(var(--line-y) + 26px);
+  }
+
+  .story[data-state="expanded"] .stage {
+    height: calc(var(--line-y) + 26px + var(--bar));
+  }
+
+  /* Rail: frame i at (i·step, i·stagger), scaled to the rail width.
+     06 keeps its right edge on the measure; 05 → 01 slide out left. */
+  .story[data-state="expanded"] .frame {
+    transform: translate(
+        calc(var(--i) * var(--rail-step) - (100cqw - var(--hero-w))),
+        calc(var(--i) * var(--rail-stagger))
+      )
+      scale(var(--rail-scale));
+  }
+
+  .timelineLine {
+    top: var(--line-y);
+    left: calc(var(--rail-w) / 2);
+    width: calc(5 * var(--rail-step));
+    height: 1px;
+  }
+
+  .timelineFill {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+
+  .story[data-state="expanded"] .timelineFill {
+    transform: scaleX(1);
+  }
+
+  .station {
+    top: var(--line-y);
+    left: calc(var(--i) * var(--rail-step) + var(--rail-w) / 2);
+  }
+
+  /* Connector: frame bottom → its station. Shortens along the descent. */
+  .station::before {
+    content: "";
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    width: 1px;
+    height: max(
+      0px,
+      calc(var(--line-y) - var(--i) * var(--rail-stagger) - var(--rail-h) - 12px)
+    );
+    background: rgba(251, 250, 247, 0.22);
+  }
+
+  /* ---- choreography ---- */
+  /* Opening: 05 slides out first, then 04 … 01, each a beat later;
+     06 settles into its slot once the deck is moving. */
+  .story[data-state="expanded"] .frame {
+    visibility: visible;
+    transition:
+      transform var(--move) var(--ease) calc((4 - var(--i)) * 55ms),
+      visibility 0s linear 0s;
+  }
+
+  .story[data-state="expanded"] .frameHero {
+    transition: transform var(--move) var(--ease) 160ms;
+  }
+
+  /* Closing: 06 returns to the front first, then 01 → 05 fold under
+     it; each becomes hidden only once fully covered. */
+  .story[data-state="collapsed"] .frame {
+    transition:
+      transform var(--move) var(--ease) calc(60ms + var(--i) * 45ms),
+      visibility 0s linear calc(60ms + var(--i) * 45ms + var(--move));
+  }
+
+  .story[data-state="collapsed"] .frameHero {
+    transition: transform var(--move) var(--ease) 0s;
+  }
+
+  /* Copy is displaced by the incoming 01/02 — out before they land,
+     back only after they have left its territory. */
+  .intro {
+    transition:
+      opacity 300ms ease 300ms,
+      transform 300ms var(--ease) 300ms;
+  }
+
+  .story[data-state="expanded"] .intro {
+    opacity: 0;
+    transform: translateX(-48px);
+    pointer-events: none;
+    transition:
+      opacity 220ms ease 0s,
+      transform 220ms var(--ease) 0s;
+  }
+
+  /* Once the copy has faded out, the intro column stops reserving its
+     height so the shared grid cell collapses to the (shrunk) stage —
+     this removes the empty band beneath the unfolded rail. The copy's
+     height is restored first on close, before it fades back in. */
+  .story[data-state="expanded"] .introWrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0s linear 260ms;
+  }
+}
+
+/* ===================================================================
+   MOBILE (<768) — vertical unfold beneath Step 06
+   =================================================================== */
+@media (max-width: 767px) {
+  .body {
+    --hero-w: 100cqw;
+    --m-scale: 0.84;
+    --m-h: calc(var(--hero-h) * var(--m-scale));
+    --m-pitch: calc(var(--m-h) * 0.85); /* 15% tucks under the frame above */
+    --m-y0: calc(var(--hero-h) + var(--bar));
+    --m-gutter: calc(100cqw * (1 - var(--m-scale)));
+  }
+
+  .introWrap {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 320ms var(--ease) 260ms;
+  }
+
+  .intro {
+    overflow: hidden;
+    transition: opacity 260ms ease 320ms;
+  }
+
+  /* Spacing lives INSIDE the clipped box so 0fr collapses to 0px.
+     The cue sits between the timeline and the photograph, reading as
+     one inline phrase. */
+  .cta {
+    width: 100%;
+    margin: 20px 0 16px;
+  }
+
+  .ctaTitle {
+    font-size: 18px;
+  }
+
+  .miniLine {
+    font-size: clamp(20px, 5.4vw, 24px);
+  }
+
+  .miniStep + .miniStep::before {
+    min-width: 10px;
+    margin: 0 clamp(6px, 2vw, 10px);
+  }
+
+  .story[data-state="expanded"] .introWrap {
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 320ms var(--ease) 0s;
+  }
+
+  .story[data-state="expanded"] .intro {
+    opacity: 0;
+    transition: opacity 180ms ease 0s;
+  }
+
+  .frame {
+    left: 0;
+  }
+
+  .bar {
+    left: 0;
+    right: 0;
+    background: var(--neodent-charcoal);
+  }
+
+  /* The stage grows at once on open (frames need the room) and only
+     shrinks after the journey has folded back. */
+  .stage {
+    transition: height 0s linear calc(60ms + 4 * 45ms + var(--move));
+  }
+
+  .story[data-state="expanded"] .stage {
+    height: calc(var(--m-y0) + 4 * var(--m-pitch) + var(--m-h) + 56px);
+    transition: height 0s linear 0s;
+  }
+
+  /* 06 stays put; 05 → 01 are dealt downward, right-aligned, each
+     tucked 15% under the one above, in the order they sit beneath it. */
+  .story[data-state="expanded"] .frame:not(.frameHero) {
+    visibility: visible;
+    transform: translate(
+        var(--m-gutter),
+        calc(var(--m-y0) + (4 - var(--i)) * var(--m-pitch))
+      )
+      scale(var(--m-scale));
+    transition:
+      transform var(--move) var(--ease) calc((4 - var(--i)) * 55ms),
+      visibility 0s linear 0s;
+  }
+
+  .story[data-state="collapsed"] .frame:not(.frameHero) {
+    transition:
+      transform var(--move) var(--ease) calc(60ms + var(--i) * 45ms),
+      visibility 0s linear calc(60ms + var(--i) * 45ms + var(--move));
+  }
+
+  /* Vertical through-line in the left gutter: 05 → 01 under 06. */
+  .timelineLine {
+    top: var(--m-y0);
+    left: calc(var(--m-gutter) / 2);
+    width: 1px;
+    height: calc(4 * var(--m-pitch) + var(--m-h) / 2);
+  }
+
+  .timelineFill {
+    transform: scaleY(0);
+    transform-origin: center top;
+  }
+
+  .story[data-state="expanded"] .timelineFill {
+    transform: scaleY(1);
+  }
+
+  .station {
+    left: calc(var(--m-gutter) / 2);
+    top: calc(var(--m-y0) + (4 - var(--i)) * var(--m-pitch) + var(--m-h) / 2);
+  }
+
+  .station:last-child {
+    display: none;
+  }
+
+  .endClose {
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+    pointer-events: auto;
+  }
+
+  .story[data-state="expanded"] .endClose {
+    display: inline-flex;
+  }
+}
+
+/* ---- Shared through-line timing ----------------------------------- */
+.timelineLine {
+  transition: opacity 200ms ease 0s;
+}
+
+.timelineFill {
+  transition: transform 300ms var(--ease) 0s;
+}
+
+.station {
+  transition:
+    opacity 200ms ease 0s,
+    visibility 0s linear 200ms;
+}
+
+.story[data-state="expanded"] .timelineLine {
+  opacity: 1;
+  transition: opacity 240ms ease 140ms;
+}
+
+.story[data-state="expanded"] .timelineFill {
+  transition: transform 620ms var(--ease) 180ms;
+}
+
+.story[data-state="expanded"] .station {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 260ms ease calc(320ms + (5 - var(--i)) * 55ms),
+    visibility 0s linear 0s;
+}
+
+/* ---- Reduced motion: same states, no travel ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .story .frame,
+  .story .intro,
+  .story .introWrap,
+  .story .stage,
+  .story .timelineLine,
+  .story .timelineFill,
+  .story .station,
+  .story .toggle::after,
+  .story .toggle svg {
+    transition: none !important;
+  }
+
+  /* The cue stays, fully drawn and still. */
+  .story .ctaArrowLine,
+  .story .ctaArrowHead {
+    animation: none !important;
+  }
+
+  .story .ctaArrowLine {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  .story .ctaArrowHead {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+.story {
+  scroll-margin-top: 80px;
+}
