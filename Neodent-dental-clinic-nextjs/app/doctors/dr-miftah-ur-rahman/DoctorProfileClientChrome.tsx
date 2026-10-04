@@ -13,7 +13,7 @@ import { ctaTelPhone } from "@/lib/site-data";
 export function DoctorProfileClientChrome() {
   return (
     <div className="site">
-      <Navbar />
+      <Navbar overHero />
       <main>
         <DrMiftahProfile />
       </main>

@@ -14,7 +14,33 @@ import styles from "./BrandStatementStrip.module.css";
    section nor globals.css is touched.
    ------------------------------------------------------------------ */
 
-export function BrandStatementStrip() {
+/* Content props default to the homepage "peak performance" statement, so
+   `<BrandStatementStrip />` renders exactly as before. Other pages (e.g.
+   the Dr. Miftah profile's clinical-philosophy strip) reuse the same
+   component and stylesheet with their own copy; pass `null` to omit the
+   attribution / location lines. */
+type BrandStatementStripProps = {
+  ariaLabel?: string;
+  eyebrow?: string;
+  support?: string;
+  emphasis?: string;
+  attribution?: string | null;
+  location?: string | null;
+  /* Set when the emphasis line is markedly longer than "peak performance"
+     (16 chars): on very narrow phones it is sized to stay on one line
+     instead of orphaning its last word. Default output is unchanged. */
+  longEmphasis?: boolean;
+};
+
+export function BrandStatementStrip({
+  ariaLabel = "Neodent brand statement",
+  eyebrow = "Neodent Standard",
+  support = "We maintain",
+  emphasis = "peak performance",
+  attribution = "— Neodent Dental Clinic",
+  location = "Mehdipatnam · Nampally",
+  longEmphasis = false,
+}: BrandStatementStripProps = {}) {
   const [isVisible, setIsVisible] = useState(false);
   const stripRef = useRef<HTMLElement>(null);
 
@@ -36,8 +62,8 @@ export function BrandStatementStrip() {
   return (
     <section
       ref={stripRef}
-      className={`${styles.strip} ${isVisible ? styles.visible : ""}`}
-      aria-label="Neodent brand statement"
+      className={`${styles.strip} ${isVisible ? styles.visible : ""} ${longEmphasis ? styles.longEmphasis : ""}`}
+      aria-label={ariaLabel}
     >
       <span className={styles.seamTop} aria-hidden="true" />
       <span className={styles.seamBottom} aria-hidden="true" />
@@ -47,14 +73,14 @@ export function BrandStatementStrip() {
       </div>
 
       <div className={styles.container}>
-        <p className={styles.eyebrow}>Neodent Standard</p>
+        <p className={styles.eyebrow}>{eyebrow}</p>
         <p className={styles.statement}>
-          <span className={styles.statementSupport}>We maintain</span>
-          <span className={styles.statementEmphasis}>peak performance</span>
+          <span className={styles.statementSupport}>{support}</span>
+          <span className={styles.statementEmphasis}>{emphasis}</span>
         </p>
         <span className={styles.signatureLine} aria-hidden="true" />
-        <p className={styles.attribution}>— Neodent Dental Clinic</p>
-        <p className={styles.location}>Mehdipatnam · Nampally</p>
+        {attribution && <p className={styles.attribution}>{attribution}</p>}
+        {location && <p className={styles.location}>{location}</p>}
       </div>
     </section>
   );

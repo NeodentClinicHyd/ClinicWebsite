@@ -65,7 +65,7 @@
   flex: 1;
   min-width: 0;
   color: var(--muted);
-  font: 700 9px/1.3 var(--mono);
+  font: 700 10px/1.3 var(--mono);
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -96,7 +96,7 @@
   border: 1px solid rgba(241, 238, 231, 0.22);
   background: transparent;
   color: var(--ivory);
-  font: 700 9px/1 var(--mono);
+  font: 700 10px/1 var(--mono);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -169,6 +169,7 @@
   max-height: 100%;
   width: auto;
   height: 100%;
+  object-fit: contain; /* keep native aspect, never stretch */
   background: #0c0d0f;
 }
 
@@ -189,7 +190,7 @@
 
 .captionSource {
   color: var(--red);
-  font: 700 9px/1.4 var(--mono);
+  font: 700 10px/1.4 var(--mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;

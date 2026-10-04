@@ -55,10 +55,12 @@ function FilmPlayer({ item }: { item: Extract<EvidenceItem, { kind: "video" }> }
     /* Called within the opening click's user-activation window. If the
        browser still refuses, native controls remain available. */
     video.play().catch(() => {});
+    /* Only pause here. The <video> is unmounted with the player, which
+       releases the media. Stripping `src` in cleanup breaks playback
+       under React StrictMode (mount → cleanup → mount reuses the same
+       element without re-applying the attribute). */
     return () => {
       video.pause();
-      video.removeAttribute("src");
-      video.load();
     };
   }, []);
 
@@ -69,7 +71,7 @@ function FilmPlayer({ item }: { item: Extract<EvidenceItem, { kind: "video" }> }
       src={item.src}
       controls
       playsInline
-      preload="none"
+      preload="auto"
       aria-label={item.label}
     />
   );

@@ -1,0 +1,260 @@
+/* Media rail — Dr. Miftah profile, Section 09.
+   Dark editorial band, hairline borders and the italic red serif index
+   taken from the page's existing folio/plate grammar. Movement is one
+   linear transform keyframe; the viewport clips it, so the document
+   never gains horizontal overflow. */
+
+.rail {
+  --card-h: clamp(340px, 28vw, 420px);
+  --gap: 20px;
+  --index-h: 30px;
+  position: relative;
+  margin-top: clamp(28px, 3.4vw, 44px);
+  border-top: 1px solid rgba(251, 250, 247, 0.14);
+  border-bottom: 1px solid rgba(251, 250, 247, 0.14);
+  padding-block: 26px 10px;
+  /* The strip is a backdrop, not a scroll surface: vertical page
+     gestures always win on touch. */
+  touch-action: pan-y;
+}
+
+/* Clip box. `clip` (not `hidden`) so a focused off-screen item can
+   never scroll the viewport sideways. Soft fades at both ends make
+   clippings enter and leave rather than being cut off. */
+.viewport {
+  overflow: clip;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 clamp(24px, 5vw, 96px),
+    #000 calc(100% - clamp(24px, 5vw, 96px)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 clamp(24px, 5vw, 96px),
+    #000 calc(100% - clamp(24px, 5vw, 96px)),
+    transparent 100%
+  );
+}
+
+/* Three identical sets (clone · real · clone). The keyframe travels
+   exactly one set — from -1/3 to -2/3 of the track — so the wrap is
+   invisible, and the focusable real set always sits in the middle,
+   which lets keyboard focus bring any item on-screen.
+
+   Duration is constant across breakpoints: the card height
+   (and so the set width) shrinks with the viewport, which keeps the
+   on-screen speed proportionate — about 30px/s desktop, 21px/s phone. */
+.track {
+  display: flex;
+  width: max-content;
+  animation: railDrift 115s linear infinite;
+  will-change: transform;
+}
+
+@keyframes railDrift {
+  from {
+    transform: translate3d(calc(-100% / 3), 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-200% / 3), 0, 0);
+  }
+}
+
+/* The trailing padding equals the gap, so set width = n × (card + gap)
+   and the seam between set 1 and set 2 is spaced like every other. */
+.set {
+  display: flex;
+  flex: none;
+  gap: var(--gap);
+  margin: 0;
+  padding: 0 var(--gap) 0 0;
+  list-style: none;
+}
+
+.item {
+  flex: none;
+  width: calc(var(--card-h) * var(--ratio));
+  margin: 0;
+}
+
+/* Portrait-first frame: the card is exactly the clipping's own ratio,
+   so object-fit: contain shows the whole scan with no bars and no
+   crop. */
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: var(--card-h);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(251, 250, 247, 0.16);
+  border-radius: 0;
+  background: #17191a;
+  color: inherit;
+  cursor: zoom-in;
+  transition: border-color 0.35s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.image {
+  object-fit: contain;
+  filter: brightness(0.88) contrast(1.02);
+  transition: filter 0.35s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: rgba(215, 25, 32, 0.7);
+}
+
+.card:hover .image,
+.card:focus-visible .image {
+  filter: none;
+}
+
+.card:focus-visible {
+  outline: 1px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+
+/* Italic red serif numeral — the folio index grammar. */
+.index {
+  display: block;
+  height: var(--index-h);
+  padding-top: 8px;
+  font-family: var(--app-font-serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--neodent-red);
+}
+
+/* Manual stepping — arrow buttons overlaid on the strip's fade zones,
+   vertically centred on the cards. Square hairline frames, like the
+   viewer's own controls; solid enough to stay legible over newsprint. */
+.nav {
+  position: absolute;
+  z-index: 2;
+  top: calc(26px + var(--card-h) / 2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0;
+  padding: 0;
+  border: 1px solid rgba(251, 250, 247, 0.3);
+  border-radius: 0;
+  background: rgba(23, 25, 26, 0.86);
+  color: var(--neodent-ivory);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navPrev {
+  left: clamp(10px, 2.2vw, 32px);
+}
+
+.navNext {
+  right: clamp(10px, 2.2vw, 32px);
+}
+
+.nav:hover {
+  border-color: var(--neodent-red);
+  background: rgba(215, 25, 32, 0.22);
+}
+
+.nav:focus-visible {
+  outline: 1px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1099px) {
+  .rail {
+    --card-h: 320px;
+    --gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .rail {
+    --card-h: 288px;
+    --gap: 14px;
+    padding-block: 20px 6px;
+  }
+
+  .nav {
+    top: calc(20px + var(--card-h) / 2);
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+  }
+
+  .navPrev {
+    left: 8px;
+  }
+
+  .navNext {
+    right: 8px;
+  }
+
+  .viewport {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 20px,
+      #000 calc(100% - 20px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 20px,
+      #000 calc(100% - 20px),
+      transparent 100%
+    );
+  }
+
+  .card {
+    min-width: 44px;
+  }
+}
+
+/* Reduced motion — no drift. One static row, every clipping still
+   reachable: the row scrolls inside its own clip box (never the page),
+   and the duplicate set is removed. */
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(251, 250, 247, 0.3) transparent;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .track {
+    animation: none;
+    will-change: auto;
+  }
+
+  .setClone {
+    display: none;
+  }
+
+  .card,
+  .image,
+  .nav {
+    transition: none;
+  }
+}

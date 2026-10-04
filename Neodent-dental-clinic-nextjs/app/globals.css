@@ -55,6 +55,41 @@
   --type-hero-primary: clamp(56px, 7.2vw, 96px);
   --type-hero-supporting: clamp(38px, 4.7vw, 64px);
   --type-section-title: clamp(32px, 3.45vw, 52px);
+
+  /* ---- Editorial chapter typography (shared tokens) ----
+     Extracted, not invented: these are the values the homepage chapters
+     (PatientStories / WhatToExpect / SpacesDesignedAroundCare /
+     ContactNextStep .title, .eyebrow, .lede) already set independently
+     in their own modules. Profile pages (components/doctors) consume
+     them so there is one chapter voice across the site:
+       display title  DM Serif Display 400, tight leading + tracking,
+                      ink/ivory first line, red ITALIC final line
+       eyebrow        Manrope 700, 10px, .2em caps, muted ink with a
+                      red hairline lead-in
+       body           Manrope 400, 15px / 1.7, ink at .68
+     Homepage modules keep their local declarations (same values), so
+     nothing on the homepage changes. */
+  --type-display-title: clamp(2.7rem, 4.4vw, 4.4rem);
+  --type-display-leading: 1.04;
+  --type-display-tracking: -0.04em;
+  --type-serif-sub-tracking: -0.01em;
+  --type-eyebrow-size: 10px;
+  --type-eyebrow-tracking: 0.2em;
+  --type-eyebrow-rule: 34px;
+  --type-meta-size: 10px;
+  --type-meta-tracking: 0.16em;
+  --type-body-size: 15px;
+  --type-body-leading: 1.7;
+  --type-body-sm-size: 14px;
+  --type-body-sm-leading: 1.6;
+  --type-body-measure: 500px;
+  --type-lede-measure: 460px;
+  /* Homepage eyebrow ink is .58; .66 here keeps the 10px label at
+     >= 4.5:1 on the ivory surface without a visible tone change. */
+  --type-ink-eyebrow: rgba(38, 48, 51, 0.66);
+  --type-ink-body: rgba(38, 48, 51, 0.7);
+  --type-ivory-eyebrow: rgba(241, 238, 231, 0.6);
+  --type-ivory-body: rgba(241, 238, 231, 0.68);
 }
 
 /*
@@ -102,6 +137,9 @@
     --type-hero-primary: clamp(25px, 7.2vw, 36px);
     --type-hero-supporting: clamp(26px, 8.2vw, 38px);
     --type-section-title: clamp(25px, 5.1vw, 30px);
+    /* Phone tier of the chapter display title (homepage chapters use
+       clamp(2.15rem, 9vw, 2.7rem) at this width). */
+    --type-display-title: clamp(2.15rem, 9vw, 2.7rem);
   }
 }
 @media (max-width: 430px) {

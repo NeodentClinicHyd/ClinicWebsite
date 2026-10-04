@@ -1,0 +1,214 @@
+/* ------------------------------------------------------------------
+   FilmCard — one video-card language for every film on the profile.
+   Hairline frame, native 9:16 poster, chip index numeral, ring play
+   control, then tracked meta / serif title / red CTA. The light and
+   dark tones only re-ink the same grammar for the band it sits on.
+   ------------------------------------------------------------------ */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:focus-visible {
+  outline: 1px solid var(--neodent-red);
+  outline-offset: 5px;
+}
+
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid var(--film-line);
+  background: var(--film-ground);
+  transition: border-color 0.25s ease;
+}
+
+.poster {
+  object-fit: cover;
+  filter: saturate(0.88) contrast(1.03);
+  transition: transform 0.6s cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+
+/* Bottom scrim — keeps the play ring legible over bright frames. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 62%, rgba(23, 25, 26, 0.38));
+  pointer-events: none;
+}
+
+.index {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 7px 10px 6px;
+  font-family: var(--app-font-serif);
+  font-size: 17px;
+  line-height: 1;
+  color: var(--neodent-red);
+  background: var(--film-chip);
+  border-right: 1px solid var(--film-line);
+  border-bottom: 1px solid var(--film-line);
+}
+
+.play {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--neodent-ivory);
+  border: 1px solid var(--neodent-red);
+  color: var(--neodent-red);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.play svg {
+  margin-left: 2px;
+  fill: currentColor;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 14px;
+}
+
+.meta {
+  font-size: var(--type-meta-size);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--film-muted);
+}
+
+.title {
+  font-family: var(--app-font-serif);
+  font-size: clamp(17px, 1.3vw, 19px);
+  line-height: 1.25;
+  color: var(--film-ink);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  transition: color 0.2s ease;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--neodent-red);
+}
+
+.cta svg {
+  transition: translate 0.25s ease;
+}
+
+/* Tones — same grammar, re-inked per band. */
+.light {
+  --film-line: rgba(38, 48, 51, 0.16);
+  --film-ground: var(--neodent-surface);
+  --film-chip: var(--neodent-ivory);
+  --film-ink: var(--neodent-ink);
+  --film-muted: var(--neodent-muted);
+  --film-ink-hover: var(--neodent-red-dark);
+}
+
+.dark {
+  --film-line: rgba(251, 250, 247, 0.16);
+  --film-ground: #17191a;
+  --film-chip: var(--neodent-charcoal);
+  --film-ink: var(--neodent-ivory);
+  --film-muted: rgba(251, 250, 247, 0.55);
+  --film-ink-hover: var(--neodent-ivory);
+}
+
+/* Hover / focus — border to red, poster settles in, ring fills,
+   arrow advances. Pressed state gives tap feedback on touch. */
+.card:hover .frame,
+.card:focus-visible .frame {
+  border-color: var(--neodent-red);
+}
+
+.card:hover .poster,
+.card:focus-visible .poster {
+  transform: scale(1.02);
+}
+
+.card:hover .play,
+.card:focus-visible .play {
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+}
+
+.card:hover .title,
+.card:focus-visible .title {
+  color: var(--film-ink-hover);
+}
+
+.card:hover .cta svg,
+.card:focus-visible .cta svg {
+  translate: 4px 0;
+}
+
+.card:active .play {
+  transform: scale(0.94);
+}
+
+@media (max-width: 767px) {
+  .index {
+    font-size: 15px;
+    padding: 6px 8px 5px;
+  }
+
+  .play {
+    right: 10px;
+    bottom: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame,
+  .poster,
+  .play,
+  .title,
+  .cta svg {
+    transition: none;
+  }
+
+  .card:hover .poster,
+  .card:focus-visible .poster,
+  .card:active .play {
+    transform: none;
+  }
+
+  .card:hover .cta svg,
+  .card:focus-visible .cta svg {
+    translate: none;
+  }
+}

@@ -132,47 +132,191 @@
   user-select: none;
 }
 
-.blockVisible {
-  animation: miftah-rise 0.9s cubic-bezier(0.16, 0.72, 0.2, 1) both;
+/* ---- MOTION SYSTEM ----------------------------------------------
+   One quiet, editorial motion language for the whole page. Elements
+   carry data-reveal and are switched to data-shown by the single
+   IntersectionObserver in useRevealScope (DrMiftahProfile.tsx).
+
+     up    fade + short rise          (headings, copy, cards, plates)
+     mask  top-down clip wipe + the image settles from 1.05 → 1
+     step  education stage: content rises, node pops, segment draws
+
+   The pre-state only exists under [data-reveal-ready] (set by JS), so
+   content is never hidden without JS; `--d` is the in-batch stagger
+   written by the observer, `--i` an explicit order for grouped items.
+   .page is display:contents — it adds no box, only scope + tokens. */
+.page {
+  display: contents;
+  --m-dur: 760ms;
+  --m-ease: cubic-bezier(0.16, 0.72, 0.2, 1);
+  --m-stagger: 90ms;
+  --m-rise: 22px;
 }
 
-@keyframes miftah-rise {
+@media (max-width: 767px) {
+  .page {
+    --m-dur: 680ms;
+    --m-stagger: 70ms;
+    --m-rise: 16px;
+  }
+}
+
+.page[data-reveal-ready] [data-reveal]:not([data-shown]) {
+  opacity: 0;
+}
+
+.page[data-reveal-ready] [data-reveal="up"]:not([data-shown]),
+.page[data-reveal-ready] [data-reveal="step"]:not([data-shown]) {
+  transform: translateY(var(--m-rise));
+}
+
+.page [data-reveal="up"][data-shown="true"] {
+  animation: m-up var(--m-dur) var(--m-ease) backwards;
+  animation-delay: calc(var(--d, 0) * var(--m-stagger));
+}
+
+.page [data-reveal="mask"][data-shown="true"] {
+  animation: m-mask 1050ms var(--m-ease) backwards;
+  animation-delay: calc(var(--d, 0) * var(--m-stagger) + 80ms);
+}
+
+.page [data-reveal="mask"][data-shown="true"] img {
+  animation: m-settle 1400ms var(--m-ease) backwards;
+  animation-delay: calc(var(--d, 0) * var(--m-stagger) + 80ms);
+}
+
+@keyframes m-up {
   from {
     opacity: 0;
-    transform: translateY(26px);
+    transform: translateY(var(--m-rise));
+  }
+}
+
+@keyframes m-mask {
+  from {
+    opacity: 0.2;
+    clip-path: inset(0 0 100% 0);
   }
   to {
     opacity: 1;
-    transform: none;
+    clip-path: inset(0 0 0 0);
   }
 }
 
+@keyframes m-settle {
+  from {
+    transform: scale(1.05);
+  }
+}
+
+/* Anchor jumps and keyboard scrolling land below the fixed navbar. */
+:global(html):has(.page) {
+  scroll-padding-top: calc(var(--nav-height-desktop) + 20px);
+}
+
+@media (max-width: 900px) {
+  :global(html):has(.page) {
+    scroll-padding-top: calc(var(--nav-height-mobile) + 16px);
+  }
+}
+
+/* Shared heading row — heading left, lede bottom-aligned beside it on
+   wide screens (the Specialisation head grammar), stacked below. */
+@media (min-width: 1100px) {
+  .splitHead {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+    gap: 48px;
+    align-items: end;
+  }
+
+  /* Education — the lede starts on the plate column's vertical. */
+  .splitHeadEdu {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+    gap: clamp(36px, 6vw, 96px);
+  }
+
+  .splitHeadEdu .lede {
+    max-width: 460px;
+    justify-self: end;
+  }
+
+  .splitHead .lede {
+    margin: 0 0 6px;
+  }
+}
+
+/* ---- CHAPTER TYPOGRAPHY -------------------------------------------
+   The homepage chapter voice (PatientStories / WhatToExpect / Spaces /
+   ContactNextStep): the WHOLE heading in DM Serif Display 400 — tight
+   leading, -0.04em tracking — first line in the surface ink, the final
+   line a red italic block. Sizes and tracking come from the shared
+   --type-* tokens in globals.css; nothing is declared twice.
+
+   The authored halves are two block spans (not a <br>), so each half
+   wraps on its own and text-wrap: balance evens out the remainder. */
+.heading {
+  margin: 22px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: var(--type-display-title);
+  font-weight: 400;
+  line-height: var(--type-display-leading);
+  letter-spacing: var(--type-display-tracking);
+  text-wrap: balance;
+}
+
+.headingAccent {
+  display: block;
+  color: var(--neodent-red);
+  font-style: italic;
+}
+
+/* Chapter eyebrow — Manrope 700 / 10px / .2em caps, muted ink, red
+   hairline lead-in (homepage .eyebrow + ::before recipe). */
+.eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: var(--type-ink-eyebrow);
+  font-size: var(--type-eyebrow-size);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  flex: 0 0 auto;
+  width: var(--type-eyebrow-rule);
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+.dark .eyebrow {
+  color: var(--type-ivory-eyebrow);
+}
+
 .lede {
-  max-width: 560px;
+  max-width: var(--type-lede-measure);
   margin-top: 18px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--neodent-muted);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
+  color: var(--type-ink-body);
 }
 
 .dark .lede {
-  color: rgba(251, 250, 247, 0.62);
-}
-
-/* Dark-band eyebrow — the shared globals .eyebrow is sage-deep
-   (#16895c), which the hero rule above already documents as ~3.9:1
-   against charcoal (AA needs 4.5) and tonally off next to the red
-   numeral/link accents. Re-inked to the same muted ivory the dark
-   band's other micro-labels use. */
-.dark :global(.eyebrow) {
-  color: rgba(251, 250, 247, 0.55);
+  color: var(--type-ivory-body);
 }
 
 .bodyCopy {
-  max-width: 560px;
+  max-width: var(--type-body-measure);
   margin-bottom: 20px;
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
+  color: var(--type-ink-body);
 }
 
 /* ---- HERO -------------------------------------------------------- */
@@ -180,49 +324,52 @@
    name block vertically centred in the remaining height. */
 .hero {
   padding-top: calc(var(--nav-height-desktop) + clamp(20px, 3vw, 40px));
+  /* The meta rail is the hero's floor; no band padding beneath it. */
+  padding-bottom: 0;
+}
+
+/* Film-corner label sits on a bright clinic photograph here — a thin
+   charcoal backing keeps it legible. */
+.portraitFrame .filmTop span {
+  padding: 4px 6px 5px;
+  background: rgba(23, 25, 26, 0.62);
 }
 
 .heroContainer {
   display: flex;
   flex-direction: column;
-  /* Capped at 940px so very tall viewports (1440p+) don't stretch the
-     band and re-open the dead gap between the CTAs and the meta rail. */
-  min-height: min(calc(100vh - var(--nav-height-desktop)), 940px);
 }
 
-/* Dark-hero eyebrow — the homepage dark-hero eyebrow spec
-   (globals.css .hero .eyebrow): light sage instead of the light-band
-   sage-deep, because #16895c on charcoal is ~3.9:1 at 11px (AA needs
-   4.5). Same green-family grammar, tuned for the dark surface exactly
-   as the homepage hero already does. :global() because the TSX uses
-   the shared "eyebrow" class, not a module class. */
-.hero :global(.eyebrow) {
-  color: rgba(156, 178, 169, 0.95);
-  font-size: 10.5px;
+/* Dark-hero eyebrow — the homepage .hero-eyebrow spec (11px / .18em,
+   ivory at .62) instead of the chapter eyebrow's 10px / .2em. */
+.hero .eyebrow {
+  color: rgba(251, 250, 247, 0.62);
+  font-size: 11px;
+  letter-spacing: 0.18em;
 }
 
 .heroInner {
   flex: 1 1 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(32px, 5vw, 72px);
   align-items: center;
   align-content: center;
-  padding-bottom: clamp(40px, 6vw, 80px);
+  padding-bottom: clamp(28px, 3.5vw, 48px);
 }
 
-/* Bottom meta rail — full-width floor strip under the two columns:
+/* Bottom meta rail — compact floor strip under the two columns:
    hairline rule on top, mono micro-facts spread edge to edge, scroll
-   cue at the far end. This is what justifies the full-height band. */
+   cue at the far end. */
 .heroMeta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px clamp(20px, 4vw, 56px);
-  padding-top: 16px;
-  padding-bottom: clamp(18px, 2.4vw, 30px);
+  padding-top: 12px;
+  padding-bottom: clamp(14px, 1.8vw, 22px);
   border-top: 1px solid rgba(241, 238, 231, 0.14);
-  font: 9.5px var(--app-font-mono, "Manrope", sans-serif);
+  font: var(--type-meta-size) var(--app-font-mono, "Manrope", sans-serif);
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -268,20 +415,45 @@
   white-space: nowrap;
 }
 
+/* Hero title — the homepage hero grammar (.hero-title): Manrope 400
+   display sans, tight 0.96 leading, with the DM Serif Display line
+   as the contrast. Weight is 400 on BOTH: DM Serif Display ships one
+   weight, and the UA's default h1 bold was synthesising a fake-bold
+   serif. Scale is the shared --type-hero-supporting token. */
 .heroTitle {
   position: relative;
   margin: 22px 0 18px;
-  font-family: var(--app-font-serif);
   font-size: var(--type-hero-supporting);
-  line-height: 1.02;
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.018em;
   color: var(--neodent-ivory);
 }
 
+.heroTitleLine {
+  display: block;
+}
+
+.heroTitleSerif {
+  font-family: var(--app-font-serif);
+  letter-spacing: -0.025em;
+}
+
+/* Hero supporting line — the ClinicalLeadership "A steady hand. /
+   A human approach." grammar: serif, ivory first line, red italic
+   final line. The single red accent of the hero headline block. */
 .heroSubhead {
+  margin: 0;
   font-family: var(--app-font-serif);
   font-size: clamp(26px, 2.6vw, 38px);
-  line-height: 1.15;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   color: var(--neodent-ivory);
+}
+
+.heroSubhead span {
+  display: block;
 }
 
 .heroSubheadAccent {
@@ -365,7 +537,7 @@
 .heroPortrait {
   position: relative;
   margin: 0;
-  width: clamp(280px, 38vw, 520px);
+  width: clamp(340px, 44vw, 620px);
   justify-self: end;
   align-self: center;
   z-index: 1;
@@ -394,13 +566,13 @@
   pointer-events: none;
 }
 
-/* 3/4 matches the source photograph's own ratio (853x1280): no crop,
-   the subject stays unambiguous, enough of the department corridor
-   survives to show the photograph is genuinely from the hospital. */
+/* 5/4 landscape crop of the near-square banner (992x926): full width
+   kept, a little sky/floor trimmed, so the Neodent sign and the
+   doctor both stay in frame without stretching the hero. */
 .portraitFrame {
   position: relative;
   z-index: 1;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 4;
   overflow: hidden;
   border: 1px solid rgba(241, 238, 231, 0.24);
   background: #17191a;
@@ -408,6 +580,7 @@
 
 .portraitImage {
   object-fit: cover;
+  object-position: 68% 35%;
   filter: saturate(0.84) contrast(1.03);
 }
 
@@ -423,7 +596,7 @@
 
 .filmTop span {
   color: rgba(251, 250, 247, 0.72);
-  font: 9px var(--app-font-mono, "Manrope", sans-serif);
+  font: var(--type-meta-size) var(--app-font-mono, "Manrope", sans-serif);
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -444,7 +617,7 @@
 
 .portraitCaption b {
   color: var(--neodent-red);
-  font-size: 9.5px;
+  font-size: var(--type-meta-size);
   font-weight: 700;
 }
 
@@ -468,14 +641,26 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  /* Four facts do not need a full chapter's height. */
+  padding: clamp(56px, 6vw, 88px) 0;
 }
 
 .indexGrid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.9fr) 1px minmax(0, 1.1fr);
   gap: clamp(28px, 5vw, 64px);
-  align-items: start;
+  align-items: center;
+}
+
+/* Eyebrow + heading as one column block — the chapter mark no longer
+   claims its own row above the composition. */
+.indexHead .chapter {
+  margin-bottom: clamp(18px, 2.4vw, 28px);
+}
+
+.indexHead .heading {
+  margin-top: 0;
 }
 
 /* Vertical divider rule between the heading and the key-value rows —
@@ -501,7 +686,7 @@
   display: grid;
   grid-template-columns: minmax(120px, 150px) 1fr;
   gap: 18px;
-  padding: 16px 0;
+  padding: 14px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -539,8 +724,21 @@
   align-items: flex-start;
 }
 
-.bioCopy .section-heading {
+.bioCopy .heading {
   margin-bottom: 24px;
+}
+
+/* The global .text-link starts at opacity 0 and is only revealed by
+   the homepage's .about-visible scope — which never exists here, so the
+   link was permanently invisible. The page's own reveal now owns it. */
+.bioLink:global(.text-link) {
+  opacity: 0.85;
+  transform: none;
+  margin-top: 16px;
+}
+
+.bioLink:global(.text-link):hover {
+  opacity: 1;
 }
 
 /* Biography media — the hero portrait's plate grammar re-seated on the
@@ -605,7 +803,7 @@
 
 .bioPlateCaption b {
   color: var(--neodent-red);
-  font-size: 9.5px;
+  font-size: var(--type-meta-size);
   font-weight: 700;
 }
 
@@ -693,10 +891,6 @@
   min-width: 0;
   padding: 20px clamp(16px, 1.6vw, 22px);
   color: var(--neodent-ivory);
-}
-
-.blockVisible .specCard {
-  animation: eduFade 0.7s both;
 }
 
 .specCard + .specCard {
@@ -800,7 +994,7 @@
   display: grid;
   gap: 3px;
   margin-top: 8px;
-  font-size: 9.5px;
+  font-size: var(--type-meta-size);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: 0.16em;
@@ -871,10 +1065,17 @@
 
 .specCardCopy {
   margin: 12px 0 0;
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-leading);
   color: rgba(251, 250, 247, 0.66);
   transition: color 0.2s ease;
+}
+
+/* Section 03 closes on the Smile Design case story, which carries its
+   own measured breathing room — the full band padding below it read
+   as an empty dark field. */
+.specSection {
+  padding-bottom: clamp(40px, 5vw, 64px);
 }
 
 /* Card foot — holds the dossier trigger (Explore treatment). It is the
@@ -1163,6 +1364,7 @@
   font-family: var(--app-font-serif);
   font-size: 19px;
   line-height: 1.2;
+  letter-spacing: var(--type-serif-sub-tracking);
   transition: color 0.2s ease;
 }
 
@@ -1179,7 +1381,7 @@
 }
 
 .scopeFocus {
-  font-size: 9px;
+  font-size: var(--type-meta-size);
   font-weight: 700;
   letter-spacing: 0.14em;
   color: var(--neodent-red);
@@ -1200,7 +1402,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 9.5px;
+  font-size: var(--type-meta-size);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1241,8 +1443,13 @@
   opacity: 0.85;
 }
 
-/* Tablet — 2-column index; odd children own the left edge. */
+/* Tablet — two-column index; odd children own the left edge, even
+   children carry the column hairline. */
 @media (max-width: 1023px) {
+  .scopeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .scopeTile:nth-child(4n + 1) {
     border-left: 1px solid var(--line);
   }
@@ -1252,74 +1459,110 @@
   }
 }
 
-/* Mobile — single column of horizontal row-tiles: number + icon in a
-   fixed zone, title, meta line, arrow right. Everything visible
-   without any interaction. */
-@media (max-width: 640px) {
-  .scopeTile:nth-child(4n + 1),
-  .scopeTile:nth-child(2n + 1) {
-    border-left: 0;
-  }
-
-  .scopeTile,
-  .scopeFiller {
-    border-left: 0;
-    padding: 16px 4px;
+/* Phone — a genuine two-column editorial index. Each cell is a small
+   vertical plate: number and icon on one line, the treatment name
+   (free to take two lines), the focus tag and verb stacked beneath it,
+   and the View-treatment link pinned to the foot so every cell in a
+   row ends on the same baseline. Hairlines only: a rule under each
+   cell and one between the columns. Seven cells → four rows; the
+   seventh stays a half-width cell and its right edge closes with a
+   hairline, so the row reads as composed rather than cut off. */
+@media (max-width: 767px) {
+  .scopeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 28px;
   }
 
   .scopeTile {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 4px 14px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0;
+    min-height: 196px;
+    padding: 20px 14px 18px 16px;
+  }
+
+  .scopeTile:nth-child(2n + 1) {
+    padding-left: 2px;
+  }
+
+  .scopeTile:nth-child(2n) {
+    border-left: 1px solid var(--line);
+  }
+
+  .scopeTile:nth-child(7) {
+    border-right: 1px solid var(--line);
   }
 
   .scopeTileTop {
-    flex: 0 0 auto;
-    flex-direction: row;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 0;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
   }
 
   .scopeNumber {
     padding-top: 0;
+    font-size: 18px;
   }
 
   .scopeIcon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
   }
 
   .scopeTitle {
-    flex: 1 1 auto;
-    font-size: 17px;
+    font-size: 17.5px;
+    line-height: 1.22;
+    text-wrap: balance;
   }
 
   .scopeMeta {
-    flex-basis: 100%;
-    margin-top: 2px;
-    padding-left: 78px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 4px;
+    margin-top: 10px;
+    padding-left: 0;
+  }
+
+  .scopeFocus {
+    flex-basis: auto;
+    white-space: normal;
+    line-height: 1.35;
   }
 
   .scopeLink {
-    margin-top: 0;
-    padding-top: 0;
-    align-self: center;
+    margin-top: auto;
+    padding-top: 16px;
+    min-height: 44px;
+    align-items: flex-end;
+  }
+
+  /* The decorative eighth cell belongs to the four-column grid only. */
+  .scopeFiller {
+    display: none;
   }
 }
 
-/* ---- 05 EDUCATION — editorial timeline + recognition feature ------ */
-/* Left: the career timeline — serif-scaled qualifications on a red
-   spine, ordered training → specialisation → fellowship → recognition.
-   Right: the real award photograph anchoring the recognition beat the
-   timeline ends on (plate grammar: hairline frame, red corner tick,
-   factual caption). Everything visible at rest. */
+/* ---- 05 EDUCATION — academic journey + recognition plate --------- */
+/* One composition: the five-stage journey on the left, the award
+   photograph on the right. Both start on the same top line (stage 01
+   and the plate's top edge) and are sized to end together, so the
+   plate reads as the journey's evidence rather than a floating image.
+
+   Journey grammar: red serif stage number · small ringed node on a
+   1px connecting line · tracked kicker · serif title · institution
+   lines. Each stage's line segment is drawn from its node down to the
+   next node as the stage reveals, so the line literally progresses
+   with the reader. The final stage (Gold Medallist) closes on a
+   filled red node. */
 .eduGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.95fr);
-  gap: clamp(40px, 5vw, 72px);
-  margin-top: clamp(28px, 4vw, 48px);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr);
+  gap: clamp(36px, 6vw, 96px);
+  margin-top: clamp(36px, 4.5vw, 56px);
   align-items: start;
 }
 
@@ -1328,136 +1571,191 @@
 }
 
 .timeline {
-  position: relative;
   list-style: none;
   margin: 0;
-  padding: 6px 0 0 44px;
-}
-
-.timeline::before {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 10px;
-  bottom: 10px;
-  width: 1px;
-  background: rgba(215, 25, 32, 0.35);
+  padding: 0;
 }
 
 .timelineStep {
+  --num-col: 38px;
+  --node: 9px;
+  --col-gap: 16px;
   position: relative;
-  padding-bottom: 18px;
+  display: grid;
+  grid-template-columns: var(--num-col) var(--node) minmax(0, 1fr);
+  column-gap: var(--col-gap);
+  padding-bottom: 28px;
+}
+
+/* Connecting segment — node bottom → next stage's node. */
+.timelineStep::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--num-col) + var(--col-gap) + var(--node) / 2 - 0.5px);
+  top: calc(8px + var(--node) + 6px);
+  bottom: 2px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(215, 25, 32, 0.55),
+    rgba(251, 250, 247, 0.16)
+  );
+  transform-origin: 50% 0;
 }
 
 .timelineStep:last-child {
   padding-bottom: 0;
 }
 
-/* Sequential fade cadence once the block reveals — opacity only,
-   delay staggered inline. Reduced motion strips it entirely. */
-.blockVisible .timelineStep {
-  animation: eduFade 0.7s both;
+.timelineStep:last-child::after {
+  display: none;
 }
 
-@keyframes eduFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Red numbered marker (journey precedent), stepped up to 28px */
-.timelineMarker {
-  position: absolute;
-  left: -44px;
-  top: 0;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--neodent-red);
-  background: var(--neodent-charcoal);
-  border: 1px solid rgba(215, 25, 32, 0.4);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-/* The qualification itself — now the loudest timeline element */
-.timelineLabel {
-  margin: 4px 0 7px;
+.timelineNumber {
   font-family: var(--app-font-serif);
-  font-size: 17px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--neodent-red);
+  padding-top: 1px;
+}
+
+.timelineNode {
+  width: var(--node);
+  height: var(--node);
+  margin-top: 8px;
+  border: 1px solid var(--neodent-red);
+  border-radius: 50%;
+  background: var(--neodent-charcoal);
+}
+
+.timelineFinal .timelineNode {
+  background: var(--neodent-red);
+  box-shadow: 0 0 0 4px rgba(215, 25, 32, 0.16);
+}
+
+.timelineBody {
+  min-width: 0;
+}
+
+.timelineKicker {
+  display: block;
+  margin-bottom: 7px;
+  font-size: var(--type-meta-size);
+  font-weight: 700;
   line-height: 1.3;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(251, 250, 247, 0.5);
+}
+
+.timelineFinal .timelineKicker {
+  color: var(--neodent-red);
+}
+
+.timelineLabel {
+  margin: 0 0 8px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.6vw, 22px);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: var(--type-serif-sub-tracking);
   color: var(--neodent-ivory);
+  text-wrap: balance;
+}
+
+.timelineStep:not(:has(.timelineLine)) .timelineLabel {
+  margin-bottom: 0;
 }
 
 .timelineLine {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-leading);
   color: rgba(251, 250, 247, 0.6);
 }
 
-/* Recognition proof block — compact editorial plate. The photograph
-   is supporting evidence, not a hero: width-capped AND height-capped
-   (max-height is the short-viewport safety net). object-fit: contain
-   guarantees the full photograph stays visible, never cropped. */
-.eduProof {
-  min-width: 0;
+/* Stage reveal — content rises (shared m-up), node pops in, then the
+   segment draws down to the next stage. */
+.page [data-reveal="step"][data-shown="true"] {
+  animation: m-up var(--m-dur) var(--m-ease) backwards;
+  animation-delay: calc(var(--d, 0) * 140ms);
 }
 
-.eduProofHead {
+.page [data-reveal="step"][data-shown="true"] .timelineNode {
+  animation: m-node 520ms var(--m-ease) backwards;
+  animation-delay: calc(var(--d, 0) * 140ms + 160ms);
+}
+
+.page [data-reveal="step"][data-shown="true"]::after {
+  animation: m-draw 900ms var(--m-ease) backwards;
+  animation-delay: calc(var(--d, 0) * 140ms + 320ms);
+}
+
+@keyframes m-node {
+  from {
+    transform: scale(0);
+  }
+}
+
+@keyframes m-draw {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* Factual strip — closes the journey column on the plate's baseline. */
+.eduFacts {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 30px;
   padding-top: 16px;
   border-top: 1px solid rgba(251, 250, 247, 0.14);
-}
-
-.eduProofMark {
-  width: 8px;
-  height: 8px;
-  border-left: 1px solid var(--neodent-red);
-  border-bottom: 1px solid var(--neodent-red);
-  flex: none;
-}
-
-.eduProofEyebrow {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: rgba(251, 250, 247, 0.55);
+}
+
+.eduFacts span:last-child {
   color: var(--neodent-red);
+}
+
+/* Recognition plates — one stepped sequence in the right-hand column.
+   The certificate plate keeps its native ratio (1170×1150), so nothing
+   is cropped on desktop; the wrapper is width-capped so it never
+   outgrows the journey. */
+.eduPlates {
+  display: grid;
+  gap: clamp(18px, 2vw, 28px);
+  width: 100%;
+  max-width: 460px;
+  justify-self: end;
 }
 
 .eduPlate {
   margin: 0;
-  max-width: clamp(320px, 34vw, 460px);
+  width: 72%;
+  justify-self: end;
 }
 
 .eduPlateFrame {
   position: relative;
-  border: 1px solid rgba(251, 250, 247, 0.2);
+  aspect-ratio: 1170 / 1150;
   overflow: hidden;
+  border: 1px solid rgba(251, 250, 247, 0.2);
+  background: #17191a;
 }
 
 .eduPlateImage {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 74vh;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: 50% 40%;
+  /* The supplied photograph carries a thin white scan border on two
+     edges; a 4% overscale trims it inside the frame. */
+  scale: 1.04;
   filter: saturate(0.85) contrast(1.04);
-  transition: transform 0.5s ease;
+  transition: transform 0.6s var(--m-ease);
 }
 
 .eduPlate:hover .eduPlateImage {
@@ -1475,79 +1773,190 @@
 }
 
 .eduCaption {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 6px;
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid rgba(251, 250, 247, 0.14);
 }
 
-.eduCaptionText {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: rgba(251, 250, 247, 0.62);
-  max-width: 40ch;
-}
-
-/* Factual strip under the timeline — mirrors the caption grammar on
-   the right (hairline, mono-spaced caps) and balances the columns. */
-.eduFacts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 22px;
-  margin-top: 4px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(251, 250, 247, 0.14);
-  font-size: 10px;
+.eduProofEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--type-meta-size);
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(251, 250, 247, 0.55);
-}
-
-.eduFacts span:last-child {
   color: var(--neodent-red);
 }
 
-/* Tablet — single column: heading → intro → timeline → facts →
-   compact proof plate. The plate keeps its width cap so it never
-   becomes a giant vertical photograph. */
+.eduProofMark {
+  width: 8px;
+  height: 8px;
+  border-left: 1px solid var(--neodent-red);
+  border-bottom: 1px solid var(--neodent-red);
+  flex: none;
+}
+
+.eduCaptionText {
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-leading);
+  color: rgba(251, 250, 247, 0.62);
+  max-width: 44ch;
+}
+
+/* Second plate — the step down. Native 4:3 (1280×960), flush to the
+   first plate's right edge at ~64% of its width; the caption occupies
+   the space the step leaves on the left, sitting on the plate's
+   baseline. */
+.eduPlateB {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 46%;
+  column-gap: 16px;
+  align-items: end;
+  margin: 0;
+}
+
+.eduPlateBFrame {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgba(251, 250, 247, 0.2);
+  background: #17191a;
+}
+
+.eduPlateBImage {
+  object-fit: cover;
+  filter: saturate(0.85) contrast(1.04);
+  transition: transform 0.6s var(--m-ease);
+}
+
+.eduPlateB:hover .eduPlateBImage {
+  transform: scale(1.015);
+}
+
+.eduPlateBCaption {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(251, 250, 247, 0.14);
+}
+
+.eduPlateBIndex {
+  font-family: var(--app-font-serif);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--neodent-red);
+}
+
+.eduPlateBText {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(251, 250, 247, 0.5);
+}
+
+/* Tablet — keep the side-by-side composition, narrower plate. */
 @media (max-width: 1023px) {
   .eduGrid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(28px, 4vw, 40px);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 32px;
   }
 
-  .eduPlate {
-    max-width: clamp(320px, 60vw, 460px);
+  .timelineStep {
+    --num-col: 40px;
+    --col-gap: 14px;
+  }
+
+  .timelineNumber {
+    font-size: 22px;
   }
 }
 
-/* Mobile — compact timeline: tighter markers and indent; the proof
-   plate sits after the timeline at 88% width, fully visible. */
+/* Phone — the story reads top to bottom: heading → intro → plate →
+   journey → facts. The plate becomes a 5:4 crop (both people kept in
+   frame) so it introduces the chapter without taking the screen. */
 @media (max-width: 767px) {
-  .timeline {
-    padding: 4px 0 0 40px;
+  .eduGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    margin-top: 28px;
   }
 
-  .timelineMarker {
-    left: -40px;
-    width: 24px;
-    height: 24px;
-    font-size: 9px;
-  }
-
-  .timelineLabel {
-    font-size: 15.5px;
+  /* Both plates side by side, square-cropped, so the pair introduces
+     the chapter in one compact row instead of two stacked images. */
+  .eduPlates {
+    order: -1;
+    max-width: none;
+    justify-self: stretch;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-items: start;
   }
 
   .eduPlate {
-    max-width: 88%;
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .eduPlateFrame {
+    aspect-ratio: 1 / 1;
   }
 
   .eduPlateImage {
-    max-height: 60vh;
+    object-position: 50% 30%;
+  }
+
+  .eduPlateB {
+    display: block;
+  }
+
+  .eduPlateBFrame {
+    aspect-ratio: 1 / 1;
+  }
+
+  .eduPlateBImage {
+    object-position: 64% 30%;
+  }
+
+  .eduPlateBCaption {
+    margin-top: 12px;
+  }
+
+  .eduPlateBIndex {
+    display: none;
+  }
+
+  .timelineStep {
+    --num-col: 34px;
+    --col-gap: 12px;
+    padding-bottom: 24px;
+  }
+
+  .timelineNumber {
+    font-size: 20px;
+    padding-top: 2px;
+  }
+
+  .timelineLabel {
+    font-size: 18.5px;
+  }
+
+  .timelineLine {
+    font-size: var(--type-body-sm-size);
+  }
+
+  .eduFacts {
+    gap: 8px 18px;
+    margin-top: 26px;
   }
 }
 
@@ -1587,26 +1996,27 @@
   color: var(--neodent-red);
 }
 
-/* Seminar plate — teaching evidence, not a hero image. Width-capped
-   at well under the column so the section height is set by content. */
+/* Seminar plate — teaching evidence, not a hero image. A fixed 5:4
+   crop (students + Dr. Miftah at the lectern kept in frame) so the
+   left column ends close to the publications register. */
 .academicPlate {
   margin: 0 0 26px;
-  max-width: clamp(340px, 30vw, 430px);
+  max-width: clamp(340px, 32vw, 460px);
 }
 
 .academicPlateFrame {
   position: relative;
+  aspect-ratio: 5 / 4;
   border: 1px solid rgba(38, 48, 51, 0.16);
   background: var(--neodent-surface);
   overflow: hidden;
 }
 
 .academicPlateImage {
-  display: block;
-  width: 100%;
-  height: auto;
+  object-fit: cover;
+  object-position: 55% 62%;
   filter: saturate(0.88) contrast(1.03);
-  transition: transform 0.5s ease;
+  transition: transform 0.6s var(--m-ease);
 }
 
 .academicPlate:hover .academicPlateImage {
@@ -1664,86 +2074,193 @@
 .academicRole span {
   display: block;
   margin-top: 3px;
-  font-size: 13.5px;
+  font-size: var(--type-body-sm-size);
   font-weight: 400;
-  line-height: 1.55;
+  line-height: var(--type-body-sm-leading);
   color: var(--neodent-muted);
 }
 
-/* Selected Publications — editorial numbered rows. */
+/* Selected Publications — a ruled research register: header row
+   (book mark + label, article count), then one bordered paper panel
+   per article — large red serif numeral, journal/year meta, serif
+   title, explicit PubMed cue. Square corners, no shadow, no gradient. */
+.publicationHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* PubMed identity row — official mark at small editorial scale, a
+   hairline divider, then the tracked index note. No box. */
+.pubmedIdentity {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 0;
+  min-width: 0;
+}
+
+.pubmedLogo {
+  display: block;
+  width: auto;
+  height: 32px; /* logo is 2000×710 → ≈90px wide; raise/lower to resize */
+}
+
+.pubmedDivider {
+  width: 1px;
+  height: 20px;
+  background: rgba(38, 48, 51, 0.22);
+}
+
+@media (max-width: 767px) {
+  .pubmedLogo {
+    height: 28px;
+  }
+}
+
+/* Visually hidden, still announced (external-destination notes). */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.publicationCount {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neodent-muted);
+}
+
 .publicationList {
+  display: grid;
+  gap: 12px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .publication {
-  border-top: 1px solid var(--line);
-}
-
-.publication:last-child {
-  border-bottom: 1px solid var(--line);
+  min-width: 0;
 }
 
 .publicationLink {
+  position: relative;
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) auto;
-  gap: 14px;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 16px;
   align-items: start;
-  padding: 18px 0;
+  padding: 22px 24px 20px 20px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--line);
+  border-left: 2px solid transparent;
   text-decoration: none;
-}
-
-.blockVisible .publicationLink {
-  animation: eduFade 0.7s both;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .publicationIndex {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  line-height: 1.5;
+  font-family: var(--app-font-serif);
+  font-size: 32px;
+  line-height: 1;
   color: var(--neodent-red);
 }
 
 .publicationBody {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
 }
 
+.publicationMeta {
+  margin-bottom: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neodent-muted);
+}
+
 .publicationTitle {
-  display: block;
-  font-size: 15.5px;
-  font-weight: 600;
-  line-height: 1.45;
+  font-family: var(--app-font-serif);
+  font-size: clamp(17px, 1.35vw, 19px);
+  line-height: 1.32;
+  letter-spacing: var(--type-serif-sub-tracking);
   color: var(--neodent-ink);
   overflow-wrap: anywhere;
   transition: color 0.2s ease;
 }
 
-.publicationMeta {
-  display: block;
-  margin-top: 6px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
+.publicationCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--neodent-muted);
 }
 
+.publicationCueRule {
+  width: 14px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
 .publicationArrow {
-  margin-top: 4px;
-  color: var(--neodent-muted);
-  transition: color 0.2s ease, translate 0.25s ease;
+  color: var(--neodent-red);
+  transition: translate 0.25s ease;
+}
+
+.publicationLink:hover,
+.publicationLink:focus-visible {
+  background: #fff;
+  border-color: rgba(38, 48, 51, 0.22);
+  border-left-color: var(--neodent-red);
+}
+
+.publicationLink:focus-visible {
+  outline: 1px solid var(--neodent-red);
+  outline-offset: 3px;
 }
 
 .publicationLink:hover .publicationTitle,
 .publicationLink:focus-visible .publicationTitle {
-  color: var(--neodent-red);
+  color: var(--neodent-red-dark);
 }
 
 .publicationLink:hover .publicationArrow,
 .publicationLink:focus-visible .publicationArrow {
-  color: var(--neodent-red);
-  translate: 4px 0;
+  translate: 2px -2px;
+}
+
+@media (max-width: 767px) {
+  .publicationLink {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 18px 16px 16px 14px;
+  }
+
+  .publicationIndex {
+    font-size: 26px;
+  }
 }
 
 .pubmedLink {
@@ -1763,182 +2280,176 @@
   color: var(--neodent-red-dark);
 }
 
-/* ---- 07 IN PRACTICE ----------------------------------------------
-   Editorial clinical film archive. Uniform height-capped reel frames
-   on a charcoal field; posters cover, source video is contained (never
-   cropped or stretched); nothing is fetched until the visitor plays. */
-.filmGrid {
+/* Clinical teaching — a deliberate second row of the chapter, ruled
+   off from the research row above and laid on the same column grid:
+   the intro sits under the teaching column, the two root-canal films
+   under the publications. Cards are the shared FilmCard system; only
+   the JPG posters load with the page. */
+.teachingRow {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 3vw, 40px);
-  margin-top: clamp(24px, 3.2vw, 40px);
+  grid-template-columns: minmax(0, 0.78fr) 1px minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  margin-top: clamp(48px, 6vw, 80px);
+  padding-top: clamp(28px, 3.5vw, 40px);
+  border-top: 1px solid var(--line);
 }
 
-.filmPlate {
-  margin: 0;
+.teachingIntro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
   min-width: 0;
 }
 
-.blockVisible .filmPlate {
-  animation: eduFade 0.7s both;
-}
-
-.filmFrame {
-  position: relative;
-  overflow: hidden;
-  background: #17191a;
-  border: 1px solid rgba(251, 250, 247, 0.14);
-  /* Native reel ratio (608×1080) — the video fills the frame edge to
-     edge with no crop or letterbox. Height is controlled by capping
-     the WIDTH, keeping the section compact. */
-  aspect-ratio: 608 / 1080;
-  width: 100%;
-  max-width: clamp(260px, 23vw, 340px);
-  margin-inline: auto;
-}
-
-.filmVideo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-/* Poster state — cover still under the chrome; the video element
-   itself is contain, so playback never crops clinical content. */
-.filmVideo[poster] {
-  object-fit: cover;
-  filter: saturate(0.82) contrast(1.04);
-}
-
-.filmPlate:hover .filmVideo[poster] {
-  transform: scale(1.015);
-}
-
-.filmScrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(23, 25, 26, 0.22),
-    transparent 26%,
-    transparent 68%,
-    rgba(23, 25, 26, 0.5)
-  );
-  pointer-events: none;
-}
-
-/* Film number — top-left, small red serif. */
-.filmIndex {
-  position: absolute;
-  top: 12px;
-  left: 14px;
+.teachingFilmsLine {
+  margin: 14px 0 12px;
   font-family: var(--app-font-serif);
-  font-size: 15px;
-  letter-spacing: 0.06em;
-  color: var(--neodent-red);
-  /* Halo keeps the red index legible over bright posters (e.g. the
-     light table background on film 01). */
-  text-shadow: 0 1px 6px rgba(23, 25, 26, 0.7);
-  z-index: 1;
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--neodent-ink);
+  text-wrap: balance;
 }
 
-/* Custom Neodent play control — bottom-right; the native controls
-   only exist once the film is actively playing. */
-.filmPlayBtn {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 30px;
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--neodent-ivory);
-  background: rgba(23, 25, 26, 0.55);
-  border: 1px solid rgba(251, 250, 247, 0.4);
-  cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease;
-  z-index: 1;
-}
-
-.filmPlayBtn:hover,
-.filmPlayBtn:focus-visible {
-  border-color: var(--neodent-red);
-  transform: scale(1.06);
-}
-
-/* While the film is actively playing, native controls + the caption
-   CTA already provide pause — fade the corner button out so the frame
-   isn't carrying two competing affordances. */
-.filmPlayBtnHidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.filmCaption {
-  margin-top: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.filmTitle {
+.teachingNote {
   margin: 0;
-  font-family: var(--app-font-serif);
-  font-size: 19px;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-  color: var(--neodent-ivory);
+  max-width: 34ch;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--neodent-muted);
 }
 
-.filmCaption > span {
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
+.teachingMeta {
+  display: block;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--neodent-muted);
+}
+
+.teachingFilmGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 260px));
+  gap: clamp(20px, 2.6vw, 36px);
+  justify-content: start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.teachingFilmItem {
+  min-width: 0;
+}
+
+/* ---- 07 IN PRACTICE ----------------------------------------------
+   One curated reel: a ruled index line, three identical 9:16 FilmCards
+   on a shared baseline, and an archive footer — the three films read
+   as a single collection rather than three separate embeds. */
+.reel {
+  margin-top: clamp(32px, 4vw, 52px);
+}
+
+.reelRule,
+.filmFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(251, 250, 247, 0.5);
 }
 
-.filmCta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-  padding: 0;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.reelRule {
+  padding-bottom: 14px;
+  margin-bottom: clamp(22px, 2.6vw, 32px);
+  border-bottom: 1px solid rgba(251, 250, 247, 0.14);
+}
+
+.reelRule span:last-child {
   color: var(--neodent-red);
-  background: none;
-  border: none;
-  cursor: pointer;
-  justify-self: start;
 }
 
-.filmCta:hover svg,
-.filmCta:focus-visible svg {
-  translate: 4px 0;
+.filmGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 340px));
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 44px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.filmCta svg {
-  transition: translate 0.25s ease;
+.filmItem {
+  min-width: 0;
 }
 
-/* Editorial archive footer line. */
 .filmFooter {
-  margin-top: clamp(32px, 5vw, 56px);
-  padding-top: 18px;
+  margin-top: clamp(28px, 4vw, 44px);
+  padding-top: 16px;
   border-top: 1px solid rgba(251, 250, 247, 0.14);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: rgba(251, 250, 247, 0.45);
 }
 
-.filmFooter span {
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(251, 250, 247, 0.45);
+/* Tablet — still one row of three (no orphan), tighter gutters. */
+@media (max-width: 1023px) {
+  .teachingRow {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .teachingRow .academicRule {
+    display: none;
+  }
+
+  .teachingFilmGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .filmGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Phone — a vertical reel. Each film is a chapter: poster (true 9:16,
+   width-capped so it never fills the screen) → meta → title → CTA.
+   Cards alternate edge to edge so the stack reads as a sequence, not
+   a column of identical blocks. No horizontal scrolling anywhere. */
+@media (max-width: 767px) {
+  .teachingRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    margin-top: 48px;
+    padding-top: 28px;
+  }
+
+  .teachingIntro {
+    gap: 18px;
+  }
+
+  .teachingFilmGrid,
+  .filmGrid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 40px;
+  }
+
+  .teachingFilmItem,
+  .filmItem {
+    width: min(64vw, 256px);
+  }
+
+  .teachingFilmItem:nth-child(even),
+  .filmItem:nth-child(even) {
+    justify-self: end;
+  }
 }
 
 /* ---- 08 PATIENT VOICES ------------------------------------------- */
@@ -1952,10 +2463,6 @@
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: clamp(20px, 3vw, 36px);
   margin-top: clamp(28px, 4vw, 48px);
-}
-
-.blockVisible .reviewCard {
-  animation: eduFade 0.7s both;
 }
 
 .reviewCard {
@@ -1983,7 +2490,7 @@
 }
 
 .reviewFeature .reviewQuote p {
-  font-size: 16px;
+  font-size: 19px;
 }
 
 .reviewIndex {
@@ -1999,8 +2506,12 @@
 
 .reviewQuote p {
   margin: 0;
-  font-size: 14.5px;
-  line-height: 1.65;
+  font-family: var(--app-font-serif);
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.008em;
   color: var(--neodent-ink);
 }
 
@@ -2025,7 +2536,7 @@
 
 .reviewVia {
   margin-left: auto;
-  font-size: 9px;
+  font-size: var(--type-meta-size);
   font-weight: 700;
   letter-spacing: 0.16em;
   color: var(--neodent-muted);
@@ -2037,98 +2548,30 @@
   margin-top: 30px;
 }
 
-/* ---- 09 RECOGNITION FOLIO ---------------------------------------- */
-.folioGrid {
+/* ---- 09 RECOGNITION — press archive ------------------------------
+   The moving strip itself lives in MediaRail.module.css; this is only
+   the small context line beside the heading (meta caps, muted). */
+.pressMeta {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(16px, 2.4vw, 32px);
-  margin-top: clamp(28px, 4vw, 48px);
-  align-items: start;
+  gap: 6px;
+  margin: 18px 0 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(251, 250, 247, 0.5);
 }
 
-.folioPlate {
-  position: relative;
-  margin: 0;
-  transition:
-    translate 0.4s ease,
-    box-shadow 0.4s ease;
-}
-
-/* Same 0.7s + 90ms-per-plate stagger as sections 06/07/08, so the
-   whole page shares one motion language. */
-.blockVisible .folioPlate {
-  animation: eduFade 0.7s both;
-}
-
-/* Stepped composition. The two press plates (iii–iv) are tall portrait
-   scans and define the row; the two ceremony photographs (i–ii) are
-   pushed down so their captions land level with the press captions —
-   the row reads as a deliberate stagger instead of ragged bottoms.
-   The margin is a percentage of the column width, so the offset scales
-   with the grid itself. */
-.folioPlate:nth-child(-n + 2) {
-  margin-top: 70%;
-}
-
-.folioPlate:nth-child(-n + 2) .folioFrame {
-  aspect-ratio: 4 / 5;
-}
-
-/* Press scans keep their natural near-1:2 proportion; anchoring to the
-   top keeps the masthead and headline in frame. */
-.folioPlate:nth-child(n + 3) .folioFrame {
-  aspect-ratio: 1 / 2;
-}
-
-.folioPlate:nth-child(n + 3) .folioImage {
-  object-position: top;
-}
-
-.folioIndex {
-  position: absolute;
-  top: -14px;
-  left: 8px;
-  z-index: 1;
-  font-family: var(--app-font-serif);
-  font-style: italic;
-  font-size: 22px;
+.pressMeta span:first-child {
   color: var(--neodent-red);
 }
 
-.folioFrame {
-  overflow: hidden;
-  border: 1px solid rgba(251, 250, 247, 0.14);
-  background: rgba(251, 250, 247, 0.04);
-}
-
-.folioImage {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.folioPlate:hover {
-  translate: 0 -3px;
-  box-shadow: 12px 14px 28px rgba(0, 0, 0, 0.35);
-}
-
-.folioPlate:hover .folioImage {
-  transform: scale(1.03);
-}
-
-.folioCaption {
-  margin-top: 9px;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(251, 250, 247, 0.45);
-  transition: color 0.4s ease;
-}
-
-.folioPlate:hover .folioCaption {
-  color: rgba(251, 250, 247, 0.78);
+@media (min-width: 1100px) {
+  .pressMeta {
+    margin: 0 0 10px;
+    justify-self: end;
+    text-align: right;
+  }
 }
 
 /* ---- 10 WHERE TO FIND HIM ---------------------------------------- */
@@ -2172,6 +2615,7 @@
 .branchPhone {
   font-family: var(--app-font-serif);
   font-size: 20px;
+  letter-spacing: var(--type-serif-sub-tracking);
   color: var(--neodent-ink);
   text-decoration: none;
   transition: color 0.2s ease;
@@ -2199,7 +2643,7 @@
 
 .locationsFootnote {
   margin-top: 26px;
-  font-size: 13.5px;
+  font-size: var(--type-body-sm-size);
   color: var(--neodent-muted);
 }
 
@@ -2245,6 +2689,7 @@
   font-family: var(--app-font-serif);
   font-size: clamp(30px, 4vw, 54px);
   line-height: 1.08;
+  letter-spacing: var(--type-display-tracking);
   color: var(--neodent-ivory);
 }
 
@@ -2266,6 +2711,7 @@
 }
 
 /* ---- RESPONSIVE --------------------------------------------------- */
+/* Tablet (768–1023) — compositions are re-set, not squeezed. */
 @media (max-width: 1023px) {
   .heroInner,
   .indexGrid,
@@ -2273,35 +2719,28 @@
     grid-template-columns: 1fr;
   }
 
+  .heroPortrait {
+    justify-self: start;
+    width: min(100%, 640px);
+  }
+
   /* Column rails become horizontal seams on stacked layouts */
   .indexRail,
-  .academicRule {
+  .academicGrid > .academicRule {
     display: none;
+  }
+
+  .indexGrid {
+    gap: 28px;
   }
 
   .academicGrid {
     grid-template-columns: 1fr;
-    gap: clamp(32px, 5vw, 56px);
+    gap: clamp(32px, 5vw, 48px);
   }
 
-  .academicPlate {
-    max-width: min(420px, 78vw);
-  }
-
-  .specGrid,
-  .filmGrid {
+  .specGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .folioGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* Pairs become like-with-like (photo row, press row), so the desktop
-     bottom-alignment offset must go — but the frame ratios stay, which
-     keeps each pair level within its own row. */
-  .folioPlate:nth-child(-n + 2) {
-    margin-top: 0;
   }
 
   .reviewGrid {
@@ -2320,33 +2759,186 @@
   }
 }
 
+/* Tablet only — the seminar plate and its teaching note sit side by
+   side once the research row stacks, so the plate never balloons to
+   the full column width. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .academicTeaching {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .academicPlate {
+    max-width: none;
+    margin: 0;
+  }
+
+  .academicTeachingBlock {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+/* Phone (≤767) — the vertical editorial portfolio. */
 @media (max-width: 767px) {
+  /* Rhythm: chapters breathe, but never stand empty. */
+  .section {
+    padding: 60px 0;
+  }
+
+  .chapter {
+    margin-bottom: 20px;
+  }
+
+  .numeral {
+    font-size: 96px;
+  }
+
+  .lede {
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  .bodyCopy {
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+
+  /* Hero — portrait-first editorial stack: name → promise →
+     credentials → equal-width calls → framed portrait → facts. */
   .hero {
-    padding-top: calc(var(--nav-height-mobile) + 24px);
+    padding-top: calc(var(--nav-height-mobile) + 20px);
+    padding-bottom: 0;
   }
 
   .heroContainer {
-    min-height: calc(100vh - var(--nav-height-mobile));
+    min-height: 0;
   }
 
   .heroInner {
-    padding-bottom: clamp(32px, 6vw, 56px);
+    gap: 28px;
+    padding-bottom: 24px;
   }
 
   .heroGhost {
     font-size: 96px;
   }
 
-  .heroPortrait {
-    justify-self: center;
-    width: min(86vw, 420px);
+  .breadcrumb {
+    margin-bottom: 30px;
+    line-height: 1.7;
   }
 
+  .heroTitle {
+    margin: 16px 0 14px;
+  }
+
+  .heroCredentials {
+    margin-top: 22px;
+    font-size: 10.5px;
+    line-height: 1.6;
+  }
+
+  .heroActions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .heroCta {
+    justify-content: center;
+    min-height: 48px;
+  }
+
+  .heroPortrait {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .portraitFrame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .portraitImage {
+    object-position: 72% 30%;
+  }
+
+  .heroMeta {
+    gap: 8px 18px;
+  }
+
+  .heroMetaScroll {
+    display: none;
+  }
+
+  /* Profile Index — compact chapter: label above value. */
+  .profileIndex {
+    padding: 52px 0;
+  }
+
+  .indexGrid {
+    gap: 22px;
+  }
+
+  .indexRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 12px 0;
+  }
+
+  .indexRow dd {
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+
+  /* Biography — heading → opening paragraph → plate → rest → link. */
+  .bioGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .bioCopy {
+    display: contents;
+  }
+
+  .bioLead {
+    order: 1;
+  }
+
+  .bioMedia {
+    order: 2;
+    align-self: flex-start;
+    width: 88%;
+    margin: 14px 0 40px;
+  }
+
+  .bioRest {
+    order: 3;
+  }
+
+  .bioLink {
+    order: 4;
+    align-self: flex-start;
+  }
+
+  .bioSecondary {
+    width: 50%;
+    margin-right: -10%;
+  }
+
+  .bioPlateCaption {
+    padding-right: 46%;
+  }
+
+  /* Specialisation — locked design; stacked chapters 01 → 04. */
   .specGrid,
-  .filmGrid,
   .reviewGrid,
-  .branchGrid,
-  .folioGrid {
+  .branchGrid {
     grid-template-columns: 1fr;
   }
 
@@ -2367,7 +2959,7 @@
     display: flex;
     flex-direction: column;
     grid-row: auto;
-    padding: 22px 0;
+    padding: 24px 0;
   }
 
   .specFigure {
@@ -2382,19 +2974,69 @@
     margin-top: 2px;
   }
 
-  /* (Full Scope legacy row reflow removed — the index grid has its
-     own ≤640px single-column layout.) */
-
-  .branchCard {
-    padding: 22px 18px 20px;
+  .specExplore {
+    min-height: 44px;
   }
 
+  /* Academic — plate as a 4:3 landscape so it introduces the
+     chapter without dominating it. */
   .academicPlate {
-    max-width: 88%;
+    max-width: none;
   }
 
-  .filmFrame {
-    max-width: min(78vw, 340px);
+  .academicPlateFrame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .publicationHead {
+    gap: 12px;
+  }
+
+  /* Patient voices — locked; reading rhythm only. */
+  .reviewGrid {
+    gap: 18px;
+  }
+
+  .reviewCard {
+    padding: 22px 20px 18px;
+  }
+
+  .voicesCta {
+    margin-top: 24px;
+  }
+
+  /* Locations — stacked branch stories. */
+  .branchCard {
+    padding: 20px 16px 18px;
+  }
+
+  .branchPhone {
+    font-size: 19px;
+  }
+
+  .branchActions > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Closing CTA — strong type, full-width calls. */
+  .closingCta {
+    padding: 64px 0;
+  }
+
+  .ctaActions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* The decorative 8th cell has no partner on a single-column index. */
+  .scopeFiller {
+    display: none;
   }
 }
 
@@ -2408,50 +3050,26 @@
   }
 }
 
-/* ---- REDUCED MOTION ----------------------------------------------- */
+/* Very narrow phones: let the CTA label wrap gracefully rather than clip. */
+@media (max-width: 340px) {
+  .heroCta {
+    white-space: normal;
+    line-height: 1.3;
+    padding-block: 10px;
+  }
+}
+
+/* ---- REDUCED MOTION -----------------------------------------------
+   One rule for the whole page scope: no entrance animation (the reveal
+   hook never applies a hidden state either), no transitions, and no
+   hover transforms. Dialogs/viewers carry their own reduced-motion
+   rules (they are portalled outside .page). */
 @media (prefers-reduced-motion: reduce) {
-  .blockVisible,
-  .blockVisible .specCard,
-  .folioImage,
-  .specCard,
-  .specCardTitle,
-  .specCardCopy,
-  .specCell,
-  .specCellImage,
-  .specAction,
-  .specAction svg,
-  .specFigureSvg,
-  .specFigPrimary,
-  .specFigDetail,
-  .specFigConstruct,
-  .specFigRestored,
-  .scopeTile,
-  .scopeIconSvg,
-  .scopeIconPrimary,
-  .scopeLink,
-  .timelineStep,
-  .eduPlateImage,
-  .academicPlateImage,
-  .publicationLink,
-  .publicationArrow,
-  .filmPlate,
-  .filmVideo,
-  .filmPlayBtn,
-  .folioPlate,
-  .folioImage,
-  .filmCta svg {
-    animation: none;
-    transition: none;
-  }
-
-  .specCard,
-  .specFigureSvg,
-  .scopeIconSvg {
-    transform: none;
-  }
-
-  .specAction:hover svg {
-    translate: none;
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation: none !important;
+    transition: none !important;
   }
 
   .specCard:hover .specFigureSvg,
@@ -2459,20 +3077,16 @@
   .scopeTile:hover .scopeIconSvg,
   .eduPlate:hover .eduPlateImage,
   .academicPlate:hover .academicPlateImage,
-  .filmPlate:hover .filmVideo {
+  .folioPlate:hover .folioImage {
     transform: none;
   }
 
-  .filmPlayBtn:hover {
-    transform: none;
-  }
-
-  .publicationLink:hover .publicationArrow {
+  .specAction:hover svg,
+  .specExplore:hover svg,
+  .reviewCard:hover,
+  .folioPlate:hover,
+  .publicationLink:hover .publicationArrow,
+  .publicationLink:focus-visible .publicationArrow {
     translate: none;
   }
 }
-
-
-
-
-

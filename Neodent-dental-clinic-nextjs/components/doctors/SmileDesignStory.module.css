@@ -17,7 +17,7 @@
 
 .story {
   container: story / inline-size;
-  margin-top: clamp(48px, 6vw, 80px);
+  margin-top: clamp(36px, 4.5vw, 56px);
   padding-top: clamp(28px, 3.4vw, 40px);
   border-top: 1px solid rgba(251, 250, 247, 0.14);
 
@@ -27,12 +27,23 @@
 }
 
 .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: clamp(18px, 2.2vw, 26px);
-  font-size: 11px;
+  font-size: var(--type-eyebrow-size);
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: var(--type-eyebrow-tracking);
   text-transform: uppercase;
-  color: rgba(251, 250, 247, 0.55);
+  color: var(--type-ivory-eyebrow);
+}
+
+.eyebrow::before {
+  content: "";
+  flex: 0 0 auto;
+  width: var(--type-eyebrow-rule);
+  height: 1px;
+  background: var(--neodent-red);
 }
 
 .body {
@@ -53,12 +64,23 @@
   min-height: 0;
 }
 
+/* Sub-chapter title — the shared chapter voice (DM Serif Display 400,
+   ivory first line, red italic final line) one step below the
+   section titles. */
 .story .title {
   margin: 0;
+  font-family: var(--app-font-serif);
   font-size: clamp(28px, 3vw, 40px);
-  font-weight: inherit;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-weight: 400;
+  line-height: var(--type-display-leading);
+  letter-spacing: var(--type-display-tracking);
+  text-wrap: balance;
+}
+
+.titleAccent {
+  display: block;
+  color: var(--neodent-red);
+  font-style: italic;
 }
 
 /* Two editorial paragraphs — the clinical reasoning behind the result.
@@ -69,10 +91,10 @@
   flex-direction: column;
   gap: 14px;
   margin: 18px 0 0;
-  max-width: 620px;
-  font-size: clamp(14px, 1.05vw, 15.5px);
-  line-height: 1.62;
-  color: rgba(251, 250, 247, 0.7);
+  max-width: 560px;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
+  color: var(--type-ivory-body);
 }
 
 .lede p {
@@ -135,24 +157,25 @@
 }
 
 /* ---- Discovery CTA (collapsed) -------------------------------------
-   One editorial line, not a button slab: the red kicker CLICK TO VIEW,
-   a short rule + chevron that draws toward the title, and the ivory
-   title THE SMILE JOURNEY — all on a single baseline so the cue reads
-   as one phrase that belongs to the timeline above it. The directional
-   cue is a restrained transform/opacity nudge on the chevron only, so
-   the button's box never changes size (no layout shift). */
+   One editorial unit, not a button slab: a muted eyebrow label
+   ("Click to view") stacked over the primary title THE SMILE JOURNEY,
+   with a single red rule + chevron running straight on from the title
+   on its own baseline. Static at rest; hover/focus only underscores
+   the title and eases the chevron forward (transform only), so the
+   button's box never changes size (no layout shift). */
 .cta {
   display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  padding: 8px 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
   background: none;
   border: 0;
   cursor: pointer;
   color: var(--neodent-ivory);
   font: inherit;
   font-weight: 700;
+  text-align: left;
   text-transform: uppercase;
   line-height: 1.1;
   visibility: visible;
@@ -160,19 +183,37 @@
 }
 
 .ctaKicker {
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  color: var(--neodent-red);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(251, 250, 247, 0.55);
   transition: color 0.2s ease;
 }
 
-/* Integrated directional cue between kicker and title: a drawn rule
-   ending in a red chevron. Fixed box; only the chevron translates. */
+.ctaMain {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.ctaTitle {
+  font-size: clamp(19px, 1.7vw, 24px);
+  letter-spacing: 0.12em;
+  color: var(--neodent-ivory);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+/* The directional cue: one red rule ending in a red chevron, centred
+   on the title's x-height. Fixed box; only the chevron translates. */
 .ctaArrow {
   position: relative;
   display: inline-block;
-  width: 46px;
-  height: 2px;
+  width: 52px;
+  height: 1.5px;
   flex: 0 0 auto;
 }
 
@@ -180,81 +221,33 @@
   position: absolute;
   inset: 0;
   background: var(--neodent-red);
-  transform-origin: left center;
-  animation: ctaDraw 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
 .ctaArrowHead {
   position: absolute;
-  top: -5px;
-  right: 0;
-  width: 12px;
-  height: 12px;
-  border-top: 2px solid var(--neodent-red);
-  border-right: 2px solid var(--neodent-red);
+  top: -4px;
+  right: 1px;
+  width: 9px;
+  height: 9px;
+  border-top: 1.5px solid var(--neodent-red);
+  border-right: 1.5px solid var(--neodent-red);
   transform: rotate(45deg);
-  animation: ctaNudge 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  transition: translate 0.25s ease;
 }
 
-.ctaTitle {
-  font-size: clamp(19px, 1.7vw, 24px);
-  letter-spacing: 0.12em;
-  color: var(--neodent-ivory);
-}
-
-@keyframes ctaDraw {
-  0% {
-    transform: scaleX(0);
-    opacity: 1;
-  }
-  55% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  85%,
-  100% {
-    transform: scaleX(1);
-    opacity: 0.55;
-  }
-}
-
-/* Glide forward a few pixels, ease home — a directional pull, never a
-   bounce; transform/opacity only. */
-@keyframes ctaNudge {
-  0%,
-  14% {
-    translate: 0 0;
-    opacity: 1;
-  }
-  55% {
-    translate: 5px 0;
-    opacity: 0.6;
-  }
-  100% {
-    translate: 0 0;
-    opacity: 1;
-  }
-}
-
-/* Hover / keyboard focus settle the cue: rule fully drawn, chevron
-   resting forward, title underscored by the red accent. */
-.cta:hover .ctaArrowLine,
-.cta:focus-visible .ctaArrowLine {
-  animation: none;
-  transform: scaleX(1);
-  opacity: 1;
+.cta:hover .ctaTitle,
+.cta:focus-visible .ctaTitle {
+  text-decoration-color: var(--neodent-red);
 }
 
 .cta:hover .ctaArrowHead,
 .cta:focus-visible .ctaArrowHead {
-  animation: none;
   translate: 3px 0;
-  opacity: 1;
 }
 
 .cta:hover .ctaKicker,
 .cta:focus-visible .ctaKicker {
-  color: var(--neodent-ivory);
+  color: rgba(251, 250, 247, 0.8);
 }
 
 .cta:focus-visible {
@@ -267,11 +260,6 @@
 .story[data-state="expanded"] .cta {
   visibility: hidden;
   transition: visibility 0s linear 220ms;
-}
-
-.story[data-state="expanded"] .ctaArrowLine,
-.story[data-state="expanded"] .ctaArrowHead {
-  animation-play-state: paused;
 }
 
 /* The bar's close control exists only in the expanded state. */
@@ -562,15 +550,15 @@
      instead of reserving the full Step-06 height below the rail.
      Collapsed keeps the original geometry (bar under full Step 06). */
   .story[data-state="expanded"] .body {
-    --line-y: calc(var(--rail-bottom) + 20px);
+    --line-y: calc(var(--rail-bottom) + 12px);
   }
 
   .story[data-state="expanded"] .bar {
-    top: calc(var(--line-y) + 26px);
+    top: calc(var(--line-y) + 16px);
   }
 
   .story[data-state="expanded"] .stage {
-    height: calc(var(--line-y) + 26px + var(--bar));
+    height: calc(var(--line-y) + 16px + var(--bar));
   }
 
   /* Rail: frame i at (i·step, i·stagger), scaled to the rail width.
@@ -744,7 +732,7 @@
   }
 
   .story[data-state="expanded"] .stage {
-    height: calc(var(--m-y0) + 4 * var(--m-pitch) + var(--m-h) + 56px);
+    height: calc(var(--m-y0) + 4 * var(--m-pitch) + var(--m-h) + 44px);
     transition: height 0s linear 0s;
   }
 
@@ -848,24 +836,9 @@
   .story .timelineFill,
   .story .station,
   .story .toggle::after,
-  .story .toggle svg {
+  .story .toggle svg,
+  .story .ctaArrowHead {
     transition: none !important;
-  }
-
-  /* The cue stays, fully drawn and still. */
-  .story .ctaArrowLine,
-  .story .ctaArrowHead {
-    animation: none !important;
-  }
-
-  .story .ctaArrowLine {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-
-  .story .ctaArrowHead {
-    translate: 0 0;
-    opacity: 1;
   }
 }
 
