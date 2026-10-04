@@ -7,7 +7,14 @@ import { AppButton } from "@/components/ui/AppButton";
 import { BrandLockup } from "@/components/layout/BrandLockup";
 import { navItems } from "@/lib/site-data";
 
-export function Navbar() {
+interface NavbarProps {
+  /** The page opens on a dark full-bleed hero: keep the bar transparent
+   *  over it (the homepage behaviour) and turn solid only after the
+   *  usual scroll threshold. Every other internal page stays solid. */
+  overHero?: boolean;
+}
+
+export function Navbar({ overHero = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -19,9 +26,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // On internal pages, force scrolled state for dark text visibility
+  // On internal pages, force scrolled state for dark text visibility —
+  // unless the page opts in to sitting over a dark hero.
   const isInternalPage = pathname !== "/";
-  const navScrolled = scrolled || isInternalPage;
+  const navScrolled = scrolled || (isInternalPage && !overHero);
 
   const closeMenu = () => setMenuOpen(false);
 

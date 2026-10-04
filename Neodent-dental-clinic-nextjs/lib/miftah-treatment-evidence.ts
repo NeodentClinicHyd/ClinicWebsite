@@ -38,6 +38,58 @@ export const RCT_FILMS: { short: string; item: EvidenceItem }[] = [
   },
 ];
 
+/* Section 07 "In Practice" — Dr. Miftah's existing clinical films
+   (also used by RealTreatmentWork / the homepage). Each poster is a real
+   frame of its own film, derived by scripts/derive-film-posters.mjs, so
+   no card shows content that is not in the video it opens. */
+export const PRACTICE_FILMS: {
+  title: string;
+  poster: string;
+  posterAlt: string;
+  item: Extract<EvidenceItem, { kind: "video" }>;
+}[] = [
+  {
+    title: "DMLS crowns — masticatory efficiency",
+    poster: "/assets/treatment-video/dr-miftah-explains-dmls-crowns-masticatory-efficiency.jpg",
+    posterAlt:
+      "Dr. Md. Miftah Ur Rahman holding a dental model while explaining DMLS crowns",
+    item: {
+      kind: "video",
+      src: "/assets/treatment-video/dr-miftah-explains-dmls-crowns-masticatory-efficiency.mp4",
+      caption: "DMLS crowns — masticatory efficiency",
+      label:
+        "Dr. Md. Miftah Ur Rahman explaining DMLS crowns and masticatory efficiency",
+    },
+  },
+  {
+    title: "Crown cementation",
+    poster: "/assets/treatment-video/dr-miftah-neodent-crown-cementation-procedure.jpg",
+    posterAlt:
+      "Dr. Md. Miftah Ur Rahman seated at the dental chair during a crown cementation procedure, Neodent Dental Hospital",
+    item: {
+      kind: "video",
+      src: "/assets/treatment-video/dr-miftah-neodent-crown-cementation-procedure.mp4",
+      caption: "Crown cementation",
+      label:
+        "Crown cementation procedure performed by Dr. Md. Miftah Ur Rahman at Neodent Dental Hospital",
+    },
+  },
+  {
+    title: "Treatment in practice",
+    poster: "/assets/treatment-video/dr-miftah-neodent-dental-treatment-procedure.jpg",
+    posterAlt:
+      "Dr. Md. Miftah Ur Rahman in the operatory at Neodent Dental Hospital, preparing for a dental procedure",
+    item: {
+      kind: "video",
+      src: "/assets/treatment-video/dr-miftah-neodent-dental-treatment-procedure.mp4",
+      caption: "Treatment in practice",
+      label:
+        "Clinical dental procedure carried out by Dr. Md. Miftah Ur Rahman at Neodent Dental Hospital",
+    },
+  },
+];
+
+
 export const RCT_XRAY_ITEMS: EvidenceItem[] = RCT_STAGES.map(({ key, stage }) => ({
   kind: "image",
   src: treatmentMedia[key].src,

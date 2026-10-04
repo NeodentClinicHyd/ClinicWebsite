@@ -315,6 +315,14 @@
   .arc { opacity: 0.55; }
 }
 
+/* Opt-in (longEmphasis prop): a longer emphasis line keeps its balance
+   instead of orphaning a word, and on phones narrower than 390px steps
+   down just enough to hold one line. Not applied to the homepage copy. */
+.longEmphasis .statementEmphasis { text-wrap: balance; }
+@media (max-width: 389px) {
+  .longEmphasis .statementEmphasis { font-size: clamp(1.75rem, 9.2vw, 2.4rem); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .atmosphere,
   .eyebrow,

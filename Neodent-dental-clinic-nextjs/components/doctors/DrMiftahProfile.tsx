@@ -1,13 +1,20 @@
-﻿"use client";
+"use client";
 
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Phone, ArrowDown, Play, Pause } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Phone,
+  ArrowDown,
+  Play,
+} from "lucide-react";
 import styles from "./DrMiftahProfile.module.css";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import { AppButton } from "@/components/ui/AppButton";
+import { BrandStatementStrip } from "@/components/sections/BrandStatementStrip";
 import { Atmosphere } from "@/components/ui/Atmosphere";
 import { OffsetImagePair } from "@/components/ui/OffsetImagePair";
 import { TreatmentEvidenceViewer } from "@/components/doctors/TreatmentEvidenceViewer";
@@ -15,8 +22,12 @@ import type { EvidenceItem } from "@/components/doctors/TreatmentEvidenceViewer"
 import { SmileDesignStory } from "@/components/doctors/SmileDesignStory";
 import { TreatmentDossier } from "@/components/doctors/TreatmentDossier";
 import { TreatmentDetailDialog } from "@/components/doctors/TreatmentDetailDialog";
+import { FilmCard } from "@/components/doctors/FilmCard";
+import { MediaRail } from "@/components/doctors/MediaRail";
+import { PRESS_CLIPPINGS } from "@/lib/miftah-press-archive";
 import treatmentMedia from "@/lib/miftah-treatment-media.json";
 import {
+  PRACTICE_FILMS,
   RCT_FILMS,
   RCT_STAGES,
   RCT_XRAY_ITEMS,
@@ -54,14 +65,15 @@ import {
    Patient review text is unedited.
    ------------------------------------------------------------------ */
 
-/* Hero portrait — the client-supplied photograph at the Department of
-   Prosthodontics, SB Patil Dental College & Hospital. Also the source
-   for the OG crop (scripts/derive-og-miftah.mjs). */
+/* Hero portrait — the client-supplied banner photograph at Neodent
+   Dental Hospital (near-square source, subject on the right half;
+   cropped by CSS object-position only). The OG crop still derives from
+   the SB Patil portrait (scripts/derive-og-miftah.mjs). */
 const PORTRAIT = {
-  src: "/assets/dr-miftah/Dr Md Miftah at Dept of Prosthodontics at SB Patil Dental College.jpeg",
-  width: 853,
-  height: 1280,
-  alt: "Dr. Md. Miftah Ur Rahman at the Department of Prosthodontics, SB Patil Dental College & Hospital",
+  src: "/assets/dr-miftah/banner_image.jpeg",
+  width: 992,
+  height: 926,
+  alt: "Dr. Md. Miftah Ur Rahman at Neodent Dental Hospital, Hyderabad",
 };
 
 const TREATMENT_IMAGE = {
@@ -96,71 +108,15 @@ const ACADEMIC_FRAME_IMAGE = {
   alt: "Dr. Md. Miftah Ur Rahman receiving a framed certificate presented by Dr. K Mahendranadh Reddy",
 };
 
-/* Recognition folio — existing certificate, award and press imagery. */
-const RECOGNITION_PLATES = [
-  {
-    index: "i",
-    src: "/assets/dr-miftah/Award presented to Dr Miftah ur Rahman by Dr K Mahendranadh Reddy.jpeg",
-    width: 1170,
-    height: 1150,
-    alt: "Dr. Md. Miftah Ur Rahman receiving a framed certificate presented by Dr. K Mahendranadh Reddy",
-    caption: "Certificate / presented at ceremony",
-  },
-  {
-    index: "ii",
-    src: "/assets/dr-miftah/dr-miftah-award-recognition.jpg",
-    width: 1280,
-    height: 960,
-    alt: "Dr. Md. Miftah Ur Rahman receiving a certificate at a professional ceremony",
-    caption: "Recognition / professional ceremony",
-  },
-  {
-    index: "iii",
-    src: "/assets/news-articles/Dr miftah neodent dental clinic hyderabad news.jpg",
-    width: 530,
-    height: 1280,
-    alt: "Newspaper coverage featuring Dr. Md. Miftah Ur Rahman at Neodent Dental Clinic, Hyderabad",
-    caption: "Press / Hyderabad daily",
-  },
-  {
-    index: "iv",
-    src: "/assets/news-articles/neodent-media-siasat-01.jpg",
-    width: 631,
-    height: 1280,
-    alt: "The Siasat Daily, Hyderabad — newspaper coverage of a Neodent Dental Hospital dental implant camp and lecture",
-    caption: "Press / The Siasat Daily",
-  },
-];
-
-/* Clinical films already on the site (RealTreatmentWork / homepage). */
-const CLINICAL_FILMS = [
-  {
-    number: "01",
-    title: "DMLS crowns — masticatory efficiency",
-    src: "/assets/treatment-video/dr-miftah-explains-dmls-crowns-masticatory-efficiency.mp4",
-    poster:
-      "/assets/dr-miftah/Dr. Md. Miftah Ur Rahman - Neodent Dental Hospital.png",
-    label:
-      "Dr. Md. Miftah Ur Rahman explaining DMLS crowns and masticatory efficiency",
-  },
-  {
-    number: "02",
-    title: "Crown cementation",
-    src: "/assets/treatment-video/dr-miftah-neodent-crown-cementation-procedure.mp4",
-    poster: "/assets/neodent-dmls-crowns-dental-model-side-view.jpg",
-    label:
-      "Crown cementation procedure performed by Dr. Md. Miftah Ur Rahman at Neodent Dental Hospital",
-  },
-  {
-    number: "03",
-    title: "Treatment in practice",
-    src: "/assets/treatment-video/dr-miftah-neodent-dental-treatment-procedure.mp4",
-    poster:
-      "/assets/Dr Siraj and Dr. Miftah Neodent dental clinic - during treatment.webp",
-    label:
-      "Clinical dental procedure carried out by Dr. Md. Miftah Ur Rahman at Neodent Dental Hospital",
-  },
-];
+/* Section 05 — second recognition photograph (professional ceremony).
+   Moved here from the old Section 09 folio; it pairs with
+   ACADEMIC_FRAME_IMAGE as the chapter's two formal milestones. */
+const CEREMONY_FRAME_IMAGE = {
+  src: "/assets/dr-miftah/dr-miftah-award-recognition.jpg",
+  width: 1280,
+  height: 960,
+  alt: "Dr. Md. Miftah Ur Rahman receiving a certificate at a professional ceremony",
+};
 
 /* Section 04 — the site's numbered treatment rows (number left, title,
    verb right), mirroring the homepage Expertise treatment list. Rows
@@ -245,6 +201,29 @@ const PUBLICATIONS = [
   },
 ];
 
+/* Section 06 PubMed identity — the local PubMed mark (2000×710). */
+const PUBMED_LOGO = {
+  src: "/assets/dr-miftah/pubmed-seeklogo.png",
+  width: 2000,
+  height: 710,
+  alt: "PubMed",
+};
+
+/* Section 06 clinical teaching — poster frames for the two RCT_FILMS
+   (same order). Each JPG is the opening frame of its MP4 (1080×1920). */
+const RCT_FILM_POSTERS = [
+  {
+    src: "/assets/dr-miftah/treatments/dr-md-miftah-ur-rahman-root-canal-treatment-explainer.jpg",
+    alt: "Dr. Md. Miftah Ur Rahman presenting the root canal treatment explainer film",
+    title: "Root canal treatment — the explainer",
+  },
+  {
+    src: "/assets/dr-miftah/treatments/dr-md-miftah-ur-rahman-root-canal-treatment.jpg",
+    alt: "Dr. Md. Miftah Ur Rahman presenting the root canal treatment film",
+    title: "Root canal treatment — the treatment film",
+  },
+];
+
 /* Patient voices — verbatim Google review excerpts. Unedited. */
 const REVIEWS = [
   {
@@ -323,23 +302,53 @@ const NAMPALLY_PLATES = {
   },
 };
 
-function useReveal<T extends HTMLElement>(threshold = 0.12) {
-  const ref = useRef<T>(null);
-  const [visible, setVisible] = useState(false);
+/* ------------------------------------------------------------------
+   Motion — one page-wide reveal scope (Task: final polish).
 
+   Any element marked `data-reveal` ("up" | "mask" | "step") starts in
+   its quiet pre-state and plays its entrance once it enters the
+   viewport. One IntersectionObserver for the whole page; no scroll
+   listeners. Elements that enter in the same frame (e.g. a desktop row
+   of three cards) get an incrementing --d stagger; on a phone, stacked
+   cards enter one at a time, so each simply reveals as it arrives.
+
+   Safety: nothing is hidden until JS has run (the pre-state only
+   applies under [data-reveal-ready]); anything already on screen at
+   mount is marked shown instantly (no flash); reduced-motion users
+   never get a hidden state at all.
+   ------------------------------------------------------------------ */
+function useRevealScope(rootRef: RefObject<HTMLElement | null>) {
   useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [threshold]);
+    const root = rootRef.current;
+    if (!root) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  return [ref, visible] as const;
+    const items = [...root.querySelectorAll<HTMLElement>("[data-reveal]")];
+    const fold = window.innerHeight * 0.92;
+    for (const el of items) {
+      if (el.getBoundingClientRect().top < fold) el.dataset.shown = "instant";
+    }
+    root.dataset.revealReady = "true";
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let batch = 0;
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          el.style.setProperty("--d", String(Math.min(batch++, 5)));
+          el.dataset.shown = "true";
+          observer.unobserve(el);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0 },
+    );
+    items.filter((el) => !el.dataset.shown).forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [rootRef]);
 }
+
+/* (Grouped items stagger through the observer's in-batch --d index.) */
 
 function SectionHeading({
   line1,
@@ -351,32 +360,45 @@ function SectionHeading({
   id: string;
 }) {
   return (
-    <h2 id={id} className="section-heading">
+    <h2 id={id} className={styles.heading} data-reveal="up">
       {line1}
-      <br />
-      <span className="serif">{line2}</span>
+      <span className={styles.headingAccent}>{line2}</span>
     </h2>
   );
 }
 
 function Eyebrow({ numeral, label }: { numeral?: string; label: string }) {
   return (
-    <div className={styles.chapter}>
+    <div className={styles.chapter} data-reveal="up">
       {numeral && (
         <span className={styles.numeral} aria-hidden="true">
           {numeral}
         </span>
       )}
-      <div className="eyebrow">{label}</div>
+      <div className={styles.eyebrow}>{label}</div>
     </div>
   );
 }
 
 export function DrMiftahProfile() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  useRevealScope(rootRef);
   return (
-    <>
+    <div ref={rootRef} className={styles.page}>
       <Hero />
       <ProfileIndex />
+      {/* Clinical philosophy - the homepage "We maintain peak performance" strip
+          (BrandStatementStrip) reused with this doctor's content: same component,
+          same CSS module. */}
+      <BrandStatementStrip
+        ariaLabel="Clinical philosophy"
+        eyebrow="CLINICAL PHILOSOPHY"
+        support="Saving natural teeth,"
+        emphasis="even when it is mobile."
+        longEmphasis
+        attribution={null}
+        location={null}
+      />
       <Biography />
       <Specialisation />
       <FullScope />
@@ -387,7 +409,7 @@ export function DrMiftahProfile() {
       <RecognitionSection />
       <WhereToFindHim />
       <ClosingCta />
-    </>
+    </div>
   );
 }
 
@@ -432,17 +454,19 @@ function Hero() {
             <span className={styles.heroGhost} aria-hidden="true">
               DR.
             </span>
-            <div className="eyebrow">
+            <div className={styles.eyebrow}>
               NEODENT DENTAL HOSPITALS / CLINICAL TEAM
             </div>
             <h1 id="miftah-hero-title" className={styles.heroTitle}>
-              Dr. Md. Miftah
-              <br />
-              Ur Rahman
+              <span className={styles.heroTitleLine}>Dr. Md. Miftah</span>
+              <span
+                className={`${styles.heroTitleLine} ${styles.heroTitleSerif}`}
+              >
+                Ur Rahman
+              </span>
             </h1>
             <p className={styles.heroSubhead}>
-              A specialist&rsquo;s hand.
-              <br />
+              <span>A specialist&rsquo;s hand.</span>
               <span className={styles.heroSubheadAccent}>
                 A patient&rsquo;s pace.
               </span>
@@ -454,20 +478,24 @@ function Hero() {
               Prosthodontist &amp; Implantologist &middot; Assistant Director,
               Neodent Dental Hospital
             </p>
+            {/* The hero leads with expertise; conversion is carried by the
+                persistent Call Neodent control (floating button on desktop,
+                bottom bar on phones) and the branch calls further down. */}
             <div className={styles.heroActions}>
               <AppButton
-                href={nampallyTelPhone}
+                href="#clinical-focus"
                 variant="primary"
                 className={styles.heroCta}
               >
-                Call Nampally <ArrowRight size={14} aria-hidden="true" />
+                View Clinical Specialties{" "}
+                <ArrowRight size={14} aria-hidden="true" />
               </AppButton>
               <AppButton
-                href={telPhone}
+                href="#publications"
                 variant="ghost"
                 className={styles.heroCta}
               >
-                <Phone size={14} aria-hidden="true" /> Call Mehdipatnam{" "}
+                Read PubMed Articles{" "}
                 <ArrowRight size={14} aria-hidden="true" />
               </AppButton>
             </div>
@@ -485,7 +513,7 @@ function Hero() {
                 src={PORTRAIT.src}
                 alt={PORTRAIT.alt}
                 fill
-                sizes="(max-width: 767px) 86vw, (max-width: 1023px) 52vw, 44vw"
+                sizes="(max-width: 767px) 92vw, (max-width: 1023px) 70vw, 46vw"
                 priority
                 className={styles.portraitImage}
               />
@@ -495,17 +523,13 @@ function Hero() {
             </div>
             <figcaption className={styles.portraitCaption}>
               <b>Dr. Md. Miftah Ur Rahman</b>
-              <span>
-                Dept. of Prosthodontics &middot; SB Patil Dental College &amp;
-                Hospital
-              </span>
+              <span>Neodent Dental Hospital &middot; Hyderabad</span>
             </figcaption>
           </figure>
         </div>
-        {/* Bottom meta rail — the floor of the full-height band. Hairline
-            rule, four mono micro-facts spread across the container, and a
-            scroll cue. Fills the dead space below the copy/portrait and
-            gives the 100vh height something to stand on. */}
+        {/* Bottom meta rail — the compact floor of the hero. Hairline
+            rule, four mono micro-facts spread across the container, and
+            a scroll cue. */}
         <div className={styles.heroMeta} aria-hidden="true">
           <span className={styles.heroMetaItem}>
             15+ years clinical practice
@@ -539,27 +563,28 @@ const PROFILE_ROWS = [
 ];
 
 function ProfileIndex() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.1);
   return (
     <section
       className={`${styles.section} ${styles.light} ${styles.profileIndex}`}
       aria-labelledby="miftah-index-title"
     >
       <div className={`container ${styles.container}`}>
-        <Eyebrow numeral="01" label="01 / PROFILE INDEX" />
-        <div
-          ref={ref}
-          className={`${styles.indexGrid} ${visible ? styles.blockVisible : ""}`}
-        >
-          <SectionHeading
-            id="miftah-index-title"
-            line1="The record,"
-            line2="in brief."
-          />
+        {/* One composed row: chapter mark + heading on the left, the four
+            verified facts on the right. The eyebrow now lives inside the
+            heading column instead of claiming its own row. */}
+        <div className={styles.indexGrid}>
+          <div className={styles.indexHead}>
+            <Eyebrow numeral="01" label="01 / PROFILE INDEX" />
+            <SectionHeading
+              id="miftah-index-title"
+              line1="The record,"
+              line2="in brief."
+            />
+          </div>
           <span className={styles.indexRail} aria-hidden="true" />
           <dl className={styles.indexRows}>
             {PROFILE_ROWS.map((row) => (
-              <div className={styles.indexRow} key={row.term}>
+              <div className={styles.indexRow} key={row.term} data-reveal="up">
                 <dt>{row.term}</dt>
                 <dd>{row.detail}</dd>
               </div>
@@ -576,7 +601,6 @@ function ProfileIndex() {
    two marked phrases carried by the shared EditorialHighlight system.
    ------------------------------------------------------------------ */
 function Biography() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
   return (
     <section
       className={`${styles.section} ${styles.light} ${styles.biography}`}
@@ -584,17 +608,18 @@ function Biography() {
     >
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="02" label="02 / BIOGRAPHY" />
-        <div
-          ref={ref}
-          className={`${styles.bioGrid} ${visible ? styles.blockVisible : ""}`}
-        >
+        {/* Mobile order (CSS only, DOM unchanged): heading → opening
+            paragraph → plate → remaining paragraphs → link, so the
+            photograph lands after the hook instead of after four
+            paragraphs. */}
+        <div className={styles.bioGrid}>
           <div className={styles.bioCopy}>
             <SectionHeading
               id="miftah-bio-title"
               line1="A steady hand."
               line2="A considered approach."
             />
-            <p className={styles.bodyCopy}>
+            <p className={`${styles.bodyCopy} ${styles.bioLead}`} data-reveal="up">
               Dr. Md. Miftah Ur Rahman is a Prosthodontist and Implantologist at
               Neodent Dental Hospital, practising across both the Mehdipatnam
               and Nampally clinics. His work centres on{" "}
@@ -604,7 +629,7 @@ function Biography() {
               — implants, full-mouth rehabilitation and the prosthodontic work
               that follows.
             </p>
-            <p className={styles.bodyCopy}>
+            <p className={`${styles.bodyCopy} ${styles.bioRest}`} data-reveal="up">
               Prosthodontics is the branch of dentistry concerned with replacing
               and restoring teeth. In practice, that means the cases other
               clinics often describe as complicated: a tooth that has been
@@ -616,7 +641,7 @@ function Biography() {
               </EditorialHighlight>
               .
             </p>
-            <p className={styles.bodyCopy}>
+            <p className={`${styles.bodyCopy} ${styles.bioRest}`} data-reveal="up">
               Alongside clinical practice, he holds an academic post as
               Assistant Professor in the Department of Prosthodontics at SB
               Patil Dental College &amp; Hospital, where he{" "}
@@ -631,7 +656,7 @@ function Biography() {
                 and the patient-intent conditions (who visits him). Every
                 fact is brief-sourced and already established elsewhere on
                 the page (hero credentials strip, Profile Index rows). */}
-            <p className={styles.bodyCopy}>
+            <p className={`${styles.bodyCopy} ${styles.bioRest}`} data-reveal="up">
               He holds a BDS and an MDS in Prosthodontics &amp; Implantology,
               along with a FICOI (U.S.A.) fellowship, and brings{" "}
               <EditorialHighlight tone="quiet">
@@ -642,7 +667,11 @@ function Biography() {
               failing crowns and bridges, worn or collapsed bites, and teeth
               other clinics have recommended for extraction.
             </p>
-            <a className="text-link" href="/treatments">
+            <a
+              className={`text-link ${styles.bioLink}`}
+              href="/treatments"
+              data-reveal="up"
+            >
               See the treatments he performs{" "}
               <ArrowRight size={14} aria-hidden="true" />
             </a>
@@ -655,15 +684,15 @@ function Biography() {
               section 02 matches the framing system used across the other
               pages. The extreme 1:1.95 source ratio is replaced by a 4/5
               plate crop tuned to the subject's face. */}
-          <figure className={styles.bioMedia}>
+          <figure className={styles.bioMedia} data-reveal="up">
             <span className={styles.plateFocusRing} aria-hidden="true" />
             <span className={styles.frameRegistration} aria-hidden="true" />
-            <div className={styles.bioPlateFrame}>
+            <div className={styles.bioPlateFrame} data-reveal="mask">
               <Image
                 src={TREATMENT_IMAGE.src}
                 alt={TREATMENT_IMAGE.alt}
                 fill
-                sizes="(max-width: 767px) 86vw, (max-width: 1023px) 60vw, 36vw"
+                sizes="(max-width: 767px) 92vw, (max-width: 1023px) 60vw, 36vw"
                 className={styles.bioPlateImage}
                 style={{ objectPosition: "50% 30%" }}
               />
@@ -1034,7 +1063,6 @@ const SPECIALISATION_CARDS: {
   titleSuffix?: string;
   name: string;
   copy: string;
-  href: string;
   evidence: SpecEvidence;
 }[] = [
   {
@@ -1044,7 +1072,6 @@ const SPECIALISATION_CARDS: {
     titleSuffix: "Root canal treatment",
     name: "Root canal treatment",
     copy: "Treatment within the tooth, aimed at keeping the natural tooth where appropriate rather than removing it.",
-    href: "/treatments#root-canal-treatment",
     evidence: { kind: "rct" },
   },
   {
@@ -1053,7 +1080,6 @@ const SPECIALISATION_CARDS: {
     title: "SMILE DESIGNING",
     name: "Smile designing",
     copy: "Restorative work where appearance matters as much as function: shape, shade and proportion planned around the patient's own face.",
-    href: "/treatments#smile-design",
     evidence: { kind: "pair", before: "smileBefore", after: "smileAfter" },
   },
   {
@@ -1062,7 +1088,6 @@ const SPECIALISATION_CARDS: {
     title: "DENTAL IMPLANTS",
     name: "Dental implants",
     copy: "Replacing a missing tooth at the root, so the replacement functions and is maintained like a natural tooth rather than resting on the teeth beside it.",
-    href: "/treatments#dental-implants",
     evidence: { kind: "pair", before: "implantsBefore", after: "implantsAfter" },
   },
   {
@@ -1071,7 +1096,6 @@ const SPECIALISATION_CARDS: {
     title: "FULL MOUTH REHABILITATION",
     name: "Full mouth rehabilitation",
     copy: "Rebuilding an entire bite — function, alignment and appearance together — planned as one treatment rather than a series of separate repairs.",
-    href: "/treatments#full-mouth-rehabilitation",
     evidence: {
       kind: "pair",
       before: "rehabBefore",
@@ -1224,7 +1248,6 @@ function RootCanalEvidence({ onOpen }: { onOpen: OpenViewer }) {
 }
 
 function Specialisation() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
   const [viewer, setViewer] = useState<{
     title: string;
     items: EvidenceItem[];
@@ -1243,33 +1266,33 @@ function Specialisation() {
 
   return (
     <section
-      className={`${styles.section} ${styles.dark}`}
+      className={`${styles.section} ${styles.dark} ${styles.specSection}`}
       aria-labelledby="miftah-spec-title"
     >
       <div className={`container ${styles.container}`}>
         <div data-spec-chapter>
           <Eyebrow numeral="03" label="03 / SPECIALISATION" />
         </div>
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div>
           <div className={styles.specHead}>
             <SectionHeading
               id="miftah-spec-title"
               line1="Where his work"
               line2="goes deepest."
             />
-            <p className={styles.lede}>
+            <p className={styles.lede} data-reveal="up">
               Four areas where his specialist training is most directly
               applied.
             </p>
           </div>
           <div className={styles.specGrid} data-spec-grid>
-            {SPECIALISATION_CARDS.map((card, index) => (
+            {SPECIALISATION_CARDS.map((card) => (
               <article
                 className={styles.specCard}
                 key={card.number}
                 aria-labelledby={`miftah-spec-card-${card.number}`}
-                style={{ animationDelay: `${index * 90}ms` }}
                 data-spec-card
+                data-reveal="up"
               >
                 <div className={styles.specCardTop}>
                   <span className={styles.specCardNumber} aria-hidden="true">
@@ -1585,15 +1608,15 @@ const SCOPE_ICONS: Record<string, ReactNode> = {
 };
 
 function FullScope() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
   return (
     <section
+      id="clinical-focus"
       className={`${styles.section} ${styles.light}`}
       aria-labelledby="miftah-scope-title"
     >
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="04" label="04 / FULL SCOPE" />
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div>
           <SectionHeading
             id="miftah-scope-title"
             line1="Seven areas"
@@ -1601,7 +1624,12 @@ function FullScope() {
           />
           <div className={styles.scopeGrid}>
             {SCOPE_ROWS.map((row) => (
-              <a className={styles.scopeTile} key={row.number} href={row.href}>
+              <a
+                className={styles.scopeTile}
+                key={row.number}
+                href={row.href}
+                data-reveal="up"
+              >
                 <span className={styles.scopeTileTop}>
                   <span className={styles.scopeNumber} aria-hidden="true">
                     {row.number}
@@ -1624,7 +1652,11 @@ function FullScope() {
                 </span>
               </a>
             ))}
-            <div className={styles.scopeFiller} aria-hidden="true">
+            <div
+              className={styles.scopeFiller}
+              aria-hidden="true"
+              data-reveal="up"
+            >
               <p className={styles.scopeFillerCopy}>
                 Seven treatment areas
                 <br />
@@ -1640,42 +1672,53 @@ function FullScope() {
 }
 
 /* ------------------------------------------------------------------
-   05 — EDUCATION & TRAINING (dark) — editorial career timeline
-   (training → specialisation → fellowship) concluding on the
-   recognition beat, anchored by the real award photograph on the
-   right. Undated; ordered for the story, not the calendar.
+   05 — EDUCATION & TRAINING (dark) — editorial career journey in the
+   usual professional order (BDS → internship → MDS → fellowship →
+   recognition), anchored by the real award photograph. Undated — no
+   reliable dates exist, so none are shown. Kickers reuse the lede's own
+   wording; no new facts are introduced.
    ------------------------------------------------------------------ */
-const EDUCATION_STEPS = [
+const EDUCATION_STEPS: {
+  kicker: string;
+  title: string;
+  lines: string[];
+  final?: boolean;
+}[] = [
   {
-    label: "MDS — PROSTHODONTICS & IMPLANTOLOGY",
-    lines: [
-      "Sri Sai College of Dental Surgery",
-      "Kaloji Narayana Rao University of Health Sciences",
-    ],
-  },
-  {
-    label: "INTERNSHIP",
-    lines: ["Osmania Government Dental College, Hyderabad"],
-  },
-  {
-    label: "BDS",
+    kicker: "Dental school",
+    title: "BDS",
     lines: [
       "Sri Sai College of Dental Surgery",
       "Dr. NTR University of Health Sciences",
     ],
   },
   {
-    label: "FELLOWSHIP — FICOI (U.S.A.)",
+    kicker: "Clinical internship",
+    title: "Internship",
+    lines: ["Osmania Government Dental College, Hyderabad"],
+  },
+  {
+    kicker: "Specialist training",
+    title: "MDS — Prosthodontics & Implantology",
+    lines: [
+      "Sri Sai College of Dental Surgery",
+      "Kaloji Narayana Rao University of Health Sciences",
+    ],
+  },
+  {
+    kicker: "Fellowship",
+    title: "FICOI (U.S.A.)",
     lines: [],
   },
   {
-    label: "RECOGNITION — GOLD MEDALLIST",
+    kicker: "Formal recognition",
+    title: "Gold Medallist",
     lines: [],
+    final: true,
   },
 ];
 
 function Education() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
   return (
     <section
       className={`${styles.section} ${styles.dark}`}
@@ -1683,71 +1726,100 @@ function Education() {
     >
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="05" label="05 / EDUCATION & TRAINING" />
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div className={`${styles.splitHead} ${styles.splitHeadEdu}`}>
           <SectionHeading
             id="miftah-edu-title"
             line1="A foundation"
             line2="built formally."
           />
-          <p className={styles.lede}>
+          <p className={styles.lede} data-reveal="up">
             His specialist practice rests on formal training in prosthodontics
             and implantology, carried through dental school, clinical
             internship, fellowship and formal recognition.
           </p>
-          <div className={styles.eduGrid}>
-            <div className={styles.eduTimelineCol}>
-              <ol className={styles.timeline}>
-                {EDUCATION_STEPS.map((step, index) => (
-                  <li
-                    className={styles.timelineStep}
-                    key={step.label}
-                    style={{ animationDelay: `${index * 90}ms` }}
-                  >
-                    <span className={styles.timelineMarker} aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className={styles.timelineLabel}>{step.label}</h3>
+        </div>
+        {/* One composition: the journey (left) and its evidence plate
+            (right) share a top line — stage 01 and the photograph start
+            together and end together. On phones the plate moves above the
+            journey (CSS order) so the story reads image → steps. */}
+        <div className={styles.eduGrid}>
+          <div className={styles.eduTimelineCol}>
+            <ol className={styles.timeline}>
+              {EDUCATION_STEPS.map((step, index) => (
+                <li
+                  className={`${styles.timelineStep} ${step.final ? styles.timelineFinal : ""}`}
+                  key={step.title}
+                  data-reveal="step"
+                >
+                  <span className={styles.timelineNumber} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className={styles.timelineNode} aria-hidden="true" />
+                  <div className={styles.timelineBody}>
+                    <span className={styles.timelineKicker}>{step.kicker}</span>
+                    <h3 className={styles.timelineLabel}>{step.title}</h3>
                     {step.lines.map((line) => (
                       <p className={styles.timelineLine} key={line}>
                         {line}
                       </p>
                     ))}
-                  </li>
-                ))}
-              </ol>
-              <div className={styles.eduFacts} aria-hidden="true">
-                <span>05 Stages</span>
-                <span>04 Institutions</span>
-                <span>FICOI — U.S.A.</span>
-              </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className={styles.eduFacts} aria-hidden="true" data-reveal="up">
+              <span>05 Stages</span>
+              <span>04 Institutions</span>
+              <span>FICOI — U.S.A.</span>
             </div>
-            <div className={styles.eduProof}>
-              <div className={styles.eduProofHead}>
-                <span className={styles.eduProofMark} aria-hidden="true" />
+          </div>
+          {/* Two formal milestones as one stepped sequence: the certificate
+              plate leads (full column width), the ceremony plate follows
+              smaller and flush to the same right edge, its caption set in
+              the space the step leaves on the left. On phones the two
+              plates sit side by side above the journey. */}
+          <div className={styles.eduPlates}>
+            <figure className={styles.eduPlate} data-reveal="up">
+              <div className={styles.eduPlateFrame} data-reveal="mask">
+                <Image
+                  src={ACADEMIC_FRAME_IMAGE.src}
+                  alt={ACADEMIC_FRAME_IMAGE.alt}
+                  fill
+                  sizes="(max-width: 767px) 46vw, (max-width: 1023px) 36vw, 40vw"
+                  className={styles.eduPlateImage}
+                />
+                <span className={styles.eduPlateTick} aria-hidden="true" />
+              </div>
+              <figcaption className={styles.eduCaption}>
                 <span className={styles.eduProofEyebrow}>
-                  Recognition — Evidence
+                  <span className={styles.eduProofMark} aria-hidden="true" />
+                  Recognition
                 </span>
+                <span className={styles.eduCaptionText}>
+                  Award presented to Dr. Miftah Ur Rahman by Dr. K.
+                  Mahendranadh Reddy
+                </span>
+              </figcaption>
+            </figure>
+            <figure className={styles.eduPlateB} data-reveal="up">
+              <div className={styles.eduPlateBFrame} data-reveal="mask">
+                <Image
+                  src={CEREMONY_FRAME_IMAGE.src}
+                  alt={CEREMONY_FRAME_IMAGE.alt}
+                  fill
+                  sizes="(max-width: 767px) 46vw, (max-width: 1023px) 24vw, 26vw"
+                  className={styles.eduPlateBImage}
+                />
               </div>
-              <figure className={styles.eduPlate}>
-                <div className={styles.eduPlateFrame}>
-                  <Image
-                    src={ACADEMIC_FRAME_IMAGE.src}
-                    alt={ACADEMIC_FRAME_IMAGE.alt}
-                    width={ACADEMIC_FRAME_IMAGE.width}
-                    height={ACADEMIC_FRAME_IMAGE.height}
-                    sizes="(max-width: 1023px) 88vw, 34vw"
-                    className={styles.eduPlateImage}
-                  />
-                  <span className={styles.eduPlateTick} aria-hidden="true" />
-                </div>
-                <figcaption className={styles.eduCaption}>
-                  <span className={styles.eduCaptionText}>
-                    Award presented to Dr. Miftah Ur Rahman by Dr. K.
-                    Mahendranadh Reddy
-                  </span>
-                </figcaption>
-              </figure>
-            </div>
+              <figcaption className={styles.eduPlateBCaption}>
+                <span className={styles.eduPlateBIndex} aria-hidden="true">
+                  ii
+                </span>
+                <span className={styles.eduPlateBText}>
+                  Professional ceremony
+                </span>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
@@ -1759,144 +1831,223 @@ function Education() {
    06 — ACADEMIC & RESEARCH (cream)
    ------------------------------------------------------------------ */
 function AcademicResearch() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
+  /* Index into RCT_FILMS of the film open in the shared viewer. */
+  const [filmIndex, setFilmIndex] = useState<number | null>(null);
   return (
     <section
+      id="published-work"
       className={`${styles.section} ${styles.light}`}
       aria-labelledby="miftah-academic-title"
     >
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="06" label="06 / ACADEMIC & RESEARCH" />
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div className={styles.splitHead}>
           <SectionHeading
             id="miftah-academic-title"
             line1="Published work"
             line2="and teaching."
           />
-          <p className={styles.lede}>
+          <p className={styles.lede} data-reveal="up">
             His clinical work is carried by an academic base — formal specialist
             training, published research and ongoing teaching.
           </p>
-          <div className={styles.academicGrid}>
-            <div className={styles.academicTeaching}>
-              <figure className={styles.academicPlate}>
-                <div className={styles.academicPlateFrame}>
-                  <Image
-                    src={TEACHING_IMAGE.src}
-                    alt={TEACHING_IMAGE.alt}
-                    width={TEACHING_IMAGE.width}
-                    height={TEACHING_IMAGE.height}
-                    sizes="(max-width: 1023px) 88vw, 30vw"
-                    className={styles.academicPlateImage}
-                  />
-                  <span
-                    className={styles.academicPlateTick}
-                    aria-hidden="true"
-                  />
-                </div>
-                <figcaption className={styles.academicPlateCaption}>
-                  Seminar &middot; Dept. of Prosthodontics
-                </figcaption>
-              </figure>
-              <div className={styles.academicTeachingBlock}>
-                <div className={styles.academicProofHead}>
-                  <span
-                    className={styles.academicProofMark}
-                    aria-hidden="true"
-                  />
-                  <h3 className={styles.academicSubhead}>Teaching</h3>
-                </div>
-                <p className={styles.academicRole}>
-                  Assistant Professor
-                  <span>
-                    Department of Prosthodontics, SB Patil Dental College &amp;
-                    Hospital
-                  </span>
-                </p>
-                <p className={styles.bodyCopy}>
-                  He teaches and conducts seminars for dental students alongside
-                  his clinical practice in Hyderabad.
-                </p>
+        </div>
+
+        {/* ROW 1 — teaching evidence (left) | publications register (right).
+            The seminar plate is a fixed 5:4 crop so the two columns end
+            close together instead of one towering over the other. */}
+        <div className={styles.academicGrid}>
+          <div className={styles.academicTeaching}>
+            <figure className={styles.academicPlate} data-reveal="up">
+              <div className={styles.academicPlateFrame} data-reveal="mask">
+                <Image
+                  src={TEACHING_IMAGE.src}
+                  alt={TEACHING_IMAGE.alt}
+                  fill
+                  sizes="(max-width: 767px) 92vw, (max-width: 1023px) 70vw, 30vw"
+                  className={styles.academicPlateImage}
+                />
+                <span className={styles.academicPlateTick} aria-hidden="true" />
               </div>
-            </div>
-            <span className={styles.academicRule} aria-hidden="true" />
-            <div className={styles.academicPublications}>
-              <h3 className={styles.academicSubhead}>Selected Publications</h3>
-              <ol className={styles.publicationList}>
-                {PUBLICATIONS.map((publication, index) => (
-                  <li className={styles.publication} key={publication.href}>
-                    <a
-                      href={publication.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.publicationLink}
-                      style={{ animationDelay: `${index * 90}ms` }}
-                    >
-                      <span
-                        className={styles.publicationIndex}
-                        aria-hidden="true"
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className={styles.publicationBody}>
-                        <span className={styles.publicationTitle}>
-                          {publication.title}
-                        </span>
-                        <span className={styles.publicationMeta}>
-                          {publication.journal} &middot; {publication.year}
-                        </span>
-                      </span>
-                      <ArrowRight
-                        size={13}
-                        aria-hidden="true"
-                        className={styles.publicationArrow}
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ol>
-              <a
-                href="https://pubmed.ncbi.nlm.nih.gov/?term=md+miftah+ur+rahman"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.pubmedLink}
-              >
-                VIEW ON PUBMED <ArrowRight size={13} aria-hidden="true" />
-              </a>
+              <figcaption className={styles.academicPlateCaption}>
+                Seminar &middot; Dept. of Prosthodontics
+              </figcaption>
+            </figure>
+            <div className={styles.academicTeachingBlock} data-reveal="up">
+              <div className={styles.academicProofHead}>
+                <span className={styles.academicProofMark} aria-hidden="true" />
+                <h3 className={styles.academicSubhead}>Teaching</h3>
+              </div>
+              <p className={styles.academicRole}>
+                Assistant Professor
+                <span>
+                  Department of Prosthodontics, SB Patil Dental College &amp;
+                  Hospital
+                </span>
+              </p>
+              <p className={styles.bodyCopy}>
+                He teaches and conducts seminars for dental students alongside
+                his clinical practice in Hyderabad.
+              </p>
             </div>
           </div>
+          <span className={styles.academicRule} aria-hidden="true" />
+          <div id="publications" className={styles.academicPublications}>
+            <div className={styles.publicationHead} data-reveal="up">
+              <h3 className={styles.academicSubhead}>Selected Publications</h3>
+              {/* PubMed identity — the official mark appears ONCE, here;
+                  each card carries only a quiet text cue. */}
+              <p className={styles.pubmedIdentity}>
+                <Image
+                  src={PUBMED_LOGO.src}
+                  alt={PUBMED_LOGO.alt}
+                  width={PUBMED_LOGO.width}
+                  height={PUBMED_LOGO.height}
+                  sizes="100px"
+                  className={styles.pubmedLogo}
+                />
+                <span className={styles.pubmedDivider} aria-hidden="true" />
+                <span className={styles.publicationCount}>
+                  Indexed on PubMed &middot;{" "}
+                  {String(PUBLICATIONS.length).padStart(2, "0")} publications
+                </span>
+              </p>
+            </div>
+            <ol className={styles.publicationList}>
+              {PUBLICATIONS.map((publication, index) => (
+                <li
+                  className={styles.publication}
+                  key={publication.href}
+                  data-reveal="up"
+                >
+                  <a
+                    href={publication.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.publicationLink}
+                  >
+                    <span className={styles.publicationIndex} aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={styles.publicationBody}>
+                      <span className={styles.publicationMeta}>
+                        {publication.journal} &middot; {publication.year}
+                      </span>
+                      <span className={styles.publicationTitle}>
+                        {publication.title}
+                      </span>
+                      <span className={styles.publicationCue}>
+                        <span
+                          className={styles.publicationCueRule}
+                          aria-hidden="true"
+                        />
+                        Indexed &middot; PubMed
+                        <ArrowUpRight
+                          size={13}
+                          aria-hidden="true"
+                          className={styles.publicationArrow}
+                        />
+                      </span>
+                      <span className={styles.srOnly}>
+                        {" "}
+                        (opens PubMed in a new tab)
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+            <a
+              href="https://pubmed.ncbi.nlm.nih.gov/?term=md+miftah+ur+rahman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.pubmedLink}
+              data-reveal="up"
+            >
+              VIEW ON PUBMED <ArrowRight size={13} aria-hidden="true" />
+              <span className={styles.srOnly}> (opens PubMed in a new tab)</span>
+            </a>
+          </div>
+        </div>
+
+        {/* ROW 2 — Clinical teaching as its own ruled row: intro column
+            aligned under the teaching column, the two root-canal films
+            under the publications. Poster JPGs only; the MP4 is fetched by
+            the shared TreatmentEvidenceViewer once a card is chosen. */}
+        <div
+          className={styles.teachingRow}
+          role="group"
+          aria-labelledby="miftah-teaching-films-title"
+        >
+          <div className={styles.teachingIntro} data-reveal="up">
+            <div>
+              <h3
+                id="miftah-teaching-films-title"
+                className={styles.academicSubhead}
+              >
+                Clinical teaching
+              </h3>
+              <p className={styles.teachingFilmsLine}>
+                Root canal treatment, explained.
+              </p>
+              <p className={styles.teachingNote}>
+                Two short films in which Dr. Miftah explains root canal
+                treatment.
+              </p>
+            </div>
+            <span className={styles.teachingMeta} aria-hidden="true">
+              02 films &middot; Root canal treatment
+            </span>
+          </div>
+          <span className={styles.academicRule} aria-hidden="true" />
+          <ul className={styles.teachingFilmGrid}>
+            {RCT_FILMS.map((film, index) => {
+              const poster = RCT_FILM_POSTERS[index];
+              return (
+                <li
+                  key={film.short}
+                  className={styles.teachingFilmItem}
+                  data-reveal="up"
+                >
+                  <FilmCard
+                    number={String(index + 1).padStart(2, "0")}
+                    poster={poster.src}
+                    alt={poster.alt}
+                    meta="Saving natural teeth"
+                    title={poster.title}
+                    cta="View film"
+                    label={film.item.kind === "video" ? film.item.label : film.short}
+                    sizes="(max-width: 767px) 66vw, (max-width: 1023px) 34vw, 260px"
+                    onOpen={() => setFilmIndex(index)}
+                    dataAttrs={{ "data-teaching-film": String(index) }}
+                  />
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
+      {filmIndex !== null && (
+        <TreatmentEvidenceViewer
+          key={`academic-film-${filmIndex}`}
+          title="Root canal treatment · Films"
+          items={RCT_FILMS.map((f) => f.item)}
+          initialIndex={filmIndex}
+          onClose={() => setFilmIndex(null)}
+        />
+      )}
     </section>
   );
 }
 
 /* ------------------------------------------------------------------
-   07 — IN PRACTICE (dark) — existing clinical films
+   07 — IN PRACTICE (dark) — Dr. Miftah's clinical films as one curated
+   reel: three identical 9:16 FilmCards on a shared ruled baseline, each
+   poster a real frame of its own film. No <video> exists on the page
+   until a card is chosen; the shared viewer then loads and plays it.
    ------------------------------------------------------------------ */
 function InPractice() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
-  /* Poster-first reel archive: nothing is fetched until a film is
-     actively played (preload="none" + custom play control). Only one
-     film plays at a time. */
-  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
-  const [activeFilm, setActiveFilm] = useState<string | null>(null);
-
-  const toggleFilm = (number: string) => {
-    const video = videoRefs.current[number];
-    if (!video) return;
-    if (activeFilm === number) {
-      video.pause();
-      setActiveFilm(null);
-      return;
-    }
-    if (activeFilm) {
-      videoRefs.current[activeFilm]?.pause();
-    }
-    setActiveFilm(number);
-    video.play().catch(() => setActiveFilm(null));
-  };
-
+  const [filmIndex, setFilmIndex] = useState<number | null>(null);
   return (
     <section
       className={`${styles.section} ${styles.dark}`}
@@ -1904,86 +2055,57 @@ function InPractice() {
     >
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="07" label="07 / IN PRACTICE" />
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div className={styles.splitHead}>
           <SectionHeading
             id="miftah-practice-title"
             line1="See the work"
             line2="behind the treatment."
           />
-          <p className={styles.lede}>
+          <p className={styles.lede} data-reveal="up">
             Real clinical films from Dr. Miftah&rsquo;s work at Neodent.
           </p>
-          <div className={styles.filmGrid}>
-            {CLINICAL_FILMS.map((film, index) => (
-              <figure
-                className={styles.filmPlate}
-                key={film.number}
-                style={{ animationDelay: `${index * 90}ms` }}
-              >
-                <div className={styles.filmFrame}>
-                  <video
-                    ref={(el) => {
-                      videoRefs.current[film.number] = el;
-                    }}
-                    className={styles.filmVideo}
-                    src={film.src}
-                    poster={film.poster}
-                    playsInline
-                    preload="none"
-                    controls={activeFilm === film.number}
-                    onEnded={() => setActiveFilm(null)}
-                    onPause={() =>
-                      activeFilm === film.number && setActiveFilm(null)
-                    }
-                    aria-label={film.label}
-                  />
-                  <span className={styles.filmScrim} aria-hidden="true" />
-                  <span className={styles.filmIndex} aria-hidden="true">
-                    {film.number}
-                  </span>
-                  <button
-                    type="button"
-                    className={`${styles.filmPlayBtn} ${activeFilm === film.number ? styles.filmPlayBtnHidden : ""}`}
-                    tabIndex={activeFilm === film.number ? -1 : undefined}
-                    onClick={() => toggleFilm(film.number)}
-                    aria-label={
-                      activeFilm === film.number
-                        ? `Pause film: ${film.title}`
-                        : `Play film: ${film.title}`
-                    }
-                  >
-                    {activeFilm === film.number ? (
-                      <Pause size={12} />
-                    ) : (
-                      <Play size={12} />
-                    )}
-                  </button>
-                </div>
-                <figcaption className={styles.filmCaption}>
-                  <h3 className={styles.filmTitle}>{film.title}</h3>
-                  <span>DR. MD. MIFTAH UR RAHMAN &middot; NEODENT</span>
-                  <button
-                    type="button"
-                    className={styles.filmCta}
-                    onClick={() => toggleFilm(film.number)}
-                    aria-label={
-                      activeFilm === film.number
-                        ? `Pause film: ${film.title}`
-                        : `View film: ${film.title}`
-                    }
-                  >
-                    {activeFilm === film.number ? "PAUSE FILM" : "VIEW FILM"}{" "}
-                    <ArrowRight size={12} aria-hidden="true" />
-                  </button>
-                </figcaption>
-              </figure>
-            ))}
+        </div>
+        <div className={styles.reel}>
+          <div className={styles.reelRule} aria-hidden="true" data-reveal="up">
+            <span>Clinical films</span>
+            <span>01 &mdash; {String(PRACTICE_FILMS.length).padStart(2, "0")}</span>
           </div>
-          <div className={styles.filmFooter}>
+          <ul className={styles.filmGrid}>
+            {PRACTICE_FILMS.map((film, index) => (
+              <li className={styles.filmItem} key={film.item.src} data-reveal="up">
+                <FilmCard
+                  tone="dark"
+                  number={String(index + 1).padStart(2, "0")}
+                  poster={film.poster}
+                  alt={film.posterAlt}
+                  meta="Dr. Md. Miftah Ur Rahman · Neodent"
+                  title={film.title}
+                  cta="View film"
+                  label={film.item.label}
+                  sizes="(max-width: 767px) 66vw, (max-width: 1023px) 30vw, 340px"
+                  onOpen={() => setFilmIndex(index)}
+                  dataAttrs={{ "data-practice-film": String(index) }}
+                />
+              </li>
+            ))}
+          </ul>
+          <div className={styles.filmFooter} data-reveal="up">
             <span>Clinical work &middot; Neodent Hyderabad</span>
+            <span>
+              {String(PRACTICE_FILMS.length).padStart(2, "0")} films
+            </span>
           </div>
         </div>
       </div>
+      {filmIndex !== null && (
+        <TreatmentEvidenceViewer
+          key={`practice-film-${filmIndex}`}
+          title="In practice · Clinical films"
+          items={PRACTICE_FILMS.map((f) => f.item)}
+          initialIndex={filmIndex}
+          onClose={() => setFilmIndex(null)}
+        />
+      )}
     </section>
   );
 }
@@ -1993,7 +2115,6 @@ function InPractice() {
    AggregateRating structured data anywhere on this page.
    ------------------------------------------------------------------ */
 function PatientVoices() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
   return (
     <section
       className={`${styles.section} ${styles.light}`}
@@ -2001,13 +2122,13 @@ function PatientVoices() {
     >
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="08" label="08 / PATIENT VOICES" />
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div>
           <SectionHeading
             id="miftah-voices-title"
             line1="What patients say."
             line2="In their own words."
           />
-          <p className={styles.lede}>
+          <p className={styles.lede} data-reveal="up">
             Verbatim from Google reviews. Individual results vary.
           </p>
           <div className={styles.reviewGrid}>
@@ -2015,7 +2136,7 @@ function PatientVoices() {
               <figure
                 className={`${styles.reviewCard} ${reviewIndex < 2 ? styles.reviewFeature : ""}`}
                 key={review.index}
-                style={{ animationDelay: `${reviewIndex * 90}ms` }}
+                data-reveal="up"
               >
                 <span className={styles.reviewIndex} aria-hidden="true">
                   {review.index}
@@ -2031,7 +2152,7 @@ function PatientVoices() {
               </figure>
             ))}
           </div>
-          <div className={styles.voicesCta}>
+          <div className={styles.voicesCta} data-reveal="up">
             <a
               href={GOOGLE_PROFILE_URL}
               target="_blank"
@@ -2049,10 +2170,13 @@ function PatientVoices() {
 }
 
 /* ------------------------------------------------------------------
-   09 — RECOGNITION (dark) — roman-numeral folio grid
+   09 — RECOGNITION (dark) — press archive
+   The ceremony photographs now live in Section 05 ("Foundation built
+   formally"); this chapter is the doctor's published presence only: a
+   slow right-to-left strip of newspaper clippings, each opening in the
+   shared evidence viewer.
    ------------------------------------------------------------------ */
 function RecognitionSection() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
   return (
     <section
       className={`${styles.section} ${styles.dark}`}
@@ -2060,39 +2184,25 @@ function RecognitionSection() {
     >
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="09" label="09 / RECOGNITION" />
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div className={styles.splitHead}>
           <SectionHeading
             id="miftah-recognition-title"
             line1="Recognition"
             line2="earned over time."
           />
-          <div className={styles.folioGrid}>
-            {RECOGNITION_PLATES.map((plate, plateIndex) => (
-              <figure
-                className={styles.folioPlate}
-                key={plate.index}
-                style={{ animationDelay: `${plateIndex * 90}ms` }}
-              >
-                <span className={styles.folioIndex} aria-hidden="true">
-                  {plate.index}
-                </span>
-                <div className={styles.folioFrame}>
-                  <Image
-                    src={plate.src}
-                    alt={plate.alt}
-                    width={plate.width}
-                    height={plate.height}
-                    sizes="(max-width: 640px) 92vw, (max-width: 1023px) 46vw, 26vw"
-                    className={styles.folioImage}
-                  />
-                </div>
-                <figcaption className={styles.folioCaption}>
-                  {plate.caption}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <p className={styles.pressMeta} data-reveal="up">
+            <span>Press archive</span>
+            <span>
+              {String(PRESS_CLIPPINGS.length).padStart(2, "0")} clippings
+              &middot; select to enlarge
+            </span>
+          </p>
         </div>
+      </div>
+      {/* Full-bleed: the strip runs edge to edge inside the section's own
+          clip box, outside the centred container. */}
+      <div data-reveal="up">
+        <MediaRail items={PRESS_CLIPPINGS} title="Press archive" />
       </div>
     </section>
   );
@@ -2104,7 +2214,6 @@ function RecognitionSection() {
    the site / Google Business Profile discrepancy is being resolved.
    ------------------------------------------------------------------ */
 function WhereToFindHim() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.08);
   return (
     <section
       className={`${styles.section} ${styles.light} ${styles.wash}`}
@@ -2113,14 +2222,14 @@ function WhereToFindHim() {
       <Atmosphere surface="light" rails dots />
       <div className={`container ${styles.container}`}>
         <Eyebrow numeral="10" label="10 / WHERE TO FIND HIM" />
-        <div ref={ref} className={`${visible ? styles.blockVisible : ""}`}>
+        <div>
           <SectionHeading
             id="miftah-locations-title"
             line1="Two doors."
             line2="One standard of care."
           />
           <div className={styles.branchGrid}>
-            <article className={styles.branchCard} id="mehdipatnam">
+            <article className={styles.branchCard} id="mehdipatnam" data-reveal="up">
               <OffsetImagePair
                 primary={MEHDIPATNAM_PLATES.primary}
                 secondary={MEHDIPATNAM_PLATES.secondary}
@@ -2145,7 +2254,7 @@ function WhereToFindHim() {
                 </a>
               </div>
             </article>
-            <article className={styles.branchCard} id="nampally">
+            <article className={styles.branchCard} id="nampally" data-reveal="up">
               <OffsetImagePair
                 primary={NAMPALLY_PLATES.primary}
                 secondary={NAMPALLY_PLATES.secondary}
@@ -2171,7 +2280,7 @@ function WhereToFindHim() {
               </div>
             </article>
           </div>
-          <p className={styles.locationsFootnote}>
+          <p className={styles.locationsFootnote} data-reveal="up">
             Both branches are profiled on{" "}
             <a href="/clinic" className={styles.inlineLink}>
               the clinics page
@@ -2192,24 +2301,24 @@ function WhereToFindHim() {
    11 — CLOSING CTA (dark) — the FinalCta pattern, both branch numbers
    ------------------------------------------------------------------ */
 function ClosingCta() {
-  const [ref, visible] = useReveal<HTMLDivElement>(0.1);
   return (
     <section
       className={`${styles.section} ${styles.dark} ${styles.closingCta}`}
       aria-labelledby="miftah-cta-title"
     >
-      <div className={`container ${styles.container}`} ref={ref}>
-        <div
-          className={`${styles.ctaInner} ${visible ? styles.blockVisible : ""}`}
-        >
-          <div className="eyebrow">Your next visit</div>
-          <h2 id="miftah-cta-title" className="section-heading">
-            Begin with a <span className="serif">conversation.</span>
+      <div className={`container ${styles.container}`}>
+        <div className={styles.ctaInner}>
+          <div className={styles.eyebrow} data-reveal="up">
+            Your next visit
+          </div>
+          <h2 id="miftah-cta-title" className={styles.heading} data-reveal="up">
+            Begin with a{" "}
+            <span className={styles.headingAccent}>conversation.</span>
           </h2>
-          <p className={styles.lede}>
+          <p className={styles.lede} data-reveal="up">
             Choose your preferred location, then let&rsquo;s begin.
           </p>
-          <div className={styles.ctaActions}>
+          <div className={styles.ctaActions} data-reveal="up">
             <AppButton
               href={telPhone}
               variant="primary"

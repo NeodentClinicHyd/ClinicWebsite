@@ -158,10 +158,9 @@ export function SmileDesignStory() {
       <div className={styles.body}>
         <div className={styles.introWrap}>
           <div className={styles.intro} data-story-intro>
-            <h3 id="miftah-story-title" className={`section-heading ${styles.title}`}>
+            <h3 id="miftah-story-title" className={styles.title}>
               The clinical thinking behind
-              <br />
-              <span className="serif">a confident smile.</span>
+              <span className={styles.titleAccent}>a confident smile.</span>
             </h3>
             <div className={styles.lede}>
               <p>
@@ -203,11 +202,13 @@ export function SmileDesignStory() {
               data-story-toggle
             >
               <span className={styles.ctaKicker}>Click to view</span>
-              <span className={styles.ctaArrow} aria-hidden="true">
-                <span className={styles.ctaArrowLine} />
-                <span className={styles.ctaArrowHead} />
+              <span className={styles.ctaMain}>
+                <span className={styles.ctaTitle}>The smile journey</span>
+                <span className={styles.ctaArrow} aria-hidden="true">
+                  <span className={styles.ctaArrowLine} />
+                  <span className={styles.ctaArrowHead} />
+                </span>
               </span>
-              <span className={styles.ctaTitle}>the smile journey</span>
             </button>
           </div>
         </div>
