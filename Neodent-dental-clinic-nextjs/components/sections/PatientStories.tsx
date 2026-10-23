@@ -174,7 +174,7 @@ export function PatientStories() {
             <br />
             <span>In their own words.</span>
           </h2>
-          <p className={styles.lede}>
+          <p className={`${styles.lede} section-lede`}>
             Real experiences from patients who trusted Neodent with their care.
           </p>
         </header>

@@ -1,16 +1,53 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
+import {
+  Award,
+  Crosshair,
+  HeartHandshake,
+  Leaf,
+  MapPin,
+  Pause,
+  Play,
+  Smile,
+  Stethoscope,
+  type LucideIcon,
+} from "lucide-react";
 import { tourVideo } from "@/lib/site-data";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
+import Link from "next/link";
 
-const philosophyValues = ["Calm", "Precise", "Personal"];
+/* "Why Neodent" card -- edit this array to change the four cells. Icons
+   come from the lucide-react set already used across the site. The
+   "25,000+ smiles changed" figure is client-supplied and must be
+   verified before launch. */
+const whyNeodentStats: {
+  value: string;
+  label: string;
+  icon: LucideIcon;
+}[] = [
+  { value: "30+", label: "years' experience", icon: Award },
+  { value: "Multi-speciality", label: "clinic", icon: Stethoscope },
+  { value: "2", label: "locations", icon: MapPin },
+  { value: "25,000+", label: "smiles changed", icon: Smile },
+];
 
-const experienceProof = [
-  { value: "30+ YEARS", detail: "of dental care" },
-  { value: "2 LOCATIONS", detail: "Mehdipatnam · Nampally" },
-  { value: "MULTI-SPECIALITY", detail: "Comprehensive dental care" },
+const careQualities: {
+  name: string;
+  text: string;
+  icon: LucideIcon;
+}[] = [
+  { name: "Calm", text: "An unhurried pace, a reassuring space.", icon: Leaf },
+  {
+    name: "Precise",
+    text: "Careful diagnosis, exact and clear work.",
+    icon: Crosshair,
+  },
+  {
+    name: "Personal",
+    text: "Every plan shaped around you.",
+    icon: HeartHandshake,
+  },
 ];
 
 export function ExperienceIntro() {
@@ -174,38 +211,59 @@ export function ExperienceIntro() {
         <span className="exp-intro-draft exp-intro-draft-vertical" />
         <span className="exp-intro-registration" />
       </div>
-      <span className="exp-intro-ghost" aria-hidden="true">
-        01
-      </span>
+      <div className="container exp-intro-why-wrap">
+        {/* Visible title is a plain <p> (not a heading) so it cannot
+            disturb the page's heading order; the <ul> carries the
+            accessible name. Icons are decorative. */}
+        <div className="exp-intro-why">
+          <p className="exp-intro-why-title" aria-hidden="true">
+            Why Neodent
+          </p>
+          <ul className="exp-intro-why-list" aria-label="Why Neodent">
+            {whyNeodentStats.map(({ value, label, icon: Icon }) => (
+              <li className="exp-intro-why-cell" key={value}>
+                <span className="exp-intro-why-icon" aria-hidden="true">
+                  <Icon size={20} strokeWidth={1.5} />
+                </span>
+                <span className="exp-intro-why-text">
+                  <span className="exp-intro-why-value">{value}</span>
+                  <span className="exp-intro-why-label">{label}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <div className="container exp-intro-grid">
         <div className="exp-intro-copy">
-          <div className="exp-intro-eyebrow-row">
-            <div className="eyebrow">The Neodent Experience</div>
-            <span className="exp-intro-clinical">
-              Multi-speciality dental care
-            </span>
-          </div>
           <h2 id="exp-intro-title" className="exp-intro-title">
             <span>Care begins</span>
             <span>the moment</span>
             <span className="serif">you walk in.</span>
           </h2>
-          <p className="exp-intro-lede">
+          <p className="exp-intro-lede exp-intro-lede-lead section-lede">
             From the first step inside to every stage of treatment, Neodent is
             designed around a{" "}
             <EditorialHighlight tone="primary">
               calmer, more reassuring
             </EditorialHighlight>{" "}
-            dental experience — where clinical expertise meets thoughtful
-            care. You&apos;re guided through each stage with{" "}
+            dental experience.
+          </p>
+          <p className="exp-intro-lede section-lede">
+            Clinical expertise meets thoughtful care. You&apos;re guided through
+            each stage with{" "}
             <EditorialHighlight tone="secondary">
               clear explanations
             </EditorialHighlight>
-            , not simply moved through a procedure. That same{" "}
+            , not simply moved through a procedure, and that same{" "}
             <EditorialHighlight tone="quiet">continuity</EditorialHighlight>{" "}
             carries from your first visit through to the care that follows.
           </p>
-          <p className="exp-intro-lede">
+          <p className="exp-intro-lede section-lede">
+            Whether you visit Mehdipatnam or Nampally, the standard of care is
+            the same.
+          </p>
+          <p className="exp-intro-lede section-lede">
             Every detail is considered to make your visit feel{" "}
             <EditorialHighlight tone="primary">
               calmer, clearer and more personal
@@ -249,24 +307,19 @@ export function ExperienceIntro() {
         </div>
 
         <div className="exp-intro-secondary">
-          <ul className="exp-intro-values" aria-label="Our care philosophy">
-            {philosophyValues.map((value) => (
-              <li key={value}>{value}</li>
+          <ul className="exp-intro-qualities" aria-label="Our care philosophy">
+            {careQualities.map(({ name, text, icon: Icon }) => (
+              <li className="exp-intro-quality" key={name}>
+                <span className="exp-intro-quality-icon" aria-hidden="true">
+                  <Icon size={20} strokeWidth={1.5} />
+                </span>
+                <span className="exp-intro-quality-body">
+                  <span className="exp-intro-quality-name">{name}</span>
+                  <span className="exp-intro-quality-text">{text}</span>
+                </span>
+              </li>
             ))}
           </ul>
-        </div>
-      </div>
-      <div className="container exp-intro-proof-wrap">
-        <div className="exp-intro-proof" aria-label="Neodent experience facts">
-          {experienceProof.map((item, index) => (
-            <div className="exp-intro-proof-item" key={item.value}>
-              <span className="exp-intro-proof-index">0{index + 1}</span>
-              <div>
-                <strong>{item.value}</strong>
-                <span>{item.detail}</span>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
       <div className="container exp-intro-cta-wrap">
@@ -276,13 +329,12 @@ export function ExperienceIntro() {
             route or the in-page #about anchor, so it is visually and
             semantically complete without claiming to be interactive
             until it can be wired to that page. Positioned after the
-            proof points in DOM/reading order (both desktop and mobile)
-            so the section closes on the CTA, matching the intended
-            eyebrow -> headline -> paragraph -> video -> values -> proof
-            -> CTA sequence. */}
-        <span className="text-link exp-intro-cta">
+            qualities panel in DOM/reading order (both desktop and
+            mobile) so the section closes on the CTA. */}
+
+        <Link href="/about" className="text-link exp-intro-cta">
           Discover Our Story <span aria-hidden="true">→</span>
-        </span>
+        </Link>
       </div>
     </section>
   );

@@ -14,7 +14,7 @@ import {
 import styles from "./DrMiftahProfile.module.css";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import { AppButton } from "@/components/ui/AppButton";
-import { BrandStatementStrip } from "@/components/sections/BrandStatementStrip";
+import { SeamCard } from "@/components/sections/SeamCard";
 import { Atmosphere } from "@/components/ui/Atmosphere";
 import { OffsetImagePair } from "@/components/ui/OffsetImagePair";
 import { TreatmentEvidenceViewer } from "@/components/doctors/TreatmentEvidenceViewer";
@@ -387,13 +387,15 @@ export function DrMiftahProfile() {
     <div ref={rootRef} className={styles.page}>
       <Hero />
       <ProfileIndex />
-      {/* Clinical philosophy - the homepage "We maintain peak performance" strip
-          (BrandStatementStrip) reused with this doctor's content: same component,
-          same CSS module. */}
-      <BrandStatementStrip
+      {/* Clinical philosophy - the shared SeamCard straddling the seam
+          between the profile index and the biography, with this doctor's
+          content. Text-only: no portrait is supplied, so neighbours reserve
+          var(--seam-pad-above-text) / var(--seam-pad-below-text)
+          (see .profileIndex / .biography). */}
+      <SeamCard
         ariaLabel="Clinical philosophy"
-        eyebrow="CLINICAL PHILOSOPHY"
-        support="Saving natural teeth,"
+        label="CLINICAL PHILOSOPHY"
+        lead="Saving natural teeth,"
         emphasis="even when it is mobile."
         longEmphasis
         attribution={null}

@@ -1,0 +1,580 @@
+/* Homepage legacy section — "Decades of changing smiles."
+
+   Rebuilt on the site's standard .container with a 12-column grid,
+   24–32px gutters and an 8px spacing scale. Only existing tokens are
+   used (--neodent-red / -ink / -ivory / -surface, --app-font-*,
+   --seam-card-h); the handful of local values below are scoped to
+   this module.
+
+   Surfaces:  one large radius (20px — the same as the SeamCard above)
+              for cards, one small radius (8px) for press figures.
+   Red:       title accent, the experience numeral, the short rule and
+              the closing statement card. Nowhere else.
+   Motion:    one 12px / 400ms fade-up per block (see useReveal in the
+              component). No parallax, no count-up. */
+
+.section {
+  --lg-ink: var(--neodent-ink);
+  --lg-body: rgba(38, 48, 51, 0.8);
+  /* Muted ink tuned to >= 4.5:1 on the #ece7dc section tone. */
+  --lg-muted: rgba(38, 48, 51, 0.72);
+  --lg-hair: rgba(38, 48, 51, 0.12);
+  --lg-surface: var(--neodent-surface);
+  --lg-radius: 20px;
+  --lg-radius-sm: 8px;
+  --lg-pad: 24px;
+  --lg-gutter: clamp(24px, 2.5vw, 32px);
+  --ghost: clamp(140px, 17vw, 240px);
+
+  position: relative;
+  overflow: hidden;
+  background: #ece7dc;
+  color: var(--lg-ink);
+  /* The statement card hangs half its height below the seam
+     (--seam-card-h / 2); the clear space under it is added on top. */
+  padding: calc(var(--seam-card-h) / 2 + 72px) 0 clamp(88px, 8vw, 120px);
+}
+
+@media (min-width: 768px) {
+  .section {
+    --lg-pad: 32px;
+    padding-top: calc(var(--seam-card-h) / 2 + clamp(96px, 12vw, 160px));
+  }
+}
+
+/* The faint background grid that already existed in this section; the
+   arches, crosshairs, draft lines and vertical caption are gone. */
+.bgGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(36, 38, 40, 0.045) 1px, transparent 1px) 0 0 / 100% 86px,
+    linear-gradient(90deg, rgba(36, 38, 40, 0.035) 1px, transparent 1px) 0 0 / 86px 100%;
+  mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Shared type ---------- */
+
+.label,
+.chapter {
+  margin: 0;
+  color: var(--lg-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+@media (min-width: 1024px) {
+  .label,
+  .chapter {
+    font-size: 12px;
+  }
+}
+
+.chapter {
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.chapter span {
+  color: var(--lg-ink);
+}
+
+/* ---------- Story block ---------- */
+
+.story {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--lg-gutter);
+  row-gap: 56px;
+  align-items: start;
+}
+.left,
+.right {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .left {
+    grid-column: 1 / 7;
+  }
+  .right {
+    grid-column: 7 / 13;
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Title + ghost year */
+.titleWrap {
+  position: relative;
+  isolation: isolate;
+  padding-top: calc(var(--ghost) * 0.3);
+}
+.ghost {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  color: rgba(38, 48, 51, 0.07);
+  font-family: var(--app-font-serif);
+  font-size: var(--ghost);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.8;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.title {
+  position: relative;
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.5rem, 11.5vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+}
+@media (min-width: 768px) {
+  .title {
+    font-size: clamp(3rem, 5vw, 5.2rem);
+  }
+}
+.title span {
+  display: block;
+  color: var(--neodent-red);
+  font-style: italic;
+}
+.intro .label {
+  margin-top: 16px;
+}
+
+/* ---------- Founder card ---------- */
+
+.card {
+  container-type: inline-size;
+  padding: var(--lg-pad);
+  background: var(--lg-surface);
+  border: 1px solid var(--lg-hair);
+  border-radius: var(--lg-radius);
+}
+
+.cardHead {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+.portrait {
+  position: relative;
+  width: 80px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #ece7dc;
+  border-radius: 10px;
+}
+.portraitImg {
+  object-fit: cover;
+  /* The source is a wide cut-out; this window keeps the face and
+     shoulders centred and never trims the top of the head. */
+  object-position: 66% 0%;
+}
+@media (min-width: 768px) {
+  .portrait {
+    width: 96px;
+  }
+}
+
+.name {
+  margin: 0 0 4px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* Experience stat: below the name row when the card is narrow ... */
+.exp {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--lg-hair);
+}
+.exp strong {
+  color: var(--neodent-red);
+  font-family: var(--app-font-serif);
+  font-size: 40px;
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.exp span {
+  color: var(--lg-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* ... and on the far right when it is wide enough to hold it. */
+@container (min-width: 480px) {
+  .cardHead {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 24px;
+  }
+  .portrait {
+    width: 112px;
+  }
+  .exp {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    padding-top: 0;
+    border-top: 0;
+    text-align: right;
+  }
+  .exp strong {
+    font-size: 48px;
+  }
+  .exp span {
+    max-width: 8em;
+    text-wrap: balance;
+  }
+}
+
+/* Credentials: same label / value rhythm as the Dr. Miftah profile
+   index (.practiceRow) so both doctor blocks read as one system. */
+.facts {
+  margin: 24px 0 0;
+  border-top: 1px solid var(--lg-hair);
+}
+.fact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--lg-hair);
+}
+.fact:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.fact dt {
+  color: var(--lg-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  color: var(--lg-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.fact dd.quals {
+  font-weight: 600;
+}
+@container (min-width: 420px) {
+  .fact {
+    grid-template-columns: 140px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+/* ---------- Body copy ---------- */
+
+.body {
+  max-width: 62ch;
+}
+.body p {
+  margin: 0 0 16px;
+  color: var(--lg-body);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.body p:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 1024px) {
+  .body p {
+    font-size: 17px;
+  }
+}
+
+/* ---------- The record ---------- */
+
+.record {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .record {
+    max-width: 560px;
+  }
+}
+
+.recordHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: -8px;
+}
+.recordHead .chapter {
+  margin-bottom: 0;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid var(--lg-hair);
+  border-radius: var(--lg-radius-sm);
+}
+.frame {
+  position: relative;
+  overflow: hidden;
+  background: #ece7dc;
+  border-radius: 4px;
+}
+.frame_press {
+  aspect-ratio: 4 / 5;
+}
+.frame_tv,
+.frame_recognition {
+  aspect-ratio: 3 / 2;
+}
+.img {
+  object-fit: cover;
+}
+/* Headline of the clipping stays in frame. */
+.img_press {
+  object-position: top;
+}
+/* Window chosen so the whole "BIG BREAKING" banner (and the programme
+   strip above it) survives the crop. */
+.img_tv {
+  object-position: 62% 50%;
+}
+.img_recognition {
+  object-position: 50% 30%;
+}
+
+.caption {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 6px 6px;
+}
+.source {
+  color: var(--lg-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.numeral {
+  display: inline-block;
+  min-width: 2ch;
+  margin-right: 8px;
+  color: var(--lg-muted);
+  font-family: var(--app-font-serif);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.medium {
+  color: var(--lg-muted);
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
+}
+.pairItem {
+  min-width: 0;
+}
+@media (max-width: 479px) {
+  /* Two-up stays two-up on phones; give the captions room to wrap. */
+  .numeral {
+    min-width: 0;
+    margin-right: 6px;
+  }
+}
+
+/* ---------- Closing row ---------- */
+
+.closing {
+  margin-top: clamp(72px, 8vw, 112px);
+}
+.closingChapter .chapter {
+  margin-bottom: 16px;
+}
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--lg-gutter);
+  align-items: stretch;
+}
+.bentoCard {
+  grid-column: 1 / -1;
+  min-width: 0;
+  min-height: 240px;
+  padding: var(--lg-pad);
+  border-radius: var(--lg-radius);
+}
+@media (min-width: 768px) {
+  .stat {
+    grid-column: 1 / 6;
+  }
+  .statement {
+    grid-column: 6 / 13;
+  }
+}
+@media (min-width: 1024px) {
+  .stat {
+    grid-column: 1 / 5;
+  }
+  .statement {
+    grid-column: 5 / 13;
+  }
+}
+
+.stat {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--lg-surface);
+  border: 1px solid var(--lg-hair);
+}
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--neodent-red);
+}
+.statFigure {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+.statFigure strong {
+  /* clamp(56px, 7vw, 88px), additionally bounded by the card so the
+     seven glyphs never outgrow it at narrow desktop widths. */
+  font-size: clamp(48px, min(7vw, 22cqi), 88px);
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.statement {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-align: left;
+}
+.statementText em {
+  display: block;
+  font-style: italic;
+}
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.timelineLine {
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(248, 246, 239, 0.5);
+}
+.timelineDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-left: -12px;
+  background: var(--neodent-ivory);
+  border-radius: 50%;
+}
+@media (min-width: 1024px) {
+  .timeline {
+    font-size: 12px;
+  }
+}
+
+/* ---------- Reveal: one 12px fade-up, 400ms ---------- */
+
+.section [data-reveal] {
+  transition:
+    opacity 400ms ease,
+    transform 400ms ease;
+}
+.section[data-reveal-ready] [data-reveal]:not([data-shown]) {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.section [data-shown="instant"] {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section [data-reveal] {
+    transition: none;
+  }
+}

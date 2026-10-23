@@ -641,8 +641,15 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* Four facts do not need a full chapter's height. */
-  padding: clamp(56px, 6vw, 88px) 0;
+  /* Four facts do not need a full chapter's height. The bottom padding
+     reserves the room the SeamCard takes above the seam below (see the
+     "SEAM CARD" tokens in globals.css). */
+  padding: clamp(56px, 6vw, 88px) 0 var(--seam-pad-above-text);
+}
+
+/* The SeamCard's share below the seam overlaps the top of this chapter. */
+.biography {
+  padding-top: var(--seam-pad-below-text);
 }
 
 .indexGrid {
@@ -2877,7 +2884,11 @@
 
   /* Profile Index — compact chapter: label above value. */
   .profileIndex {
-    padding: 52px 0;
+    padding: 52px 0 var(--seam-pad-above-text);
+  }
+
+  .biography {
+    padding-top: var(--seam-pad-below-text);
   }
 
   .indexGrid {

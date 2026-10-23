@@ -2,7 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, ChevronLeft, ChevronRight, MapPin, Phone, Star } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+  Newspaper,
+  Phone,
+  Star,
+  Trophy,
+  Tv,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { AppButton } from "@/components/ui/AppButton";
 import {
   HERO_AUTOPLAY_MS,
@@ -24,6 +36,16 @@ const inertAttr = (isInert: boolean) =>
    one-line data change that cannot leave a dangling grid cell behind. */
 const heroRecordPrimary = heroRecordItems[0];
 const heroRecordSecondary = heroRecordItems.slice(1);
+
+/* The channel list reuses the plate data's `variant` token so the icon
+   assignment cannot drift from the evidence: press -> newspaper,
+   public media -> broadcast screen, recognition -> award. Icons come
+   from the existing lucide-react set already used across the hero. */
+const heroRecordChannelIcon: Record<HeroRecordItem["variant"], LucideIcon> = {
+  press: Newspaper,
+  media: Tv,
+  award: Trophy,
+};
 
 function RecordPlate({ item }: { item: HeroRecordItem }) {
   return (
@@ -215,17 +237,27 @@ export function Hero() {
                   <span>Two Hyderabad locations.</span>
                   <span>One standard of care.</span>
                 </p>
-                {/* Wayfinding legend. Decorative: the same two branches are
-                    announced properly by each figure's caption below, so this
-                    index is hidden from assistive tech to avoid duplication. */}
-                <ul className="hero-place-legend" aria-hidden="true">
-                  {heroBranches.map((branch) => (
-                    <li key={branch.index}>
-                      <span>{branch.index}</span>
-                      {branch.name}
-                    </li>
-                  ))}
-                </ul>
+                {/* Clinic links. A real navigation landmark: each row goes to
+                    the Clinics page, where both branches are described. */}
+                <nav className="hero-place-clinics" aria-label="Our clinics">
+                  <ul>
+                    {heroBranches.map((branch) => (
+                      <li key={branch.index}>
+                        <Link href="/clinic">
+                          <span className="hero-place-clinics-name">
+                            {branch.name}
+                          </span>
+                          <span
+                            className="hero-place-clinics-arrow"
+                            aria-hidden="true"
+                          >
+                            <ArrowRight size={15} />
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
               </div>
 
               <div className="hero-place-atlas">
@@ -321,17 +353,30 @@ export function Hero() {
                   <span>Documented in print and on air.</span>
                   <span>Practised the same way, every day.</span>
                 </p>
-                {/* Channel index. Decorative: each figure's caption below
-                    names its own outlet to assistive tech, so this index
-                    is hidden to avoid announcing the same evidence twice
-                    (same rationale as Slide 02's wayfinding legend). */}
-                <ul className="hero-record-index" aria-hidden="true">
-                  {heroRecordItems.map((item) => (
-                    <li key={item.index}>
-                      <span>{item.index}</span>
-                      {item.channel}
-                    </li>
-                  ))}
+                {/* Channel list: the three kinds of public record, as
+                    compact glass cards. Not navigation and not linked —
+                    these name the evidence the plates show, so each row
+                    is a static <li>. The outlet names still live on the
+                    plates' captions; these cards answer "what kinds of
+                    proof". Icons are decorative (aria-hidden); the names
+                    carry the meaning. */}
+                <ul className="hero-record-channels">
+                  {heroRecordItems.map((item) => {
+                    const ChannelIcon = heroRecordChannelIcon[item.variant];
+                    return (
+                      <li key={item.index} className="hero-record-channel">
+                        <span
+                          className="hero-record-channel-icon"
+                          aria-hidden="true"
+                        >
+                          <ChannelIcon size={20} strokeWidth={1.5} />
+                        </span>
+                        <span className="hero-record-channel-name">
+                          {item.channel}
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 

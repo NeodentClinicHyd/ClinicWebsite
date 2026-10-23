@@ -111,7 +111,7 @@ export function ContactNextStep() {
             <br />
             <span>feel simple.</span>
           </h2>
-          <p className={styles.lede}>
+          <p className={`${styles.lede} section-lede section-lede--on-dark`}>
             Whether you have a{" "}
             <EditorialHighlight tone="secondary" onDark>
               dental concern

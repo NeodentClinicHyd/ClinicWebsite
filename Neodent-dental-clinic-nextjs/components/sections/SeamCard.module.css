@@ -1,0 +1,362 @@
+/* SeamCard -- the compact brand-statement card that sits on the seam
+   between two sections. See SeamCard.tsx for usage.
+
+   Sizes are viewport-aware: the card is clamp(240px, 38vh, 340px) tall, so
+   on a laptop it never grows past ~40% of the window, and it is always seen
+   whole with content above and below. Every size is derived from the
+   --seam-* tokens in app/globals.css ("SEAM CARD" block), the same tokens
+   the neighbouring sections use for their compensating padding.
+
+   One rounded surface, composed in layers so the pointer tilt can give it
+   depth: the dotted red frame sits behind the card, the surface (fill,
+   hairline border, glow) is the plane itself, and the text and the portrait
+   float slightly in front. overflow:hidden would flatten the 3D context, so
+   the rounded fill is a childless element and the portrait carries its own
+   clip. At rest every layer's depth is zero (--t: 0), so nothing is
+   displaced or rescaled; the tilt script only raises --t while a fine
+   pointer is over the card. Depth layers are counter-scaled about the card
+   centre so perspective never resizes them. */
+
+/* Zero-height, in-flow wrapper at the seam. z-index 10 clears the
+   sections' own internal layers (max 3) and stays below the navbar (40),
+   the floating call button (45) and the mobile call bar (50). */
+.seam {
+  position: relative;
+  height: 0;
+  z-index: 10;
+}
+
+/* The seam, drawn: a 1px line on the exact boundary, across the content
+   width, behind the card. Both neighbours share a cream tone, so this line
+   (not a colour change) is what makes the seam legible. */
+.seam::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: min(1180px, calc(100% - 64px));
+  margin-inline: auto;
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+}
+
+/* Positioning + perspective. The stage never rotates: it is the stable
+   frame of reference for the pointer and the origin of the perspective. */
+.stage {
+  --seam-w: 780px;
+  /* Card width as a length, for sizes derived from it. */
+  --W: min(var(--seam-w), calc(100vw - 2rem));
+  --h: var(--seam-card-h);
+  --r: 20px;
+  --pw: 220px; /* portrait panel width */
+  --Ph: calc(var(--h) * 0.92); /* portrait panel height */
+  --fill: 0.97; /* share of the panel the subject itself fills */
+  --shift: clamp(-24px, -2vw, 0px); /* slight off-centre for asymmetry */
+  position: absolute;
+  top: 0;
+  left: var(--shift);
+  right: calc(var(--shift) * -1);
+  margin-inline: auto;
+  width: min(var(--seam-w), calc(100% - 2rem));
+  height: var(--h);
+  /* Centred on the seam: `--seam-up` is half the card. */
+  transform: translateY(calc(var(--seam-up) * -1));
+  perspective: 1200px;
+}
+.textOnly .stage {
+  --seam-w: 640px;
+  --h: var(--seam-card-h-text);
+  transform: translateY(calc(var(--seam-up-text) * -1));
+}
+
+.card {
+  --t: 0; /* 0 at rest, 1 while tilting (set by the script) */
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  color: var(--neodent-ivory);
+}
+
+/* Depth layers. Z in px at full tilt; counter-scaled about the card centre
+   so perspective cannot resize or shift them. backface-visibility keeps the
+   rotated layers' edges antialiased. */
+.frame,
+.portrait,
+.textLayer {
+  transform-origin: calc(var(--W) / 2) calc(var(--h) / 2);
+  transform: translate3d(0, 0, calc(var(--z) * var(--t) * 1px))
+    scale(calc((1200 - var(--z) * var(--t)) / 1200));
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* The one depth device: a dotted red frame, offset behind the card. Its box
+   is the card's, shifted 12px down-right by layout (not by transform).
+   Drawn as an SVG stroke rather than a CSS dotted border: browsers snap a
+   1.5px border to whole device pixels and space the dots unevenly round the
+   corners, while a round-capped dash gives identical, crisp dots at every
+   pixel ratio. The path starts under the card, where any seam in the
+   pattern is hidden. */
+.frame {
+  --z: -24;
+  position: absolute;
+  inset: 12px -12px -12px 12px;
+  transform-origin: calc(var(--W) / 2 - 12px) calc(var(--h) / 2 - 12px);
+  pointer-events: none;
+}
+.frameSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.frameRect {
+  width: calc(100% - 1.5px);
+  height: calc(100% - 1.5px);
+  rx: var(--r);
+  fill: none;
+  stroke: color-mix(in srgb, var(--neodent-red) 70%, transparent);
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-dasharray: 0 6;
+}
+
+/* The card plane: fill, hairline border and a single soft warm glow behind
+   the doctor's shoulders. Childless, so clipping it cannot flatten 3D. The
+   transparent outline makes the compositor antialias the rounded edge when
+   the card is rotated. */
+.surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-radius: var(--r);
+  background: var(--neodent-charcoal);
+  outline: 1px solid transparent;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* Portrait blend: a faint ivory plate that fades into the charcoal of the
+   text zone, so photo and text read as one surface; and the glow. */
+.surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse calc(var(--pw) * 0.85) 62% at calc(var(--pw) * 0.5) 82%,
+      rgba(215, 25, 32, 0.22),
+      transparent 72%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(241, 238, 231, 0.075) 0%,
+      rgba(241, 238, 231, 0.04) calc(var(--pw) * 0.7),
+      rgba(241, 238, 231, 0) calc(var(--pw) + 70px)
+    );
+}
+.textOnly .surface::before {
+  display: none;
+}
+
+/* ---- Portrait ------------------------------------------------------ */
+/* A small panel anchored bottom-left, showing the central part of the
+   cut-out (face, hands, microphone). It is sized from the card, never the
+   reverse. The right edge dissolves into the charcoal so the cropped jacket
+   leaves no hard vertical line. */
+.portrait {
+  --z: 24;
+  --fig-h: calc(var(--Ph) * var(--fill) / var(--seam-fig-opaque, 0.9));
+  --fig-w: calc(var(--fig-h) * var(--seam-fig-aspect, 1.146));
+  transform-origin: calc(var(--W) / 2) calc(var(--Ph) - var(--h) / 2);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--pw);
+  height: var(--Ph);
+  overflow: hidden;
+  border-bottom-left-radius: var(--r);
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 var(--fade, 80%), transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0, #000 var(--fade, 80%), transparent 100%);
+}
+/* Seated on the card's bottom edge: the cut-out has an empty transparent
+   band below the subject, which is pushed past the clip so the real bottom
+   of the figure (hands and microphone included) meets the edge. The crop is
+   centred on the face/hands. */
+.figure {
+  position: absolute;
+  bottom: 0;
+  left: calc(var(--pw) / 2 - var(--fig-w) * var(--seam-fig-focus, 0.5));
+  width: var(--fig-w);
+  height: var(--fig-h);
+  max-width: none;
+  margin-bottom: calc(var(--fig-h) * var(--seam-fig-bottom, 0) * -1);
+}
+
+/* ---- Text ---------------------------------------------------------- */
+.textLayer {
+  --z: 12;
+  position: absolute;
+  inset: 0;
+}
+
+/* One block: label, lead, statement and the signature row, centred in the
+   text zone. */
+.copy {
+  position: absolute;
+  left: calc(var(--pw) + 8px);
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 36px 0 24px;
+}
+.textOnly .copy {
+  left: 0;
+  padding: 0 52px;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  color: var(--type-ivory-eyebrow);
+  font-size: var(--type-eyebrow-size);
+  font-weight: 700;
+  letter-spacing: var(--type-eyebrow-tracking);
+  text-transform: uppercase;
+}
+.label::before {
+  content: "";
+  flex: none;
+  width: 26px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+.statement {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  line-height: 1;
+}
+.lead {
+  display: block;
+  color: rgba(241, 238, 231, 0.88);
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+}
+/* The focal point: one line when the width allows. */
+.emphasis {
+  display: block;
+  margin-top: 4px;
+  color: var(--neodent-red);
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-style: italic;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.longEmphasis .emphasis {
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  line-height: 1;
+}
+
+/* Signature row on a hairline, inside the text zone: small and quiet. */
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 16px;
+  margin-top: 16px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(241, 238, 231, 0.16);
+}
+.attribution {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.78);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+.location {
+  margin: 0;
+  color: rgba(241, 238, 231, 0.64);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ---- Tablet (<=860) ------------------------------------------------ */
+@media (max-width: 860px) {
+  .stage { --seam-w: 620px; --pw: 224px; --fill: 0.85; --r: 18px; }
+  .textOnly .stage { --seam-w: 580px; }
+  .copy { padding: 0 28px 0 20px; }
+  .textOnly .copy { padding: 0 44px; }
+  .lead { font-size: 1.2rem; }
+  .emphasis { font-size: 2.4rem; }
+  .longEmphasis .emphasis { font-size: 2.1rem; }
+}
+
+/* ---- Mobile (<=767): portrait thumbnail on the left ----------------- */
+@media (max-width: 767px) {
+  .stage {
+    --seam-w: 560px;
+    --r: 16px;
+    --pw: min(calc(var(--W) * 0.42), 190px);
+    /* Smaller subject so the hands still fit the narrow panel. */
+    --fill: 0.72;
+    --fade: 87%;
+    --shift: 0px; /* centred on a phone */
+    perspective: none;
+  }
+  .frame,
+  .portrait,
+  .textLayer {
+    transform: none;
+  }
+  .surface::before {
+    background:
+      radial-gradient(
+        ellipse calc(var(--pw) * 0.9) 60% at calc(var(--pw) * 0.5) 84%,
+        rgba(215, 25, 32, 0.22),
+        transparent 72%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(241, 238, 231, 0.075) 0%,
+        rgba(241, 238, 231, 0.04) calc(var(--pw) * 0.7),
+        rgba(241, 238, 231, 0) calc(var(--pw) + 40px)
+      );
+  }
+  .copy { left: var(--pw); padding: 0 18px 0 12px; }
+  .textOnly .copy { left: 0; padding: 0 24px; }
+  .label { margin-bottom: 10px; letter-spacing: 0.16em; }
+  .label::before { width: 18px; }
+  .lead { font-size: clamp(1.05rem, 4.6vw, 1.25rem); }
+  .emphasis {
+    margin-top: 3px;
+    font-size: clamp(1.7rem, 8vw, 2.1rem);
+  }
+  .longEmphasis .emphasis { font-size: clamp(1.6rem, 7.4vw, 2rem); }
+  .foot { margin-top: 12px; padding-top: 9px; flex-direction: column; gap: 4px; }
+  .attribution { font-size: 11.5px; }
+  .location { font-size: 9px; letter-spacing: 0.15em; }
+}
+
+/* The seam line runs the full width on a phone, where the card is nearly
+   as wide as the content column and would otherwise hide it. */
+@media (max-width: 767px) {
+  .seam::before {
+    width: 100%;
+  }
+}

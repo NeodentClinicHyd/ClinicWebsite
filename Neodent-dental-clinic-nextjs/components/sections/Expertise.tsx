@@ -1,180 +1,159 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import { ArrowRight, Play } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
+import Image from "next/image";
+import { ArrowLeftRight, ArrowRight, Play } from "lucide-react";
+import neodentMark from "@/public/assets/neodent-mark.png";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
-const treatmentVideo = "/assets/treatment-video/dr-miftah-neodent-clinical-treatment-detailed.mp4";
-const rootCanalTreatmentVideo = "/assets/treatment-video/Dr. Miftah Neodent dental clinic Hyderabad-Root canal treatment.mp4";
-
-type Treatment = {
-  number: string;
-  title: string;
-  intent: string;
-  summary: string;
-  description: string;
-  proof?: string;
-  visual: string;
-  alt: string;
-  before?: string;
-  beforeAlt?: string;
-  video?: boolean;
-  videoSrc?: string;
-};
-
-const treatments: Treatment[] = [
-  {
-    number: "01",
-    title: "Composite build-up",
-    intent: "REPAIR",
-    summary: "Restore damaged or worn teeth.",
-    description: "Conservative restorative detail for small changes that can make a meaningful difference to a smile.",
-    proof: "REAL CASE / COMPOSITE SMILE DESIGN",
-    visual: "/assets/treatment/Neodent dental hospital Treatment - Composite build up smile design after.jpg",
-    before: "/assets/treatment/Neodent dental hospital Treatment - Composite build up smile design  before.jpg",
-    alt: "Composite build-up smile design after treatment",
-    beforeAlt: "Smile before composite build-up treatment",
-    video: true,
-  },
-  {
-    number: "02",
-    title: "Dental implants",
-    intent: "REPLACE",
-    summary: "Replace missing teeth with planned restorative care.",
-    description: "Carefully planned restorative treatment for missing teeth, built around function and a natural-looking result.",
-    visual: "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - after surgery.jpg",
-    before: "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - before surgery.jpg",
-    alt: "Upper arch rehabilitation with implants after surgery at Neodent Dental Hospital",
-    beforeAlt: "Upper arch rehabilitation before surgery at Neodent Dental Hospital",
-    proof: "REAL CASE / UPPER ARCH REHABILITATION",
-  },
-  {
-    number: "03",
-    title: "Root canal treatment",
-    intent: "PRESERVE",
-    summary: "Treat infection while preserving the tooth.",
-    description: "Focused care to help preserve a natural tooth and bring comfort back to everyday life.",
-    visual: "/assets/treatment/after treatment.jpg",
-    alt: "Root canal treatment at Neodent Dental Hospital",
-    proof: "REAL CASE / RESTORATIVE CARE",
-    video: true,
-    videoSrc: rootCanalTreatmentVideo,
-  },
-  {
-    number: "04",
-    title: "Braces & orthodontics",
-    intent: "ALIGN",
-    summary: "Improve alignment and bite over time.",
-    description: "Measured orthodontic care for a healthier bite and a smile that feels like your own.",
-    visual: "/assets/treatment/Orthodontics after treatment - neodent dental hospital nampally.jpeg",
-    before: "/assets/treatment/Orthodontics before treatment - neodent dental hospital nampally.jpeg",
-    alt: "Orthodontics result after treatment at Neodent Dental Hospital Nampally",
-    beforeAlt: "Orthodontics before treatment at Neodent Dental Hospital Nampally",
-    proof: "REAL CASE / SMILE ALIGNMENT",
-  },
-  {
-    number: "05",
-    title: "Smile design",
-    intent: "REFINE",
-    summary: "Refine the appearance of your smile.",
-    description: "Subtle cosmetic planning that respects your features while refining the way your smile comes together.",
-    proof: "REAL CASE / ZIRCONIA CROWNS",
-    visual: "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -after treatment.jpg",
-    before: "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -before treatment.jpg",
-    alt: "Anterior smile design with zirconia crowns after treatment",
-    beforeAlt: "Anterior smile before zirconia crown treatment",
-  },
-  {
-    number: "06",
-    title: "Full mouth rehabilitation",
-    intent: "REBUILD",
-    summary: "Rebuild function across complex restorative needs.",
-    description: "Comprehensive restorative care when several parts of your smile need to work together again.",
-    visual: "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - after surgery.jpg",
-    before: "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - before surgery.jpg",
-    alt: "Full mouth rehabilitation with implants after surgery",
-    beforeAlt: "Full mouth condition before implant rehabilitation",
-    proof: "REAL CASE / FULL MOUTH REHABILITATION",
-  },
-  {
-    number: "07",
-    title: "Scaling & polishing",
-    intent: "MAINTAIN",
-    summary: "Professional cleaning for a healthier-feeling mouth.",
-    description: "A considered clean that supports gum health and leaves your mouth feeling fresh and cared for.",
-    visual: "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment after.jpg",
-    before: "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment before.jpg",
-    alt: "Scaling and polishing result at Neodent Dental Hospital",
-    beforeAlt: "Teeth before scaling and polishing at Neodent Dental Hospital",
-    proof: "REAL CASE / GUM HEALTH",
-  },
-];
+import {
+  closingCta,
+  defaultTreatmentVideo,
+  treatmentPointsHeading,
+  treatments,
+} from "@/components/sections/expertise-data";
 
 export function Expertise() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [comparisonPosition, setComparisonPosition] = useState(50);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+
   const comparisonRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const draggingRef = useRef(false);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const introVideoRef = useRef<HTMLVideoElement>(null);
+
+  // Intro clip: stays paused for prefers-reduced-motion users (first frame
+  // shown), and otherwise plays only while it is on screen.
+  useEffect(() => {
+    const video = introVideoRef.current;
+    if (!video) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduced.matches) {
+      video.pause();
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   const active = treatments[activeIndex];
 
+  // Selecting a treatment resets the comparison + any playing film.
+  const selectIndex = useCallback((index: number) => {
+    setActiveIndex(index);
+    setComparisonPosition(50);
+    setVideoPlaying(false);
+  }, []);
+
+  // --- Before/after compare slider (kept from the previous viewer) ---
   const updateComparison = (clientX: number) => {
     const bounds = comparisonRef.current?.getBoundingClientRect();
     if (!bounds) return;
-    setComparisonPosition(Math.min(100, Math.max(0, ((clientX - bounds.left) / bounds.width) * 100)));
-    setHasInteracted(true);
+    setComparisonPosition(
+      Math.min(100, Math.max(0, ((clientX - bounds.left) / bounds.width) * 100)),
+    );
   };
 
   const handleComparisonKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const step = event.shiftKey ? 10 : 5;
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
-      setComparisonPosition((position) => Math.min(100, Math.max(0, position + (event.key === "ArrowRight" ? step : -step))));
-      setHasInteracted(true);
+      setComparisonPosition((position) =>
+        Math.min(
+          100,
+          Math.max(0, position + (event.key === "ArrowRight" ? step : -step)),
+        ),
+      );
     }
   };
 
   useEffect(() => {
-    const stopDragging = () => { draggingRef.current = false; };
+    const stopDragging = () => {
+      draggingRef.current = false;
+    };
     window.addEventListener("pointerup", stopDragging);
     return () => window.removeEventListener("pointerup", stopDragging);
   }, []);
 
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsVisible((visible) => visible || entry.isIntersecting);
-      const video = videoRef.current;
-      if (!video || !active.video) return;
-      if (entry.isIntersecting) {
-        void video.play().catch(() => undefined);
-      } else {
-        video.pause();
+  // --- Tablist roving focus + arrow-key navigation ---
+  const focusTab = useCallback(
+    (index: number) => {
+      selectIndex(index);
+      // Bring the newly selected card into view on the mobile scroll row.
+      const node = tabRefs.current[index];
+      if (node) {
+        node.focus();
+        const reduced =
+          typeof window !== "undefined" &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        node.scrollIntoView({
+          behavior: reduced ? "auto" : "smooth",
+          inline: "center",
+          block: "nearest",
+        });
       }
-    }, { threshold: [0, 0.15] });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [active.video]);
+    },
+    [selectIndex],
+  );
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    const count = treatments.length;
+    let next: number | null = null;
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        next = (activeIndex + 1) % count;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        next = (activeIndex - 1 + count) % count;
+        break;
+      case "Home":
+        next = 0;
+        break;
+      case "End":
+        next = count - 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    focusTab(next);
+  };
+
+  const hasComparison = Boolean(active.before) && !active.video;
 
   return (
+    // The clinical-icon texture is a CSS background on this element (see
+    // .treatment-atlas in globals.css), referenced by string path so a
+    // missing file cannot break the build.
     <section
-      ref={sectionRef}
-      className={`section treatment-atlas ${isVisible ? "treatment-atlas-visible" : ""}`}
+      className="section treatment-atlas"
       id="expertise"
       aria-labelledby="treatment-atlas-title"
-      style={{ "--atlas-stage-image": `url(${active.visual})` } as CSSProperties}
     >
-      <div className="treatment-atlas-geometry" aria-hidden="true" />
       <div className="container treatment-atlas-shell">
-        <div className="treatment-atlas-header atlas-reveal atlas-reveal-header">
-          <div className="treatment-atlas-number" aria-hidden="true">03</div>
+        <header className="treatment-atlas-header">
           <div className="treatment-atlas-copy">
-            <div className="eyebrow">Dental care <span>/</span> Featured treatment atlas</div>
-            <h2 id="treatment-atlas-title">What can we <span className="serif">help you with?</span></h2>
-            <p>
+            <h2 id="treatment-atlas-title">
+              What can we <span className="serif">help you with?</span>
+            </h2>
+            <p className="section-lede section-lede--on-dark">
               Focused care for the dental problems that bring patients to us.
               Each concern is met with the{" "}
               <EditorialHighlight tone="primary">
@@ -191,104 +170,283 @@ export function Expertise() {
               </EditorialHighlight>
               .
             </p>
+            <p className="section-lede section-lede--on-dark">
+              Whether you need a missing tooth replaced, a worn tooth
+              restored or a smile rebuilt, care begins with understanding
+              your concern and explaining your options clearly. Treatments
+              range from preventive care such as scaling and polishing to
+              restorative and specialist work such as implants, root canal
+              treatment, braces and smile design. Each area below is shown
+              with a <strong className="treatment-atlas-emphasis">real case</strong> from our clinics, so you can
+              see the kind of work we do before you decide.
+            </p>
           </div>
-        </div>
+          {/* Silent looping clip beside the intro copy (cols 8-12, in line
+              with the detail panel below). Stacks under the copy < 1024px. */}
+          <div className="treatment-atlas-visual">
+            <video
+              ref={introVideoRef}
+              className="treatment-atlas-visual-video"
+              src="/assets/section-video.mp4"
+              aria-label="Silent looping video of a dental tooth model and instruments"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              disablePictureInPicture
+              width={1280}
+              height={720}
+            >
+              A looping video of a dental tooth model and instruments.
+            </video>
+            {/* Brand mark over the clip's baked-in corner sparkle. Decorative. */}
+            <span className="treatment-atlas-visual-logo" aria-hidden="true">
+              <Image src={neodentMark} alt="" width={40} height={40} />
+            </span>
+          </div>
+        </header>
 
-        <div className="treatment-atlas-grid">
-          <nav className="treatment-atlas-index atlas-reveal atlas-reveal-index" aria-label="Featured treatment areas">
-            <div className="treatment-atlas-index-intro">
-              <span className="treatment-atlas-index-label">7 areas of care</span>
-              <span className="treatment-atlas-index-helper">Select a treatment to view a real case.</span>
-              <span className="treatment-atlas-progress">{active.number} / 07</span>
+        <div className="treatment-atlas-layout">
+          {/* Card grid — the 7 treatment tabs plus one closing CTA card. */}
+          <div className="treatment-atlas-cards">
+            <div
+              className="treatment-atlas-tablist"
+              role="tablist"
+              aria-label="Featured treatment areas"
+            >
+              {treatments.map((treatment, index) => {
+                const selected = index === activeIndex;
+                return (
+                  <button
+                    key={treatment.number}
+                    ref={(node) => {
+                      tabRefs.current[index] = node;
+                    }}
+                    type="button"
+                    role="tab"
+                    id={`atlas-tab-${treatment.number}`}
+                    aria-selected={selected}
+                    aria-controls="atlas-panel"
+                    tabIndex={selected ? 0 : -1}
+                    className={`treatment-atlas-card ${selected ? "is-active" : ""}`}
+                    onClick={() => selectIndex(index)}
+                    onKeyDown={handleTabKeyDown}
+                  >
+                    <span className="treatment-atlas-card-title">
+                      {treatment.title}
+                    </span>
+                    <span className="treatment-atlas-card-summary">
+                      {treatment.summary}
+                    </span>
+                    <span className="treatment-atlas-card-bottom">
+                      {!selected && (
+                        <treatment.icon
+                          className="treatment-atlas-card-icon"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <span className="treatment-atlas-card-action">
+                        <span className="treatment-atlas-card-intent">
+                          {treatment.intent}
+                        </span>
+                        <ArrowRight
+                          className="treatment-atlas-card-arrow"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+
+              {/* Closing CTA card — a normal link, outside the tablist. */}
+              <a
+                href={closingCta.href}
+                className="treatment-atlas-card treatment-atlas-cta"
+              >
+                <span className="treatment-atlas-cta-heading">
+                  {closingCta.heading}
+                </span>
+                <span className="treatment-atlas-cta-text">
+                  {closingCta.text}
+                </span>
+                <span className="treatment-atlas-cta-link">
+                  {closingCta.linkLabel}
+                  <ArrowRight aria-hidden="true" />
+                </span>
+              </a>
             </div>
-            {treatments.map((treatment, index) => (
-              <button
-                key={treatment.number}
-                type="button"
-                className={`treatment-atlas-item ${index === activeIndex ? "is-active" : ""}`}
-                aria-pressed={index === activeIndex}
-                aria-label={`${treatment.title}: ${treatment.intent}`}
-                onClick={() => setActiveIndex(index)}
-                onMouseEnter={() => setActiveIndex(index)}
-              >
-                <span className="treatment-atlas-item-number">{treatment.number}</span>
-                <span className="treatment-atlas-item-main">
-                  <strong>{treatment.title}</strong>
-                  <small>{treatment.intent}</small>
-                  <em>{treatment.summary}</em>
-                </span>
-                <ArrowRight aria-hidden="true" />
-              </button>
-            ))}
-          </nav>
+          </div>
 
-          <div className="treatment-atlas-stage atlas-reveal atlas-reveal-stage" aria-live="polite">
-            <div className="treatment-atlas-stage-backdrop" aria-hidden="true" />
-            {active.before && !active.video ? (
-              <div
-                key={active.number}
-                ref={comparisonRef}
-                className="treatment-atlas-comparison"
-                role="slider"
-                tabIndex={0}
-                aria-label={`Compare before and after ${active.title}`}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round(comparisonPosition)}
-                aria-valuetext={`${Math.round(comparisonPosition)} percent after treatment visible`}
-                onKeyDown={handleComparisonKeyDown}
-                onPointerDown={(event) => {
-                  draggingRef.current = true;
-                  event.currentTarget.setPointerCapture(event.pointerId);
-                  updateComparison(event.clientX);
-                }}
-                onPointerMove={(event) => {
-                  if (draggingRef.current) updateComparison(event.clientX);
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="treatment-atlas-comparison-image" src={active.before} alt={active.beforeAlt} draggable={false} />
-                <div className="treatment-atlas-comparison-after" style={{ clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)` }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="treatment-atlas-comparison-image" src={active.visual} alt={active.alt} draggable={false} />
-                </div>
-                <span className="treatment-atlas-stage-label">Clinical comparison</span>
-                <span className="treatment-atlas-comparison-label treatment-atlas-comparison-before-label">Before</span>
-                <span className="treatment-atlas-comparison-label treatment-atlas-comparison-after-label">After</span>
-                <span className="treatment-atlas-comparison-divider" style={{ left: `${comparisonPosition}%` }}>
-                  <span className="treatment-atlas-comparison-handle" aria-hidden="true">↔</span>
-                </span>
-                {!hasInteracted && <span className="treatment-atlas-comparison-affordance">Drag to compare</span>}
-              </div>
-            ) : (
-              <div key={active.number} className="treatment-atlas-stage-media">
-                {active.video ? (
-                  <video ref={videoRef} src={active.videoSrc ?? treatmentVideo} muted loop playsInline autoPlay preload="metadata" aria-label="Neodent clinical treatment film" />
+          {/* Detail panel — the tabpanel for the active card. */}
+          <div
+            className="treatment-atlas-panel"
+            id="atlas-panel"
+            role="tabpanel"
+            tabIndex={0}
+            aria-labelledby={`atlas-tab-${active.number}`}
+            aria-live="polite"
+          >
+            <div key={active.number} className="treatment-atlas-panel-inner">
+              <div className="treatment-atlas-media">
+                {hasComparison ? (
+                  <div
+                    ref={comparisonRef}
+                    className="treatment-atlas-comparison"
+                    role="slider"
+                    tabIndex={0}
+                    aria-label={`Compare before and after ${active.title}`}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round(comparisonPosition)}
+                    aria-valuetext={`${Math.round(
+                      comparisonPosition,
+                    )} percent after treatment visible`}
+                    onKeyDown={handleComparisonKeyDown}
+                    onPointerDown={(event: ReactPointerEvent<HTMLDivElement>) => {
+                      draggingRef.current = true;
+                      event.currentTarget.setPointerCapture(event.pointerId);
+                      updateComparison(event.clientX);
+                    }}
+                    onPointerMove={(event: ReactPointerEvent<HTMLDivElement>) => {
+                      if (draggingRef.current) updateComparison(event.clientX);
+                    }}
+                  >
+                    <Image
+                      className="treatment-atlas-comparison-image"
+                      src={active.before as string}
+                      alt={active.beforeAlt ?? ""}
+                      fill
+                      sizes="(min-width: 1024px) 480px, 92vw"
+                      quality={75}
+                      draggable={false}
+                    />
+                    <div
+                      className="treatment-atlas-comparison-after"
+                      style={{
+                        clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)`,
+                      }}
+                    >
+                      <Image
+                        className="treatment-atlas-comparison-image"
+                        src={active.visual}
+                        alt={active.alt}
+                        fill
+                        sizes="(min-width: 1024px) 480px, 92vw"
+                        quality={75}
+                        draggable={false}
+                      />
+                    </div>
+                    <span className="treatment-atlas-comparison-label treatment-atlas-comparison-before-label">
+                      Before
+                    </span>
+                    <span className="treatment-atlas-comparison-label treatment-atlas-comparison-after-label">
+                      After
+                    </span>
+                    <span
+                      className="treatment-atlas-comparison-divider"
+                      style={{ left: `${comparisonPosition}%` }}
+                    >
+                      <span
+                        className="treatment-atlas-comparison-handle"
+                        aria-hidden="true"
+                      >
+                        ↔
+                      </span>
+                    </span>
+                  </div>
+                ) : active.video ? (
+                  <div className="treatment-atlas-film">
+                    {videoPlaying ? (
+                      <video
+                        ref={videoRef}
+                        src={active.videoSrc ?? defaultTreatmentVideo}
+                        poster={active.visual}
+                        controls
+                        autoPlay
+                        playsInline
+                        preload="none"
+                        aria-label={`${active.title} — Neodent clinical treatment film`}
+                      />
+                    ) : (
+                      <button
+                        type="button"
+                        className="treatment-atlas-film-poster"
+                        onClick={() => setVideoPlaying(true)}
+                        aria-label={`Play ${active.title} treatment film`}
+                      >
+                        <Image
+                          src={active.visual}
+                          alt={active.alt}
+                          fill
+                          sizes="(min-width: 1024px) 480px, 92vw"
+                          quality={75}
+                        />
+                        <span
+                          className="treatment-atlas-play"
+                          aria-hidden="true"
+                        >
+                          <Play fill="currentColor" />
+                        </span>
+                      </button>
+                    )}
+                  </div>
                 ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={active.visual} alt={active.alt} />
+                  <div className="treatment-atlas-still">
+                    <Image
+                      src={active.visual}
+                      alt={active.alt}
+                      fill
+                      sizes="(min-width: 1024px) 480px, 92vw"
+                      quality={75}
+                    />
+                  </div>
                 )}
-                <span className="treatment-atlas-stage-label">{active.video ? "In practice" : "Clinical visual"}</span>
-                {active.video && <span className="treatment-atlas-play"><Play fill="currentColor" aria-hidden="true" /></span>}
               </div>
-            )}
-            <div className="treatment-atlas-stage-meta">
-              <span>NEODENT / CLINICAL CARE</span>
-              <span>0{activeIndex + 1} / 07</span>
-            </div>
-            <div className="treatment-atlas-detail">
-              <div>
-                <span className="treatment-atlas-kicker">{active.number} / {active.video ? "TREATMENT FILM" : "FEATURED CARE"}</span>
-                <h3>{active.title}</h3>
-                <p>{active.description}</p>
+
+              {hasComparison || active.video ? (
+                <div className="treatment-atlas-meta">
+                  <span className="treatment-atlas-meta-hint">
+                    {hasComparison ? (
+                      <>
+                        <ArrowLeftRight aria-hidden="true" />
+                        Drag to compare
+                      </>
+                    ) : (
+                      "Treatment film"
+                    )}
+                  </span>
+                </div>
+              ) : null}
+
+              <h3 className="treatment-atlas-panel-title">{active.title}</h3>
+              <p className="treatment-atlas-panel-desc">{active.description}</p>
+              {active.proof && (
+                <span className="treatment-atlas-tag">{active.proof}</span>
+              )}
+              <div className="treatment-atlas-points">
+                <p className="treatment-atlas-points-heading">
+                  <active.icon
+                    className="treatment-atlas-points-icon"
+                    aria-hidden="true"
+                  />
+                  {treatmentPointsHeading}
+                </p>
+                <ul>
+                  {active.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
               </div>
-              {active.proof && <span className="treatment-atlas-proof">{active.proof}</span>}
-              <a href="#contact" className="treatment-atlas-link">Explore treatment <ArrowRight aria-hidden="true" /></a>
+              <div className="treatment-atlas-panel-foot">
+                <a href={active.href} className="treatment-atlas-panel-link">
+                  Explore treatment <ArrowRight aria-hidden="true" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
-
-        <a href="#contact" className="treatment-atlas-all">Explore all treatments <ArrowRight aria-hidden="true" /></a>
       </div>
     </section>
   );

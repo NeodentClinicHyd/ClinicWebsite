@@ -193,7 +193,7 @@ export function SpacesDesignedAroundCare() {
             <br />
             <span>around care.</span>
           </h2>
-          <p className={styles.lede}>
+          <p className={`${styles.lede} section-lede section-lede--on-dark`}>
             Across Mehdipatnam and Nampally, Neodent brings the same{" "}
             <EditorialHighlight tone="primary" onDark>
               patient-focused approach

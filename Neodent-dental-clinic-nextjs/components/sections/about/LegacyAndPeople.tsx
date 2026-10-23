@@ -287,7 +287,7 @@ export function LegacyAndPeople() {
             <p className={styles.actText}>
               With{" "}
               <EditorialHighlight tone="secondary">
-                35+ years of experience
+                30+ years of experience
               </EditorialHighlight>{" "}
               in dentistry, Dr. Siraj&apos;s clinical philosophy has always
               placed the patient conversation ahead of the procedure —

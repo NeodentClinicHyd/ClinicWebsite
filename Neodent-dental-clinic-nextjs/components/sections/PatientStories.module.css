@@ -138,12 +138,9 @@
   color: var(--neodent-red);
   font-style: italic;
 }
+/* Type (size / leading / colour / measure) comes from .section-lede. */
 .lede {
-  max-width: 380px;
   margin: 18px 0 0;
-  color: rgba(38, 48, 51, 0.68);
-  font-size: 15px;
-  line-height: 1.7;
 }
 
 /* ---- Stage -- film column (dominant) + rail (selector + review) --

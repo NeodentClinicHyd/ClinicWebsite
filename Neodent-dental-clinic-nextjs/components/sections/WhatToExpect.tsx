@@ -150,7 +150,7 @@ export function WhatToExpect() {
             <br />
             to <span>Neodent.</span>
           </h2>
-          <p className={styles.lede}>
+          <p className={`${styles.lede} section-lede`}>
             A considered{" "}
             <EditorialHighlight tone="primary">dental appointment</EditorialHighlight>{" "}
             from the first hello to the final goodbye. Every stage is designed

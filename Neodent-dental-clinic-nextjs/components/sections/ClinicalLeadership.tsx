@@ -69,7 +69,7 @@ const team: TeamMember[] = [
   {
     label: "01 / SENIOR CLINICAL LEADERSHIP",
     name: <>Dr. Mohd. Siraj<br />Ur Rahman</>,
-    degrees: <>BDS · FCIP · MDS (Chennai)<br />Professor · Director, Neodent · 35+ years</>,
+    degrees: <>BDS · FCIP · MDS (Chennai)<br />Professor · Director, Neodent · 30+ years</>,
     image: "/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png",
     alt: "Dr. Mohd. Siraj Ur Rahman",
   },
@@ -328,7 +328,7 @@ export function ClinicalLeadership() {
           </div>
 
           <div className={styles.identityBody}>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               Dr. Md. Miftah Ur Rahman is a{" "}
               <EditorialHighlight tone="primary" onDark>
                 Prosthodontist and Implantologist
@@ -345,7 +345,7 @@ export function ClinicalLeadership() {
               Rahman, in the same specialist disciplines Neodent has been
               built around since 1994.
             </p>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               His specialist grounding is in{" "}
               <EditorialHighlight tone="primary" onDark>
                 prosthodontics and implantology
@@ -363,7 +363,7 @@ export function ClinicalLeadership() {
               </EditorialHighlight>{" "}
               is put forward.
             </p>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               Alongside clinical dentistry he teaches as an{" "}
               <EditorialHighlight tone="primary" onDark>
                 Assistant Professor at SB Patil Dental College &amp; Hospital
@@ -379,7 +379,7 @@ export function ClinicalLeadership() {
               </EditorialHighlight>
               , and the two have run in parallel throughout his career.
             </p>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               He qualified BDS and MDS, holds{" "}
               <EditorialHighlight tone="secondary" onDark>
                 FICOI (U.S.A.)
