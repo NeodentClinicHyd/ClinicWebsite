@@ -136,7 +136,7 @@ const SCOPE_ROWS = [
     number: "02",
     title: "Dental implants",
     verb: "REPLACE",
-    href: "/treatments#dental-implants",
+    href: "/treatments/dental-implants",
     focus: true,
   },
   {

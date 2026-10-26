@@ -1,0 +1,45 @@
+/* Chapter heading. Values copied from the home chapters' `.title`
+   (WhatToExpect / SpacesDesignedAroundCare / PatientStories):
+   DM Serif Display 400, clamp(2.7rem, 4.4vw, 4.4rem), tracking -0.04em,
+   leading 1.04, red italic closing line. Intro paragraph margin is the
+   home's 18px. */
+
+.header {
+  max-width: 1040px;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.7rem, 4.4vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.title span {
+  display: block;
+}
+.title .accent {
+  color: var(--neodent-red);
+  font-style: italic;
+}
+.compact .title {
+  font-size: clamp(2rem, 2.8vw, 2.6rem);
+  line-height: 1.04;
+}
+.dark .title {
+  color: #f1eee7;
+}
+.intro {
+  max-width: 640px;
+  margin: 18px 0 0;
+}
+.intro p {
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(2.15rem, 9vw, 2.7rem);
+  }
+}

@@ -1,0 +1,302 @@
+/* Overview. Pattern: ExperienceIntro. Values copied from the final-layer
+   `.exp-intro*` rules in globals.css: #ece7dc ground, 0.88fr / 0.72fr grid,
+   serif title clamp(2.75rem, 4.1vw, 4.5rem) / 0.96 / -0.05em, dark card
+   radius 4px 56px 4px 4px with 26px padding, framed visual with a red
+   offset border and corner. The drawing sits on a light plate inside that
+   frame. */
+
+.section {
+  background: #ece7dc;
+  color: var(--ink);
+  padding: clamp(72px, 8vw, 108px) 0 clamp(72px, 8vw, 108px);
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(320px, 0.72fr);
+  gap: clamp(24px, 4vw, 72px) clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+.copy {
+  min-width: 0;
+  max-width: 580px;
+}
+.title {
+  margin: 0;
+  max-width: 520px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.75rem, 4.1vw, 4.5rem);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+.title span {
+  display: block;
+}
+.accent {
+  color: var(--neodent-red);
+  font-style: italic;
+}
+.lede {
+  margin: 26px 0 0;
+  max-width: 540px;
+}
+.lede + .lede {
+  margin-top: 18px;
+}
+.inlineLink {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+.inlineLink:hover {
+  color: var(--neodent-red-dark);
+}
+.inlineLink:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 2px;
+}
+
+/* Right column: the drawing plate, then the dark card. */
+.side {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3.4vw, 40px);
+}
+.visual {
+  margin: 0;
+  min-width: 0;
+}
+.frame {
+  position: relative;
+  padding: 18px 0 0 18px;
+}
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0 18px 18px 0;
+  border: 1px solid rgba(215, 25, 32, 0.46);
+  pointer-events: none;
+}
+.frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-top: 1px solid var(--neodent-red);
+  border-left: 1px solid var(--neodent-red);
+  pointer-events: none;
+}
+.plate {
+  position: relative;
+  padding: clamp(12px, 2vw, 22px);
+}
+.figcaption {
+  margin: 14px 0 0 18px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.76);
+  text-wrap: balance;
+}
+
+/* Dark card of labelled items (`.exp-intro-qualities`), one card, three
+   rows, each with its coloured mini drawing on a small light plate. */
+.parts {
+  margin: 0;
+  padding: 26px;
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.partsTitle {
+  margin: 0 0 20px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.partList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.part {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.iconPlate {
+  flex: none;
+  display: block;
+  width: 68px;
+  padding: 6px;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 3px;
+}
+.partBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.partName {
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.partText {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Card group. Two cards, deliberately unlike each other. */
+.cards {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(48px, 6vw, 80px);
+  align-items: stretch;
+}
+.card {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 32px);
+}
+.cardTitle {
+  margin: 0 0 18px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* Paper card (doctor-card surface, 20px radius), red dash bullets. */
+.when {
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.dashList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.dashList li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.86);
+}
+.dashList li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+}
+.closing {
+  margin: 22px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+/* Tinted card (atlas surface #f3f0e8, 16px radius), red dot bullets. */
+.visit {
+  background: #f3f0e8;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 16px;
+}
+.dotList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+.dotList li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.86);
+}
+.dotList li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neodent-red);
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .copy {
+    max-width: 620px;
+  }
+  .side {
+    max-width: 620px;
+  }
+}
+@media (max-width: 860px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .section {
+    padding-top: 56px;
+  }
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .title {
+    font-size: clamp(2.15rem, 9vw, 2.7rem);
+  }
+  .parts {
+    padding: 22px;
+  }
+  .frame {
+    padding: 14px 0 0 14px;
+  }
+  .frame::before {
+    inset: 0 14px 14px 0;
+  }
+  .figcaption {
+    margin-left: 14px;
+  }
+}

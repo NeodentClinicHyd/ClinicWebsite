@@ -167,8 +167,6 @@ export function PatientStories() {
 
       <div className={styles.container}>
         <header className={styles.header}>
-          <span className={styles.numeral} aria-hidden="true">05</span>
-          <div className={styles.eyebrow}>Patient experiences / Real stories</div>
           <h2 id="stories-title" className={styles.title}>
             What patients say.
             <br />
@@ -199,10 +197,6 @@ export function PatientStories() {
                   onPlay={() => setPlaying(true)}
                   onPause={() => setPlaying(false)}
                 />
-                <div className={styles.frameTop}>
-                  <span>{active.index} / PATIENT FILM</span>
-                  <span>{active.place}</span>
-                </div>
                 <button
                   type="button"
                   className={styles.control}
@@ -214,27 +208,21 @@ export function PatientStories() {
               </div>
 
               {/* The quote plate overlaps the frame's bottom-left corner
-                  directly (no caption line breaks the seam) so video,
-                  theme and quote read as one editorial object rather
-                  than a caption sitting apart from the image. The
-                  location/caption text lives in frameTop instead, so
-                  nothing else competes with this join. */}
+                  directly so video and quote read as one editorial
+                  object. It carries only the patient's words. */}
               <div
                 className={`${styles.quotePlate} ${switching ? styles.quotePlateSwitching : ""}`}
               >
-                <span className={styles.quotePlateGlyph} aria-hidden="true">
-                  &ldquo;
-                </span>
-                <span className={styles.quotePlateIndex}>{active.index}</span>
-                <p className={styles.quotePlateTheme}>{active.theme}</p>
-                <p className={styles.quotePlateQuote}>{active.quote}</p>
+                <p className={styles.quotePlateQuote}>
+                  &ldquo;{active.quote}&rdquo;
+                </p>
               </div>
             </figure>
           </div>
 
           <div className={styles.rail}>
-            <nav className={styles.selector} aria-label="Choose a patient story">
-              <ol>
+            <nav className={styles.selector} aria-label="Choose a patient film">
+              <ul>
                 {stories.map((story, index) => {
                   const isActive = index === activeIndex;
                   return (
@@ -244,30 +232,38 @@ export function PatientStories() {
                         className={`${styles.selectorItem} ${isActive ? styles.selectorItemActive : ""}`}
                         onClick={() => selectStory(index)}
                         aria-current={isActive ? "true" : undefined}
-                        aria-label={`Story ${story.index}: ${story.theme}`}
                       >
-                        <span className={styles.selectorIndex}>{story.index}</span>
-                        <span className={styles.selectorLabel}>{story.theme}</span>
+                        {story.theme}
                       </button>
                     </li>
                   );
                 })}
-              </ol>
+              </ul>
             </nav>
 
-            <div className={styles.review}>
-              <p className={styles.reviewLabel}>Google / Patient review</p>
-              <div className={styles.reviewStars} aria-hidden="true">
+            <figure className={styles.review}>
+              <figcaption className={styles.reviewHead}>
+                <span className={styles.googleMark} role="img" aria-label="Google">
+                  <span aria-hidden="true">G</span>
+                  <span aria-hidden="true">o</span>
+                  <span aria-hidden="true">o</span>
+                  <span aria-hidden="true">g</span>
+                  <span aria-hidden="true">l</span>
+                  <span aria-hidden="true">e</span>
+                </span>
+                <span className={styles.reviewKind}>Patient review</span>
+              </figcaption>
+              <div className={styles.reviewStars} role="img" aria-label="Rated 5 out of 5 stars">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={11} strokeWidth={1.6} />
+                  <Star key={i} size={14} strokeWidth={0} aria-hidden="true" />
                 ))}
               </div>
-              <p className={styles.reviewExcerpt}>
+              <blockquote className={styles.reviewExcerpt}>
                 &ldquo;Extremely kind, gentle and professional&hellip; he made me
                 very comfortable throughout the entire visit.&rdquo;
-              </p>
-              <p className={styles.reviewAuthor}>— Gaddam Sanjeeva</p>
-            </div>
+              </blockquote>
+              <p className={styles.reviewAuthor}>Gaddam Sanjeeva</p>
+            </figure>
           </div>
         </div>
 

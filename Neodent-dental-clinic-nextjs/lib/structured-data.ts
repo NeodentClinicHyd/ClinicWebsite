@@ -85,6 +85,23 @@ export const websiteJsonLd = {
   url: SITE_URL,
 };
 
+/**
+ * BreadcrumbList for a page. `path` values are site-relative ("/" for
+ * the home page); each `item` is an absolute URL built from SITE_URL.
+ */
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: entry.name,
+      item: entry.path === "/" ? SITE_URL : `${SITE_URL}${entry.path}`,
+    })),
+  };
+}
+
 /** All site-wide JSON-LD blocks, rendered once from the root layout. */
 export const siteJsonLd = [
   organizationJsonLd,

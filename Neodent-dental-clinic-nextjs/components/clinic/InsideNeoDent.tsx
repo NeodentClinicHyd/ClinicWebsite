@@ -1,102 +1,63 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import Image from "next/image";
+import { ZoomIn } from "lucide-react";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
-import { clinicGalleryImages } from "@/lib/site-data";
+import { clinicGalleryImages, type ClinicGalleryImage } from "@/lib/site-data";
 import { ClinicGalleryViewer } from "./ClinicGalleryViewer";
+import { useReveal } from "./useReveal";
+import shared from "./ClinicShared.module.css";
 import styles from "./InsideNeoDent.module.css";
 
 /* ------------------------------------------------------------------
-   Clinic page — Section 03 — "Inside Neodent".
+   Clinic -- "Spaces designed around care."
 
-   Warm ivory editorial surface. Design language inherits from the
-   About page's LegacyAndPeople and the homepage's LegacyStory
-   canonical reference (Section 02). Echoes the homepage's
-   "Spaces designed around care" heading, but is a distinct
-   composition — not a duplicate.
+   Pattern: the home "Spaces designed around care" photographs, as a
+   bento grid per branch: one large tile with smaller tiles beside it.
+   The image-to-branch mapping is exactly the one in
+   `clinicGalleryImages` (lib/site-data.ts); this component only groups
+   by `image.branch` and keeps each image's original index, so the
+   lightbox opens on the same photograph in the same order as before.
 
-   Composition: heading + single paragraph, full width, followed by a
-   dense editorial photo mosaic of every available branch photograph
-   (Mehdipatnam: entrance, reception, director's office, two treatment
-   chambers, two waiting areas; Nampally: reception/staircase and
-   street frontage). Two frames (each branch's strongest interior) are
-   given "feature" weight — a 2x2 plate rather than an equal card — and
-   one frame ("Waiting hall") breaks the rhythm as a wide plate, so the
-   mosaic reads as art-directed rather than a mechanical grid. Every
-   tile carries a quiet bottom tag: branch name (red) paired with a
-   short description of what the photograph shows (ivory) — the same
-   text-over-shade convention used by SpacesDesignedAroundCare's
-   .mediaMeta and ClinicalSettings' .branchPrimaryMeta, not a new
-   pill/badge mechanism.
-
-   Closes with a quiet geographic signature line:
-   MEHDIPATNAM · NAMPALLY · HYDERABAD
+   Layout is plain CSS grid with content visible by default (no reveal
+   on the tiles themselves), so nothing can be left hidden or clipped.
    ------------------------------------------------------------------ */
 
-function useReveal<T extends HTMLElement>(threshold = 0.1) {
-  const ref = useRef<T>(null);
-  const [visible, setVisible] = useState(false);
+type Tile = { image: ClinicGalleryImage; index: number };
 
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [threshold]);
+const groups: { branch: ClinicGalleryImage["branch"]; tiles: Tile[] }[] = (
+  ["Mehdipatnam", "Nampally"] as const
+).map((branch) => ({
+  branch,
+  tiles: clinicGalleryImages
+    .map((image, index) => ({ image, index }))
+    .filter((tile) => tile.image.branch === branch),
+}));
 
-  return [ref, visible] as const;
-}
+const sizesFor = (role: "large" | "small" | "wide") =>
+  role === "small"
+    ? "(min-width: 1024px) 290px, (min-width: 768px) 28vw, 46vw"
+    : "(min-width: 1024px) 590px, (min-width: 768px) 50vw, 92vw";
 
 export function InsideNeoDent() {
-  const [sectionRef, sectionVisible] = useReveal<HTMLElement>(0.05);
-  const [headerRef, headerVisible] = useReveal<HTMLDivElement>(0.1);
-  const [galleryRef, galleryVisible] = useReveal<HTMLDivElement>(0.05);
-  const [sigRef, sigVisible] = useReveal<HTMLDivElement>(0.1);
+  const sectionRef = useRef<HTMLElement>(null);
+  useReveal(sectionRef);
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
 
   return (
     <section
       ref={sectionRef}
-      className={`${styles.section} ${sectionVisible ? styles.visible : ""}`}
+      className={`${shared.section} ${shared.ivory}`}
       id="inside-neodent"
       aria-labelledby="inside-title"
     >
-      {/* Chapter-start seam — constrained to container width */}
-      <span className={styles.seam} aria-hidden="true" />
-
-      {/* Atmosphere geometry */}
-      <div className={styles.atmosphere} aria-hidden="true">
-        <span className={styles.draftHorizontal} />
-        <span className={styles.registrationDot} />
-        <span className={styles.registrationDotSmall} />
-      </div>
-
-      <div className={styles.container}>
-        {/* ---- Header + copy — full width, gallery follows below ---- */}
-        <div
-          ref={headerRef}
-          className={`${styles.copyCol} ${headerVisible ? styles.blockVisible : ""}`}
-        >
-          <header className={styles.header}>
-            <span className={styles.numeral} aria-hidden="true">
-              03
-            </span>
-            <div className={styles.eyebrow}>
-              <span className={styles.eyebrowRule} aria-hidden="true" />
-              03 / Inside Neodent
-            </div>
-            <h2 id="inside-title" className={styles.title}>
-              Spaces designed
-              <br />
-              <span>around care.</span>
-            </h2>
-          </header>
-
-          <p className={styles.paragraph}>
+      <div className={shared.container}>
+        <header className={styles.header} data-reveal>
+          <h2 id="inside-title" className={shared.title}>
+            Spaces designed <span>around care.</span>
+          </h2>
+          <p className={`${shared.lede} ${styles.lede}`}>
             Across{" "}
             <EditorialHighlight tone="secondary">
               Mehdipatnam and Nampally
@@ -107,73 +68,72 @@ export function InsideNeoDent() {
               consultation and treatment
             </EditorialHighlight>{" "}
             to follow-up. The surroundings differ between the two locations,
-            but both reflect the same focus on clear, comfortable and{" "}
-            <EditorialHighlight tone="quiet">
-              clinically focused patient care
-            </EditorialHighlight>
-            .
+            but both reflect the same focus on clear, comfortable and
+            clinically focused patient care.
           </p>
-        </div>
+        </header>
 
-        {/* ---- Photo mosaic — every available branch photograph ---- */}
-        <div
-          ref={galleryRef}
-          className={`${styles.gallery} ${galleryVisible ? styles.galleryVisible : ""}`}
-          aria-label="Photographs of Neodent Dental Hospital, Mehdipatnam and Nampally"
-        >
-          {clinicGalleryImages.map((image, index) => (
-            <figure
-              key={image.src}
-              className={`${styles.tile} ${image.span ? styles[image.span] : ""}`}
-              style={{ transitionDelay: `${Math.min(index * 55, 420)}ms` }}
+        <div className={styles.groups}>
+          {groups.map(({ branch, tiles }) => (
+            <div
+              key={branch}
+              className={styles.group}
+              role="group"
+              aria-labelledby={`gallery-${branch}`}
             >
-              <button
-                type="button"
-                className={styles.tileButton}
-                onClick={() => setViewerIndex(index)}
-                aria-label={`View full photograph: ${image.branch} — ${image.label}`}
+              <h3 id={`gallery-${branch}`} className={styles.groupName}>
+                {branch}
+              </h3>
+              <div
+                className={`${styles.bento} ${
+                  branch === "Nampally" ? styles.bentoPair : styles.bentoSet
+                }`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  loading={index < 2 ? "eager" : "lazy"}
-                  style={image.position ? { objectPosition: image.position } : undefined}
-                />
-                <span className={styles.tileShade} aria-hidden="true" />
-                <span className={styles.tileZoomHint} aria-hidden="true">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <path d="M15 15l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </span>
-                <figcaption className={styles.tileTag}>
-                  <span className={styles.tileTagBranch}>{image.branch}</span>
-                  <span className={styles.tileTagLabel}>{image.label}</span>
-                </figcaption>
-              </button>
-            </figure>
+                {tiles.map(({ image, index }) => {
+                  const role =
+                    image.span === "feature"
+                      ? "large"
+                      : image.span === "wide"
+                        ? "wide"
+                        : "small";
+                  return (
+                    <figure
+                      key={image.src}
+                      className={`${shared.photo} ${shared.shade} ${styles.tile} ${styles[role]}`}
+                    >
+                      <button
+                        type="button"
+                        className={styles.tileButton}
+                        onClick={() => setViewerIndex(index)}
+                        aria-label={`View full photograph: ${image.branch} — ${image.label}`}
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          sizes={sizesFor(role)}
+                          style={
+                            image.position
+                              ? { objectPosition: image.position }
+                              : undefined
+                          }
+                        />
+                        <span className={styles.zoom} aria-hidden="true">
+                          <ZoomIn size={15} />
+                        </span>
+                      </button>
+                      <figcaption className={shared.inCaption}>
+                        {image.label}
+                      </figcaption>
+                    </figure>
+                  );
+                })}
+              </div>
+            </div>
           ))}
-        </div>
-
-        {/* ---- Closing geographic signature ---- */}
-        <div
-          ref={sigRef}
-          className={`${styles.signature} ${sigVisible ? styles.blockVisible : ""}`}
-          aria-label="Neodent clinic locations"
-        >
-          <span className={styles.signatureTick} aria-hidden="true" />
-          <span className={styles.signatureText}>
-            Mehdipatnam
-            <span className={styles.signatureDot} aria-hidden="true">·</span>
-            Nampally
-            <span className={styles.signatureDot} aria-hidden="true">·</span>
-            Hyderabad
-          </span>
         </div>
       </div>
 
-      {/* ---- Gallery preview viewer ------------------------------- */}
       {viewerIndex !== null && (
         <ClinicGalleryViewer
           images={clinicGalleryImages}

@@ -1,28 +1,37 @@
 "use client";
 
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { OurClinics } from "@/components/clinic/OurClinics";
+import { ClinicHero } from "@/components/clinic/ClinicHero";
+import { ChooseClinic } from "@/components/clinic/ChooseClinic";
 import { ClinicalSettings } from "@/components/clinic/ClinicalSettings";
 import { InsideNeoDent } from "@/components/clinic/InsideNeoDent";
+import { ClinicTreatments } from "@/components/clinic/ClinicTreatments";
+import { ClinicVisit } from "@/components/clinic/ClinicVisit";
 
 /* ------------------------------------------------------------------
-   Client chrome for /clinic — the three-section editorial clinic
-   profile page. Mirrors the About page's chrome pattern exactly:
-   Navbar + the page's own section components + Footer. No booking
-   CTA appears anywhere inside the clinic sections themselves —
-   phone and directions only, per the page's constraints.
+   Client chrome for /clinic.
+
+   Mirrors the About page's chrome: Navbar (transparent over the dark
+   hero via `overHero`), the page's own sections, then the sitewide
+   Footer. The sitewide FloatingCta is mounted in app/layout.tsx.
+
+   Rhythm, as on the home page: dark hero -> ivory (glance strip, clinic
+   cards) -> dark (surroundings) -> ivory (gallery) -> dark (treatments)
+   -> ivory (closing red card) -> footer.
    ------------------------------------------------------------------ */
 
 export function ClinicClientChrome() {
   return (
     <div className="site">
-      <Navbar />
+      <Navbar overHero />
       <main>
-        <OurClinics />
+        <ClinicHero />
+        <ChooseClinic />
         <ClinicalSettings />
         <InsideNeoDent />
+        <ClinicTreatments />
+        <ClinicVisit />
       </main>
       <Footer />
     </div>

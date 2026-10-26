@@ -1,0 +1,214 @@
+/* Cases. Ivory ground and film frame from PatientStories (16/10, 1px
+   rgba(38,48,51,.22) border, 16px 18px 32px shadow, 36px round control);
+   plate borders and small caption labels from ClinicalLeadership /
+   SpacesDesignedAroundCare. Two 6/6 rows so every column is filled. */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(72px, 8vw, 108px) 0 clamp(64px, 7vw, 96px);
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 40px);
+  align-items: stretch;
+  margin-top: clamp(32px, 4vw, 48px);
+}
+.row + .row {
+  margin-top: clamp(24px, 3vw, 40px);
+}
+
+.main,
+.small,
+.film {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Main case: two 3:4 plates, same height, never cropped. */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.plate {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.frame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.22);
+  background: #e2ddd0;
+  box-shadow: 8px 10px 20px rgba(38, 48, 51, 0.09);
+}
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: saturate(0.92) contrast(1.02);
+}
+.label {
+  color: rgba(38, 48, 51, 0.7);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+/* Caption pair: red bold + muted (`.exp-intro-meta`). */
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.caption b {
+  color: var(--neodent-red);
+  font-weight: 700;
+}
+.caption span {
+  color: rgba(38, 48, 51, 0.7);
+  font-weight: 600;
+}
+
+/* Second case: paper card holding the smaller pair at one shared height,
+   never beyond their intrinsic sizes (315 and 535 px wide). */
+.small {
+  justify-content: center;
+  padding: clamp(24px, 3vw, 32px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+  gap: 20px;
+}
+.smallPair {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+.smallPlate {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.smallImage {
+  display: block;
+  height: 210px;
+  width: auto;
+  max-width: 100%;
+  border: 1px solid rgba(38, 48, 51, 0.22);
+  filter: saturate(0.92) contrast(1.02);
+}
+
+/* Film frame. */
+.filmFrame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.22);
+  background: #17191a;
+  box-shadow: 16px 18px 32px rgba(38, 48, 51, 0.1);
+}
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(251, 250, 247, 0.75);
+  border-radius: 50%;
+  background: rgba(22, 28, 30, 0.5);
+  color: #fbfaf7;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.play:hover {
+  background: rgba(215, 25, 32, 0.72);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+.play:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+}
+
+/* Notes card. */
+.notes {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: clamp(24px, 3vw, 32px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-top: 2px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.evidence {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+.privacy {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.8);
+}
+.privacyLink {
+  display: inline-block;
+  padding: 10px 0;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-underline-offset: 5px;
+}
+
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .pair {
+    gap: 12px;
+  }
+  .smallImage {
+    height: 150px;
+  }
+}

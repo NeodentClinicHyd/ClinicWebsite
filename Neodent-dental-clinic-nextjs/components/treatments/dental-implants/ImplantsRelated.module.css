@@ -1,0 +1,44 @@
+/* Related. A slim ivory band: about half the vertical padding of the
+   other sections. Heading left, three compact cards in one row, then the
+   quiet small print. */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(36px, 4.2vw, 56px) 0 clamp(28px, 3vw, 40px);
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.24fr) minmax(0, 0.76fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+}
+.note {
+  margin-top: clamp(20px, 2.4vw, 28px);
+  max-width: 760px;
+}
+.note p {
+  margin: 0;
+  color: rgba(38, 48, 51, 0.66);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.note p + p {
+  margin-top: 4px;
+}
+
+@media (max-width: 1023px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+}

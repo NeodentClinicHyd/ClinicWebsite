@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { ArrowRight, Facebook, Instagram } from "lucide-react";
 import { BrandLockup } from "@/components/layout/BrandLockup";
 import { useCookieConsent } from "@/components/consent/CookieConsentContext";
+import { treatments as treatmentLinks } from "@/components/sections/expertise-data";
 import {
+  ctaPhone,
+  ctaTelPhone,
   directions,
+  googleRating,
+  heroLocations,
   nampallyDirections,
+  nampallyGoogleRating,
   nampallyPhone,
   nampallyTelPhone,
   navItems,
@@ -17,46 +23,57 @@ import {
 import styles from "./Footer.module.css";
 
 /* ------------------------------------------------------------------
-   Footer — "Final Editorial Frame".
+   Footer -- closing chapter of every page.
 
-   The homepage's ninth and closing chapter. Inherits Section 02's
-   canonical .archive-* grammar (numeral bleeding into eyebrow, red
-   hairline, serif + red-italic emphasis, mono metadata) exactly as
-   Sections 04/07/08 already do, on a genuinely distinct charcoal
-   value (see Footer.module.css) so it reads as its own final room.
+   Hierarchy, top to bottom:
+     1. Closing brand statement over the faint "1994" year.
+     2. Navigation: brand + social, Explore, Treatments, Contact.
+     3. Locations: one compact summary per clinic (name, brief
+        address, Google rating, phone, directions).
+     4. Legal row and the developer credit.
 
-   Reuses the existing BrandLockup component for brand identity
-   (Column 01) rather than a second logo/wordmark system, and reuses
-   the same tel:/directions data Section 08 (ContactNextStep) already
-   established -- no invented numbers or routes. The Explore column
-   filters Doctor out of the shared `navItems` list (the Doctor page
-   has been intentionally dropped) without touching site-data.ts
-   itself. All new styling lives in Footer.module.css; globals.css is
-   untouched and its old `.footer*` rules are simply left unused. ------------------------------------------------------------------ */
+   DATA: nothing is re-typed here that already lives elsewhere.
+     - Explore routes come from `navItems` (lib/site-data.ts); the
+       Doctors hub (/doctors) is the only literal route, and it has
+       its own app/doctors/page.tsx.
+     - The seven treatments and their destinations come from the
+       homepage's `treatments` list (expertise-data.ts), so the footer
+       can never drift from the section it mirrors. Dedicated
+       treatment pages exist only for dental implants; every other
+       entry keeps its existing /treatments anchor (each id is
+       rendered on that page) or the /treatments directory.
+     - Phones, directions and branch locations come from site-data.ts.
+     - Google ratings are the approved snapshot figures already shown
+       in "Spaces designed around care": Mehdipatnam 4.3 / 261
+       (`googleRating`) and Nampally 4.6 / 157 (`nampallyGoogleRating`).
+       The branch pages do not exist yet, so branch names point at the
+       verified /clinic#mehdipatnam and /clinic#nampally anchors.
+   ------------------------------------------------------------------ */
 
-// The Doctor page has been intentionally dropped from the site --
-// filtered out here rather than removed from the shared navItems
-// list, so nothing else that reads navItems is affected.
-const exploreLinks = navItems.filter((item) => item.label !== "Doctor");
-
-// Icon lookup for socialLinks (lib/site-data.ts) — kept local to the
-// Footer since it's currently the only consumer of these profiles.
+// Icon lookup for socialLinks (lib/site-data.ts).
 const socialIcons: Record<string, typeof Instagram> = {
   Instagram,
   Facebook,
 };
 
-const careLinks = [
-  { label: "Dr. Miftah Ur Rahman", href: "/doctors/dr-miftah-ur-rahman" },
-  { label: "Dental Treatments", href: "/treatments" },
-  { label: "Our Clinics", href: "/clinic" },
-  { label: "Contact & Directions", href: "/contact" },
+const navHref = (label: string) =>
+  navItems.find((item) => item.label === label)?.href ?? "/";
+
+const exploreLinks = [
+  { id: "home", label: "Home", href: navHref("Home") },
+  { id: "about", label: "About", href: navHref("About") },
+  { id: "doctors", label: "Doctors", href: "/doctors" },
+  { id: "treatments", label: "Treatments", href: navHref("Treatments") },
+  { id: "clinic", label: "Clinics", href: navHref("Clinic") },
+  { id: "contact", label: "Contact", href: navHref("Contact") },
 ];
 
 type Branch = {
-  index: "01" | "02";
+  id: "mehdipatnam" | "nampally";
   name: string;
-  meta: string;
+  pageHref: string;
+  location: string;
+  rating: { score: string; count: number };
   phoneLabel: string;
   tel: string;
   directionsHref: string;
@@ -64,17 +81,21 @@ type Branch = {
 
 const branches: Branch[] = [
   {
-    index: "01",
+    id: "mehdipatnam",
     name: "Mehdipatnam",
-    meta: "Mehdipatnam · Hyderabad",
+    pageHref: "/clinic#mehdipatnam",
+    location: heroLocations[0].detail,
+    rating: googleRating,
     phoneLabel: phone,
     tel: telPhone,
     directionsHref: directions,
   },
   {
-    index: "02",
+    id: "nampally",
     name: "Nampally",
-    meta: "Nampally · Hyderabad",
+    pageHref: "/clinic#nampally",
+    location: `${heroLocations[1].detail}, Hyderabad`,
+    rating: nampallyGoogleRating,
     phoneLabel: nampallyPhone,
     tel: nampallyTelPhone,
     directionsHref: nampallyDirections,
@@ -82,68 +103,30 @@ const branches: Branch[] = [
 ];
 
 export function Footer() {
-  const footerRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
   const { openPreferences } = useCookieConsent();
 
-  useEffect(() => {
-    const node = footerRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.1 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <footer
-      ref={footerRef}
-      className={`${styles.footer} ${visible ? styles.visible : ""}`}
-      aria-labelledby="footer-title"
-    >
-      {/* Chapter-start seam -- matches the mechanic used at the top of
-          Sections 04/07 (a thin hairline + centred registration tick). */}
-      <span className={styles.seam} aria-hidden="true" />
-
-      {/* Closing-frame geometry -- a single quiet registration line +
-          dot, far more restrained than earlier chapters since this is
-          the final room, not a new motif. Purely decorative. */}
-      <div className={styles.atmosphere} aria-hidden="true">
-        <span className={styles.axisLine} />
-        <span className={styles.registrationLine} />
-        <span className={styles.registrationDot} />
-      </div>
-
-      <span className={styles.ghostWordmark} aria-hidden="true">
-        NEODENT
-      </span>
-
+    <footer className={styles.footer} aria-labelledby="footer-title">
       <div className={styles.container}>
-        <header className={styles.header}>
-          <span className={styles.numeral} aria-hidden="true">
+        {/* ---- 1. Closing brand statement ------------------------- */}
+        <div className={styles.closing}>
+          <span className={styles.year} aria-hidden="true">
             1994
           </span>
-          <div className={styles.eyebrow}>Neodent Dental Hospital</div>
-        </header>
+          <p id="footer-title" className={styles.statement}>
+            Changing smiles <span>since decades.</span>
+          </p>
+        </div>
 
-        <p id="footer-title" className={styles.statement}>
-          Changing smiles <span>since decades.</span>
-        </p>
-
+        {/* ---- 2. Navigation -------------------------------------- */}
         <div className={styles.grid}>
-          <div className={`${styles.col} ${styles.brandCol}`}>
+          <div className={styles.brandCol}>
             <BrandLockup testId="link-footer-brand" />
             <p className={styles.brandSentence}>
               Specialist-led dental care in Hyderabad, delivered with clarity,
               precision and a personal touch.
             </p>
-            <div className={styles.brandLocations}>
-              <span>Mehdipatnam · Hyderabad</span>
-              <span>Nampally · Hyderabad</span>
-            </div>
-            <div className={styles.socialRow} aria-label="Social media">
+            <div className={styles.socialRow}>
               {socialLinks.map((social) => {
                 const Icon = socialIcons[social.label];
                 return (
@@ -156,97 +139,135 @@ export function Footer() {
                     className={styles.socialLink}
                     data-testid={`link-footer-social-${social.label.toLowerCase()}`}
                   >
-                    {Icon && <Icon size={16} aria-hidden="true" />}
+                    {Icon && <Icon size={17} aria-hidden="true" />}
                   </a>
                 );
               })}
             </div>
           </div>
 
-          <div className={`${styles.col} ${styles.exploreCol}`}>
-            <p className={styles.colLabel}>Explore</p>
-            <nav aria-label="Footer navigation">
-              <ul className={styles.linkList}>
-                {exploreLinks.map((item) => (
-                  <li key={item.href}>
-                    <a
-                      href={item.href}
-                      data-testid={`link-footer-${item.label.toLowerCase()}`}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
+          <nav className={styles.exploreCol} aria-labelledby="footer-explore">
+            <h2 id="footer-explore" className={styles.colLabel}>
+              Explore
+            </h2>
+            <ul className={styles.linkList}>
+              {exploreLinks.map((item) => (
+                <li key={item.id}>
+                  <Link href={item.href} data-testid={`link-footer-${item.id}`}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-          <div className={`${styles.col} ${styles.careCol}`}>
-            <p className={styles.colLabel}>Care</p>
-            <nav aria-label="Footer care navigation">
-              <ul className={styles.linkList}>
-                {careLinks.map((item) => (
-                  <li key={item.href}>
-                    <a
-                      href={item.href}
-                      data-testid={`link-footer-care-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-
-          <div className={`${styles.col} ${styles.contactCol}`}>
-            <p className={styles.colLabel}>Contact</p>
-            <div className={styles.branchGrid}>
-              {branches.map((branch) => (
-                <article className={styles.branch} key={branch.index}>
-                  <p className={styles.branchIndex}>
-                    {branch.index} / {branch.name.toUpperCase()}
-                  </p>
-                  <p className={styles.branchMeta}>{branch.meta.toUpperCase()}</p>
-                  <a
-                    href={branch.tel}
-                    className={styles.branchPhone}
-                    data-testid={`link-footer-phone-${branch.index}`}
+          <nav className={styles.treatmentsCol} aria-labelledby="footer-treatments">
+            <h2 id="footer-treatments" className={styles.colLabel}>
+              Treatments
+            </h2>
+            <ul className={styles.linkList}>
+              {treatmentLinks.map((treatment) => (
+                <li key={treatment.number}>
+                  <Link
+                    href={treatment.href}
+                    data-testid={`link-footer-treatment-${treatment.number}`}
                   >
-                    {branch.phoneLabel}
-                  </a>
+                    {treatment.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className={styles.contactCol}>
+            <h2 className={styles.colLabel}>Contact</h2>
+            <a
+              href={ctaTelPhone}
+              className={styles.contactCall}
+              data-testid="link-footer-call-neodent"
+            >
+              <span>Call Neodent</span>
+              {ctaPhone}
+            </a>
+            <Link
+              href={navHref("Contact")}
+              className={styles.textAction}
+              data-testid="link-footer-enquiry"
+            >
+              Send an enquiry <ArrowRight size={12} aria-hidden="true" />
+            </Link>
+          </div>
+
+          {/* ---- 3. Locations ------------------------------------- */}
+          <section className={styles.locations} aria-labelledby="footer-locations">
+            <h2 id="footer-locations" className={styles.colLabel}>
+              Locations
+            </h2>
+            <ul className={styles.branchList}>
+              {branches.map((branch) => (
+                <li className={styles.branch} key={branch.id}>
+                  <div className={styles.branchHead}>
+                    <h3 className={styles.branchName}>
+                      <Link
+                        href={branch.pageHref}
+                        data-testid={`link-footer-branch-${branch.id}`}
+                      >
+                        {branch.name}
+                      </Link>
+                    </h3>
+                    <p
+                      className={styles.rating}
+                      data-testid={`text-footer-rating-${branch.id}`}
+                    >
+                      <span className={styles.srOnly}>Google rating: </span>
+                      <span className={styles.ratingScore}>{branch.rating.score}</span>
+                      <span className={styles.ratingStar} aria-hidden="true">
+                        ★
+                      </span>
+                      <span className={styles.ratingCount}>
+                        {branch.rating.count} Google reviews
+                      </span>
+                    </p>
+                  </div>
+                  <p className={styles.branchAddress}>{branch.location}</p>
                   <div className={styles.branchActions}>
                     <a
                       href={branch.tel}
-                      className={styles.actionPrimary}
-                      data-testid={`link-footer-call-${branch.name.toLowerCase()}`}
+                      className={styles.branchPhone}
+                      data-testid={`link-footer-phone-${branch.id}`}
                     >
-                      Call {branch.name} <ArrowRight size={12} aria-hidden="true" />
+                      {branch.phoneLabel}
                     </a>
                     <a
                       href={branch.directionsHref}
-                      className={styles.actionSecondary}
-                      data-testid={`link-footer-directions-${branch.name.toLowerCase()}`}
+                      className={styles.textAction}
+                      aria-label={`Get directions to Neodent ${branch.name}`}
+                      data-testid={`link-footer-directions-${branch.id}`}
                     >
-                      Get directions <ArrowRight size={11} aria-hidden="true" />
+                      Directions <ArrowRight size={12} aria-hidden="true" />
                     </a>
                   </div>
-                </article>
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+          </section>
         </div>
 
+        {/* ---- 4. Legal and credit -------------------------------- */}
         <div className={styles.legal}>
-          <div className={styles.legalRow}>
-            <span>© {new Date().getFullYear()} Neodent Dental Hospital</span>
-            <span className={styles.legalLinks}>
-              <a href="/privacy-policy" data-testid="link-footer-privacy">
+          <p className={styles.copyright}>
+            © {new Date().getFullYear()} Neodent Dental Hospital
+          </p>
+          <ul className={styles.legalLinks}>
+            <li>
+              <Link href="/privacy-policy" data-testid="link-footer-privacy">
                 Privacy
-              </a>
-              <span aria-hidden="true">·</span>
+              </Link>
+            </li>
+            <li>
               <span>Terms</span>
-              <span aria-hidden="true">·</span>
+            </li>
+            <li>
               <button
                 type="button"
                 className={styles.legalLinkButton}
@@ -255,9 +276,8 @@ export function Footer() {
               >
                 Cookie Preferences
               </button>
-            </span>
-          </div>
-          <p className={styles.legalMeta}>Mehdipatnam · Nampally · Hyderabad</p>
+            </li>
+          </ul>
           <p className={styles.credit}>
             Designed &amp; developed by{" "}
             <a

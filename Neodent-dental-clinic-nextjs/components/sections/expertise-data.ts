@@ -116,7 +116,7 @@ export const treatments: Treatment[] = [
     alt: "Upper arch rehabilitation with implants after surgery at Neodent Dental Hospital",
     beforeAlt: "Upper arch rehabilitation before surgery at Neodent Dental Hospital",
     proof: "REAL CASE / UPPER ARCH REHABILITATION",
-    href: "/treatments#dental-implants",
+    href: "/treatments/dental-implants",
   },
   {
     number: "03",

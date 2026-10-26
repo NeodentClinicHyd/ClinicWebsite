@@ -1,0 +1,80 @@
+/* About -- practice chapter. Values from LegacyStory.module.css
+   (.story, .titleWrap, .ghost, .title). */
+
+.practice {
+  --ghost: clamp(140px, 17vw, 240px);
+  --pt: clamp(88px, 9vw, 128px);
+}
+
+.story {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 48px;
+  align-items: start;
+}
+.left,
+.right {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .left {
+    grid-column: 1 / 8;
+  }
+  .right {
+    grid-column: 8 / 13;
+    /* Sits level with the first paragraph, below the ghost-year band. */
+    padding-top: calc(var(--ghost) * 0.3);
+  }
+}
+
+/* Title + the page's single ghost year */
+.titleWrap {
+  position: relative;
+  isolation: isolate;
+  padding-top: calc(var(--ghost) * 0.3);
+}
+.ghost {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  color: rgba(38, 48, 51, 0.07);
+  font-family: var(--app-font-serif);
+  font-size: var(--ghost);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.8;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.title {
+  position: relative;
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.5rem, 11.5vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+}
+@media (min-width: 768px) {
+  .title {
+    font-size: clamp(3rem, 5vw, 5.2rem);
+  }
+}
+.title span {
+  display: block;
+  color: var(--red);
+  font-style: italic;
+}
+
+.prose {
+  margin-top: 32px;
+  max-width: 62ch;
+}
+
+.patients {
+  margin-top: clamp(48px, 5.5vw, 72px);
+}

@@ -1,0 +1,338 @@
+/* About hero + glance strip.
+
+   Values copied from the home Hero (globals.css .hero, .hero-founder-*,
+   .hero-record-*) and from the "Why Neodent" strip (.exp-intro-why-*).
+   Differences from the home: shorter (no carousel chrome), no icon tiles
+   in the strip, and no backdrop blur on it. */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: clamp(560px, 78svh, 740px);
+  overflow: hidden;
+  background: var(--neodent-charcoal);
+  color: var(--neodent-ivory);
+}
+
+/* Dark ground: the founder slide's red radial + 64px grid + one faint
+   red vertical, without the extra marks. */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(54% 62% at 82% 38%, rgba(215, 25, 32, 0.1) 0%, rgba(215, 25, 32, 0.03) 42%, transparent 72%),
+    radial-gradient(70% 55% at 8% 95%, rgba(0, 0, 0, 0.5) 0%, transparent 62%);
+}
+.bg::after {
+  content: "";
+  position: absolute;
+  right: 12%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(215, 25, 32, 0.22) 18%,
+    rgba(215, 25, 32, 0.22) 82%,
+    transparent 100%
+  );
+}
+.gridlines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(251, 250, 247, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(251, 250, 247, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.35) 45%, transparent 78%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  /* Clear the fixed navbar with deliberate room, as the home hero does. */
+  padding: calc(var(--nav-height-desktop) + 34px) 0 56px;
+}
+
+.copy {
+  min-width: 0;
+  max-width: 600px;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: rgba(251, 250, 247, 0.62);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  animation: rise 0.9s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.eyebrow::before {
+  content: "";
+  width: 14px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+/* Sans headline, red serif accent -- the home hero's one device. The
+   supporting scale is used (as on home slides 02/03) because this
+   headline is two sentences long. */
+.headline {
+  margin: 20px 0 0;
+  font-size: var(--type-hero-supporting);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  animation: rise 1s 0.08s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.accent {
+  display: block;
+  color: var(--neodent-red);
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+}
+
+.lede {
+  max-width: 520px;
+  margin: 24px 0 0;
+  color: rgba(251, 250, 247, 0.78);
+  font-size: 16.5px;
+  line-height: 1.65;
+  animation: rise 1s 0.22s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+
+/* Framed image: offset red hairline + corner tick (.exp-intro-frame
+   recipe), image itself square like every hero plate. */
+.visual {
+  justify-self: end;
+  width: clamp(300px, 29vw, 400px);
+  max-width: 100%;
+  margin: 0;
+  animation: rise 1.1s 0.12s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.frame {
+  position: relative;
+  padding: 14px 0 0 14px;
+}
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(215, 25, 32, 0.4);
+  pointer-events: none;
+}
+.frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-top: 1.5px solid var(--neodent-red);
+  border-left: 1.5px solid var(--neodent-red);
+  opacity: 0.85;
+  pointer-events: none;
+}
+.imageBox {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #1b1d1f;
+}
+.image {
+  object-fit: cover;
+  /* Keeps the clinician's face and the baked-in Neodent logo in frame. */
+  object-position: 50% 6%;
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 0 0 14px;
+  color: rgba(251, 250, 247, 0.62);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.caption b {
+  color: var(--neodent-ivory);
+  font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    min-height: 0;
+  }
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding: calc(var(--nav-height-mobile) + 40px) 0 56px;
+  }
+  .copy {
+    max-width: 640px;
+  }
+  .visual {
+    justify-self: start;
+    width: min(100%, 380px);
+  }
+}
+@media (max-width: 767px) {
+  .eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+  }
+  .headline {
+    margin-top: 16px;
+    line-height: 1.03;
+  }
+  .lede {
+    font-size: 16px;
+  }
+  .visual {
+    width: min(100%, 320px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .headline,
+  .lede,
+  .visual {
+    animation: none;
+  }
+}
+
+/* ---- "Why Neodent" strip -------------------------------------------- */
+.stripSection {
+  padding: clamp(40px, 4.4vw, 60px) 0 clamp(40px, 4.4vw, 60px);
+}
+.why {
+  display: flex;
+  align-items: stretch;
+  height: 100px;
+  overflow: hidden;
+  background: #f6f3ec;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  box-shadow: 0 8px 28px rgba(22, 28, 30, 0.06);
+}
+.whyTitle {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0 clamp(24px, 2.6vw, 36px);
+  background: var(--neodent-charcoal);
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+.whyTitle::after {
+  content: "";
+  width: 28px;
+  height: 3px;
+  background: var(--neodent-red);
+}
+.whyList {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+  margin: 0;
+  padding: 0 clamp(20px, 3vw, 44px);
+  list-style: none;
+}
+.whyCell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.whyValue {
+  color: #242628;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 2.05vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.whyLabel {
+  color: rgba(36, 38, 40, 0.72);
+  font-size: 12.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (max-width: 1023px) {
+  .why {
+    flex-direction: column;
+    height: auto;
+  }
+  .whyTitle {
+    padding: 16px 24px 18px;
+    gap: 8px;
+  }
+  .whyList {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 24px;
+    padding: 20px 24px;
+  }
+  .whyValue {
+    font-size: 24px;
+  }
+}
+@media (max-width: 480px) {
+  .whyList {
+    gap: 18px 12px;
+    padding: 18px 16px;
+  }
+  .whyValue {
+    font-size: 18px;
+  }
+  .whyLabel {
+    font-size: 12px;
+    white-space: normal;
+  }
+}
+

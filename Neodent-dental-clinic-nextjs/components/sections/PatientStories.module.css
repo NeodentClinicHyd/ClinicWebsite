@@ -1,18 +1,15 @@
 /* Section 05 — Patient Experiences / Real Stories.
 
-   Design language inherited directly from Section 02's canonical
-   .archive-* system in globals.css: the same 10px/.2em uppercase
-   eyebrow with a 34px red hairline, DM Serif Display headings with a
-   red italic emphasis line, an oversized low-opacity serif chapter
-   numeral bleeding into the copy above it via negative margin (same
-   mechanic as .archive-year / ClinicalLeadership's .numeral), 15px/
-   1.7 muted body copy and the site's existing red/ink/ivory tokens.
-   Nothing here edits globals.css or any locked section.
+   Design language inherited from Section 02's canonical .archive-*
+   system in globals.css: DM Serif Display headings with a red italic
+   emphasis line, 15px/1.7 muted body copy and the site's existing
+   red/ink/ivory tokens. Nothing here edits globals.css or any locked
+   section.
 
    Composition is original to this section: a single featured
    testimonial stage (video + an overlapping quote plate, read as one
-   editorial object) paired with a slim rail carrying the 01/02/03
-   selector and one Google review annotation -- distinct from Section
+   editorial object) paired with a slim rail carrying the film
+   selector and one Google review card -- distinct from Section
    02's archive fan, Section 03's drafting grid and Section 04's
    portrait/annotation-rail pairing, while still reading as the same
    brand system. */
@@ -89,41 +86,10 @@
   z-index: 1;
 }
 
-/* ---- Header -- numeral bleeds into eyebrow, matching Section 02 -- */
+/* ---- Header -- title only, same values as the other homepage sections. */
 .header {
   max-width: 620px;
   position: relative;
-}
-.numeral {
-  display: block;
-  margin: 0 0 -0.36em -0.04em;
-  color: rgba(38, 48, 51, 0.055);
-  font-family: var(--app-font-serif);
-  font-size: clamp(5.5rem, 10vw, 10rem);
-  font-weight: 400;
-  line-height: 0.8;
-  letter-spacing: -0.03em;
-  pointer-events: none;
-  user-select: none;
-}
-.eyebrow {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 22px;
-  color: rgba(38, 48, 51, 0.58);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-.eyebrow::before {
-  content: "";
-  width: 34px;
-  height: 1px;
-  background: var(--neodent-red);
-  flex-shrink: 0;
 }
 .title {
   margin: 0;
@@ -188,18 +154,6 @@
   background: linear-gradient(180deg, transparent, var(--neodent-red));
   z-index: 2;
 }
-.frameTop {
-  position: absolute;
-  inset: 15px 17px auto;
-  display: flex;
-  justify-content: space-between;
-  z-index: 2;
-  color: #fbfaf7;
-  font: 9px/1.4 var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
-}
 .control {
   position: absolute;
   right: 16px;
@@ -230,7 +184,7 @@
   z-index: 3;
   width: min(72%, 360px);
   margin: -64px 0 0 clamp(28px, 4vw, 46px);
-  padding: 24px 26px 4px;
+  padding: 28px 28px 6px;
   background: var(--paper);
   border-top: 2px solid var(--neodent-red);
   box-shadow: 8px 10px 20px rgba(38, 48, 51, 0.09);
@@ -250,29 +204,6 @@
   background: linear-gradient(180deg, transparent, var(--neodent-red));
 }
 .quotePlateSwitching { opacity: 0; transform: translateY(6px); }
-.quotePlateGlyph {
-  position: absolute;
-  top: 6px;
-  left: 22px;
-  font-family: var(--app-font-serif);
-  font-size: 56px;
-  line-height: 1;
-  color: rgba(215, 25, 32, 0.14);
-  user-select: none;
-}
-.quotePlateIndex {
-  display: block;
-  color: var(--neodent-red);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.16em;
-}
-.quotePlateTheme {
-  margin: 7px 0 16px;
-  color: rgba(38, 48, 51, 0.5);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
 .quotePlateQuote {
   position: relative;
   margin: 0 0 22px;
@@ -295,7 +226,7 @@
   padding-top: 8px;
 }
 
-.selector ol {
+.selector ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -304,22 +235,25 @@
 }
 .selectorItem {
   position: relative;
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
+  display: block;
   width: 100%;
-  padding: 17px 2px 17px 16px;
+  min-height: 48px;
+  padding: 12px 2px 12px 16px;
   border-top: 1px solid rgba(38, 48, 51, 0.14);
   background: none;
+  color: rgba(38, 48, 51, 0.58);
+  font-family: var(--app-font-serif);
+  font-size: 20px;
+  line-height: 1.3;
   text-align: left;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 .selector li:last-child .selectorItem {
   border-bottom: 1px solid rgba(38, 48, 51, 0.14);
 }
 /* The active rule is its own layer rather than a border, so its
-   height can animate independently (a quiet vertical reveal, not a
-   hard colour swap) when the selection changes. */
+   height can animate independently when the selection changes. */
 .selectorItem::before {
   content: "";
   position: absolute;
@@ -331,66 +265,68 @@
   transform: translateY(-50%);
   transition: height 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.selectorIndex {
-  color: rgba(38, 48, 51, 0.38);
-  font: 11px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.1em;
-  transition: color 0.3s ease;
-}
-.selectorLabel {
-  color: rgba(38, 48, 51, 0.58);
-  font-size: 13px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  font-weight: 600;
-  transition: color 0.3s ease, letter-spacing 0.3s ease;
-}
-.selectorItem:hover .selectorLabel { color: var(--ink); }
-.selectorItem:hover .selectorIndex { color: rgba(38, 48, 51, 0.6); }
+.selectorItem:hover { color: var(--ink); }
+.selectorItemActive { color: var(--neodent-red); font-style: italic; }
 .selectorItemActive::before { height: 70%; }
-.selectorItemActive .selectorIndex { color: var(--neodent-red); }
-.selectorItemActive .selectorLabel { color: var(--ink); letter-spacing: 0.05em; }
 .selectorItem:focus-visible {
   outline: 2px solid var(--neodent-red);
   outline-offset: 2px;
 }
 
+/* Google review card -- a text-only "Google" wordmark in Google's
+   brand colours and gold stars are the only third-party cues; the
+   surface, hairline border and type stay Neodent's. No logo asset,
+   link, date or avatar is invented. */
 .review {
-  position: relative;
-  margin-top: 38px;
-  padding-top: 26px;
-  border-top: 1px solid rgba(38, 48, 51, 0.14);
+  margin: 34px 0 0;
+  padding: 22px 24px 22px;
+  background: var(--paper);
+  border: 1px solid rgba(38, 48, 51, 0.16);
 }
-.reviewLabel {
-  margin: 0 0 14px;
-  color: var(--neodent-red);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.reviewHead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.googleMark {
+  font-family: var(--app-font-sans);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.googleMark span:nth-child(1),
+.googleMark span:nth-child(4) { color: #4285f4; }
+.googleMark span:nth-child(2),
+.googleMark span:nth-child(6) { color: #ea4335; }
+.googleMark span:nth-child(3) { color: #fbbc05; }
+.googleMark span:nth-child(5) { color: #34a853; }
+.reviewKind {
+  color: rgba(38, 48, 51, 0.58);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 .reviewStars {
   display: flex;
-  gap: 4px;
-  margin-bottom: 14px;
-  color: var(--neodent-red);
+  gap: 2px;
+  margin-bottom: 12px;
+  color: #fbbc04;
 }
 .reviewStars svg { fill: currentColor; }
 .reviewExcerpt {
   margin: 0;
-  max-width: 300px;
-  font-family: var(--app-font-serif);
-  font-style: italic;
-  font-size: 14.5px;
-  line-height: 1.62;
-  color: rgba(38, 48, 51, 0.78);
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.86);
 }
 .reviewAuthor {
   margin: 14px 0 0;
-  color: rgba(38, 48, 51, 0.5);
-  font-size: 11px;
-  letter-spacing: 0.07em;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
 }
-
 /* ---- CTA ----------------------------------------------------------- */
 .ctaRow {
   margin-top: clamp(40px, 5vw, 60px);
@@ -438,13 +374,12 @@
   .stage { grid-template-columns: 1fr; gap: 40px 0; }
   .rail { flex-direction: row; flex-wrap: wrap; gap: 32px 40px; padding-top: 0; }
   .selector { flex: 1 1 260px; }
-  .review { flex: 1 1 240px; margin-top: 0; padding-top: 0; border-top: none; border-left: 1px solid rgba(38, 48, 51, 0.16); padding-left: 28px; }
+  .review { flex: 1 1 280px; margin-top: 0; }
   .quotePlate { width: min(70%, 380px); }
 }
 
 @media (max-width: 767px) {
   .container { width: min(100% - 32px, 600px); }
-  .numeral { font-size: clamp(4rem, 20vw, 6rem); }
   .title { font-size: clamp(2.2rem, 9vw, 2.8rem); }
   .lede { max-width: none; }
   .stage { margin-top: 30px; }
@@ -454,10 +389,12 @@
     margin: -40px 0 0 10px;
     padding: 20px 20px 4px;
   }
-  .quotePlateGlyph { left: 18px; font-size: 46px; }
   .quotePlateQuote { max-width: none; font-size: 18px; margin-bottom: 18px; }
   .rail { flex-direction: column; gap: 28px 0; margin-top: 30px; }
-  .review { border-left: none; border-top: 1px solid rgba(38, 48, 51, 0.14); padding-left: 0; padding-top: 24px; margin-top: 0; }
+  .selector, .review { flex: none; }
+  /* The quote plate overlaps the frame's lower edge here, so the
+     playback control moves to the top-right to stay reachable. */
+  .control { top: 14px; right: 14px; bottom: auto; }
   .ctaRow { justify-content: flex-start; }
   .arcOuter, .arcInner { display: none; }
   .quoteGlyph { font-size: clamp(160px, 40vw, 240px); top: -20px; }
@@ -465,7 +402,7 @@
 }
 
 @media (max-width: 430px) {
-  .selectorItem { padding: 15px 2px 15px 14px; }
+  .selectorItem { padding: 12px 2px 12px 14px; }
   .quotePlate { margin-left: 6px; width: calc(100% - 12px); }
 }
 
@@ -478,9 +415,7 @@
   .cta,
   .control,
   .selectorItem,
-  .selectorItem::before,
-  .selectorIndex,
-  .selectorLabel {
+  .selectorItem::before {
     transition: none;
   }
   .section:not(.visible) .header,

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { treatmentAtlas } from "@/lib/treatment-data";
+import { treatments as featuredTreatments } from "@/components/sections/expertise-data";
 
 /* ------------------------------------------------------------------
    Shared validation for the Contact page "Send an enquiry" form.
@@ -10,17 +10,15 @@ import { treatmentAtlas } from "@/lib/treatment-data";
    Client-side validation is a UX convenience only -- the server never
    trusts it.
 
-   Enquiry type options are derived from the real, existing treatment
-   names in lib/treatment-data.ts (the canonical list backing the
-   /treatments page) rather than inventing a separate list. "General
-   Dental Care" and "Other Enquiry" are appended as catch-alls, matching
-   the site's conversation-first (not appointment-booking) philosophy.
+   Enquiry type options use the homepage's seven featured treatments as
+   the canonical patient-facing list. "General Dental Care" and
+   "Other Enquiry" remain catch-alls.
    ------------------------------------------------------------------ */
 
 export const enquiryClinicOptions = ["Mehdipatnam", "Nampally"] as const;
 
 export const enquiryTypeOptions = [
-  ...treatmentAtlas.map((treatment) => treatment.title),
+  ...featuredTreatments.map((treatment) => treatment.title),
   "General Dental Care",
   "Other Enquiry",
 ] as const;

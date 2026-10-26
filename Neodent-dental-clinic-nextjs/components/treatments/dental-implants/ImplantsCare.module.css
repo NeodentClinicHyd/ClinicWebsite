@@ -1,0 +1,176 @@
+/* Care + doctor. Pattern: ClinicalLeadership. Section ground #15171a and
+   padding, title, 20px card radius, 11-12px caps labels, 140px label
+   column and the `#ece7dc` avatar ground are copied from its module. */
+
+.section {
+  --red: #d71920;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #15171a;
+  color: #f1eee7;
+  padding: clamp(64px, 7vw, 96px) 0 clamp(88px, 10vw, 140px);
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+}
+.left {
+  min-width: 0;
+}
+
+/* Care points: plain short rows, no icons, no rules. */
+.list {
+  margin: clamp(28px, 3.4vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+  max-width: 520px;
+}
+.list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(241, 238, 231, 0.86);
+}
+.list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--red);
+}
+
+/* Doctor card (ClinicalLeadership `.card`). */
+.card {
+  min-width: 0;
+  padding: 32px;
+  background: var(--neodent-surface, #fffefa);
+  color: var(--neodent-ink, #263033);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.portrait {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #ece7dc;
+}
+.portraitImg {
+  object-fit: cover;
+  object-position: 100% 100%;
+  filter: saturate(0.92) contrast(1.02);
+}
+.identity {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+}
+.name {
+  margin: 0 0 8px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.label {
+  margin: 0;
+  color: rgba(38, 48, 51, 0.78);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+@media (min-width: 1024px) {
+  .label {
+    font-size: 12px;
+  }
+}
+
+.facts {
+  margin: 24px 0 0;
+  border-top: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 4px 24px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.fact dt {
+  color: rgba(38, 48, 51, 0.72);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.quals {
+  font-weight: 600;
+}
+.cardAction {
+  margin-top: 24px;
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .card {
+    padding: 24px;
+  }
+  .portrait {
+    aspect-ratio: 4 / 3;
+  }
+  .identity {
+    width: 50%;
+    padding: 16px;
+  }
+  .name {
+    font-size: 22px;
+  }
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cardAction :global(.button) {
+    width: 100%;
+  }
+}

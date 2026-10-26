@@ -85,6 +85,11 @@ export const nampallyPhone = "+91 90305 98081";
 export const nampallyTelPhone = "tel:+919030598081";
 export const nampallyDirections =
   "https://www.google.com/maps/search/?api=1&query=Neodent%20Dental%20Hospital%2C%20Medwin%20Hospital%20Complex%2C%20Pillar%20%23A1270%2C%20Raghav%20Ratna%20Towers%2C%20Chirag%20Ali%20Lane%2C%20Mahesh%20Nagar%20Colony%2C%20Nampally%2C%20Hyderabad%2C%20Telangana%20500001%2C%20India";
+/* Nampally's Google rating -- the client-supplied listing figures
+   already shown on the homepage's "Spaces designed around care"
+   section (4.6 / 157). Mehdipatnam's counterpart is `googleRating`
+   above. Snapshot values, not live data. */
+export const nampallyGoogleRating = { score: "4.6", count: 157 };
 
 /* ------------------------------------------------------------------
    Branch opening hours — the two branches keep different timings, so

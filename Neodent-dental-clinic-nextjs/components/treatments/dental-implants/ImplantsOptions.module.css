@@ -1,0 +1,221 @@
+/* Options. Pattern: treatment-atlas (globals.css `.treatment-atlas*`):
+   #242628 ground with the 420px icon tile under a 55% overlay, #f3f0e8
+   cards, 16px radius, 22px padding, active-card white with a red hairline
+   and the same elevation. The attention card copies the ClinicalLeadership
+   doctor card (`.card` / `.fact`, 140px label column, 11-12px caps labels). */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #242628;
+  background-image:
+    linear-gradient(
+      155deg,
+      rgba(36, 38, 40, 0.55),
+      rgba(36, 38, 40, 0.5) 50%,
+      rgba(36, 38, 40, 0.55)
+    ),
+    url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  color: #f1eee7;
+  padding: clamp(80px, 10vw, 140px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.featured {
+  grid-column: span 7;
+  background-color: #ffffff;
+  border-color: rgba(242, 29, 36, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.stack {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 24px);
+}
+.stack .card {
+  flex: 1 1 0;
+}
+
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 16px;
+  background-color: #f3f0e8;
+  color: #252525;
+}
+.cardTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #252525;
+}
+.featuredTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2rem, 3.2vw, 2.9rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #252525;
+}
+.fig {
+  min-width: 0;
+}
+.figPlate {
+  padding: 10px 14px;
+}
+.art {
+  width: 100%;
+  max-height: 140px;
+  margin: 0 auto;
+}
+/* The featured card takes the height of the stacked pair: its plate grows
+   and the larger drawing sits centred in it. */
+.featured .fig {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.featured .figPlate {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  padding: 18px 24px;
+}
+.featured .art {
+  max-height: none;
+}
+.blocks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 28px;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.blockLabel {
+  margin: 0;
+  color: var(--neodent-red-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.blockText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #3f4547;
+}
+
+/* Attention card: ClinicalLeadership doctor-card twin, full width. */
+.attention {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(16px, 2vw, 24px);
+  padding: 32px;
+  background: var(--neodent-surface);
+  color: var(--neodent-ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.attentionTitle {
+  margin: 0 0 12px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.attentionIntro {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.8);
+}
+.facts {
+  margin: 0;
+  border-top: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 4px 24px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.fact dt {
+  color: rgba(38, 48, 51, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--neodent-ink);
+}
+
+@media (max-width: 1023px) {
+  .featured,
+  .stack {
+    grid-column: 1 / -1;
+  }
+  .stack {
+    flex-direction: row;
+  }
+  .attention {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .stack {
+    flex-direction: column;
+  }
+  .blocks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .attention {
+    padding: 24px;
+  }
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

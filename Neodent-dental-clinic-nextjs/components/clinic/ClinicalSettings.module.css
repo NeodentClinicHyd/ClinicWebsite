@@ -1,651 +1,127 @@
-/* Clinic page — Section 02 — Two Clinical Settings.
-   POLISH PASS: reduced excess vertical whitespace (~15%), improved
-   contact readability (address, phone, directions hierarchy), refined
-   branch heading scale, tighter image/text balance, constrained seam. */
+/* Clinic -- "Different surroundings."
 
-.section {
-  --charcoal: #14161a;
-  --ivory: #f1eee7;
-  --muted: rgba(241, 238, 231, 0.56);
-  --red: #d71920;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  background: var(--charcoal);
-  color: var(--ivory);
-  /* Tightened from 108px/120px — removes excess breathing room without
-     making the section feel cramped */
-  padding: clamp(64px, 7vw, 96px) 0 clamp(72px, 8vw, 104px);
-}
-.section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse at 6% 3%, rgba(215, 25, 32, 0.08), transparent 44%),
-    radial-gradient(ellipse at 94% 94%, rgba(241, 238, 231, 0.025), transparent 52%),
-    var(--charcoal);
-}
+   Photo card: the home atlas card (.treatment-atlas-card: 16px radius,
+   #f3f0e8 surface, 1px rgba(37,37,37,.1) border, 19px / 600 title, 14px
+   line). Red card: AboutRecognition .red / LegacyStory .statement
+   (20px radius, --neodent-red, ivory text, DM Serif Display). */
 
-/* ---- Chapter-start seam — full width fade, matching SpacesDesignedAroundCare */
-.seam {
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-.seam::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(215, 25, 32, 0.52) 14%,
-    rgba(241, 238, 231, 0.18) 50%,
-    rgba(215, 25, 32, 0.52) 86%,
-    transparent
-  );
-}
-.seam::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: 14px;
-  background: linear-gradient(180deg, rgba(215, 25, 32, 0.6), transparent);
-  transform: translateX(-50%);
-}
-.seamLabel {
-  position: absolute;
-  top: 20px;
-  left: max(0px, calc((100% - 1180px) / 2 + 24px));
-  color: rgba(241, 238, 231, 0.26);
-  font: 9px/1 var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* ---- Location-atlas atmosphere geometry — barely visible ----------- */
-.atmosphere {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.draftVertical {
-  position: absolute;
-  top: 5%;
-  bottom: 5%;
-  right: 38%;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(241, 238, 231, 0.06) 20%,
-    rgba(241, 238, 231, 0.06) 80%,
-    transparent
-  );
-}
-.draftHorizontal {
-  position: absolute;
-  left: 5%;
-  right: 5%;
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(241, 238, 231, 0.055) 20%,
-    rgba(241, 238, 231, 0.055) 80%,
-    transparent
-  );
-}
-.registrationDot {
-  position: absolute;
-  top: 50%;
-  right: 38%;
-  width: 6px;
-  height: 6px;
-  margin: -3px -3px;
-  border-radius: 50%;
-  border: 1px solid rgba(215, 25, 32, 0.28);
-}
-.registrationDotSmall {
-  position: absolute;
-  bottom: 14%;
-  left: 6%;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(215, 25, 32, 0.22);
-}
-.coordTag {
-  position: absolute;
-  top: 12%;
-  right: 4%;
-  color: rgba(241, 238, 231, 0.14);
-  font: 9px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.22em;
-}
-
-/* ---- Container ---------------------------------------------------- */
-.container {
-  width: min(1180px, calc(100% - 48px));
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-/* ---- Section header ----------------------------------------------- */
-/* bottom margin reduced from 56–88px → 48–72px */
-.header {
-  max-width: 700px;
-  position: relative;
-  margin-bottom: clamp(48px, 6vw, 72px);
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
-    transform 760ms cubic-bezier(0.22, 1, 0.36, 1) 60ms;
-}
-.numeral {
-  display: block;
-  margin: 0 0 -0.34em -0.04em;
-  color: rgba(241, 238, 231, 0.065);
-  font-family: var(--app-font-serif);
-  font-size: clamp(5.5rem, 10vw, 10rem);
-  font-weight: 400;
-  line-height: 0.8;
-  letter-spacing: -0.03em;
-  pointer-events: none;
-  user-select: none;
-}
-.eyebrow {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 20px;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-.eyebrowRule {
-  display: inline-block;
-  width: 34px;
-  height: 1px;
-  background: var(--red);
-  flex-shrink: 0;
-}
-/* Heading scale matches the section-title token used by dark sections */
-.title {
-  margin: 0;
-  font-family: var(--app-font-serif);
-  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-}
-.title span {
-  color: var(--red);
-  font-style: italic;
-}
-
-/* ---- Branch block ------------------------------------------------- */
-.branch {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1) 80ms,
-    transform 760ms cubic-bezier(0.22, 1, 0.36, 1) 80ms;
-}
-.blockVisible {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-/* Branch index — thin editorial tag: 01 / MEHDIPATNAM hairline */
-.branchIndex {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: clamp(22px, 2.8vw, 32px);
-}
-.branchIndexNum {
-  color: var(--red);
-  font: 700 10px/1 var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.16em;
-  flex-shrink: 0;
-}
-.branchIndexLine {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(215, 25, 32, 0.5), rgba(241, 238, 231, 0.08));
-  max-width: 280px;
-}
-
-/* Branch grid — media plate | info text, asymmetric widths */
-.branchGrid {
+.cards {
   display: grid;
-  grid-template-columns: 1.08fr 0.92fr;
-  gap: 0 clamp(28px, 4vw, 60px);
-  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gutter);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
 }
 
-/* Reversed branch — info left, media right — creates asymmetry */
-.branchReverse .branchGrid {
-  grid-template-columns: 0.92fr 1.08fr;
-}
-.branchReverse .branchGrid .branchInfo {
-  order: 1;
-}
-.branchReverse .branchGrid .branchMedia {
-  order: 2;
-}
-
-/* ---- Branch media — exterior (primary) + interior (secondary) ------ */
-.branchMedia {
-  position: relative;
-  margin: 0;
-}
-
-/* Primary plate — exterior photograph */
-.branchPrimary {
-  position: relative;
-  /* 4:3 reads as a cinematic establishing shot */
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border: 1px solid rgba(241, 238, 231, 0.18);
-  background: #1b1d1f;
-}
-/* Registration hairline above the frame */
-.branchPrimary::before {
-  content: "";
-  position: absolute;
-  top: -16px;
-  left: 28px;
-  width: 1px;
-  height: 16px;
-  background: linear-gradient(180deg, transparent, var(--red));
-  z-index: 2;
-}
-.branchPrimary img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.88) contrast(1.03);
-}
-.branchPrimaryShade {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 34%;
-  background: linear-gradient(180deg, transparent, rgba(15, 16, 18, 0.66));
-  z-index: 1;
-  pointer-events: none;
-}
-.branchPrimaryMeta {
-  position: absolute;
-  left: 14px;
-  bottom: 14px;
-  right: 14px;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  color: var(--ivory);
-  font: 9px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-/* Secondary plate — interior photograph, offset bottom-right of primary.
-   Mehdipatnam: offset right. Nampally: same position (CSS handles via
-   margin-right on .branchSecondary defaults). */
-.branchSecondary {
-  position: relative;
-  z-index: 2;
-  width: 44%;
-  max-width: 200px;
-  /* Portrait crop for the interior gives better spatial depth */
-  aspect-ratio: 3 / 4;
-  margin: -56px 0 0 auto;
-  margin-right: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(241, 238, 231, 0.22);
-  background: #1b1d1f;
-  box-shadow: -5px 8px 20px rgba(0, 0, 0, 0.3);
-}
-.branchSecondary::before {
-  content: "";
-  position: absolute;
-  top: -18px;
-  right: 0;
-  width: 1px;
-  height: 18px;
-  background: linear-gradient(180deg, transparent, var(--red));
-  z-index: 3;
-}
-.branchSecondary img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.88) contrast(1.03);
-}
-.branchSecondaryLabel {
-  position: absolute;
-  left: 8px;
-  bottom: 7px;
-  z-index: 2;
-  color: rgba(241, 238, 231, 0.78);
-  font: 8px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-}
-
-/* ---- Branch information — refined hierarchy ----------------------- */
-/* padding-top ensures the text block top-aligns with the primary plate */
-.branchInfo {
+.photoCard {
   display: flex;
   flex-direction: column;
-  padding-top: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 8px;
+  background-color: #f3f0e8;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 16px;
+  color: #252525;
 }
-
-/* Location / name block */
-.branchMeta {
+.left {
+  grid-column: 1;
+  grid-row: 1;
+}
+.right {
+  grid-column: 3;
+  grid-row: 1;
+}
+.photo {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #e2ddd0;
+  border-radius: 8px;
+}
+.photo img {
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.02);
+}
+.photoCaption {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-bottom: clamp(16px, 2vw, 22px);
-  padding-bottom: clamp(14px, 1.8vw, 20px);
-  border-bottom: 1px solid rgba(241, 238, 231, 0.12);
+  padding: 18px 14px 14px;
 }
-.branchMetaLocation {
-  color: var(--muted);
-  font: 9.5px/1.4 var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.photoTitle {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #252525;
 }
-/* Branch name — stepped up for authority */
-.branchMetaName {
-  color: var(--ivory);
+.photoLine {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #535353;
+}
+
+.red {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(28px, 3vw, 40px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: var(--radius);
+}
+.redText {
+  margin: 0;
   font-family: var(--app-font-serif);
-  font-size: clamp(1.55rem, 2.2vw, 2rem);
+  font-size: clamp(20px, 1.95vw, 27px);
   font-weight: 400;
   letter-spacing: -0.01em;
-  line-height: 1;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.redText em {
+  font-style: italic;
 }
 
-/* Description paragraph */
-.branchDescription {
-  margin: 0 0 clamp(18px, 2.2vw, 24px);
-  color: rgba(241, 238, 231, 0.72);
-  font-size: 15px;
-  line-height: 1.72;
-}
-
-/* Deep link to the doctor named at this branch — same quiet red
-   metadata-link grammar as the section's other links. */
-.branchDoctorLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 clamp(18px, 2.2vw, 24px);
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--neodent-red);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.branchDoctorLink:hover {
-  color: var(--neodent-ivory);
-}
-
-/* ---- Contact information — properly readable hierarchy ------------ */
-
-/* ADDRESS — slightly larger than before for a location page */
-.branchAddress {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin: 0 0 14px;
-  font-style: normal;
-  /* Bumped from 13.5px → 14px for comfortable readability */
-  color: rgba(241, 238, 231, 0.65);
-  font-size: 14px;
-  line-height: 1.68;
-}
-.branchAddressIcon {
-  display: flex;
-  align-items: center;
-  color: rgba(215, 25, 32, 0.68);
-  margin-top: 3px;
-  flex-shrink: 0;
-}
-
-/* PHONE — visually dominant over the address but not a CTA */
-.branchPhone {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 clamp(18px, 2.2vw, 26px);
-  /* 16px gives the number clear visual hierarchy over the 14px address */
-  color: var(--ivory);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.branchPhone:hover {
-  color: var(--red);
-}
-.branchPhone:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-.branchPhoneIcon {
-  display: flex;
-  align-items: center;
-  color: rgba(215, 25, 32, 0.7);
-  flex-shrink: 0;
-}
-
-/* HOURS — sits between phone and directions, same weight as the address */
-.branchHours {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 clamp(18px, 2.2vw, 26px);
-  color: rgba(241, 238, 231, 0.65);
-  font-size: 14px;
-  line-height: 1.4;
-}
-.branchHoursIcon {
-  display: flex;
-  align-items: center;
-  color: rgba(215, 25, 32, 0.68);
-  flex-shrink: 0;
-}
-
-/* GET DIRECTIONS → — quiet editorial action, same style as site CTAs */
-.branchDirections {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: rgba(241, 238, 231, 0.72);
-  font: 700 10px/1 var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 0.18s ease, gap 0.22s ease;
-}
-.branchDirections:hover {
-  color: var(--ivory);
-  gap: 14px;
-}
-.branchDirections:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-/* ---- Inter-branch editorial seam — reduced vertical margin -------- */
-/* Previously clamp(56px, 7vw, 88px) — trimmed ~15–20% */
-.interSeam {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin: clamp(48px, 6vw, 72px) 0;
-  position: relative;
-}
-.interSeamLine {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(241, 238, 231, 0.12) 20%,
-    rgba(241, 238, 231, 0.12) 80%,
-    transparent
-  );
-}
-.interSeamDot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(215, 25, 32, 0.38);
-  border: 1px solid rgba(215, 25, 32, 0.6);
-  flex-shrink: 0;
-  margin: 0 18px;
-}
-
-/* ---- Responsive ---------------------------------------------------- */
-@media (max-width: 1280px) {
-  .branchGrid {
-    gap: 0 clamp(24px, 3.8vw, 52px);
+@media (max-width: 1023px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .left {
+    grid-column: 1;
+  }
+  .right {
+    grid-column: 2;
+  }
+  .red {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding: clamp(28px, 5vw, 40px);
+  }
+  .redText {
+    max-width: 38ch;
+    font-size: clamp(24px, 3.4vw, 30px);
   }
 }
-
-@media (max-width: 1100px) {
-  .branchGrid {
-    gap: 0 clamp(20px, 3.2vw, 44px);
-  }
-  .branchReverse .branchGrid {
-    grid-template-columns: 0.9fr 1.1fr;
-  }
-}
-
-@media (max-width: 1024px) {
-  .branchPrimary {
-    aspect-ratio: 3 / 2;
-  }
-  .branchSecondary {
-    width: 48%;
-    max-width: none;
-    margin-right: 12px;
-    aspect-ratio: 4 / 3;
-  }
-}
-
-@media (max-width: 900px) {
-  .branchGrid,
-  .branchReverse .branchGrid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .branchReverse .branchGrid .branchInfo {
-    order: 2;
-  }
-  .branchReverse .branchGrid .branchMedia {
-    order: 1;
-  }
-  .branchInfo {
-    padding-top: 0;
-  }
-  .branchSecondary {
-    max-width: 50%;
-    width: 50%;
-    aspect-ratio: 4 / 3;
-    margin-right: 0;
-    margin-left: auto;
-    margin-top: -44px;
-  }
-}
-
 @media (max-width: 767px) {
-  .container {
-    width: min(100% - 32px, 600px);
+  .photoCaption {
+    padding: 14px 8px 10px;
   }
-  .numeral {
-    font-size: clamp(4rem, 20vw, 6rem);
+  .photoTitle {
+    font-size: 17px;
   }
-  .title {
-    font-size: clamp(2.2rem, 9vw, 2.8rem);
+  .photoLine {
+    font-size: 13px;
   }
-  .header {
-    margin-bottom: clamp(36px, 5vw, 52px);
+  .red {
+    padding: 28px 22px;
+    border-radius: 16px;
   }
-  .branchMetaName {
-    font-size: clamp(1.35rem, 5.5vw, 1.7rem);
-  }
-  .branchSecondary {
-    max-width: 46%;
-    width: 46%;
-    margin-top: -36px;
-  }
-  .interSeam {
-    margin: clamp(40px, 5vw, 56px) 0;
-  }
-  .draftVertical,
-  .registrationDot {
-    right: 50%;
-  }
-  .coordTag {
-    display: none;
-  }
-}
-
-@media (max-width: 430px) {
-  .branchPrimaryMeta {
-    font-size: 8px;
-  }
-  .branchSecondary {
-    width: 48%;
-    max-width: 48%;
-  }
-  .branchPhone {
-    font-size: 15px;
-  }
-  .branchAddress {
-    font-size: 13.5px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .header,
-  .branch {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
-  .branchDirections {
-    transition: none;
+  .redText {
+    font-size: clamp(22px, 6.2vw, 26px);
   }
 }

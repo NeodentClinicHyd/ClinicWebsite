@@ -1,0 +1,172 @@
+/* Clinic -- treatments at both clinics.
+
+   Every value is the home atlas card (globals.css .treatment-atlas-card,
+   -title, -summary, -bottom, -icon, -intent, -arrow and the ivory
+   .treatment-atlas-cta): 16px radius, 22px padding, #f3f0e8 surface,
+   19px / 600 title, 14px summary, red 42px icon, 12px / .14em intent. */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.grid li {
+  display: flex;
+  min-width: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 210px;
+  padding: 22px;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 16px;
+  background-color: #f3f0e8;
+  color: #252525;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+.card:hover {
+  border-color: rgba(37, 37, 37, 0.24);
+  transform: translateY(-2px);
+}
+.card:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.cardTitle {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #252525;
+  text-wrap: balance;
+}
+.cardSummary {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #535353;
+}
+.cardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+.icon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  stroke-width: 1.5;
+  color: var(--neodent-red);
+}
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.intent {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--neodent-red-dark);
+}
+.arrow {
+  width: 16px;
+  height: 16px;
+  color: var(--neodent-red-dark);
+  transition: transform 180ms ease;
+}
+.card:hover .arrow,
+.card:hover .ctaLink svg {
+  transform: translateX(3px);
+}
+
+/* The home's ivory closing card. */
+.cta {
+  background: #f1eee7;
+  border-color: #f1eee7;
+  color: #242628;
+}
+.ctaHeading {
+  font-family: var(--app-font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #242628;
+  text-wrap: balance;
+}
+.ctaText {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(36, 38, 40, 0.78);
+  text-wrap: pretty;
+}
+.ctaLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--neodent-red-dark);
+}
+.ctaLink svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 180ms ease;
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card {
+    min-height: 190px;
+  }
+}
+@media (max-width: 599px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .card {
+    min-height: 0;
+    padding: 20px;
+  }
+  .cardBottom {
+    min-height: 0;
+    padding-top: 18px;
+  }
+  .icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .arrow,
+  .ctaLink svg {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}

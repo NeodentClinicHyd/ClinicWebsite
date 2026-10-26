@@ -1,0 +1,348 @@
+/* About page -- shared chapter system.
+
+   Every value below is copied from the finished home sections
+   (LegacyStory, ClinicalLeadership, PatientStories, WhatToExpect,
+   SpacesDesignedAroundCare) and kept local to the About page so no home
+   CSS module is imported.
+
+   Deliberate deviations from the home, to honour the About brief:
+   - label / value rows are separated by spacing, not hairlines;
+   - chapter markers are plain words (no "01 /" numerals);
+   - no backdrop blur anywhere.                                      */
+
+.section {
+  --ink: var(--neodent-ink);
+  --body: rgba(38, 48, 51, 0.8);
+  /* Muted ink tuned to >= 4.5:1 on the #ece7dc section tone. */
+  --muted: rgba(38, 48, 51, 0.72);
+  --hair: rgba(38, 48, 51, 0.12);
+  --surface: var(--neodent-surface);
+  --red: var(--neodent-red);
+  --radius: 20px;
+  --radius-sm: 8px;
+  --pad: 24px;
+  --gutter: clamp(24px, 2.5vw, 32px);
+
+  position: relative;
+  overflow: var(--overflow, hidden);
+  isolation: isolate;
+  color: var(--section-color, var(--ink));
+  /* Sections tune their rhythm through --pt / --pb, never by
+     re-declaring padding, so import order cannot change the result. */
+  padding: var(--pt, clamp(72px, 8vw, 108px)) 0 var(--pb, clamp(64px, 7vw, 96px));
+}
+@media (min-width: 768px) {
+  .section {
+    --pad: 32px;
+  }
+}
+
+.ivory {
+  background: var(--ivory);
+}
+.sand {
+  background: #ece7dc;
+}
+/* The faint background grid LegacyStory sets on its sand surface. */
+.sand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(36, 38, 40, 0.045) 1px, transparent 1px) 0 0 / 100% 86px,
+    linear-gradient(90deg, rgba(36, 38, 40, 0.035) 1px, transparent 1px) 0 0 / 86px 100%;
+  mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+.container {
+  position: relative;
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+}
+
+/* ---- Chapter title: serif, red italic closing line ----------------- */
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.7rem, 4.4vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.title span {
+  display: block;
+  color: var(--red);
+  font-style: italic;
+}
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(2.15rem, 9vw, 2.7rem);
+  }
+}
+
+/* ---- Body copy: the .section-lede voice ---------------------------- */
+.lede {
+  margin: 0;
+  max-width: 64ch;
+  color: var(--body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  .lede {
+    font-size: 17px;
+  }
+}
+.lede + .lede {
+  margin-top: 16px;
+}
+
+/* Two balanced columns of prose (ClinicalLeadership .identityBody). */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(32px, 4vw, 56px);
+  align-items: start;
+}
+.cols > div {
+  min-width: 0;
+}
+.cols .lede {
+  max-width: none;
+}
+@media (max-width: 899px) {
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 16px;
+  }
+}
+
+/* ---- Labels -------------------------------------------------------- */
+.label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+@media (min-width: 1024px) {
+  .label {
+    font-size: 12px;
+  }
+}
+
+/* ---- Profile card (LegacyStory .card / ClinicalLeadership .card) ---- */
+.card {
+  container-type: inline-size;
+  padding: var(--pad);
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+}
+.cardHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+.cardName {
+  margin: 0 0 4px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.exp {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+}
+.exp strong {
+  color: var(--red);
+  font-family: var(--app-font-serif);
+  font-size: 40px;
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.exp span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+@container (min-width: 440px) {
+  .cardHead.withExp {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+  }
+  .exp {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    text-align: right;
+  }
+  .exp strong {
+    font-size: 48px;
+  }
+  .exp span {
+    max-width: 8em;
+    text-wrap: balance;
+  }
+}
+
+.facts {
+  margin: 28px 0 0;
+}
+.fact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px 24px;
+  padding: 10px 0;
+}
+.fact:first-child {
+  padding-top: 0;
+}
+.fact:last-child {
+  padding-bottom: 0;
+}
+.fact dt {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.fact dd.strong {
+  font-weight: 600;
+}
+@container (min-width: 420px) {
+  .fact {
+    grid-template-columns: 140px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+/* ---- Photographs & captions ----------------------------------------- */
+.figure {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+}
+.photo {
+  position: relative;
+  overflow: hidden;
+  background: #e2ddd0;
+  border-radius: var(--photo-radius, var(--radius));
+}
+.photo img {
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.02);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 6px 0;
+}
+.source {
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.medium {
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ---- Text link with arrow (PatientStories .cta) --------------------- */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+.cta:hover {
+  color: var(--red);
+  gap: 13px;
+}
+.cta:focus-visible,
+.inlineLink:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+.inlineLink {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 4px;
+}
+.inlineLink:hover {
+  color: var(--red);
+}
+
+/* ---- Reveal: one 12px fade-up, 400ms --------------------------------- */
+.section [data-reveal] {
+  transition:
+    opacity 400ms ease,
+    transform 400ms ease;
+}
+.section[data-reveal-ready] [data-reveal]:not([data-shown]) {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.section [data-shown="instant"] {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section [data-reveal] {
+    transition: none;
+  }
+  .cta {
+    transition: none;
+  }
+}

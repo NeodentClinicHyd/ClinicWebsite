@@ -1,19 +1,11 @@
 /* Section 04 — Clinical Leadership / Neodent profile.
 
-   Design language is inherited from Section 02 (.archive-* in
-   globals.css / LegacyStory.tsx), the canonical homepage style
-   reference: serif display headings with an italic red emphasis
-   span, a 10px/.2em uppercase eyebrow with a 34px red hairline, 15px/
-   1.7 muted sans body copy, and an oversized low-opacity serif
-   numeral that bleeds into the copy that follows it via a negative
-   margin in normal document flow (the same mechanic .archive-year
-   uses against .archive-intro), not a z-index overlay trick. Values
-   are copied from the exact Section 02 tokens and adapted for this
-   section's dark surface and its own composition. Nothing here edits
-   globals.css or Section 02.
+   Title uses the same values as the other dark-section titles; the
+   doctor card is a light-surface twin of the Dr. Siraj Ur Rahman card
+   in LegacyStory. Nothing here edits globals.css or other sections.
 
-   The Dr. Miftah profile is composed as: real Neodent portrait plate
-   bound to the numbered credential rail -> narrative -> a staggered
+   The Dr. Miftah profile is composed as: title -> (doctor card | photo,
+   philosophy callout and CTA) -> full-width narrative -> a staggered
    portfolio field (dominant teaching plate, medium recognition plate,
    small academic plate, profile film) built on the same 12-column
    offset-plate grammar the /about press archive uses. The supporting
@@ -35,65 +27,6 @@
   color: var(--ivory);
   padding: clamp(64px, 7vw, 96px) 0 clamp(88px, 10vw, 140px);
 }
-.section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse at 84% 3%, rgba(215, 25, 32, 0.1), transparent 44%),
-    radial-gradient(ellipse at 6% 96%, rgba(241, 238, 231, 0.035), transparent 55%),
-    #15171a;
-}
-
-/* Chapter-start seam: a compact top hairline (red-accented at the
-   edges, ivory at the centre), a short registration tick bleeding
-   down from its centre, and the section's own micro-label carried on
-   the seam itself (rather than floating separately above the
-   eyebrow, which previously read as a redundant second label). */
-.seam {
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-.seam::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(215, 25, 32, 0.55) 12%,
-    rgba(241, 238, 231, 0.2) 50%,
-    rgba(215, 25, 32, 0.55) 88%,
-    transparent
-  );
-}
-.seam::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: 15px;
-  background: linear-gradient(180deg, rgba(215, 25, 32, 0.6), transparent);
-  transform: translateX(-50%);
-}
-.seamLabel {
-  position: absolute;
-  top: 20px;
-  left: max(0px, calc((100% - 1180px) / 2 + 24px));
-  color: rgba(241, 238, 231, 0.3);
-  font: 9px/1 var(--app-font-mono, monospace);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
 
 .container {
   width: min(1180px, calc(100% - 48px));
@@ -102,295 +35,257 @@
   z-index: 1;
 }
 
-/* Leadership-specific drafting motif: vertical registration lines +
-   two mirrored corner crosshairs, standing for portrait framing --
-   as if two corners of a photograph are being registered -- rather
-   than Section 03's treatment-atlas grid geometry. */
-.guide {
-  position: absolute;
-  inset: 0;
-  opacity: 0.4;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    transparent 0 12%,
-    rgba(241, 238, 231, 0.08) 12% calc(12% + 1px),
-    transparent calc(12% + 1px) 50%,
-    rgba(215, 25, 32, 0.15) 50% calc(50% + 1px),
-    transparent calc(50% + 1px) 88%,
-    rgba(241, 238, 231, 0.08) 88% calc(88% + 1px),
-    transparent calc(88% + 1px)
-  );
-}
-.guide span {
-  position: absolute;
-  left: 12%;
-  right: 12%;
-  border-top: 1px solid rgba(241, 238, 231, 0.1);
-}
-.guide span:first-child { top: 18%; }
-.guide span:nth-child(2) { bottom: 18%; }
-.guide i {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  top: 18%;
-  left: 12%;
-  border-left: 1px solid var(--red);
-  border-top: 1px solid var(--red);
-}
-.guide b {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  bottom: 18%;
-  right: 12%;
-  border-right: 1px solid var(--red);
-  border-bottom: 1px solid var(--red);
-}
-
-/* Header -- eyebrow + heading inherit Section 02's .archive-eyebrow /
-   .archive-title tokens directly. The numeral is a normal-flow block
-   above the eyebrow with a large negative bottom margin, exactly like
-   .archive-year bleeding into .archive-intro: the eyebrow paints on
-   top of the numeral's lower portion simply because it comes later in
-   document order, so the "04" now reads as structurally connected to
-   the opening title rather than floating in a remote corner, with no
-   risk to text contrast. */
+/* Title -- same values as the dark sibling sections' .title
+   (Spaces designed around care, What to expect): serif, 400,
+   -0.04em, 1.04, red italic second line. */
 .header {
   position: relative;
-  max-width: 700px;
 }
-.numeral {
-  display: block;
-  margin: 0 0 -0.4em -0.05em;
-  color: rgba(241, 238, 231, 0.075);
-  font-family: var(--app-font-serif);
-  font-size: clamp(5.5rem, 9.5vw, 9.5rem);
-  font-weight: 400;
-  line-height: 0.8;
-  letter-spacing: -0.03em;
-  pointer-events: none;
-  user-select: none;
-}
-.eyebrow {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 22px;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-.eyebrow::before {
-  content: "";
-  width: 34px;
-  height: 1px;
-  background: var(--red);
-  flex-shrink: 0;
-}
-.metaLine {
-  position: relative;
-  margin: 0 0 20px;
-  color: rgba(241, 238, 231, 0.4);
-  font: 10px/1.4 var(--app-font-mono, monospace);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.header h2 {
-  position: relative;
+.title {
   margin: 0;
   font-family: var(--app-font-serif);
-  font-size: clamp(2.5rem, 3.8vw, 3.9rem);
+  font-size: clamp(2.7rem, 4.4vw, 4.4rem);
   font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 0.98;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
 }
-.header h2 span {
-  display: block;
+.title span {
   color: var(--red);
   font-style: italic;
 }
 
-/* Feature -- Miftah's identity stays a spacious, narrower left column;
-   the portrait plate (real Neodent photograph + its bound credential
-   rail) is pushed hard toward the container's right edge instead of
-   centring in its track, so the composition reads as deliberately
-   asymmetric rather than a generic two-column block.
-
-   Three grid children rather than two (head / plate / body) exist for
-   one reason: on mobile they can be re-ordered into name -> real
-   photograph -> credentials -> story. On desktop the head sits
-   directly above the body in the same left track, so the left column
-   still reads as one continuous piece of copy. */
+/* Feature -- row 1: the doctor card (left) and the visual column
+   (right: photograph, philosophy callout, CTA), both starting on the
+   same top edge; the visual column stretches to the card's height so
+   the CTA sits level with the card's bottom. Row 2: the narrative,
+   full width. */
 .feature {
+  --card-ink: var(--neodent-ink, #263033);
+  --card-muted: rgba(38, 48, 51, 0.72);
+  --card-hair: rgba(38, 48, 51, 0.12);
+  --card-pad: 24px;
+  --feature-gap: clamp(32px, 4vw, 56px);
   display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-  grid-template-rows: auto auto;
-  column-gap: 48px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  column-gap: var(--feature-gap);
+  row-gap: clamp(40px, 5vw, 64px);
+  align-items: stretch;
   margin-top: clamp(40px, 5vw, 64px);
 }
-.identityHead { grid-column: 1; grid-row: 1; padding-top: 6px; }
-.identityBody { grid-column: 1; grid-row: 2; }
-.kicker, .teamHeader span, .filmTop, .member > span { color: var(--red); font: 10px/1.4 var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
-.identityHead h3 { margin: 18px 0 16px; font-family: var(--app-font-serif); font-size: clamp(24px, 2.6vw, 40px); font-weight: 400; line-height: 1; letter-spacing: -.03em; }
-.role { margin: 0 0 26px; color: var(--ivory); font-size: 14px; line-height: 1.55; }
-/* Type (size / leading / colour / measure) comes from .section-lede. */
-.copy { margin: 0 0 22px; }
-.link { display: inline-flex; align-items: center; gap: 9px; margin-top: 6px; color: var(--ivory); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; transition: color .2s ease, gap .2s ease; }
-.link:hover { color: var(--red); gap: 13px; }
+@media (min-width: 768px) {
+  .feature { --card-pad: 32px; }
+}
+.identityHead { grid-column: 1; grid-row: 1; min-width: 0; }
 
-/* Portrait plate -- the real Neodent operatory photograph is the
-   section's information anchor. The credential rail sits immediately
-   left of the frame, sharing its height, with a vertical spine
-   hairline (.rail::after) running the full height of the rail and
-   touching the frame's left edge, plus a short horizontal tick per
-   annotation (.annotation::after) that reaches from the spine into
-   the frame border. This is what binds the four proof points to the
-   photograph as one system instead of an independent list beside it.
-
-   The aside around it stretches across both grid rows, so it is exactly
-   as tall as the narrative column: the plate takes its natural height
-   and the profile index takes the remainder. That is what stops the
-   right column from simply ending under the photograph and leaving a
-   void beside the closing paragraphs. */
-.profileAside {
+/* Visual column -- photograph, then the philosophy callout overlapping
+   its lower-right edge, then the CTA directly beneath the callout. */
+.visual {
   grid-column: 2;
-  grid-row: 1 / 3;
-  align-self: stretch;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
-.portraitPlate {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-end;
-  gap: 0;
-  margin-left: auto;
-  width: 100%;
-}
-.rail {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 4px 22px 4px 0;
-  width: clamp(150px, 17vw, 200px);
-  flex-shrink: 0;
-}
-.rail::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(215, 25, 32, 0.5) 12%, rgba(215, 25, 32, 0.5) 88%, transparent);
-}
-.annotation { position: relative; display: grid; grid-template-columns: 20px 1fr; gap: 9px; }
-.annotation::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: -22px;
-  width: 22px;
-  height: 1px;
-  background: rgba(215, 25, 32, 0.55);
-}
-.annotationNumber { color: var(--red); font: 10px var(--app-font-mono, monospace); }
-.annotation small { display: block; margin-bottom: 5px; color: var(--muted); font: 9px var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
-.annotation strong { color: var(--ivory); font-size: 12.5px; font-weight: 400; line-height: 1.4; }
 
-/* Same clamp as .practiceIndex below, so the index sits flush to the
-   photograph's own left and right edges rather than to its grid track. */
-.portrait { position: relative; margin: 0; flex-shrink: 1; min-width: 0; width: clamp(260px, 36vw, 480px); }
-/* 3/4 is the source photograph's own ratio (960x1280), so the primary
-   Dr. Miftah image is framed with no crop at all: his face stays
-   unambiguous and enough of the Neodent operatory around him survives
-   to show the photograph is genuinely from the hospital. */
-.portraitFrame {
+/* Photograph -- same image and source; cropped to keep the doctor in
+   frame, with a generous top-right radius and the card's 20px radius
+   on the other corners so it sits with the card beside it. */
+.portrait {
   position: relative;
-  z-index: 1;
-  aspect-ratio: 3 / 4;
+  flex: 1 1 auto;
+  min-height: 360px;
+  min-width: 0;
+  margin: 0;
   overflow: hidden;
-  border: 1px solid rgba(241, 238, 231, 0.24);
+  border-radius: 20px 96px 20px 20px;
   background: #17191a;
 }
-.portraitCaption {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-top: 11px;
-  color: var(--muted);
-  font: 10px/1.4 var(--app-font-mono, monospace);
-  letter-spacing: .12em;
-  text-transform: uppercase;
+.portraitImg {
+  object-fit: cover;
+  /* Full figure from head to knees; trims ceiling, not the subject. */
+  object-position: 40% 78%;
+  filter: saturate(.9) contrast(1.03);
 }
-.portraitCaption b { color: var(--red); font-size: 9.5px; font-weight: 700; }
 
-/* Profile index -- verified metadata the credential rail deliberately
-   does not carry (locations, clinical focus, academic post), set as a
-   thin annotation table bound to the portrait plate's own width. It
-   takes all remaining aside height and distributes it between its rows
-   with space-between, exactly as .rail does against the frame, so a
-   tall narrative column produces measured rhythm instead of a void. */
-.practiceIndex {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  width: clamp(260px, 36vw, 480px);
-  margin: clamp(28px, 3.2vw, 42px) 0 0 auto;
-  padding-top: 20px;
-  border-top: 1px solid rgba(215, 25, 32, 0.3);
-}
-.practiceIndexLabel {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 18px;
-  color: var(--muted);
-  font: 9px/1 var(--app-font-mono, monospace);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-.practiceIndexLabel::before {
-  content: "";
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
+/* Philosophy callout -- compact red card hung off the photo's lower
+   right. Unequal radii (large on two opposite corners, small on the
+   others) make it a deliberate editorial tab, not a generic pill. */
+.quote {
+  position: relative;
+  z-index: 1;
+  align-self: flex-end;
+  width: min(100% - 24px, 340px);
+  margin: -44px 12px 0 0;
+  padding: 20px 24px 22px;
   background: var(--red);
-  opacity: .8;
-  flex-shrink: 0;
+  color: #fff;
+  border-radius: 24px 6px 24px 6px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
 }
-.practiceRows {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 18px;
+.quote p {
   margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.7vw, 22px);
+  font-style: italic;
+  line-height: 1.3;
+  text-wrap: balance;
 }
-.practiceRow {
+
+/* Doctor card -- twin of the Dr. Siraj Ur Rahman card
+   (LegacyStory.module.css .card / .cardHead / .facts): same light
+   surface token, ink, radius, padding, hairline border, avatar size and
+   shape, and label / value rhythm. */
+.card {
+  container-type: inline-size;
+  padding: var(--card-pad);
+  background: var(--neodent-surface, #fffefa);
+  color: var(--card-ink);
+  border: 1px solid var(--card-hair);
+  border-radius: 20px;
+}
+.cardHead {
   display: grid;
-  grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
-  gap: 8px 18px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(241, 238, 231, 0.1);
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
 }
-.practiceRow:last-child { padding-bottom: 0; border-bottom: 0; }
-.practiceRow dt {
-  color: var(--red);
-  font: 9px/1.5 var(--app-font-mono, monospace);
-  letter-spacing: .16em;
+.avatar {
+  position: relative;
+  width: 80px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #ece7dc;
+  border-radius: 10px;
+}
+.avatarImg {
+  object-fit: cover;
+  /* Keeps his face and shoulders in frame, clear of the logo. */
+  object-position: 100% 20%;
+}
+@media (min-width: 768px) {
+  .avatar { width: 96px; }
+}
+.cardName {
+  margin: 0 0 4px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.label {
+  margin: 0;
+  color: var(--card-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
   text-transform: uppercase;
 }
-.practiceRow dd { margin: 0; color: rgba(241, 238, 231, 0.78); font-size: 12.5px; line-height: 1.55; }
+@media (min-width: 1024px) {
+  .label { font-size: 12px; }
+}
+.exp {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-hair);
+}
+.exp strong {
+  color: var(--red);
+  font-family: var(--app-font-serif);
+  font-size: 40px;
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.exp span {
+  color: var(--card-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+@container (min-width: 480px) {
+  .cardHead {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 24px;
+  }
+  .avatar { width: 112px; }
+  .exp {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    padding-top: 0;
+    border-top: 0;
+    text-align: right;
+  }
+  .exp strong { font-size: 48px; }
+  .exp span { max-width: 8em; text-wrap: balance; }
+}
+.facts {
+  margin: 24px 0 0;
+  border-top: 1px solid var(--card-hair);
+}
+.fact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--card-hair);
+}
+.fact:last-child { padding-bottom: 0; border-bottom: 0; }
+.fact dt {
+  color: var(--card-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  color: var(--card-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.fact dd.quals { font-weight: 600; }
+@container (min-width: 420px) {
+  .fact {
+    grid-template-columns: 140px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+/* Narrative -- one full-width block under the card + photo row. A
+   hairline spans the whole content width so the block owns it; the
+   paragraphs themselves are capped at a comfortable measure (~92ch)
+   instead of the 64ch lede, so they fill the width without turning
+   into an over-long line. */
+.identityBody {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  padding-top: clamp(32px, 4vw, 48px);
+  border-top: 1px solid rgba(241, 238, 231, 0.14);
+}
+.identityBody .copy {
+  max-width: 92ch;
+  margin: 0 0 22px;
+}
+.identityBody .copy:last-child { margin-bottom: 0; }
+@media (min-width: 1024px) {
+  .identityBody .copy { font-size: 17px; }
+}
+.ctaRow {
+  margin-top: 20px;
+}
 
 /* Faint focus-ring arc behind a plate -- editorial portrait-framing
    geometry, not a decorative blob: a single offset circle, very low
@@ -514,13 +409,9 @@
 }
 .folioPlate figcaption b { color: var(--red); font-size: 9.5px; font-weight: 700; }
 
-.folioNote { padding-top: 2px; }
-.folioNoteCopy { margin: 0 0 22px; color: var(--muted); font-size: 14px; line-height: 1.7; }
-.folioIndexList { margin: 0; padding-top: 18px; border-top: 1px solid rgba(215, 25, 32, 0.3); }
-.folioIndexList > div { display: grid; gap: 4px; padding: 9px 0; border-bottom: 1px solid rgba(241, 238, 231, 0.09); }
-.folioIndexList > div:last-child { border-bottom: 0; }
-.folioIndexList dt { color: var(--red); font: 9px var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
-.folioIndexList dd { margin: 0; color: rgba(241, 238, 231, 0.72); font-size: 11.5px; line-height: 1.5; }
+.folioNote { padding-top: 18px; border-top: 1px solid rgba(215, 25, 32, 0.3); }
+.folioNoteCopy { margin: 0 0 18px; color: var(--muted); font-size: 17px; line-height: 1.75; }
+.folioNoteCopy:last-child { margin-bottom: 0; }
 
 /* Profile film -- existing editorial treatment kept intact (offset
    focus ring, thin frame, registration tick, micro-labels, circular
@@ -679,8 +570,7 @@
 .header,
 .identityHead,
 .identityBody,
-.portraitPlate,
-.practiceIndex,
+.visual,
 .folio,
 .teamHeader,
 .team {
@@ -691,8 +581,7 @@
 .section:not(.visible) .header,
 .section:not(.visible) .identityHead,
 .section:not(.visible) .identityBody,
-.section:not(.visible) .portraitPlate,
-.section:not(.visible) .practiceIndex,
+.section:not(.visible) .visual,
 .section:not(.visible) .teamHeader,
 .section:not(.visible) .team,
 .folio:not(.folioVisible) {
@@ -700,16 +589,13 @@
   transform: translateY(18px);
 }
 .identityHead { transition-delay: 90ms; }
-.portraitPlate { transition-delay: 170ms; }
+.visual { transition-delay: 170ms; }
 .identityBody { transition-delay: 230ms; }
-.practiceIndex { transition-delay: 290ms; }
 .teamHeader { transition-delay: 260ms; }
 .team { transition-delay: 340ms; }
 
-@media (max-width: 1100px) {
-  .feature { column-gap: 32px; }
-  .rail { width: clamp(130px, 15vw, 170px); }
-}
+/* Micro-labels carried over for the portfolio / roster / film. */
+.teamHeader span, .filmTop, .member > span { color: var(--red); font: 10px/1.4 var(--app-font-mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
 
 /* Tablet -- the portfolio steps down to a two-column editorial
    collage: the dominant teaching plate goes full width, the medium
@@ -721,8 +607,8 @@
   .folioLead { grid-column: 1 / 13; grid-row: 1; }
   .folioRecognition { grid-column: 1 / 8; grid-row: 2; margin-top: 0; }
   .folioNote { grid-column: 8 / 13; grid-row: 2; }
-  .folioAcademic { grid-column: 1 / 5; grid-row: 3; margin-top: 0; }
-  .film { grid-column: 5 / 10; grid-row: 3; margin-top: 0; }
+  .folioAcademic { grid-column: 1 / 7; grid-row: 3; margin-top: 0; }
+  .film { grid-column: 7 / 13; grid-row: 3; margin-top: 0; }
   .folioLead .folioFrame { aspect-ratio: 3 / 2; }
 }
 
@@ -736,44 +622,6 @@
 
 @media (max-width: 800px) {
   .container { width: min(100% - 32px, 600px); }
-  .header h2 { max-width: 100%; }
-  .numeral { font-size: clamp(4.2rem, 20vw, 6.5rem); }
-  /* Mobile re-composition, not a stacked desktop layout: identity head
-     (name + role) -> the real Dr. Miftah photograph -> the numbered
-     credentials -> the profile narrative. The photograph arrives before
-     any body copy. */
-  .feature { display: flex; flex-direction: column; gap: 30px; margin-top: 32px; }
-  /* display: contents lifts the portrait plate and the profile index out
-     of the aside so all four blocks become siblings in one flex column
-     and can be ordered independently: name -> photograph -> credentials
-     -> story -> index metadata. */
-  .profileAside { display: contents; }
-  .identityHead { order: 1; padding-top: 0; }
-  .portraitPlate { order: 2; }
-  .identityBody { order: 3; }
-  .practiceIndex { order: 4; flex: 0 0 auto; width: 100%; max-width: 460px; margin: 0 auto; }
-  .practiceRows { gap: 16px; }
-  .role { margin-bottom: 0; }
-  /* Portrait plate flips to a compact vertical stack: photograph first,
-     then the credential rail directly beneath it as a 2x2 grid with a
-     horizontal spine touching the frame's bottom edge -- proofs stay
-     visually bound to the photograph rather than reverting to a plain
-     list. */
-  .portraitPlate { flex-direction: column-reverse; justify-content: flex-start; width: 100%; }
-  .portrait { width: 100%; max-width: 460px; margin: 0 auto; }
-  .rail {
-    width: 100%;
-    max-width: 460px;
-    margin: 0 auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 18px 0 0;
-    gap: 16px 20px;
-  }
-  .rail::after { top: 0; bottom: auto; left: 0; right: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(215,25,32,.5) 12%, rgba(215,25,32,.5) 88%, transparent); }
-  .annotation { width: calc(50% - 10px); }
-  .annotation::after { top: -18px; right: auto; left: 0; width: 1px; height: 18px; background: rgba(215, 25, 32, 0.55); }
 
   /* Portfolio becomes a single editorial column at full container
      width -- the index note (captions + recognition/teaching metadata)
@@ -796,9 +644,29 @@
   .teamHeader { align-items: flex-start; flex-direction: column; gap: 8px; margin-top: 56px; }
 }
 
+/* Mobile (<= 768px): single column in the order title, card,
+   photo + philosophy callout, CTA, paragraphs. */
+@media (max-width: 768px) {
+  .title { font-size: clamp(2.15rem, 9vw, 2.7rem); }
+  .feature {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 40px;
+    margin-top: 32px;
+  }
+  .identityHead,
+  .visual,
+  .identityBody { grid-column: 1; grid-row: auto; }
+  .portrait {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    border-radius: 20px 72px 20px 20px;
+  }
+  .quote { width: min(100% - 16px, 320px); margin-right: 8px; }
+}
+
 @media (max-width: 430px) {
   .team { grid-template-columns: 1fr; }
-  .annotation { width: 100%; }
   .plateFocusRing { display: none; }
 }
 
@@ -807,8 +675,7 @@
   .header,
   .identityHead,
   .identityBody,
-  .portraitPlate,
-  .practiceIndex,
+  .visual,
   .folio,
   .teamHeader,
   .team {

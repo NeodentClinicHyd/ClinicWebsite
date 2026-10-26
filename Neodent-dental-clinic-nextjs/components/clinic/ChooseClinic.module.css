@@ -1,0 +1,190 @@
+/* Clinic -- "Find your clinic."
+
+   Branch card: the About card surface (surface fill, 1px hair border,
+   20px radius) with a photograph on top. The facts block is the About
+   doctor card's label / value rows, set in an inset panel so address,
+   phone and hours read as one group. The doctor row beneath is the
+   compact dark link row; its geometry is the 16px home service card. */
+
+.choose {
+  --pt: clamp(32px, 4vw, 56px);
+  --pb: clamp(72px, 8vw, 112px);
+  /* The footer links to #mehdipatnam / #nampally: clear the fixed bar. */
+  scroll-margin-top: calc(var(--nav-height-desktop) + 16px);
+}
+
+.branches {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter);
+  margin: clamp(32px, 4vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.branch {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  scroll-margin-top: calc(var(--nav-height-desktop) + 24px);
+}
+
+.card {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+}
+
+.figure {
+  margin: 0;
+}
+.photo {
+  aspect-ratio: 16 / 10;
+}
+
+.cardBody {
+  container-type: inline-size;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 20px;
+  padding: var(--pad);
+}
+.name {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(30px, 2.8vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.description {
+  max-width: 62ch;
+}
+
+/* Inset panel: the same label / value rhythm as the About doctor card. */
+.facts {
+  padding: 20px 22px;
+  background: #f6f3ec;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-sm);
+}
+@container (min-width: 420px) {
+  .facts > div {
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+.phone {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 4px;
+}
+.phone:hover {
+  color: var(--red);
+}
+.phone:focus-visible,
+.doctor:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
+}
+.actions > :global(.button) {
+  flex: 1 1 160px;
+}
+.directions {
+  color: var(--ink);
+}
+.directions:hover {
+  background: rgba(38, 48, 51, 0.06);
+}
+
+/* Compact doctor row under each card. */
+.doctor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding: 14px 22px;
+  background: var(--neodent-charcoal);
+  border-radius: 16px;
+  color: var(--neodent-ivory);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+.doctor:hover {
+  background: #242628;
+  transform: translateY(-2px);
+}
+.doctor:focus-visible {
+  outline-color: var(--red);
+}
+.doctorArrow {
+  flex: none;
+  color: var(--neodent-red);
+  transition: transform 180ms ease;
+}
+.doctor:hover .doctorArrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 899px) {
+  .branches {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .photo {
+    aspect-ratio: 16 / 9;
+  }
+}
+@media (max-width: 767px) {
+  .cardBody {
+    gap: 18px;
+    padding: 22px 20px 24px;
+  }
+  .name {
+    font-size: 32px;
+  }
+  .facts {
+    padding: 18px 18px;
+  }
+  .actions {
+    flex-direction: column;
+  }
+  .actions > :global(.button) {
+    flex: none;
+    width: 100%;
+  }
+  .doctor {
+    padding: 14px 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doctor,
+  .doctorArrow {
+    transition: none;
+  }
+  .doctor:hover {
+    transform: none;
+  }
+}
