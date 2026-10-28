@@ -1,18 +1,12 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowRight, Pause, Play } from "lucide-react";
 import styles from "./ClinicalLeadership.module.css";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
-
-const proofs = [
-  ["01", "Credentials", "BDS · MDS · FICOI (U.S.A.)"],
-  ["02", "Clinical role", "Prosthodontist & Implantologist"],
-  ["03", "Recognition", "Gold Medallist"],
-  ["04", "Experience / leadership", "15+ years · Assistant Director · Neodent"],
-];
+import { AppButton } from "@/components/ui/AppButton";
+import { homepageClinicalTeam } from "@/lib/clinical-team";
 
 /* Authentic, client-supplied Dr. Miftah photography, all from
    /public/assets/dr-miftah. Nothing here is stock, generated or
@@ -34,6 +28,10 @@ const proofs = [
      - "Dr. Md. Miftah Ur Rahman - Neodent Dental Hospital.png" -- the
        cutout portrait, already used by the Treatments page. */
 const MIFTAH_MEDIA = {
+  avatar: {
+    src: "/assets/dr-miftah/banner_image.jpeg",
+    alt: "Portrait of Dr. Md. Miftah Ur Rahman in a white coat at Neodent Dental Hospital",
+  },
   portrait: {
     src: "/assets/dr-miftah/Dr Miftah ur Rahman at Neodent Dental Hospital.jpeg",
     alt:
@@ -55,55 +53,6 @@ const MIFTAH_MEDIA = {
       "Dr. Md. Miftah Ur Rahman in a clinical coat at the entrance to the Department of Prosthodontics, SB Patil Dental College & Hospital",
   },
 };
-
-type TeamMember = {
-  label: string;
-  name: ReactNode;
-  degrees: ReactNode;
-  image: string | null;
-  alt: string;
-  initials?: string;
-};
-
-const team: TeamMember[] = [
-  {
-    label: "01 / SENIOR CLINICAL LEADERSHIP",
-    name: <>Dr. Mohd. Siraj<br />Ur Rahman</>,
-    degrees: <>BDS · FCIP · MDS (Chennai)<br />Professor · Director, Neodent · 35+ years</>,
-    image: "/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png",
-    alt: "Dr. Mohd. Siraj Ur Rahman",
-  },
-  {
-    label: "02 / NEODENT TEAM",
-    name: <>Dr. Md. Muti<br />Ur Rahman</>,
-    degrees: <>MBBS (OSM) · MD (Gen. Med.)<br />5+ years</>,
-    image: "/assets/Dr. Md. Muti Ur Rahman - Neodent  dental clinic.png",
-    alt: "Dr. Md. Muti Ur Rahman",
-  },
-  {
-    label: "03 / CLINICAL TEAM",
-    name: <>Dr. Asiya<br />Siraj</>,
-    degrees: <>MBBS (OSM) · MRSH (LON)<br />30+ years</>,
-    image: null,
-    alt: "Dr. Asiya Siraj",
-    initials: "AS",
-  },
-  {
-    label: "04 / CLINICAL TEAM",
-    name: <>Dr. Safoora<br />Talha</>,
-    degrees: <>BDS · 12+ years</>,
-    image: null,
-    alt: "Dr. Safoora Talha",
-    initials: "ST",
-  },
-  {
-    label: "05 / CLINICAL TEAM",
-    name: <>Dr. Muqeet<br />Ur Rahman</>,
-    degrees: <>BDS (OSM) · Dental Surgeon<br />4+ years</>,
-    image: "/assets/Dr.Muqeet-ur-Rahman.png",
-    alt: "Dr. Muqeet Ur Rahman",
-  },
-];
 
 /* Editorial identity plate used only where no authentic Neodent
    portrait exists yet (Dr. Asiya, Dr. Safoora). It intentionally does
@@ -213,122 +162,87 @@ export function ClinicalLeadership() {
 
   return (
     <section ref={sectionRef} className={`${styles.section} ${visible ? styles.visible : ""}`} id="leadership" aria-labelledby="leadership-title">
-      {/* Chapter-start seam -- top hairline + centred registration tick,
-          carrying the section's own micro-label, marking a clear (but
-          still dark) new-chapter boundary with Section 03. */}
-      <span className={styles.seam} aria-hidden="true">
-        <span className={styles.seamLabel}>04 / Portrait frame</span>
-      </span>
-      <div className={styles.guide} aria-hidden="true">
-        <span /> <span /> <i /> <b />
-      </div>
-
       <div className={styles.container}>
         <header className={styles.header}>
-          {/* Numeral sits in normal flow directly before the eyebrow with
-              a negative bottom margin, exactly like Section 02's
-              .archive-year bleeding into .archive-intro: later siblings
-              paint over its lower portion in normal document order, so
-              no z-index trick is needed and text stays fully readable. */}
-          <span className={styles.numeral} aria-hidden="true">04</span>
-          <div className={styles.eyebrow}>04 / The people behind the care</div>
-          <div className={styles.metaLine}>Clinical leadership / Neodent profile</div>
-          <h2 id="leadership-title">A steady hand.<br /><span>A human approach.</span></h2>
+          <h2 id="leadership-title" className={styles.title}>
+            A steady hand.<br /><span>A human approach.</span>
+          </h2>
         </header>
 
-        {/* Primary profile. Three DOM blocks -- identity head, portrait
-            plate, narrative body -- placed as an asymmetric two-column
-            grid on desktop (head above body in the left track, plate
-            spanning both rows on the right) purely so that mobile can
-            re-order them into name -> real photograph -> credentials ->
-            story, rather than making a visitor read four paragraphs
-            before they ever see Dr. Miftah. */}
+        {/* Row 1: doctor card (left), photo + philosophy callout + CTA
+            (right), tops aligned. Row 2: the narrative paragraphs across
+            the full width. DOM order doubles as the mobile order: card,
+            photo + callout, CTA, paragraphs. */}
         <div className={styles.feature}>
           <div className={styles.identityHead}>
-            <p className={styles.kicker}>A trusted face of Neodent</p>
-            <h3>Dr. Md. Miftah<br />Ur Rahman</h3>
-            <p className={styles.role}>Prosthodontist &amp; Implantologist<br />Assistant Director · Neodent</p>
-          </div>
-
-          {/* Right-hand aside: the portrait plate, then a profile index
-              that absorbs whatever height the narrative column runs on
-              past the photograph. Without it the plate simply stopped
-              and left a tall void beside the last two paragraphs. The
-              index rows distribute across the remaining space using the
-              same space-between mechanic the credential rail uses, so
-              the leftover height becomes rhythm rather than a dead
-              zone -- and it carries verified metadata the rail does not
-              (locations, clinical focus, academic post) rather than
-              repeating it. */}
-          <div className={styles.profileAside}>
-            {/* The portrait plate is the section's information anchor: the
-                real Neodent operatory photograph pushed to the container's
-                right edge, with the four proof points bound to it as an
-                annotation rail rather than sitting beside it as an
-                independent list. Each annotation's connecting tick
-                terminates exactly at the frame's edge. */}
-            <div className={styles.portraitPlate}>
-              <div className={styles.rail}>
-                {proofs.map(([number, label, value]) => (
-                  <div className={styles.annotation} key={number}>
-                    <span className={styles.annotationNumber}>{number}</span>
-                    <div>
-                      <small>{label}</small>
-                      <strong>{value}</strong>
-                    </div>
-                  </div>
-                ))}
+            <div className={styles.card}>
+              <div className={styles.cardHead}>
+                <div className={styles.avatar}>
+                  <Image
+                    className={styles.avatarImg}
+                    src={MIFTAH_MEDIA.avatar.src}
+                    alt={MIFTAH_MEDIA.avatar.alt}
+                    fill
+                    sizes="112px"
+                  />
+                </div>
+                <div className={styles.identity}>
+                  <h4 className={styles.cardName}>Dr. Md. Miftah Ur Rahman</h4>
+                  <p className={styles.label}>Assistant Director, Neodent Dental Hospitals</p>
+                </div>
+                <p className={styles.exp}>
+                  <strong>15+</strong>
+                  <span>Years of clinical experience</span>
+                </p>
               </div>
 
-              <figure className={styles.portrait}>
-                <span className={styles.plateFocusRing} aria-hidden="true" />
-                <span className={styles.frameRegistration} aria-hidden="true" />
-                <div className={styles.portraitFrame}>
-                  <Image
-                    src={MIFTAH_MEDIA.portrait.src}
-                    alt={MIFTAH_MEDIA.portrait.alt}
-                    fill
-                    sizes="(max-width: 800px) 92vw, (max-width: 1100px) 36vw, 480px"
-                    className={styles.plateImage}
-                  />
-                  {/* One micro-label only -- the location and hospital are
-                      already carried by the caption beneath the frame, and a
-                      second label would crowd the narrower tablet width. */}
-                  <div className={styles.filmTop}>
-                    <span>01 / Clinical practice</span>
-                  </div>
+              <dl className={styles.facts}>
+                <div className={styles.fact}>
+                  <dt>Qualifications</dt>
+                  <dd className={styles.quals}>BDS · MDS · FICOI (U.S.A.)</dd>
                 </div>
-                <figcaption className={styles.portraitCaption}>
-                  <b>Dr. Miftah Ur Rahman</b>
-                  <span>In the operatory · Neodent Dental Hospital, Hyderabad</span>
-                </figcaption>
-              </figure>
-            </div>
-
-            <div className={styles.practiceIndex}>
-              <p className={styles.practiceIndexLabel}>Profile index</p>
-              <dl className={styles.practiceRows}>
-                <div className={styles.practiceRow}>
-                  <dt>Practising at</dt>
-                  <dd>Mehdipatnam &amp; Nampally — Hyderabad</dd>
+                <div className={styles.fact}>
+                  <dt>Specialism</dt>
+                  <dd>Prosthodontist &amp; Implantologist · Smile Designer (expert in smile design)</dd>
                 </div>
-                <div className={styles.practiceRow}>
-                  <dt>Clinical focus</dt>
-                  <dd>Prosthodontics · Implantology · Dental rehabilitation</dd>
-                </div>
-                <div className={styles.practiceRow}>
+                <div className={styles.fact}>
                   <dt>Academic post</dt>
-                  <dd>
-                    Assistant Professor — SB Patil Dental College &amp;
-                    Hospital, Department of Prosthodontics
-                  </dd>
+                  <dd>Assistant Professor, Department of Prosthodontics, SB Patil Dental College &amp; Hospital</dd>
+                </div>
+                <div className={styles.fact}>
+                  <dt>Practising at</dt>
+                  <dd>Mehdipatnam &amp; Nampally, Hyderabad</dd>
+                </div>
+                <div className={styles.fact}>
+                  <dt>Recognition</dt>
+                  <dd>University Gold Medalist · Madina Gold Medal (2023), awarded by Commissioner A. K. Khan</dd>
                 </div>
               </dl>
             </div>
           </div>
 
+          <div className={styles.visual}>
+            <figure className={styles.portrait}>
+              <Image
+                src={MIFTAH_MEDIA.portrait.src}
+                alt={MIFTAH_MEDIA.portrait.alt}
+                fill
+                sizes="(max-width: 800px) 92vw, 46vw"
+                className={styles.portraitImg}
+              />
+            </figure>
+            <blockquote className={styles.quote}>
+              <p>&ldquo;Save the natural teeth, even if they are mobile.&rdquo;</p>
+            </blockquote>
+            <div className={styles.ctaRow}>
+              <AppButton href="/doctors/dr-miftah-ur-rahman" variant="primary">
+                Explore Dr. Miftah <ArrowRight size={15} aria-hidden="true" />
+              </AppButton>
+            </div>
+          </div>
+
           <div className={styles.identityBody}>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               Dr. Md. Miftah Ur Rahman is a{" "}
               <EditorialHighlight tone="primary" onDark>
                 Prosthodontist and Implantologist
@@ -345,7 +259,7 @@ export function ClinicalLeadership() {
               Rahman, in the same specialist disciplines Neodent has been
               built around since 1994.
             </p>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               His specialist grounding is in{" "}
               <EditorialHighlight tone="primary" onDark>
                 prosthodontics and implantology
@@ -363,7 +277,7 @@ export function ClinicalLeadership() {
               </EditorialHighlight>{" "}
               is put forward.
             </p>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               Alongside clinical dentistry he teaches as an{" "}
               <EditorialHighlight tone="primary" onDark>
                 Assistant Professor at SB Patil Dental College &amp; Hospital
@@ -379,7 +293,7 @@ export function ClinicalLeadership() {
               </EditorialHighlight>
               , and the two have run in parallel throughout his career.
             </p>
-            <p className={styles.copy}>
+            <p className={`${styles.copy} section-lede section-lede--on-dark`}>
               He qualified BDS and MDS, holds{" "}
               <EditorialHighlight tone="secondary" onDark>
                 FICOI (U.S.A.)
@@ -396,9 +310,6 @@ export function ClinicalLeadership() {
               — precision, clear conversations, and care that stays
               personal even when the work ahead is complex.
             </p>
-            <a className={styles.link} href="/doctors/dr-miftah-ur-rahman">
-              Explore Dr. Miftah <ArrowRight size={15} aria-hidden="true" />
-            </a>
           </div>
         </div>
 
@@ -459,39 +370,27 @@ export function ClinicalLeadership() {
 
             <div className={styles.folioNote}>
               <p className={styles.folioNoteCopy}>
+                As Assistant Director at Neodent, his prosthodontic and implant
+                work spans the Mehdipatnam and Nampally clinics. It centres on{" "}
                 <EditorialHighlight tone="primary" onDark>
-                  Clinical practice, teaching and recognition
+                  restoring what can be saved and rebuilding what cannot
                 </EditorialHighlight>{" "}
-                are three parts of one career rather than three separate
-                stories — and the same{" "}
+                — implants, full-mouth rehabilitation and the restorative work
+                that follows — with{" "}
                 <EditorialHighlight tone="secondary" onDark>
-                  specialist grounding
-                </EditorialHighlight>{" "}
-                sits behind all of them, whether Dr. Miftah is planning a
-                rehabilitation at Neodent or{" "}
-                <EditorialHighlight tone="quiet" onDark>
-                  taking a seminar for dental students
+                  a full assessment and a plan before treatment begins
                 </EditorialHighlight>
                 .
               </p>
-              <dl className={styles.folioIndexList}>
-                <div>
-                  <dt>i · Teaching</dt>
-                  <dd>Department of Prosthodontics, SB Patil Dental College &amp; Hospital</dd>
-                </div>
-                <div>
-                  <dt>ii · Recognition</dt>
-                  <dd>Certificate presented by Dr. K Mahendranadh Reddy</dd>
-                </div>
-                <div>
-                  <dt>iii · Academic</dt>
-                  <dd>Academic teaching and professional development</dd>
-                </div>
-                <div>
-                  <dt>iv · Clinical film</dt>
-                  <dd>Neodent Dental Hospital, Hyderabad</dd>
-                </div>
-              </dl>
+              <p className={styles.folioNoteCopy}>
+                Alongside clinical practice, he teaches and conducts seminars
+                as Assistant Professor in the Department of Prosthodontics at
+                SB Patil Dental College &amp; Hospital — and that{" "}
+                <EditorialHighlight tone="quiet" onDark>
+                  teaching keeps the clinical reasoning current
+                </EditorialHighlight>
+                .
+              </p>
             </div>
 
             <figure className={`${styles.folioPlate} ${styles.folioAcademic}`}>
@@ -548,8 +447,8 @@ export function ClinicalLeadership() {
             invented likeness) so all four cards still share one
             identical design standard. */}
         <div className={styles.team}>
-          {team.map((member) => (
-            <article className={styles.member} key={member.label}>
+          {homepageClinicalTeam.map((member) => (
+            <article className={styles.member} key={member.id}>
               <div className={styles.memberImage}>
                 {member.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -559,8 +458,12 @@ export function ClinicalLeadership() {
                 )}
               </div>
               <span>{member.label}</span>
-              <h3>{member.name}</h3>
-              <p>{member.degrees}</p>
+              <h3>{member.nameLines[0]}<br />{member.nameLines[1]}</h3>
+              <p>
+                {member.detailLines.map((line, index) => (
+                  <span key={line}>{index > 0 && <br />}{line}</span>
+                ))}
+              </p>
             </article>
           ))}
         </div>

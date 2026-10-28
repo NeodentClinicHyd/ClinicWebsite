@@ -1,0 +1,123 @@
+/* Related-treatment cards. Copied from `.treatment-atlas-card*`: 16px
+   radius, 22px padding, 19px / 600 title, 14-15px summary, red arrow that
+   nudges 3px on hover, card lifts 2px. Surface is the paper token because
+   the host section is ivory. */
+
+.grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.cell {
+  display: flex;
+  min-width: 0;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 190px;
+  padding: 22px;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 16px;
+  background-color: var(--neodent-surface);
+  color: #252525;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.card:hover {
+  border-color: rgba(37, 37, 37, 0.24);
+  transform: translateY(-2px);
+}
+.card:focus-visible {
+  outline: 2px solid #252525;
+  outline-offset: 2px;
+}
+.title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #252525;
+  text-wrap: balance;
+}
+.text {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #3f4547;
+}
+.more {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 44px;
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--neodent-red);
+}
+.more svg {
+  transition: transform 180ms ease;
+}
+.card:hover .more svg {
+  transform: translateX(3px);
+}
+
+/* Compact: title, one short line and a small arrow in a slim card. */
+.compact {
+  gap: 12px;
+}
+.compact .card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 12px;
+  min-height: 96px;
+  padding: 14px 18px;
+  border-radius: 14px;
+}
+.compact .title {
+  grid-column: 1;
+  font-size: 17px;
+}
+.compact .text {
+  grid-column: 1;
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.compact .more {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    min-height: 0;
+  }
+  .compact .card {
+    min-height: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .more svg {
+    transition: none;
+  }
+  .card:hover,
+  .card:hover .more svg {
+    transform: none;
+  }
+}

@@ -1,0 +1,25 @@
+/* Styling for the root canal treatment illustrations. New classes only;
+   the shared kit's module (illustrations.module.css) is not touched.
+   Artwork colours come from the existing palette (see RctDefs.tsx). Edge
+   strokes are tinted, never black. Hairline behaviour
+   (vector-effect: non-scaling-stroke) comes from the .illus class that the
+   shared <Scene> wrapper puts on every scene. */
+
+.eCanal { stroke: #c4a872; stroke-width: 1.1px; }
+.ePulp { stroke: #d49791; stroke-width: 1px; }
+.eFill { stroke: #7f786b; stroke-width: 1.1px; }
+.eTemp { stroke: #a39b88; stroke-width: 1.2px; }
+.eClosure { stroke: #bfb08c; stroke-width: 1.2px; }
+.eDam { stroke: #8e9599; stroke-width: 1.1px; }
+.eRoot { stroke: #c7ae7c; stroke-width: 1.2px; }
+.eStump { stroke: #c7ae7c; stroke-width: 1.2px; }
+
+.tint { stroke: none; }
+
+/* Red annotation lines drawn on top of artwork get a pale halo so they stay
+   legible over dentine and bone. */
+.halo { fill: none; stroke: #fffaf0; stroke-opacity: 0.85; stroke-width: 4.6px; }
+.redThin { fill: none; stroke: #d71920; stroke-width: 1.5px; }
+.redDashed { fill: none; stroke: #d71920; stroke-width: 1.6px; stroke-dasharray: 6 5; }
+.inkDashed { fill: none; stroke: #263033; stroke-opacity: 0.62; stroke-width: 1.5px; stroke-dasharray: 5 5; }
+.numbArc { fill: none; stroke: #d71920; stroke-linecap: round; }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DoctorProfileClientChrome } from "./DoctorProfileClientChrome";
 import { SITE_NAME, SITE_URL } from "@/lib/site-data";
+import { featuredTreatmentTitle } from "@/lib/featured-treatment-catalog";
 
 /* ------------------------------------------------------------------
    Doctor profile — Dr. Md. Miftah Ur Rahman (/doctors/dr-miftah-ur-rahman).
@@ -104,9 +105,9 @@ const doctorJsonLd = [
       knowsAbout: [
         "Prosthodontics",
         "Implantology",
-        "Dental Implants",
-        "Full Mouth Rehabilitation",
-        "Smile Design",
+        featuredTreatmentTitle("dental-implants"),
+        featuredTreatmentTitle("full-mouth-rehabilitation"),
+        featuredTreatmentTitle("smile-design"),
       ],
       alumniOf: "Sri Sai College of Dental Surgery",
     },

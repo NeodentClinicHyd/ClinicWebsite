@@ -3,46 +3,36 @@
 import { ArrowRight, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { TreatmentsHero } from "@/components/treatments/TreatmentsHero";
-import { TreatmentAtlas } from "@/components/treatments/TreatmentAtlas";
-import { TreatmentThinking } from "@/components/treatments/TreatmentThinking";
-import { RealTreatmentWork } from "@/components/treatments/RealTreatmentWork";
-import { BeforeAfterCases } from "@/components/treatments/BeforeAfterCases";
-import { ExperienceEvidenceLocations } from "@/components/treatments/ExperienceEvidenceLocations";
-import { QuestionsContact } from "@/components/treatments/QuestionsContact";
-import { EditorialSeam } from "@/components/treatments/EditorialSeam";
 import { AppButton } from "@/components/ui/AppButton";
+import { HubHero } from "@/components/treatments/hub/HubHero";
+import { HubTreatments } from "@/components/treatments/hub/HubTreatments";
+import { HubBeyond } from "@/components/treatments/hub/HubBeyond";
+import { HubThinking } from "@/components/treatments/hub/HubThinking";
+import { HubDmls } from "@/components/treatments/hub/HubDmls";
+import { HubPlanning } from "@/components/treatments/hub/HubPlanning";
+import { HubWork } from "@/components/treatments/hub/HubWork";
+import { HubEvidence } from "@/components/treatments/hub/HubEvidence";
+import { HubQuestions } from "@/components/treatments/hub/HubQuestions";
 import { ctaTelPhone } from "@/lib/site-data";
 
+/* /treatments hub. Same chrome as the home page (fixed Navbar, global
+   Footer, mobile call bar). `.site` normally clips with overflow:hidden,
+   which would stop the FAQ contact card from sticking; `overflow: clip`
+   clips identically without creating a scroll container. */
 export function TreatmentsClientChrome() {
   return (
-    <div className="site">
+    <div className="site" style={{ overflow: "clip" }}>
       <Navbar />
       <main>
-        {/* 01: DENTAL EXPERTISE */}
-        <TreatmentsHero />
-        
-        {/* 02: WHAT WE TREAT */}
-        <TreatmentAtlas />
-        
-        {/* 03: THE THINKING BEHIND TREATMENT */}
-        <TreatmentThinking />
-        
-        {/* 04: REAL TREATMENT WORK */}
-        <RealTreatmentWork />
-        
-        <EditorialSeam variant="standard" surface="light" />
-        
-        {/* 05: REAL CASES / TREATMENT RESULTS */}
-        <BeforeAfterCases />
-        
-        {/* 06: EXPERIENCE, EVIDENCE & LOCATIONS */}
-        <ExperienceEvidenceLocations />
-        
-        <EditorialSeam variant="standard" surface="light" />
-        
-        {/* 07: QUESTIONS & CONTACT */}
-        <QuestionsContact />
+        <HubHero />
+        <HubTreatments />
+        <HubBeyond />
+        <HubThinking />
+        <HubDmls />
+        <HubPlanning />
+        <HubWork />
+        <HubEvidence />
+        <HubQuestions />
       </main>
       <Footer />
       <div className="mobile-bar">

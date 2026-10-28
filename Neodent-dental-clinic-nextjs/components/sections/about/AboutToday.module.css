@@ -1,0 +1,141 @@
+/* About -- today chapter. Photo pair from
+   SpacesDesignedAroundCare.module.css (.mediaCol); the clinic cards use
+   the doctor-card surface (label / value rows) from the shared system. */
+
+.layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 48px;
+  align-items: start;
+}
+.copy {
+  grid-column: 1 / 7;
+  min-width: 0;
+}
+.media {
+  grid-column: 7 / 13;
+  display: grid;
+  grid-template-columns: 64fr 36fr;
+  align-items: end;
+  gap: 16px;
+  min-width: 0;
+}
+.prose {
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.primary,
+.secondary {
+  min-width: 0;
+}
+.primaryPhoto {
+  aspect-ratio: 2 / 3;
+  --photo-radius: 20px clamp(48px, 7vw, 96px) 20px 20px;
+}
+.secondaryPhoto {
+  aspect-ratio: 3 / 4;
+}
+
+/* Two compact clinic cards, each a single link to /clinic. */
+.clinics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(28px, 3.4vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.clinic {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+.clinic > div {
+  width: 100%;
+  padding: 24px;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+.clinic:hover > div {
+  border-color: rgba(37, 37, 37, 0.24);
+  transform: translateY(-2px);
+}
+.clinicHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.clinicArrow {
+  flex: none;
+  margin-top: 8px;
+  color: var(--neodent-red-dark);
+  transition: transform 180ms ease;
+}
+.clinic:hover .clinicArrow {
+  transform: translateX(3px);
+}
+/* The name is the card's link; its hit area covers the whole card. */
+.clinicLink {
+  color: inherit;
+}
+.clinicLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+}
+.clinicLink:focus-visible {
+  outline: none;
+}
+.clinicLink:focus-visible::after {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+.phone {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 4px;
+}
+.phone:hover {
+  color: var(--red);
+}
+.phone:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1023px) {
+  .copy,
+  .media {
+    grid-column: 1 / -1;
+  }
+  .media {
+    max-width: 640px;
+  }
+}
+@media (max-width: 639px) {
+  .clinics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .media {
+    gap: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .clinic > div,
+  .clinicArrow {
+    transition: none;
+  }
+  .clinic:hover > div {
+    transform: none;
+  }
+}

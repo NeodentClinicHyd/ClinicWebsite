@@ -1,0 +1,239 @@
+/* When. Ivory ground. Paper cards (20px radius, #fffefa, 1px hairline) as
+   the doctor card; the frame sits left, title and line right. The note strip
+   is the implants "tinted footer strip" (red-soft, serif italic). The matched
+   pair copies the implants overview pair: same padding, radius and heading
+   size, red dash markers, tinted footer strip on the shorter card. */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.cards {
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 28px);
+  padding: clamp(16px, 2vw, 20px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.frame {
+  min-width: 0;
+}
+.body {
+  min-width: 0;
+  padding-right: clamp(0px, 0.6vw, 8px);
+}
+.title {
+  margin: 0 0 10px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+.figNote {
+  margin: 12px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.72);
+}
+
+.note {
+  position: relative;
+  margin: clamp(16px, 2vw, 24px) 0 0;
+  padding: 26px clamp(24px, 3vw, 36px) 26px calc(clamp(24px, 3vw, 36px) + 36px);
+  background: var(--neodent-red-soft);
+  border-radius: 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.7vw, 21px);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.note::before {
+  content: "";
+  position: absolute;
+  left: clamp(24px, 3vw, 36px);
+  top: 36px;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+
+/* ---- Matched pair ----------------------------------------------------- */
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(40px, 5vw, 64px);
+  align-items: stretch;
+}
+.pairCard {
+  --card-pad: clamp(24px, 3vw, 32px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--card-pad);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.pairTitle {
+  margin: 0 0 20px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.pairText {
+  margin: 0 0 28px;
+  max-width: 54ch;
+  font-size: 18px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.9);
+}
+/* Tinted footer strip: runs edge to edge along the bottom of the card and
+   takes the height left over, so the shorter card has no empty area. */
+.pairFoot {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  margin: 0 calc(var(--card-pad) * -1) calc(var(--card-pad) * -1);
+  padding: 30px var(--card-pad);
+  background: var(--neodent-red-soft);
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.checkList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  flex: 1 1 auto;
+}
+.checkRow {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+/* Icon gutter: wide enough for the two tiles of the first row, so the text
+   of every row starts on one line. */
+.icons {
+  flex: none;
+  width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.noIcons {
+  position: relative;
+  align-self: stretch;
+}
+.noIcons::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.82em;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.checkText {
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+@media (max-width: 1023px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  }
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 16px;
+    padding: 14px 14px 20px;
+  }
+  .body {
+    padding: 0 6px;
+  }
+  .note {
+    padding: 22px 20px 22px 20px;
+    border-radius: 14px;
+  }
+  .note::before {
+    position: static;
+    display: block;
+    margin-bottom: 12px;
+  }
+  /* Icons sit above their line instead of beside it. */
+  .checkRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .icons {
+    width: auto;
+  }
+  .noIcons {
+    align-self: auto;
+    width: 22px;
+    height: 2px;
+    margin: 8px 0 0;
+    background: var(--neodent-red);
+  }
+  .noIcons::before {
+    display: none;
+  }
+}

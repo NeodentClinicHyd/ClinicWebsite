@@ -1,0 +1,179 @@
+/* Include. Pattern: treatment-atlas (globals.css `.treatment-atlas*`):
+   #242628 ground with the 420px icon tile under a 55% overlay (same recipe
+   as the implants options section). Cards are paper (#fffefa), 20px radius.
+   The closing note is the page's red surface (the implants "statement"). */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  background-color: #242628;
+  background-image:
+    linear-gradient(
+      155deg,
+      rgba(36, 38, 40, 0.55),
+      rgba(36, 38, 40, 0.5) 50%,
+      rgba(36, 38, 40, 0.55)
+    ),
+    url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+.grid {
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+}
+.cell {
+  display: flex;
+  min-width: 0;
+}
+
+.card {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(18px, 2vw, 22px) clamp(18px, 2vw, 22px) clamp(20px, 2.2vw, 26px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.title {
+  margin: 4px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+.text {
+  margin: -6px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.examples {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.examples b {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.links {
+  margin: auto 0 0;
+  padding: 6px 0 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 20px;
+}
+.link {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+.link svg {
+  color: var(--neodent-red);
+  transition: transform 180ms ease;
+}
+.link:hover {
+  color: var(--neodent-red-dark);
+}
+.link:hover svg {
+  transform: translateX(3px);
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 3px;
+}
+
+/* Closing note: red surface, white dash and serif sentence. */
+.note {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(26px, 3vw, 34px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.note::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--neodent-ivory);
+}
+.note p {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(23px, 2.1vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    padding: 16px 16px 20px;
+  }
+  .note {
+    padding: 26px 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link svg {
+    transition: none;
+  }
+  .link:hover svg {
+    transform: none;
+  }
+}

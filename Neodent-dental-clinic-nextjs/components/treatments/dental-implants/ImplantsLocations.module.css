@@ -1,0 +1,23 @@
+/* Locations. Flat dark ground (#14161a) from SpacesDesignedAroundCare; the
+   red radial glow is gone. Standard section padding. */
+
+.section {
+  position: relative;
+  background: #14161a;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+.cards {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+}

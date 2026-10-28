@@ -1,0 +1,40 @@
+/* Styling for the smile design illustrations. New classes only; the shared
+   kit's modules are not touched. Colours are tints of the existing artwork
+   palette. Edge strokes are tinted, never black. Hairline behaviour
+   (vector-effect: non-scaling-stroke) comes from the .illus class that the
+   shared <Scene> wrapper puts on every scene. */
+
+.sd {
+  --sd-porcelain-edge: #aeb8bd;
+  --sd-resin-edge: #c3b085;
+  --sd-break: #c3b28a;
+}
+
+.ePorcelain { stroke: var(--sd-porcelain-edge); stroke-width: 1.2px; }
+.eResin { stroke: var(--sd-resin-edge); stroke-width: 1.2px; }
+.eBreak { fill: none; stroke: var(--sd-break); stroke-width: 1.3px; }
+.eVeneer { stroke: #cfc4b0; stroke-width: 1.1px; }
+
+/* Planning marks: thin dashed red, ink dashed. */
+.redDash { fill: none; stroke: #d71920; stroke-width: 1.5px; stroke-dasharray: 6 5; }
+.redThin { fill: none; stroke: #d71920; stroke-width: 1.2px; stroke-dasharray: 5 5; }
+.inkDash { fill: none; stroke: #263033; stroke-opacity: 0.6; stroke-width: 1.2px; stroke-dasharray: 4 4; }
+.zone { fill: #d71920; fill-opacity: 0.05; stroke: #d71920; stroke-width: 1.5px; stroke-dasharray: 6 5; }
+
+/* Small marker dot with a pale ring so it reads on teeth and gum alike. */
+.marker { fill: #d71920; stroke: #fffaf0; stroke-width: 1.5px; }
+
+/* Soft white halo under red lines that cross teeth. */
+.halo { fill: none; stroke: #fffaf0; stroke-opacity: 0.85; stroke-width: 4px; }
+
+/* Physical objects (shade strip rail, chips): thickness follows the artwork. */
+.fine :where(path, line, rect) {
+  vector-effect: none;
+}
+
+/* Labels and leaders drop out where the tile is too small to hold 12px text. */
+@media (max-width: 767px) {
+  .hideSmall {
+    display: none;
+  }
+}

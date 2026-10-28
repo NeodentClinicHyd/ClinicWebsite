@@ -1,0 +1,144 @@
+/* Reversible. Ivory ground. Paper cards (#fffefa, 1px hairline, 20px radius)
+   as the "when" cards; the featured card carries the 3px red top edge and the
+   4px 20px 20px 20px radius of the implants highlighted card. The red card is
+   the page's red surface (as the plan statement). */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.left {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.scene {
+  min-width: 0;
+}
+
+.ask {
+  margin: 0;
+  padding: clamp(24px, 3vw, 32px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.askTitle {
+  margin: 0 0 12px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+.askText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #fff;
+}
+
+.cards {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vw, 16px);
+}
+.card {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(22px, 2.6vw, 28px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.card::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.featured {
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.featured::before {
+  display: none;
+}
+.title {
+  margin: 0 0 8px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.text {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+@media (max-width: 1023px) {
+  /* Reading order: scene, the three cards, then the red card. */
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .left {
+    display: contents;
+  }
+  .scene {
+    order: 1;
+    max-width: 640px;
+  }
+  .cards {
+    order: 2;
+  }
+  .ask {
+    order: 3;
+    max-width: 640px;
+  }
+  .card {
+    flex: none;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .ask {
+    padding: 24px 22px;
+  }
+  .card {
+    padding: 20px;
+  }
+}

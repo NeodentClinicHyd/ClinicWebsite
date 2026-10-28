@@ -1,31 +1,54 @@
 "use client";
 
-
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { LegacyAndPeople } from "@/components/sections/about/LegacyAndPeople";
-import { BeyondTheClinic } from "@/components/sections/about/BeyondTheClinic";
+import { ContactNextStep } from "@/components/sections/ContactNextStep";
+import { AboutHero } from "@/components/sections/about/AboutHero";
+import { AboutPractice } from "@/components/sections/about/AboutPractice";
+import { AboutFounder } from "@/components/sections/about/AboutFounder";
+import { AboutMiftah } from "@/components/sections/about/AboutMiftah";
+import { AboutPress } from "@/components/sections/about/AboutPress";
+import { AboutRecognition } from "@/components/sections/about/AboutRecognition";
+import { AboutMedia } from "@/components/sections/about/AboutMedia";
+import { AboutCommunity } from "@/components/sections/about/AboutCommunity";
+import { AboutToday } from "@/components/sections/about/AboutToday";
+import { AboutExplore } from "@/components/sections/about/AboutExplore";
 
 /* ------------------------------------------------------------------
    Client-side chrome for /about.
 
-   The About page's own content (LegacyAndPeople, BeyondTheClinic)
-   has no booking CTA anywhere in its copy -- only the editorial
-   "Explore our expertise" / "Visit our clinics" links, per the
-   page's content rules. This wrapper reuses only the sitewide
-   Navbar and Footer exactly as Home.tsx already wires them (neither
-   is modified). The site has no booking/appointment CTA anywhere --
-   Navbar links to /contact ("Talk to Neodent"), and Call is the only
-   CTA. No floating CTA or sticky mobile booking bar is added here,
-   since those were not part of the approved About page scope. ------------------------------------------------------------------ */
+   The About page has no booking CTA of its own; the sitewide Navbar and
+   Footer are reused exactly as Home.tsx wires them (neither is
+   modified). The Navbar opens over the dark hero (`overHero`), the same
+   transparent-then-solid behaviour the home page has. The sitewide
+   FloatingCta is mounted in app/layout.tsx and is unchanged. The closing
+   band is the home page's own ContactNextStep, which takes no props and
+   holds no lifted state.
+
+   Rhythm: dark hero -> ivory / sand chapters -> patterned dark media
+   -> ivory / sand -> dark closing band -> footer.
+   ------------------------------------------------------------------ */
 
 export function AboutClientChrome() {
   return (
-    <div className="site">
-      <Navbar />
+    // The global `.site { overflow: hidden }` would stop the media
+    // chapter's film panel from sticking (an overflow:hidden ancestor
+    // becomes its scroll container). `clip` keeps the same no-sideways-
+    // scroll guarantee without creating one. Scoped to this page only.
+    <div className="site" style={{ overflowX: "clip", overflowY: "visible" }}>
+      <Navbar overHero />
       <main>
-        <LegacyAndPeople />
-        <BeyondTheClinic />
+        <AboutHero />
+        <AboutPractice />
+        <AboutFounder />
+        <AboutMiftah />
+        <AboutPress />
+        <AboutRecognition />
+        <AboutMedia />
+        <AboutCommunity />
+        <AboutToday />
+        <AboutExplore />
+        <ContactNextStep />
       </main>
       <Footer />
     </div>

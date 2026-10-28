@@ -1,0 +1,138 @@
+/* Branch page -- photograph gallery.
+
+   Column-flow (masonry) layout: each item keeps its photograph's own
+   aspect ratio (width/height are set on the <Image>, CSS only sets
+   width: 100% / height: auto), so nothing is cropped or stretched.
+   Radii match the clinic gallery tiles (16px). Captions sit under the
+   photograph, never over it. */
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 24px;
+  align-items: end;
+}
+.header > h2 {
+  grid-column: 1 / 7;
+}
+.lede {
+  grid-column: 7 / 13;
+  max-width: none;
+}
+
+.set {
+  column-count: 3;
+  column-gap: 16px;
+  margin: clamp(36px, 4.5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+/* A two-photograph set (one landscape, one portrait) stays in two
+   columns at every width above the phone breakpoint. */
+.pair {
+  column-count: 2;
+}
+.item {
+  display: block;
+  margin: 0 0 16px;
+  break-inside: avoid;
+}
+
+.figure {
+  margin: 0;
+}
+.button {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-radius: 16px;
+  background: #1b1d1f;
+  color: inherit;
+  line-height: 0;
+  cursor: zoom-in;
+  transition: border-color 200ms ease;
+}
+.button:hover {
+  border-color: rgba(241, 238, 231, 0.42);
+}
+.button:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.92) contrast(1.02);
+}
+.zoom {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: var(--neodent-charcoal);
+  border-radius: 50%;
+  color: var(--neodent-ivory);
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+.button:hover .zoom,
+.button:focus-visible .zoom {
+  opacity: 1;
+}
+.caption {
+  padding: 10px 2px 0;
+  color: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+@media (max-width: 1023px) {
+  .header > h2 {
+    grid-column: 1 / 8;
+  }
+  .lede {
+    grid-column: 1 / -1;
+  }
+  .set {
+    column-count: 2;
+    column-gap: 12px;
+  }
+  .item {
+    margin-bottom: 12px;
+  }
+}
+@media (max-width: 767px) {
+  .header > h2 {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 559px) {
+  .set,
+  .pair {
+    column-count: 1;
+  }
+}
+@media (hover: none) {
+  .zoom {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .zoom {
+    transition: none;
+  }
+}

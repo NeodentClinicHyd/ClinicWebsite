@@ -1,0 +1,196 @@
+/* Types (Build 3). Pattern: treatment-atlas (globals.css `.treatment-atlas*`):
+   #242628 ground with the 420px icon tile under a 55% overlay (same recipe
+   as the implants options and FMR include sections). The selector itself is BrcTypeTabs.module.css; the two cards
+   below it are paper (#fffefa), 20px radius. The red band is the page's red surface (FmrInclude `.note`). */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  background-color: #242628;
+  background-image:
+    linear-gradient(
+      155deg,
+      rgba(36, 38, 40, 0.55),
+      rgba(36, 38, 40, 0.5) 50%,
+      rgba(36, 38, 40, 0.55)
+    ),
+    url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ---- Below the selector ------------------------------------------------ */
+/* The note is the soft red strip with the red dash (BrcSigns `.strip`). */
+.strip {
+  position: relative;
+  max-width: 820px;
+  margin: clamp(28px, 3.4vw, 40px) 0 0;
+  padding: 22px clamp(22px, 3vw, 32px) 22px calc(clamp(22px, 3vw, 32px) + 36px);
+  background: var(--neodent-red-soft);
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.strip::before {
+  content: "";
+  position: absolute;
+  left: clamp(22px, 3vw, 32px);
+  top: 34px;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+
+.fixedLine {
+  max-width: 640px;
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(241, 238, 231, 0.82);
+}
+
+.otherTitle {
+  margin: clamp(44px, 5.4vw, 68px) 0 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #f1eee7;
+  text-wrap: balance;
+}
+
+/* Two equal cards: scene on the left, name and text on the right. */
+.others {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin: clamp(18px, 2.2vw, 24px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  column-gap: clamp(18px, 2.2vw, 26px);
+  align-items: center;
+  padding: clamp(18px, 2vw, 24px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.frame {
+  min-width: 0;
+}
+.body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+.figureNote {
+  margin: 14px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(241, 238, 231, 0.78);
+}
+/* ---- Which appliance is right for you? -------------------------------------- */
+.which {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(24px, 3vw, 40px);
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.whichTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.8vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.whichTitle::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--neodent-ivory);
+}
+.whichText {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #fff;
+}
+
+@media (max-width: 1023px) {
+  .others {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .which {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .strip {
+    padding: 20px 20px;
+    border-radius: 14px;
+  }
+  .strip::before {
+    position: static;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 18px;
+  }
+  .which {
+    padding: 26px 22px;
+  }
+}

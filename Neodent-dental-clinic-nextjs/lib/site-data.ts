@@ -62,16 +62,22 @@ export const address =
   "10-3-14B/11/1, near Masjid-e-Azizia, Humayun Nagar, Royal Colony, Mehdipatnam, Hyderabad, Telangana 500006";
 export const shortLocation = "Humayun Nagar, Hyderabad";
 export const heroLocations = [
-  { number: "01", name: "Humayun Nagar", detail: "Humayun Nagar, Hyderabad" },
+  {
+    number: "01",
+    name: "Humayun Nagar",
+    detail: "Humayun Nagar, Hyderabad",
+    href: "/clinic/mehdipatnam",
+  },
   {
     number: "02",
     name: "Nampally",
     detail: "Medwin Hospital Complex, Nampally",
+    href: "/clinic/nampally",
   },
 ] as const;
 export const directions =
   "https://www.google.com/maps/search/?api=1&query=10-3-14B%2F11%2F1%2C%20near%20Masjid-e-Azizia%2C%20Humayun%20Nagar%2C%20Royal%20Colony%2C%20Mehdipatnam%2C%20Hyderabad%2C%20Telangana%20500006%2C%20India";
-export const googleRating = { score: "4.3", count: 259 };
+export const googleRating = { score: "4.3", count: 261 };
 
 /* ------------------------------------------------------------------
    Section 08 (ContactNextStep) — Nampally branch contact details.
@@ -85,6 +91,11 @@ export const nampallyPhone = "+91 90305 98081";
 export const nampallyTelPhone = "tel:+919030598081";
 export const nampallyDirections =
   "https://www.google.com/maps/search/?api=1&query=Neodent%20Dental%20Hospital%2C%20Medwin%20Hospital%20Complex%2C%20Pillar%20%23A1270%2C%20Raghav%20Ratna%20Towers%2C%20Chirag%20Ali%20Lane%2C%20Mahesh%20Nagar%20Colony%2C%20Nampally%2C%20Hyderabad%2C%20Telangana%20500001%2C%20India";
+/* Nampally's Google rating -- the client-supplied listing figures
+   already shown on the homepage's "Spaces designed around care"
+   section (4.6 / 157). Mehdipatnam's counterpart is `googleRating`
+   above. Snapshot values, not live data. */
+export const nampallyGoogleRating = { score: "4.6", count: 157 };
 
 /* ------------------------------------------------------------------
    Branch opening hours — the two branches keep different timings, so
@@ -473,5 +484,79 @@ export const heroRecordItems: readonly HeroRecordItem[] = [
        file ends up on screen — requesting the plate's own width would
        leave the visible crop soft. */
     sizes: "(max-width: 767px) 70vw, (max-width: 1023px) 58vw, 44vw",
+  },
+] as const;
+
+
+/* ------------------------------------------------------------------
+   Homepage legacy section (components/sections/LegacyStory.tsx) —
+   single source of truth for the founder's facts and every numeric
+   claim shown in that section. All values are client-confirmed. The
+   component must read them from here and never hard-code them.
+
+   Not yet migrated to read from here (still inline in their own
+   components, left untouched on purpose): ClinicalLeadership.tsx
+   (team[0]), ExperienceIntro.tsx (stats), Hero.tsx, Doctor.tsx,
+   Experience.tsx, WhatToExpect.tsx, about/LegacyAndPeople.tsx,
+   doctors/page.tsx.
+   ------------------------------------------------------------------ */
+const founderAcademicTitle = "Professor";
+const founderAcademicInstitution =
+  "Osmania Government Dental College & Hospital, Hyderabad";
+
+export const founder = {
+  name: "Dr. Mohd. Siraj Ur Rahman",
+  shortName: "Dr. Siraj",
+  role: "Founder · Director",
+  qualifications: "BDS · FCIP · MDS (Chennai)",
+  specialisms: ["Dental Surgeon", "Prosthodontist", "Implantologist"],
+  academicTitle: founderAcademicTitle,
+  academicInstitution: founderAcademicInstitution,
+  academicPost: `${founderAcademicTitle}, ${founderAcademicInstitution}`,
+  experienceYears: "30+",
+  image: recognitionImage,
+  imageAlt:
+    "Dr. Mohd. Siraj Ur Rahman, founder and director of Neodent Dental Hospital",
+} as const;
+
+export const legacyStats = {
+  established: "1994",
+  patientsTreated: "25,000+",
+} as const;
+
+export type LegacyPressItem = {
+  id: "press" | "tv" | "recognition";
+  src: string;
+  alt: string;
+  /** Outlet / origin, set in small caps in the caption. */
+  source: string;
+  /** Medium of the item, set in muted italic in the caption. */
+  medium: string;
+};
+
+/* Reading order: press clipping (lead), television frame, recognition
+   photo. The "Big Breaking" banner belongs to the television frame
+   itself, not to a separate item. */
+export const legacyPressItems: readonly LegacyPressItem[] = [
+  {
+    id: "press",
+    src: legacyPressImage,
+    alt: "Neodent feature in The Siasat Daily, Hyderabad",
+    source: "The Siasat Daily · Hyderabad",
+    medium: "Press feature, Urdu daily",
+  },
+  {
+    id: "tv",
+    src: legacyInterviewImage,
+    alt: "Neodent doctor during a News18 Urdu television interview",
+    source: "News18 Urdu",
+    medium: "On-air interview segment",
+  },
+  {
+    id: "recognition",
+    src: legacyAwardImage,
+    alt: "Neodent recognition archive",
+    source: "Recognition",
+    medium: "Recognition ceremony",
   },
 ] as const;

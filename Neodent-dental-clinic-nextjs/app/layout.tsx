@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { FloatingCta } from "@/components/ui/FloatingCta";
 import { CookieConsentProvider } from "@/components/consent/CookieConsentContext";
+import { GoogleAnalyticsGate } from "@/components/analytics/GoogleAnalyticsGate";
 import { SITE_NAME, SITE_URL } from "@/lib/site-data";
 import { siteJsonLd } from "@/lib/structured-data";
 
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CookieConsentProvider>
           {children}
           <FloatingCta />
+          <GoogleAnalyticsGate />
         </CookieConsentProvider>
       </body>
     </html>

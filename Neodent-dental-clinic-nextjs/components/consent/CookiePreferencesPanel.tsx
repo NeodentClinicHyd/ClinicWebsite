@@ -7,10 +7,11 @@ import styles from "./CookiePreferencesPanel.module.css";
 
 /* ------------------------------------------------------------------
    Manage-preferences modal. Only lists categories that actually exist
-   in this codebase (see lib/cookie-consent.ts) — Essential (always on)
-   and Media/YouTube (the About page's embedded video archive). Do not
-   add Analytics/Marketing/Functional entries unless the corresponding
-   technology is actually introduced to the project.
+   in this codebase (see lib/cookie-consent.ts) — Essential (always on),
+   Analytics (Google Analytics 4) and Media/YouTube (the About page's
+   embedded video archive). Do not add Marketing/Functional entries
+   unless the corresponding technology is actually introduced to the
+   project.
 
    Accessibility: dialog role + aria-modal, focus trapped inside while
    open, focus restored to the trigger on close, Escape closes, body
@@ -29,6 +30,7 @@ export function CookiePreferencesPanel({
   onClose,
 }: CookiePreferencesPanelProps) {
   const [media, setMedia] = useState(initialValues.media);
+  const [analytics, setAnalytics] = useState(initialValues.analytics);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -126,6 +128,30 @@ export function CookiePreferencesPanel({
 
           <div className={styles.category}>
             <div className={styles.categoryCopy}>
+              <p className={styles.categoryName}>Analytics (Google Analytics)</p>
+              <p className={styles.categoryDesc}>
+                Helps us understand which pages are visited and how the
+                website is used, so we can improve it. Provided by Google
+                Analytics. Nothing is loaded from Google until this is
+                allowed.
+              </p>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={analytics}
+              aria-label="Analytics (Google Analytics)"
+              className={styles.switch}
+              data-checked={analytics}
+              onClick={() => setAnalytics((v) => !v)}
+              data-testid="switch-analytics-consent"
+            >
+              <span className={styles.switchKnob} aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className={styles.category}>
+            <div className={styles.categoryCopy}>
               <p className={styles.categoryName}>Embedded media (YouTube)</p>
               <p className={styles.categoryDesc}>
                 Loads YouTube&apos;s player when you choose to play a video
@@ -160,7 +186,7 @@ export function CookiePreferencesPanel({
           <button
             type="button"
             className={`${styles.btn} ${styles.btnPrimary}`}
-            onClick={() => onSave({ media })}
+            onClick={() => onSave({ media, analytics })}
             data-testid="button-save-cookie-preferences"
           >
             Save preferences

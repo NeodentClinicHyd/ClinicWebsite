@@ -14,7 +14,7 @@ import {
 import styles from "./DrMiftahProfile.module.css";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import { AppButton } from "@/components/ui/AppButton";
-import { BrandStatementStrip } from "@/components/sections/BrandStatementStrip";
+import { SeamCard } from "@/components/sections/SeamCard";
 import { Atmosphere } from "@/components/ui/Atmosphere";
 import { OffsetImagePair } from "@/components/ui/OffsetImagePair";
 import { TreatmentEvidenceViewer } from "@/components/doctors/TreatmentEvidenceViewer";
@@ -25,6 +25,7 @@ import { TreatmentDetailDialog } from "@/components/doctors/TreatmentDetailDialo
 import { FilmCard } from "@/components/doctors/FilmCard";
 import { MediaRail } from "@/components/doctors/MediaRail";
 import { PRESS_CLIPPINGS } from "@/lib/miftah-press-archive";
+import { featuredTreatmentTitle } from "@/lib/featured-treatment-catalog";
 import treatmentMedia from "@/lib/miftah-treatment-media.json";
 import {
   PRACTICE_FILMS,
@@ -121,57 +122,55 @@ const CEREMONY_FRAME_IMAGE = {
 /* Section 04 — the site's numbered treatment rows (number left, title,
    verb right), mirroring the homepage Expertise treatment list. Rows
    02/05/06 carry the specialist-focus tag. Anchors point at the
-   matching sections on /treatments; composite build-up and scaling &
-   polishing have no dedicated anchor there, so they use the atlas
-   section itself. */
+   matching treatment entries on /treatments. */
 const SCOPE_ROWS = [
   {
     number: "01",
-    title: "Composite build-up",
+    title: featuredTreatmentTitle("composite-build-up"),
     verb: "REPAIR",
-    href: "/treatments#treatment-atlas",
+    href: "/treatments/composite-build-up",
     focus: false,
   },
   {
     number: "02",
-    title: "Dental implants",
+    title: featuredTreatmentTitle("dental-implants"),
     verb: "REPLACE",
-    href: "/treatments#dental-implants",
+    href: "/treatments/dental-implants",
     focus: true,
   },
   {
     number: "03",
-    title: "Root canal treatment",
+    title: featuredTreatmentTitle("root-canal-treatment"),
     verb: "PRESERVE",
-    href: "/treatments#root-canal-treatment",
+    href: "/treatments/root-canal-treatment",
     focus: false,
   },
   {
     number: "04",
-    title: "Braces & orthodontics",
+    title: featuredTreatmentTitle("braces-orthodontics"),
     verb: "ALIGN",
-    href: "/treatments#orthodontics",
+    href: "/treatments/braces-and-orthodontics",
     focus: false,
   },
   {
     number: "05",
-    title: "Smile design",
+    title: featuredTreatmentTitle("smile-design"),
     verb: "REFINE",
-    href: "/treatments#smile-design",
+    href: "/treatments/smile-design",
     focus: true,
   },
   {
     number: "06",
-    title: "Full mouth rehabilitation",
+    title: featuredTreatmentTitle("full-mouth-rehabilitation"),
     verb: "REBUILD",
-    href: "/treatments#full-mouth-rehabilitation",
+    href: "/treatments/full-mouth-rehabilitation",
     focus: true,
   },
   {
     number: "07",
-    title: "Scaling & polishing",
+    title: featuredTreatmentTitle("scaling-polishing"),
     verb: "MAINTAIN",
-    href: "/treatments#treatment-atlas",
+    href: "/treatments/scaling-and-polishing",
     focus: false,
   },
 ];
@@ -387,13 +386,15 @@ export function DrMiftahProfile() {
     <div ref={rootRef} className={styles.page}>
       <Hero />
       <ProfileIndex />
-      {/* Clinical philosophy - the homepage "We maintain peak performance" strip
-          (BrandStatementStrip) reused with this doctor's content: same component,
-          same CSS module. */}
-      <BrandStatementStrip
+      {/* Clinical philosophy - the shared SeamCard straddling the seam
+          between the profile index and the biography, with this doctor's
+          content. Text-only: no portrait is supplied, so neighbours reserve
+          var(--seam-pad-above-text) / var(--seam-pad-below-text)
+          (see .profileIndex / .biography). */}
+      <SeamCard
         ariaLabel="Clinical philosophy"
-        eyebrow="CLINICAL PHILOSOPHY"
-        support="Saving natural teeth,"
+        label="CLINICAL PHILOSOPHY"
+        lead="Saving natural teeth,"
         emphasis="even when it is mobile."
         longEmphasis
         attribution={null}
@@ -1619,8 +1620,8 @@ function FullScope() {
         <div>
           <SectionHeading
             id="miftah-scope-title"
-            line1="Seven areas"
-            line2="of clinical focus."
+            line1="Clinical care"
+            line2="across key concerns."
           />
           <div className={styles.scopeGrid}>
             {SCOPE_ROWS.map((row) => (
@@ -1658,9 +1659,9 @@ function FullScope() {
               data-reveal="up"
             >
               <p className={styles.scopeFillerCopy}>
-                Seven treatment areas
+                Care shaped around
                 <br />
-                full range of care
+                individual needs
               </p>
               <span className={styles.scopeFillerDot} />
             </div>
@@ -2281,11 +2282,15 @@ function WhereToFindHim() {
             </article>
           </div>
           <p className={styles.locationsFootnote} data-reveal="up">
-            Both branches are profiled on{" "}
-            <a href="/clinic" className={styles.inlineLink}>
-              the clinics page
-            </a>
-            , and the wider practice story continues on{" "}
+            Visit the{" "}
+            <Link href="/clinic/mehdipatnam" className={styles.inlineLink}>
+              Mehdipatnam clinic page
+            </Link>
+            {" "}or the{" "}
+            <Link href="/clinic/nampally" className={styles.inlineLink}>
+              Nampally clinic page
+            </Link>
+            , and read the wider practice story on{" "}
             <a href="/about" className={styles.inlineLink}>
               About Neodent
             </a>

@@ -1,0 +1,218 @@
+/* Options. Pattern: treatment-atlas (globals.css `.treatment-atlas*`):
+   #242628 ground with the 420px icon tile under a 55% overlay. Comparison
+   cards are paper (#fffefa), 20px radius; the implant card is told apart
+   by a red top edge only. On wide screens the three cards share rows
+   (subgrid) so the frames, names and both text blocks line up exactly. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  background-color: #242628;
+  background-image:
+    linear-gradient(
+      155deg,
+      rgba(36, 38, 40, 0.55),
+      rgba(36, 38, 40, 0.5) 50%,
+      rgba(36, 38, 40, 0.55)
+    ),
+    url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ---- Comparison ------------------------------------------------------ */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(20px, 2.2vw, 26px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.featured {
+  border-top: 3px solid var(--neodent-red);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.frame {
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2rem, 2.8vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.blockLabel {
+  margin: 0;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.blockText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 901px) {
+    .compare {
+      /* frame (with caption), name, involves, know */
+      grid-template-rows: auto auto 1fr 1fr;
+      row-gap: 0;
+    }
+    .card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 18px;
+    }
+  }
+}
+
+/* ---- What may need attention first ------------------------------------ */
+.attention {
+  margin-top: clamp(48px, 6vw, 80px);
+}
+.attentionHead {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: end;
+  gap: 12px clamp(24px, 4vw, 56px);
+}
+.attentionTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+  color: #f1eee7;
+}
+.attentionIntro {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(241, 238, 231, 0.82);
+}
+.grid {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 16px);
+}
+.tile {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px;
+  background-color: #f3f0e8;
+  color: #252525;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 16px;
+}
+.tileIcon {
+  width: 48px;
+  margin-bottom: 4px;
+}
+.tileTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #252525;
+}
+.tileText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #3f4547;
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .attentionHead {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+@media (max-width: 900px) {
+  .compare {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    column-gap: 24px;
+    row-gap: 14px;
+    align-content: start;
+  }
+  .frame {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: start;
+  }
+  .name,
+  .block {
+    grid-column: 2;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .compare {
+    max-width: none;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+  .frame {
+    align-self: stretch;
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tile {
+    padding: 20px;
+  }
+}

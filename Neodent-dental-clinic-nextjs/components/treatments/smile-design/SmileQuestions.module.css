@@ -1,0 +1,206 @@
+/* Questions + doctor. Pattern: ClinicalLeadership (via the implants care
+   section). Ground #15171a, 20px card radius, 12px caps labels, 140px label
+   column and the `#ece7dc` avatar ground are copied from its module. The
+   questions are dark cards (#191b1f, hairline border) with a red dash.
+   `.tan` is the variant used when the cases section is off: tan ground
+   (#ece7dc, as the overview) with paper question cards. */
+
+.section {
+  position: relative;
+  background: #15171a;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.tan {
+  background: #ece7dc;
+  color: var(--ink);
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+/* Questions: 2 x 3. */
+.questions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+.question {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 22px 22px 20px;
+  background: #191b1f;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-radius: 16px;
+}
+.tan .question {
+  background: var(--neodent-surface);
+  border-color: rgba(38, 48, 51, 0.12);
+}
+.question::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.question p {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.7vw, 21px);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  color: rgba(241, 238, 231, 0.94);
+  text-wrap: pretty;
+}
+.tan .question p {
+  color: var(--ink);
+}
+
+/* Doctor card (ClinicalLeadership `.card`). */
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  background: var(--neodent-surface, #fffefa);
+  color: var(--neodent-ink, #263033);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.portrait {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 260px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #ece7dc;
+}
+.portraitImg {
+  object-fit: cover;
+  object-position: right top;
+  filter: saturate(0.92) contrast(1.02);
+}
+.identity {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+}
+.name {
+  margin: 0 0 8px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.label {
+  margin: 0;
+  color: rgba(38, 48, 51, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.facts {
+  margin: 24px 0 0;
+  border-top: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 4px 24px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.fact dt {
+  color: rgba(38, 48, 51, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.quals {
+  font-weight: 600;
+}
+.cardAction {
+  margin-top: 24px;
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .portrait {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 16 / 11;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .questions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .question {
+    padding: 18px 18px 18px 16px;
+  }
+  .card {
+    padding: 24px;
+  }
+  .portrait {
+    aspect-ratio: 4 / 3;
+  }
+  .identity {
+    width: 50%;
+    padding: 16px;
+  }
+  .name {
+    font-size: 22px;
+  }
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cardAction :global(.button) {
+    width: 100%;
+  }
+}

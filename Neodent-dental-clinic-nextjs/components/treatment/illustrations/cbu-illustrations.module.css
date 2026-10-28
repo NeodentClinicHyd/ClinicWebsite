@@ -1,0 +1,55 @@
+/* Styling for the composite build-up illustrations. New classes only; the
+   shared kit's modules (illustrations.module.css, rct-illustrations.module.css)
+   are not touched. Colours are tints of the existing artwork palette (see
+   CbuDefs.tsx). Edge strokes are tinted, never black. Hairline behaviour
+   (vector-effect: non-scaling-stroke) comes from the .illus class that the
+   shared <Scene> wrapper puts on every scene. */
+
+.cbu {
+  --cbu-resin-edge: #c3b085;
+  --cbu-resin-line: #bda770;
+  --cbu-amalgam-edge: #4f585d;
+  --cbu-ionomer-edge: #cbb98f;
+  --cbu-porcelain-edge: #cfc4b0;
+  --cbu-cement: #efe2c2;
+  --cbu-cement-edge: #d4c299;
+  --cbu-bond: #e29c98;
+  --cbu-wall: #c7ae7c;
+  --cbu-void-edge: #c4a872;
+  --cbu-decay-edge: #9c8150;
+  --cbu-crack: #8a7650;
+  --cbu-red: #d71920;
+}
+
+/* ---- tinted edges ---- */
+.eResin { stroke: var(--cbu-resin-edge); stroke-width: 1.3px; }
+.eAmalgam { stroke: var(--cbu-amalgam-edge); stroke-width: 1.2px; }
+.eIonomer { stroke: var(--cbu-ionomer-edge); stroke-width: 1.2px; }
+.ePorcelain { stroke: var(--cbu-porcelain-edge); stroke-width: 1.3px; }
+.eVoid { stroke: var(--cbu-void-edge); stroke-width: 1.1px; }
+.eDecay { stroke: var(--cbu-decay-edge); stroke-width: 1.1px; }
+.eWall { stroke: var(--cbu-wall); stroke-width: 1.3px; }
+
+/* ---- layers, bond and cement ---- */
+.incr { fill: none; stroke: var(--cbu-resin-line); stroke-opacity: 0.8; stroke-width: 1px; }
+.incrHi { fill: none; stroke: #fff; stroke-opacity: 0.8; stroke-width: 1px; }
+.bond { fill: none; stroke: var(--cbu-bond); stroke-opacity: 1; stroke-width: 1.8px; stroke-linecap: round; }
+.bondBold { fill: none; stroke: var(--cbu-bond); stroke-opacity: 0.95; stroke-width: 2.4px; stroke-linecap: round; }
+.cement { fill: none; stroke: var(--cbu-cement); stroke-width: 2.6px; stroke-linecap: round; }
+.cementEdge { fill: none; stroke: var(--cbu-cement-edge); stroke-width: 0.9px; }
+
+/* ---- crack ---- */
+.crack { fill: none; stroke: var(--cbu-crack); stroke-opacity: 0.9; stroke-width: 1.4px; }
+.crackHi { fill: none; stroke: #fff; stroke-opacity: 0.85; stroke-width: 1px; }
+
+/* ---- pale halo under annotation lines ---- */
+.halo { fill: none; stroke: #fffaf0; stroke-opacity: 0.85; stroke-width: 4.4px; }
+
+/* Visit labels: the tiles on a phone are about 100px wide, far too small for
+   any text, so the labels (and their leaders) drop out below 768px. The
+   step title and sentence next to each tile say the same thing. */
+@media (max-width: 767px) {
+  .hideSmall {
+    display: none;
+  }
+}

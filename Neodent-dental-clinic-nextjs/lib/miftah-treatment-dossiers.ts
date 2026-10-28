@@ -1,4 +1,5 @@
 import type { MediaKey } from "@/lib/miftah-treatment-evidence";
+import { featuredTreatmentTitle } from "@/lib/featured-treatment-catalog";
 
 /* ------------------------------------------------------------------
    Treatment dossiers — Dr. Miftah profile, Section 03.
@@ -97,8 +98,8 @@ const rootCanal: TreatmentDossier = {
   cardNumber: "01",
   eyebrow: "Specialist focus · 01",
   title: "Saving natural teeth",
-  subtitle: "Root canal treatment",
-  name: "Root canal treatment",
+  subtitle: featuredTreatmentTitle("root-canal-treatment"),
+  name: featuredTreatmentTitle("root-canal-treatment"),
   intro:
     "Root canal treatment is used when the soft tissue inside a tooth becomes inflamed or infected. Treatment removes the affected tissue, cleans and disinfects the root canal system, and seals the tooth so it can be restored and retained where clinically appropriate.",
   evidence: { kind: "rct" },
@@ -296,9 +297,9 @@ const smileDesign: TreatmentDossier = {
   id: "smile-design",
   cardNumber: "02",
   eyebrow: "Specialist focus · 02",
-  title: "Smile designing",
+  title: featuredTreatmentTitle("smile-design"),
   subtitle: "Designing a smile that belongs to you",
-  name: "Smile designing",
+  name: featuredTreatmentTitle("smile-design"),
   intro:
     "Smile design is the planning of how the teeth should look within a particular face — their shape, proportion, colour and alignment, the amount of gum that shows, and how they meet when the patient bites. The treatment that follows is chosen to carry out that plan, rather than the plan being bent to fit a single procedure.",
   evidence: { kind: "pair", before: "smileBefore", after: "smileAfter" },
@@ -500,9 +501,9 @@ const implants: TreatmentDossier = {
   id: "dental-implants",
   cardNumber: "03",
   eyebrow: "Specialist focus · 03",
-  title: "Dental implants",
+  title: featuredTreatmentTitle("dental-implants"),
   subtitle: "Replacing a missing tooth with a planned foundation",
-  name: "Dental implants",
+  name: featuredTreatmentTitle("dental-implants"),
   intro:
     "A dental implant replaces the root of a missing tooth. A small post, usually made of titanium or a similar material, is placed in the jawbone; once the bone has healed around it, it supports a crown, bridge or denture. Because it stands on its own, the replacement does not need to lean on the teeth beside it.",
   evidence: { kind: "pair", before: "implantsBefore", after: "implantsAfter" },
@@ -697,9 +698,9 @@ const rehabilitation: TreatmentDossier = {
   id: "full-mouth-rehabilitation",
   cardNumber: "04",
   eyebrow: "Specialist focus · 04",
-  title: "Full mouth rehabilitation",
+  title: featuredTreatmentTitle("full-mouth-rehabilitation"),
   subtitle: "Rebuilding function, comfort and confidence",
-  name: "Full mouth rehabilitation",
+  name: featuredTreatmentTitle("full-mouth-rehabilitation"),
   intro:
     "Full mouth rehabilitation is the planned restoration of most or all of the teeth in both jaws when several problems affect the mouth at once. It is not a single procedure or a list of separate repairs; it is one coordinated treatment plan built around how the whole bite works.",
   evidence: { kind: "pair", before: "rehabBefore", after: "rehabAfter" },

@@ -1,35 +1,36 @@
-/* Footer — "Final Editorial Frame".
+/* Footer -- closing chapter.
 
-   The homepage's closing chapter (09), inheriting Section 02's
-   canonical .archive-* visual grammar directly: the same 10px/.2em
-   uppercase eyebrow with a 34px red hairline, DM Serif Display
-   headings with a red italic emphasis span, an oversized low-opacity
-   serif chapter numeral bleeding into the copy that follows it via a
-   negative margin (the same mechanic as .archive-year / Section 04's
-   .numeral / Section 07's .numeral / Section 08's .numeral), and
-   15px/1.7 muted body copy where prose appears.
+   Same dark-room tokens as homepage Sections 07/08 (charcoal / ivory /
+   red, DM Serif Display statement with a red italic closing phrase,
+   Manrope for everything functional), one step darker than Section 08
+   so it reads as the final room.
 
-   Dark closing-frame surface -- a genuinely distinct charcoal value
-   (#101214) from Section 04 (#15171a), Section 07 (#14161a) and
-   Section 08 (#121316): one step darker than all three so the footer
-   reads as the final room after the homepage's last chapter, not a
-   continuation of Section 08.
+   Hierarchy, strongest to quietest:
+     1. .statement  -- the closing brand line, over the faint .year
+     2. .grid       -- navigation columns, then .locations
+     3. .legal      -- copyright, legal links, developer credit
 
-   Entirely local to this module. globals.css is never read from or
-   written to here -- the old `.footer*` global classes are left
-   completely untouched and simply unused after this rewrite. */
+   Restraint rules: no badges, no icon clutter, no decorative geometry,
+   no entrance animation. Links shift colour and grow a hairline
+   underline; that is the only motion.
+
+   Entirely local to this module -- globals.css is not touched. */
 
 .footer {
   --charcoal: #101214;
   --ivory: #f1eee7;
-  --muted: rgba(241, 238, 231, 0.58);
+  --muted: rgba(241, 238, 231, 0.7);
+  --quiet: rgba(241, 238, 231, 0.6);
+  --rule: rgba(241, 238, 231, 0.14);
   --red: #d71920;
+  --link-h: 36px;
   position: relative;
   overflow: hidden;
   isolation: isolate;
   background: var(--charcoal);
   color: var(--ivory);
-  padding: clamp(72px, 8vw, 108px) 0 0;
+  padding: clamp(64px, 7vw, 104px) 0 0;
+  border-top: 1px solid var(--rule);
 }
 .footer::before {
   content: "";
@@ -37,266 +38,145 @@
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse at 92% 4%, rgba(215, 25, 32, 0.08), transparent 46%),
-    radial-gradient(ellipse at 4% 96%, rgba(241, 238, 231, 0.028), transparent 55%),
+    radial-gradient(ellipse at 92% 0%, rgba(215, 25, 32, 0.08), transparent 46%),
     var(--charcoal);
-}
-
-/* ---- Chapter-start seam -- same mechanic as Sections 04/07's .seam:
-   a thin top hairline (red-accented at the edges) plus a short
-   registration tick bleeding down from its centre. ------------------ */
-.seam {
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-.seam::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(215, 25, 32, 0.5) 12%,
-    rgba(241, 238, 231, 0.18) 50%,
-    rgba(215, 25, 32, 0.5) 88%,
-    transparent
-  );
-}
-.seam::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: 15px;
-  background: linear-gradient(180deg, rgba(215, 25, 32, 0.55), transparent);
-  transform: translateX(-50%);
-}
-
-/* ---- Restrained closing-frame geometry -- one quiet registration
-   dot and one short vertical/horizontal registration line, kept far
-   subtler than earlier chapters since this is the final room, not a
-   new motif to introduce. Purely decorative. ------------------------ */
-.atmosphere {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.axisLine {
-  position: absolute;
-  top: 4%;
-  bottom: 60%;
-  left: 50%;
-  width: 1px;
-  background: linear-gradient(180deg, rgba(215, 25, 32, 0.32), transparent);
-}
-.registrationLine {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 8%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(241, 238, 231, 0.06) 18%,
-    rgba(241, 238, 231, 0.06) 82%,
-    transparent
-  );
-}
-.registrationDot {
-  position: absolute;
-  top: 8%;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  border-radius: 50%;
-  border: 1px solid rgba(215, 25, 32, 0.4);
-}
-
-/* Oversized low-opacity ghost wordmark -- a watermark/architectural
-   layer sitting behind the legal row, never opaque, never a new
-   logo. Clipped by .footer's own overflow:hidden. */
-.ghostWordmark {
-  position: absolute;
-  left: 50%;
-  bottom: -6%;
-  z-index: 0;
-  transform: translateX(-50%);
-  color: rgba(241, 238, 231, 0.03);
-  font-family: var(--app-font-serif);
-  font-size: clamp(90px, 16vw, 260px);
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 1;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
 }
 
 .container {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
-  position: relative;
-  z-index: 1;
 }
 
-/* ---- Opening -- numeral bleeds into eyebrow, matching Section 02 -- */
-.header {
-  max-width: 640px;
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- 1. Closing statement -------------------------------------------
+   The year is a quiet backdrop; the statement bleeds up into it (the
+   same negative-margin mechanic as the homepage chapter numerals) and
+   is the loudest thing in the footer. On desktop it sits on one line;
+   it wraps naturally below 900px. */
+.closing {
   position: relative;
 }
-.numeral {
+.year {
   display: block;
-  margin: 0 0 -0.36em -0.04em;
-  color: rgba(241, 238, 231, 0.075);
+  margin: 0 0 -0.4em -0.04em;
+  color: rgba(241, 238, 231, 0.065);
   font-family: var(--app-font-serif);
-  font-size: clamp(5.5rem, 10vw, 10rem);
+  font-size: clamp(6.5rem, 18vw, 16rem);
   font-weight: 400;
   line-height: 0.8;
   letter-spacing: -0.03em;
   pointer-events: none;
   user-select: none;
 }
-.eyebrow {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 20px;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-.eyebrow::before {
-  content: "";
-  width: 34px;
-  height: 1px;
-  background: var(--red);
-  flex-shrink: 0;
-}
-/* Closing statement -- deliberately smaller than Section 08's .title
-   (clamp(2.7rem, 4.4vw, 4.4rem)): a whisper, not another hero. */
 .statement {
+  position: relative;
   margin: 0;
   font-family: var(--app-font-serif);
-  font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+  font-size: clamp(2.15rem, 9.2vw, 3.6rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.16;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
   color: var(--ivory);
+  text-wrap: balance;
 }
 .statement span {
   color: var(--red);
   font-style: italic;
 }
 
-/* ---- Four-column editorial grid ------------------------------------ */
+/* ---- 2. Navigation grid --------------------------------------------- */
 .grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.75fr 0.85fr 1.1fr;
-  gap: 0 clamp(28px, 4vw, 56px);
-  margin-top: clamp(56px, 6vw, 84px);
-  padding-top: clamp(28px, 3vw, 40px);
-  border-top: 1px solid rgba(241, 238, 231, 0.12);
+  grid-template-columns:
+    minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-areas:
+    "brand explore treatments contact"
+    "locations locations locations locations";
+  gap: 48px clamp(32px, 4.5vw, 64px);
+  margin-top: clamp(40px, 5vw, 72px);
+  padding-top: clamp(32px, 3.5vw, 44px);
+  border-top: 1px solid var(--rule);
 }
+.brandCol { grid-area: brand; }
+.exploreCol { grid-area: explore; }
+.treatmentsCol { grid-area: treatments; }
+.contactCol { grid-area: contact; }
+.locations { grid-area: locations; }
 
-.col {
-  position: relative;
-}
 .colLabel {
-  margin: 0 0 20px;
-  color: rgba(241, 238, 231, 0.42);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
+  margin: 0 0 14px;
+  color: var(--quiet);
+  font-family: var(--app-font-sans);
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.18em;
+  line-height: 1.4;
   text-transform: uppercase;
 }
 
-/* Column 01 -- brand -------------------------------------------------- */
+/* Brand column */
 .brandCol :global(.brand) {
   margin-bottom: 18px;
 }
 .brandSentence {
-  max-width: 260px;
-  margin: 0 0 20px;
+  max-width: 290px;
+  margin: 0 0 22px;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.65;
 }
-.brandLocations {
-  margin: 0;
-  padding-top: 16px;
-  border-top: 1px solid rgba(241, 238, 231, 0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  color: rgba(241, 238, 231, 0.5);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-/* Social icon row -- sits beneath the branch locations, same quiet
-   hairline-separated rhythm as the rest of the brand column. Icon-only
-   circular targets, colour-shift on hover matching .linkList/.credit. */
 .socialRow {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 16px;
 }
 .socialLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(241, 238, 231, 0.22);
+  border: 1px solid rgba(241, 238, 231, 0.28);
   color: var(--muted);
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 .socialLink:hover,
 .socialLink:focus-visible {
   color: var(--ivory);
   border-color: var(--red);
-  background-color: rgba(215, 25, 32, 0.12);
 }
 .socialLink:focus-visible {
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--ivory);
   outline-offset: 3px;
 }
 
-/* Columns 02/03 -- link lists ----------------------------------------
-   Text links only, never buttons/pills -- colour shift + a thin
-   underline that grows from the left, the same interaction language
-   as Section 08's .actionPrimary/.actionSecondary. */
+/* Link lists -- plain text links, colour shift + a hairline underline
+   growing from the left (the interaction used by Section 08). */
 .linkList {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
 }
 .linkList a {
   position: relative;
-  display: inline-block;
-  width: fit-content;
-  padding-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--link-h);
   color: var(--ivory);
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.35;
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -305,327 +185,369 @@
   position: absolute;
   left: 0;
   right: 100%;
-  bottom: 0;
+  bottom: 5px;
   height: 1px;
   background: var(--red);
   transition: right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .linkList a:hover,
 .linkList a:focus-visible {
-  color: var(--red);
+  color: #fff;
 }
 .linkList a:hover::after,
 .linkList a:focus-visible::after {
   right: 0;
 }
 .linkList a:focus-visible {
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--ivory);
+  outline-offset: 2px;
+}
+
+/* Contact column */
+.contactCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.contactCol .colLabel {
+  align-self: stretch;
+}
+.contactCall {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+  color: var(--ivory);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.contactCall span {
+  color: var(--quiet);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.contactCall:hover,
+.contactCall:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 5px;
+}
+.contactCall:focus-visible {
+  outline: 2px solid var(--ivory);
   outline-offset: 4px;
 }
 
-/* Column 04 -- contact -- the strongest functional column ------------
-   Base layout is a single vertical stack of the two branches; the
-   1024px tier keeps the stack (2x2 grid recomposition puts Contact in
-   its own row already), so no grid override is needed there. */
-.branchGrid {
-  display: flex;
-  flex-direction: column;
-}
-.branch {
-  position: relative;
-  padding-top: 22px;
-  margin-top: 22px;
-  border-top: 1px solid rgba(241, 238, 231, 0.14);
-}
-.branch:first-of-type {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: none;
-}
-.branchIndex {
-  margin: 0 0 10px;
-  color: rgba(241, 238, 231, 0.4);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-.branchMeta {
-  margin: 0 0 12px;
-  color: var(--muted);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.branchPhone {
-  display: inline-block;
-  margin: 0 0 14px;
-  color: var(--ivory);
-  font-family: var(--app-font-mono, "Manrope", sans-serif);
-  font-size: clamp(20px, 1.8vw, 23px);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  transition: color 0.25s ease;
-}
-.branchPhone:hover,
-.branchPhone:focus-visible {
-  color: var(--red);
-}
-.branchPhone:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 4px;
-}
-.branchActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 20px;
-}
-.actionPrimary,
-.actionSecondary {
+/* Small uppercase action link with an arrow (enquiry, directions) */
+.textAction {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  width: fit-content;
-  padding-bottom: 3px;
-  text-decoration: none;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--ivory);
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
+  text-decoration: none;
   text-transform: uppercase;
   transition: color 0.2s ease, gap 0.2s ease;
 }
-.actionPrimary {
-  color: var(--ivory);
-  font-size: 11px;
-}
-.actionSecondary {
-  color: var(--muted);
-  font-size: 10px;
-}
-.actionPrimary::after,
-.actionSecondary::after {
+.textAction::after {
   content: "";
   position: absolute;
   left: 0;
   right: 100%;
-  bottom: 0;
+  bottom: 9px;
   height: 1px;
   background: var(--red);
   transition: right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.actionPrimary:hover,
-.actionPrimary:focus-visible {
-  color: var(--red);
-  gap: 10px;
+.textAction:hover,
+.textAction:focus-visible {
+  color: #fff;
+  gap: 11px;
 }
-.actionSecondary:hover,
-.actionSecondary:focus-visible {
-  color: var(--ivory);
-  gap: 9px;
-}
-.actionPrimary:hover::after,
-.actionPrimary:focus-visible::after,
-.actionSecondary:hover::after,
-.actionSecondary:focus-visible::after {
+.textAction:hover::after,
+.textAction:focus-visible::after {
   right: 0;
 }
-.actionPrimary:focus-visible,
-.actionSecondary:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 4px;
-}
-.actionPrimary svg,
-.actionSecondary svg {
-  transition: transform 0.2s ease;
-}
-.actionPrimary:hover svg,
-.actionPrimary:focus-visible svg,
-.actionSecondary:hover svg,
-.actionSecondary:focus-visible svg {
-  transform: translateX(3px);
+.textAction:focus-visible {
+  outline: 2px solid var(--ivory);
+  outline-offset: 3px;
 }
 
-/* ---- Legal / credit bar --------------------------------------------
-   Clearly separated by its own hairline, quieter than everything
-   above it. Copyright + Privacy/Terms on one line, branch metadata
-   beneath, and the Blogspage AI development credit last -- the
-   quietest element in the entire footer. */
-.legal {
-  position: relative;
-  z-index: 1;
-  margin-top: clamp(48px, 6vw, 76px);
-  padding: 20px 0 26px;
-  border-top: 1px solid rgba(241, 238, 231, 0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* ---- 3. Locations ---------------------------------------------------
+   A compact summary per clinic -- not a repeat of the homepage branch
+   panels. Name and rating on one line, brief address, phone and
+   directions beneath. */
+.locations {
+  padding-top: clamp(28px, 3vw, 36px);
+  border-top: 1px solid var(--rule);
 }
-.legalRow {
+.branchList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px clamp(32px, 4.5vw, 64px);
+}
+.branchHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+.branchName {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.branchName a {
+  color: var(--ivory);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.branchName a:hover,
+.branchName a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+.branchName a:focus-visible {
+  outline: 2px solid var(--ivory);
+  outline-offset: 4px;
+}
+.rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  margin: 0;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.ratingScore {
+  color: var(--ivory);
+  font-size: 15px;
+  font-weight: 700;
+}
+.ratingStar {
+  color: var(--red);
+  font-size: 13px;
+}
+.ratingCount {
+  margin-left: 3px;
+  color: var(--muted);
+}
+.branchAddress {
+  margin: 8px 0 6px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.branchActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 28px;
+}
+.branchPhone {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ivory);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.branchPhone:hover,
+.branchPhone:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 5px;
+}
+.branchPhone:focus-visible {
+  outline: 2px solid var(--ivory);
+  outline-offset: 3px;
+}
+
+/* ---- 4. Legal and credit --------------------------------------------
+   Three items on one row at desktop: copyright, legal links, and the
+   developer credit at the right edge -- readable, never clipped. */
+.legal {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
-  color: rgba(241, 238, 231, 0.46);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  gap: 4px 28px;
+  margin-top: clamp(36px, 4vw, 56px);
+  padding: 14px 0 22px;
+  border-top: 1px solid var(--rule);
+  color: var(--quiet);
+  font-size: 13px;
+}
+.copyright {
+  margin: 0;
 }
 .legalLinks {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
+  gap: 0 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .legalLinks a,
 .legalLinkButton {
-  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
   text-decoration: none;
-  border-bottom: 1px solid rgba(241, 238, 231, 0.3);
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease;
+}
+.legalLinks span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
 }
 .legalLinks a:hover,
 .legalLinks a:focus-visible,
 .legalLinkButton:hover,
 .legalLinkButton:focus-visible {
-  color: var(--red);
-  border-color: var(--red);
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 5px;
 }
 .legalLinks a:focus-visible,
 .legalLinkButton:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 3px;
+  outline: 2px solid var(--ivory);
+  outline-offset: 2px;
 }
-/* Reset — .legalLinkButton is a <button>, not an <a>, so it needs the
-   plain link visuals above applied on top of a cleared button style. */
+/* <button> reset so it reads as a sibling of the text links. */
 .legalLinkButton {
   background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
+  border: 0;
   padding: 0;
   margin: 0;
   font: inherit;
   cursor: pointer;
 }
-.legalRow span[aria-hidden="true"] {
-  opacity: 0.5;
-}
-.legalMeta {
-  color: rgba(241, 238, 231, 0.34);
-  font: 9.5px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
 .credit {
-  color: rgba(241, 238, 231, 0.32);
-  font: 10px var(--app-font-mono, "Manrope", sans-serif);
-  letter-spacing: 0.04em;
+  margin: 0;
+  color: var(--muted);
 }
 .credit a {
-  color: rgba(241, 238, 231, 0.5);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(241, 238, 231, 0.22);
-  transition: color 0.2s ease, border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ivory);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 5px;
+  transition: color 0.2s ease;
 }
 .credit a:hover,
 .credit a:focus-visible {
-  color: var(--red);
-  border-color: var(--red);
+  color: #fff;
 }
 .credit a:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 3px;
+  outline: 2px solid var(--ivory);
+  outline-offset: 2px;
 }
 
-/* ---- Restrained staggered entrance ----------------------------------
-   Sequence: chapter/eyebrow -> statement -> Neodent column -> Explore
-   -> Care -> Contact -> legal row. Opacity + translateY only. */
-.header,
-.statement,
-.brandCol,
-.exploreCol,
-.careCol,
-.contactCol,
-.legal {
-  transition:
-    opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.footer:not(.visible) .header,
-.footer:not(.visible) .statement,
-.footer:not(.visible) .brandCol,
-.footer:not(.visible) .exploreCol,
-.footer:not(.visible) .careCol,
-.footer:not(.visible) .contactCol,
-.footer:not(.visible) .legal {
-  opacity: 0;
-  transform: translateY(16px);
-}
-.header { transition-delay: 0ms; }
-.statement { transition-delay: 90ms; }
-.brandCol { transition-delay: 180ms; }
-.exploreCol { transition-delay: 250ms; }
-.careCol { transition-delay: 320ms; }
-.contactCol { transition-delay: 390ms; }
-.legal { transition-delay: 470ms; }
+/* ---- Responsive ------------------------------------------------------ */
 
-@media (max-width: 1180px) {
-  .grid { grid-template-columns: 1.1fr 0.7fr 0.8fr 1.05fr; gap: 0 32px; }
-}
-
-@media (max-width: 1024px) {
-  /* 2x2 recomposition: Brand + Explore share the top row, Care +
-     Contact share the bottom row, each branch keeping its own
-     vertical rhythm rather than the desktop's single 4-across line. */
-  .grid { grid-template-columns: 1fr 1fr; gap: 40px 32px; }
-}
-
-@media (max-width: 767px) {
-  .container { width: min(100% - 32px, 600px); }
-  .numeral { font-size: clamp(4rem, 20vw, 6rem); }
-  .statement { font-size: clamp(1.5rem, 6vw, 1.9rem); }
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    margin-top: 40px;
-    padding-top: 28px;
+/* The statement stays on one intentional line while the container can
+   hold it; 5rem keeps it inside the 1180px container at 1440px+. */
+@media (min-width: 900px) {
+  .statement {
+    font-size: clamp(3.4rem, 6.1vw, 5rem);
+    white-space: nowrap;
   }
-  .ghostWordmark { font-size: clamp(70px, 26vw, 140px); bottom: -4%; }
-  .legalRow { gap: 12px; }
 }
 
-@media (max-width: 430px) {
-  .branchPhone { font-size: 19px; }
-  .legal { margin-top: 40px; }
+/* Tablet: brand across the top, three link columns, then locations. */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "brand brand brand"
+      "explore treatments contact"
+      "locations locations locations";
+    gap: 40px 32px;
+  }
+  .brandSentence { max-width: 420px; }
+}
+
+/* Mobile: deliberate reading order -- brand, Explore + Treatments side
+   by side, Contact, then Locations; branches stack. */
+@media (max-width: 719px) {
+  .container { width: min(100% - 32px, 600px); }
+  .statement { font-size: clamp(2.15rem, 9.2vw, 3.6rem); }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "brand brand"
+      "explore treatments"
+      "contact contact"
+      "locations locations";
+    gap: 36px 24px;
+    margin-top: 36px;
+  }
+  .branchList { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .linkList a { min-height: 44px; }
+  .linkList a::after { bottom: 9px; }
+  .legal {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 389px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "brand"
+      "explore"
+      "treatments"
+      "contact"
+      "locations";
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .header,
-  .statement,
-  .brandCol,
-  .exploreCol,
-  .careCol,
-  .contactCol,
-  .legal,
   .linkList a,
   .linkList a::after,
+  .textAction,
+  .textAction::after,
+  .socialLink,
+  .contactCall,
+  .branchName a,
   .branchPhone,
-  .actionPrimary,
-  .actionSecondary,
-  .actionPrimary::after,
-  .actionSecondary::after,
-  .actionPrimary svg,
-  .actionSecondary svg,
+  .legalLinks a,
+  .legalLinkButton,
   .credit a {
     transition: none;
-  }
-  .footer:not(.visible) .header,
-  .footer:not(.visible) .statement,
-  .footer:not(.visible) .brandCol,
-  .footer:not(.visible) .exploreCol,
-  .footer:not(.visible) .careCol,
-  .footer:not(.visible) .contactCol,
-  .footer:not(.visible) .legal {
-    opacity: 1;
-    transform: none;
   }
 }

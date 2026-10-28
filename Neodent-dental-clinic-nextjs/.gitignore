@@ -43,3 +43,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local QA output / temp files (never committed)
+/qa-shots/
+/_tmp_shots/
+/.frame-audit/
+/_tmp_*
+/undefinedsheet.jpg

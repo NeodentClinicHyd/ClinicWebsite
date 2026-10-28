@@ -38,12 +38,18 @@ interface CookieConsentContextValue {
   /** Opens the preferences panel — used by the banner and the footer link. */
   openPreferences: () => void;
   /**
-   * Enables every currently available optional category (today, just
-   * `media`) and persists it as the visitor's decision. Exposed so a
+   * Enables every currently available optional category (`media` and
+   * `analytics`) and persists it as the visitor's decision. Exposed so a
    * gated embed (e.g. the About page's YouTube facade) can offer a
    * one-click "allow" inline, without duplicating the storage logic.
    */
   acceptAll: () => void;
+  /**
+   * Enables ONLY embedded media, leaving every other category exactly as
+   * the visitor previously set it (unset → off). Used by the inline
+   * YouTube gate so allowing one video never grants analytics consent.
+   */
+  allowMedia: () => void;
 }
 
 const CookieConsentContext = createContext<CookieConsentContextValue | null>(null);
@@ -65,7 +71,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
     setHasMounted(true);
     const stored = readStoredConsent();
     if (stored) {
-      setConsent({ media: stored.media });
+      setConsent({ media: stored.media, analytics: stored.analytics });
     }
   }, []);
 
@@ -76,8 +82,12 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const acceptAll = useCallback(() => {
-    save({ media: true });
+    save({ media: true, analytics: true });
   }, [save]);
+
+  const allowMedia = useCallback(() => {
+    save({ ...(consent ?? DEFAULT_OPTIONAL_CONSENT), media: true });
+  }, [save, consent]);
 
   const rejectNonEssential = useCallback(() => {
     save({ ...DEFAULT_OPTIONAL_CONSENT });
@@ -87,8 +97,8 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   const closePreferences = useCallback(() => setPreferencesOpen(false), []);
 
   const value = useMemo<CookieConsentContextValue>(
-    () => ({ consent, openPreferences, acceptAll }),
-    [consent, openPreferences, acceptAll],
+    () => ({ consent, openPreferences, acceptAll, allowMedia }),
+    [consent, openPreferences, acceptAll, allowMedia],
   );
 
   // Nothing to show until we know whether storage held a decision.

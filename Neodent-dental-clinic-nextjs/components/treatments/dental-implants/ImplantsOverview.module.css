@@ -1,0 +1,354 @@
+/* Overview. Tan ground (#ece7dc, as the home's "Decades" section). Paper
+   cards: 20px radius, #fffefa, 1px rgba(38,48,51,.12) (doctor card / about
+   label-value card). Dark card: 4px 56px 4px 4px (home). One list style on
+   the page: red dash markers. Standard section padding and chapter title
+   come from SectionHeader. */
+
+.section {
+  background: #ece7dc;
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: stretch;
+}
+.copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Lede: 18px, 62ch. */
+.lede {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+
+/* Scope: lead-in, three small cards, the denture note, the clinics line. */
+.scope {
+  width: 100%;
+  margin-top: 36px;
+}
+.scopeLead {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: rgba(38, 48, 51, 0.78);
+}
+.scopeList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.scopeCard {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 18px 22px;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
+}
+.scopeCard::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+/* Artwork slot: only rendered when artwork is supplied. */
+.scopeMedia {
+  order: -1;
+}
+.scopeTitle {
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.7vw, 22px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.denture {
+  max-width: 62ch;
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+.consult {
+  max-width: 62ch;
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.82);
+}
+
+/* Highlighted card: the staged / osseointegration paragraph. */
+.process {
+  width: 100%;
+  margin-top: 28px;
+  padding: clamp(22px, 2.4vw, 28px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.process p {
+  max-width: 62ch;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.92);
+}
+
+/* Closing note. */
+.closingNote {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--neodent-red);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+.inlineLink {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+.inlineLink:hover {
+  color: var(--neodent-red-dark);
+}
+.inlineLink:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 2px;
+}
+
+/* Right column: anatomy diagram, then the dark parts card. */
+.side {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+/* The dark card takes the height left over so both columns end together;
+   its three rows are spread evenly through it. */
+.parts {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(24px, 2.6vw, 32px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.partsTitle {
+  margin: 0 0 22px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.partList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.part {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+}
+.partTile {
+  flex: none;
+  width: clamp(104px, 10vw, 128px);
+}
+.partBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.partName {
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.partText {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Matched pair: same height, padding, radius, heading size and list style. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(40px, 5vw, 64px);
+  align-items: stretch;
+}
+.card {
+  --card-pad: clamp(24px, 3vw, 32px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--card-pad);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.cardTitle {
+  margin: 0 0 20px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.dashList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+.dashList li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.dashList li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+}
+/* Tinted footer strip: runs edge to edge along the bottom of the card. */
+.cardFoot {
+  margin: auto calc(var(--card-pad) * -1) calc(var(--card-pad) * -1);
+  padding: 26px var(--card-pad);
+  background: var(--neodent-red-soft);
+  font-family: var(--app-font-serif);
+  font-size: 21px;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.hasFoot {
+  margin-bottom: 28px;
+}
+.dashList {
+  gap: 18px;
+}
+
+/* Tablet and mobile: one column in reading order: heading, lede, anatomy
+   diagram + three parts, what implants can replace, osseointegration card,
+   closing note. `.copy` dissolves so its children can be re-ordered. */
+@media (max-width: 1023px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .copy {
+    display: contents;
+  }
+  .lede {
+    order: 1;
+  }
+  .side {
+    order: 2;
+    width: 100%;
+    max-width: 640px;
+    margin-top: 32px;
+  }
+  .scope {
+    order: 3;
+  }
+  .process {
+    order: 4;
+  }
+  .closingNote {
+    order: 5;
+  }
+}
+@media (max-width: 860px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .lede {
+    margin-top: 22px;
+  }
+  .scopeList {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .scopeCard {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+  .scopeCard::before {
+    flex: none;
+  }
+  /* Artwork slot needs an explicit width in a row, or it collapses. */
+  .scopeMedia {
+    flex: none;
+    width: 84px;
+  }
+  .partTile {
+    width: 72px;
+  }
+  .part {
+    gap: 16px;
+  }
+}
+

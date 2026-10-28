@@ -1,0 +1,45 @@
+/* About -- founder chapter. Layout from ClinicalLeadership.module.css
+   (.feature, .portrait); the panel surface is the charcoal the home
+   page puts behind the founder cut-out. */
+
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  column-gap: clamp(32px, 4vw, 56px);
+  row-gap: 32px;
+  align-items: start;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.cardCol {
+  min-width: 0;
+}
+
+/* Portrait panel: the charcoal the home page puts behind the founder
+   cut-out; the caption sits under it in the home's source / medium pairing. */
+.panel {
+  position: relative;
+  aspect-ratio: 714 / 623;
+  overflow: hidden;
+  background: #17191a;
+  border-radius: 20px clamp(48px, 7vw, 96px) 20px 20px;
+}
+.portrait {
+  object-fit: cover;
+  object-position: 50% 100%;
+  filter: saturate(0.92) contrast(1.03);
+}
+
+.narrative {
+  margin-top: clamp(48px, 5.5vw, 72px);
+}
+
+@media (max-width: 899px) {
+  .feature {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 32px;
+  }
+  .panel {
+    aspect-ratio: 714 / 623;
+    border-radius: 20px 72px 20px 20px;
+  }
+}

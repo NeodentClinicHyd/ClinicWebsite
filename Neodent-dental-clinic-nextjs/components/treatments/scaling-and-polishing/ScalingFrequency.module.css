@@ -1,0 +1,186 @@
+/* Frequency. Ivory ground. Paper cards (#fffefa, 1px hairline, 20px radius)
+   as the Smile Design "when" cards. The dominant card is the home dark card
+   (4px 56px 4px 4px). The red card is the page's red surface (as the
+   Smile Design plan statement). One list style: red dash markers. */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(16px, 2.4vw, 28px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.left {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.4vw, 28px);
+}
+
+/* ---- Dominant: your dentist decides ------------------------------------- */
+.decide {
+  margin: 0;
+  padding: clamp(28px, 3.4vw, 40px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.decide::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 18px;
+  background: var(--neodent-red);
+}
+.decideTitle {
+  margin: 0 0 14px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(32px, 3.4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+.decideText {
+  margin: 0;
+  max-width: 44ch;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* ---- Evidence note ----------------------------------------------------- */
+.research {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: clamp(24px, 3vw, 32px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.research::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.researchTitle {
+  margin: 0 0 10px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.researchText {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+/* ---- What can change the answer ---------------------------------------- */
+.factors {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(24px, 3vw, 34px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.factorsTitle {
+  margin: 0 0 22px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.factorList {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+.factor {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.factorText {
+  min-width: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---- Red statement ------------------------------------------------------- */
+.statement {
+  margin-top: clamp(16px, 2.4vw, 28px);
+  padding: clamp(28px, 4vw, 44px) clamp(26px, 3.6vw, 44px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.statementText {
+  margin: 0;
+  max-width: 40ch;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.statementText em {
+  display: block;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .decide {
+    border-radius: 4px 40px 4px 4px;
+    padding: 26px 22px;
+  }
+  .research,
+  .factors {
+    padding: 22px 20px;
+  }
+  .statement {
+    padding: 26px 22px;
+    border-radius: 16px;
+  }
+  .statementText {
+    max-width: none;
+  }
+}

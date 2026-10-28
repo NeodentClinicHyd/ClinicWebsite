@@ -1,0 +1,258 @@
+/* Cases. Ivory ground. Paper cards (20px radius, #fffefa, 1px hairline) as
+   the doctor card and FmrCases. The film frame is the PatientStories film
+   frame (9:16, 1px border, 16px 18px 32px shadow). The disclaimer is the home
+   dark card (4px 56px 4px 4px). Radiographs are never cropped
+   (natural 1458 x 1103 ratio) and never shown larger than their own size. */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.xrayCard {
+  grid-column: 1 / -1;
+}
+.filmCard {
+  grid-column: span 7;
+}
+.noteCard {
+  grid-column: span 5;
+}
+
+.card {
+  margin: 0;
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 28px);
+  border-radius: 20px;
+}
+.xrayCard,
+.filmCard {
+  display: flex;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+}
+.xrayCard {
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ---- Radiograph trio ------------------------------------------------- */
+.xrays {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+}
+.plate {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.frame {
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.2);
+  border-radius: 10px;
+  background: #17191a;
+}
+.frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.label {
+  color: rgba(38, 48, 51, 0.78);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.xrayCaption {
+  max-width: 70ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* ---- Film card: frame | caption --------------------------------------- */
+.filmCard {
+  flex-direction: row;
+  align-items: stretch;
+  gap: clamp(20px, 2.6vw, 32px);
+}
+.filmFrame {
+  position: relative;
+  flex: none;
+  width: min(100%, 220px);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.22);
+  border-radius: 20px;
+  background: #17191a;
+  box-shadow: 16px 18px 32px rgba(38, 48, 51, 0.1);
+}
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(251, 250, 247, 0.75);
+  border-radius: 50%;
+  background: rgba(22, 28, 30, 0.5);
+  color: #fbfaf7;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.play:hover {
+  background: rgba(215, 25, 32, 0.72);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+.play:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+}
+/* Caption pair: red bold + serif line, centred against the frame. */
+.filmCaption {
+  min-width: 0;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.filmCaption b {
+  color: var(--neodent-red-dark);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.filmCaption b::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.filmCaption span {
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* ---- Disclaimer: compact dark card ------------------------------------ */
+.noteCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  padding: clamp(26px, 3vw, 34px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.noteCard::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.evidence {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+}
+.privacyLink {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.privacyLink:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.statement {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: #fff;
+  text-wrap: balance;
+}
+
+@media (max-width: 1023px) {
+  .filmCard,
+  .noteCard {
+    grid-column: 1 / -1;
+  }
+  .noteCard {
+    border-radius: 4px 40px 4px 4px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .card {
+    padding: 18px;
+  }
+  .xrays {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .filmCard {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .filmFrame {
+    width: min(100%, 260px);
+    align-self: center;
+  }
+  .noteCard {
+    padding: 24px 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .play {
+    transition: none;
+  }
+  .play:hover {
+    transform: translate(-50%, -50%);
+  }
+}

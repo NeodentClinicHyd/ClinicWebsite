@@ -138,11 +138,18 @@ const chapters: Chapter[] = [
     number: "07",
     title: "Cookies & Website Analytics",
     body: (
-      <p>
-        Cookies or similar technologies may be used, where applicable, for website functionality,
-        performance, traffic measurement, understanding how visitors use the website, and improving the
-        overall experience.
-      </p>
+      <>
+        <p>
+          Cookies or similar technologies may be used, where applicable, for website functionality,
+          performance, traffic measurement, understanding how visitors use the website, and improving the
+          overall experience.
+        </p>
+        <p>
+          With your permission, we use Google Analytics to measure website traffic and usage. It is
+          switched off until you allow it, and you can change your choice at any time through
+          &ldquo;Cookie Preferences&rdquo; in the footer.
+        </p>
+      </>
     ),
   },
   {

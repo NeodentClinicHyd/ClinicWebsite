@@ -65,7 +65,7 @@ export const ARCHIVE_IMAGES: ArchiveImage[] = [
   },
   {
     src: "/assets/news-articles/Dr siraj neodent dental clinic Nampally news article.jpg",
-    alt: "The Siasat Daily — feature on dental awareness delivered by Dr. Siraj, Nampally",
+    alt: "The Siasat Daily — feature on dental awareness delivered by Dr. Mohd. Siraj Ur Rahman, Nampally",
     caption: "Dental awareness feature",
     source: "The Siasat Daily · Nampally",
   },
@@ -83,20 +83,20 @@ export const ARCHIVE_IMAGES: ArchiveImage[] = [
   },
   {
     src: "/assets/news-articles/Dr siraj and dr. Miftah neodent dental clinic Nampally news.jpg",
-    alt: "The Siasat Daily — press report on Dr. Siraj and Dr. Miftah at Neodent Nampally",
+    alt: "The Siasat Daily — press report on Dr. Mohd. Siraj Ur Rahman and Dr. Md. Miftah Ur Rahman at Neodent Nampally",
     caption: "Clinical team press report",
     source: "The Siasat Daily · Nampally",
   },
   {
     src: "/assets/news-articles/Dr miftah neodent dental clinic hyderabad news article.jpg",
     alt: "The Siasat Daily — article covering Dr. Md. Miftah Ur Rahman, Neodent Hyderabad",
-    caption: "Dr. Miftah — press article",
+    caption: "Dr. Md. Miftah Ur Rahman — press article",
     source: "The Siasat Daily · Hyderabad",
   },
   {
     src: "/assets/news-articles/Dr miftah neodent dental clinic hyderabad news.jpg",
     alt: "The Siasat Daily — news item on Dr. Md. Miftah Ur Rahman and Neodent",
-    caption: "Dr. Miftah — press coverage",
+    caption: "Dr. Md. Miftah Ur Rahman — press coverage",
     source: "The Siasat Daily · Hyderabad",
   },
   {

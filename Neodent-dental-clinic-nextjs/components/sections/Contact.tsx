@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Clock3, MapPin, Phone } from "lucide-react";
 import { AppButton } from "@/components/ui/AppButton";
 import {
@@ -72,11 +73,11 @@ export function Contact({ onBook }: { onBook: () => void }) {
             <span className="contact-location-kicker">Two locations in Hyderabad</span>
             <div className="contact-location-list">
               {heroLocations.map((location) => (
-                <a href="#clinic" key={location.number}>
+                <Link href={location.href} key={location.number}>
                   <span>{location.number}</span>
                   <strong>{location.name}</strong>
                   <ArrowUpRight size={14} aria-hidden="true" />
-                </a>
+                </Link>
               ))}
             </div>
           </div>

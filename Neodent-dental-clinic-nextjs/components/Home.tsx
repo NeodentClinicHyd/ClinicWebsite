@@ -6,7 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/hero/Hero";
 import { ExperienceIntro } from "@/components/sections/ExperienceIntro";
-import { BrandStatementStrip } from "@/components/sections/BrandStatementStrip";
+import { SeamCard } from "@/components/sections/SeamCard";
 import { LegacyStory } from "@/components/sections/LegacyStory";
 import { Expertise } from "@/components/sections/Expertise";
 import { ClinicalLeadership } from "@/components/sections/ClinicalLeadership";
@@ -16,7 +16,11 @@ import { SpacesDesignedAroundCare } from "@/components/sections/SpacesDesignedAr
 import { ContactNextStep } from "@/components/sections/ContactNextStep";
 import { LeadCapture } from "@/components/ui/LeadCapture";
 import { AppButton } from "@/components/ui/AppButton";
-import { ctaTelPhone, LEAD_CAPTURE_SESSION_KEY } from "@/lib/site-data";
+import {
+  ctaTelPhone,
+  LEAD_CAPTURE_SESSION_KEY,
+  recognitionImage,
+} from "@/lib/site-data";
 
 export function Home() {
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
@@ -68,7 +72,19 @@ export function Home() {
       <main>
         <Hero />
         <ExperienceIntro />
-        <BrandStatementStrip />
+        {/* Sits on the seam: ExperienceIntro pads its bottom by
+            var(--seam-pad-above), LegacyStory its top by var(--seam-pad-below). */}
+        <SeamCard
+          image={{
+            src: recognitionImage,
+            alt: "Dr. Mohd. Siraj Ur Rahman, Director of Neodent Dental Hospital, Hyderabad",
+            width: 714,
+            height: 623,
+            topTrim: 2.1,
+            bottomTrim: 8.2,
+            focusX: 53,
+          }}
+        />
         <LegacyStory />
         <Expertise />
         <ClinicalLeadership />

@@ -214,7 +214,7 @@ export function TreatmentThinking() {
                 <p className={styles.doctorSpecialty}>Prosthodontist &amp; Implantologist</p>
                 <p className={styles.doctorContext}>
                   Specialist training in prosthodontics and implantology, and
-                  35+ years of clinical practice, inform how Neodent assesses
+                  30+ years of clinical practice, inform how Neodent assesses
                   and plans treatment for each patient.
                 </p>
               </div>

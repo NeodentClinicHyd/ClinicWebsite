@@ -1,12 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
+  address,
+  directions,
+  googleRating,
   mehdipatnamExteriorImage,
+  mehdipatnamHours,
   mehdipatnamInteriorImage,
+  nampallyAddress,
+  nampallyDirections,
   nampallyExteriorImage,
+  nampallyHours,
   nampallyInteriorImage,
+  nampallyPhone,
+  nampallyTelPhone,
+  phone,
+  telPhone,
 } from "@/lib/site-data";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import styles from "./SpacesDesignedAroundCare.module.css";
@@ -14,92 +26,118 @@ import styles from "./SpacesDesignedAroundCare.module.css";
 /* ------------------------------------------------------------------
    Homepage Section 07 — "Spaces designed around care."
 
-   Answers where the Neodent experience actually happens: the two
-   Hyderabad branches. An editorial location atlas rather than two
-   generic location cards -- a single dominant image plate (large
-   primary + an offset secondary plate) switches as one coordinated
-   unit with an 01/02 branch selector, a short description and its
-   metadata, exactly like Section 05's story stage / Section 06's
-   media plate switch on a single active index rather than rendering
-   both branches at once.
+   One composed location panel per branch: the selected branch's name,
+   supporting copy, contact details, Google rating and directions on
+   the left, its photographs on the right. Selecting a branch swaps the
+   whole panel on a single active index.
 
-   PRIMARY / SECONDARY IMAGE CHOICE (art-directed, not mechanical):
-   Of the four real branch photographs, each pairing below was chosen
-   after visual inspection for which frame carries the strongest
-   architectural/spatial storytelling at large size, with the second
-   frame chosen to complement rather than repeat that viewpoint:
-     Mehdipatnam -> primary = interior (the waiting lounge corridor,
-       strong converging perspective, chandelier as a focal point);
-       secondary = exterior (the carved wooden entrance threshold).
-     Nampally -> primary = interior (the double-height reception with
-       its red staircase and mezzanine -- the strongest, most dramatic
-       frame of all four, and closest in tone to the brand's red);
-       secondary = exterior (the street-level signage/frontage).
-   This deliberately differs from the Hero's Nampally plate/inset
-   assignment (which was driven by native photo resolution, not
-   composition) -- no new assets are introduced, only a different,
-   more considered pairing for this section's larger presentation.
+   PHOTOGRAPHY: every photograph is rendered at its own aspect ratio
+   (width/height attributes + `height: auto`) -- never cropped,
+   stretched or object-fit'd. The primary plate's width is capped in
+   CSS so its height stays laptop-friendly; the smaller entrance /
+   frontage plate sits beside it (bottom-aligned), never over it.
+   Pixel sizes below were measured from the files in /public/assets.
 
-   Dark editorial surface -- a tonal shift from the light Sections 05
-   and 06 immediately before it, and from TrustStrip immediately
-   after, so Section 07 reads as a deliberate new chapter rather than
-   a continuation. Scoped entirely to `.section`'s local CSS variables
-   (mirroring ClinicalLeadership's dark-surface token pattern); nothing
-   here edits globals.css or any locked section (01-06). ------------------------------------------------------------------ */
+   GOOGLE RATING: the figures are values read from the supplied Google
+   listing screenshots, not live data, and are kept inside each branch
+   record so they cannot be swapped. Mehdipatnam reuses the existing
+   `googleRating` constant (4.3 / 261, also used by the Hero). Nampally
+   (4.6 / 157) comes from the client-supplied screenshot.
 
-type BranchImage = { src: string; alt: string; position?: string; label: string };
+   DIRECTIONS LINKS: the two share.google links supplied for this
+   section redirect to a generic "Neodent Dental Hospital" search with
+   no address/name that distinguishes the branches, so they could not
+   be matched confidently and are NOT used. Each branch keeps its
+   existing, address-based Google Maps directions link.
+
+   Dark editorial surface scoped to `.section`'s local CSS variables;
+   nothing here edits globals.css or any other section.
+   ------------------------------------------------------------------ */
+
+type BranchImage = { src: string; alt: string; label: string; width: number; height: number };
 type Branch = {
-  index: "01" | "02";
   name: string;
-  meta: string;
-  description: string;
+  body: ReactNode;
+  address: string;
+  phone: string;
+  tel: string;
+  hours: string;
+  google: { rating: string; reviews: number; href: string };
   primary: BranchImage;
   secondary: BranchImage;
 };
 
 const branches: Branch[] = [
   {
-    index: "01",
     name: "Mehdipatnam",
-    meta: "Mehdipatnam · Hyderabad",
-    description:
-      "A long-established Neodent location in Hyderabad, bringing the clinic's patient-focused approach into a familiar, dedicated dental setting.",
+    body: (
+      <>
+        Neodent&apos;s{" "}
+        <EditorialHighlight tone="primary" onDark>
+          original Hyderabad location
+        </EditorialHighlight>
+        , in Humayun Nagar. The practice began here in 1994 and continues to
+        offer{" "}
+        <EditorialHighlight tone="secondary" onDark>
+          specialist-led dental care
+        </EditorialHighlight>{" "}
+        across restorative, prosthodontic, implant and preventive needs.
+      </>
+    ),
+    address,
+    phone,
+    tel: telPhone,
+    hours: `${mehdipatnamHours} · Sunday holiday`,
+    google: { rating: googleRating.score, reviews: googleRating.count, href: directions },
     primary: {
       src: mehdipatnamInteriorImage,
       alt: "Neodent Dental Hospital Mehdipatnam — the patient waiting lounge",
-      // Shifted right of centre so the crop favours the corridor's
-      // converging perspective and chandelier rather than the
-      // promotional wall posters on the far left.
-      position: "68% 42%",
       label: "Waiting lounge",
+      width: 960,
+      height: 1280,
     },
     secondary: {
       src: mehdipatnamExteriorImage,
       alt: "Neodent Dental Hospital Mehdipatnam — the carved entrance doorway",
-      position: "62% 32%",
       label: "Entrance",
+      width: 382,
+      height: 510,
     },
   },
   {
-    index: "02",
     name: "Nampally",
-    meta: "Nampally · Hyderabad",
-    description:
-      "A Neodent location in Hyderabad offering the same patient-focused approach across consultation, treatment and follow-up care.",
+    body: (
+      <>
+        Set within the{" "}
+        <EditorialHighlight tone="secondary" onDark>
+          Medwin Hospital Complex
+        </EditorialHighlight>{" "}
+        in central Hyderabad, the Nampally clinic offers{" "}
+        <EditorialHighlight tone="primary" onDark>
+          multi-speciality dental care
+        </EditorialHighlight>
+        : consultation, treatment planning, treatment and follow-up, with
+        attention to comfort and long-term oral health.
+      </>
+    ),
+    address: nampallyAddress,
+    phone: nampallyPhone,
+    tel: nampallyTelPhone,
+    hours: `${nampallyHours} · Sunday holiday`,
+    google: { rating: "4.6", reviews: 157, href: nampallyDirections },
     primary: {
       src: nampallyInteriorImage,
       alt: "Neodent Dental Hospital Nampally — the reception and consultation wing",
-      // Keeps the double-height ceiling and red staircase visible;
-      // the busy tiled floor at the very bottom is the least
-      // interesting part of the frame, so it is the first to crop.
-      position: "50% 26%",
       label: "Reception",
+      width: 1280,
+      height: 1707,
     },
     secondary: {
       src: nampallyExteriorImage,
       alt: "Neodent Dental Hospital Nampally — the street frontage and signage",
-      position: "50% 38%",
       label: "Street frontage",
+      width: 1280,
+      height: 960,
     },
   },
 ];
@@ -142,16 +180,15 @@ export function SpacesDesignedAroundCare() {
       return;
     }
 
-    // Crossfade the media plate + description as one coordinated unit,
-    // matching PatientStories' story-switch pattern: fade out, swap
-    // once hidden, fade back in. Frame aspect ratios stay fixed, so
-    // section height never jumps mid-transition.
+    // Fade out, swap once hidden, fade back in.
     setSwitching(true);
     window.setTimeout(() => {
       setActiveIndex(nextIndex);
       window.setTimeout(() => setSwitching(false), 20);
     }, 220);
   };
+
+  const switchClass = switching ? styles.switching : "";
 
   return (
     <section
@@ -160,40 +197,21 @@ export function SpacesDesignedAroundCare() {
       id="clinics"
       aria-labelledby="clinics-title"
     >
-      {/* Chapter-start seam -- top hairline + centred registration tick
-          carrying the section's own micro-label, matching
-          ClinicalLeadership's chapter-boundary mechanic. */}
-      <span className={styles.seam} aria-hidden="true">
-        <span className={styles.seamLabel}>07 / Location atlas</span>
-      </span>
+      <span className={styles.seam} aria-hidden="true" />
 
-      {/* Architectural / location-atlas geometry -- a drafting cross
-          near the media plate, two quiet red registration ticks and a
-          compact coordinate-style tag. Deliberately distinct from
-          Section 02's archive arches, Section 03's treatment grid,
-          Section 04's portrait crosshairs and Section 06's journey
-          rail: this is the site's only "site plan" motif, and it stays
-          purely decorative (aria-hidden, no map pins, no literal map). */}
       <div className={styles.atmosphere} aria-hidden="true">
         <span className={styles.draftVertical} />
         <span className={styles.draftHorizontal} />
-        <span className={styles.registrationDot} />
-        <span className={styles.registrationDotSmall} />
-        <span className={styles.coordTag}>HYD</span>
       </div>
 
       <div className={styles.container}>
         <header className={styles.header}>
-          <span className={styles.numeral} aria-hidden="true">
-            07
-          </span>
-          <div className={styles.eyebrow}>Neodent / Our clinics</div>
           <h2 id="clinics-title" className={styles.title}>
             Spaces designed
             <br />
             <span>around care.</span>
           </h2>
-          <p className={styles.lede}>
+          <p className={`${styles.lede} section-lede section-lede--on-dark`}>
             Across Mehdipatnam and Nampally, Neodent brings the same{" "}
             <EditorialHighlight tone="primary" onDark>
               patient-focused approach
@@ -205,121 +223,122 @@ export function SpacesDesignedAroundCare() {
         <div className={styles.composition}>
           <div className={styles.panel}>
             <nav className={styles.selector} aria-label="Choose a Neodent clinic location">
-              <ol>
+              <ul>
                 {branches.map((branch, index) => {
                   const isActive = index === activeIndex;
                   return (
-                    <li key={branch.index}>
+                    <li key={branch.name}>
                       <button
                         type="button"
                         className={`${styles.selectorItem} ${isActive ? styles.selectorItemActive : ""}`}
                         onClick={() => selectBranch(index)}
                         aria-current={isActive ? "true" : undefined}
-                        aria-label={`${branch.index}: ${branch.name}, Neodent Dental Hospital, Hyderabad`}
+                        aria-label={`${branch.name}, Neodent Dental Hospital, Hyderabad`}
                       >
-                        <span className={styles.selectorIndex}>{branch.index}</span>
                         <span className={styles.selectorLabelGroup}>
                           <span className={styles.selectorName}>{branch.name}</span>
-                          <span className={styles.selectorSub}>
-                            Neodent Dental Hospital
-                            <br />
-                            Hyderabad
-                          </span>
+                          <span className={styles.selectorSub}>Neodent Dental Hospital · Hyderabad</span>
                         </span>
                       </button>
                     </li>
                   );
                 })}
-              </ol>
+              </ul>
             </nav>
 
-            <p className={`${styles.description} ${switching ? styles.descriptionSwitching : ""}`}>
-              {active.description}
-            </p>
-            <p className={`${styles.meta} ${switching ? styles.descriptionSwitching : ""}`}>{active.meta}</p>
-            {active.index === "02" && (
-              <p
-                className={`${styles.description} ${styles.extended} ${switching ? styles.descriptionSwitching : ""}`}
-              >
-                At{" "}
-                <EditorialHighlight tone="secondary" onDark>
-                  Neodent Dental Hospital, Nampally
-                </EditorialHighlight>
-                , patients can access{" "}
-                <EditorialHighlight tone="primary" onDark>
-                  multi-speciality dental care
-                </EditorialHighlight>{" "}
-                in a clinical environment built around clear consultations and
-                personalised treatment. The team provides focused care across
-                preventive, restorative and more complex dental needs, with
-                attention to comfort and long-term oral health. Located in
-                Nampally, Hyderabad, the clinic extends the same Neodent
-                approach to{" "}
-                <EditorialHighlight tone="quiet" onDark>
-                  specialist-led care and thoughtful patient support
-                </EditorialHighlight>
-                .
-              </p>
-            )}
-          </div>
+            <div className={`${styles.details} ${switchClass}`} aria-live="polite">
+              <p className={styles.description}>{active.body}</p>
 
-          {/* Connector -- a short hairline + registration dot bridging
-              the active location row to the media plate's top-left
-              corner, so the selector and photograph read as one
-              registered composition (SELECTED -> FEATURED SPACE)
-              rather than two parallel columns. Purely decorative. */}
-          <div className={styles.connector} aria-hidden="true">
-            <span className={styles.connectorLine} />
-            <span className={styles.connectorDot} />
-          </div>
-
-          <figure className={styles.mediaCol}>
-            <div className={styles.primaryWrap}>
-              <span className={styles.primaryOffsetFrame} aria-hidden="true" />
-              <div className={`${styles.primaryFrame} ${switching ? styles.frameSwitching : ""}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={active.primary.src}
-                  alt={active.primary.alt}
-                  loading="lazy"
-                  style={active.primary.position ? { objectPosition: active.primary.position } : undefined}
-                />
-                <span className={styles.mediaShade} aria-hidden="true" />
-                <span className={styles.mediaRegistration} aria-hidden="true" />
-                <div className={styles.mediaMeta}>
-                  <span>
-                    {active.index} / {active.name.toUpperCase()}
-                  </span>
-                  <span>Hyderabad</span>
+              <dl className={styles.facts}>
+                <div>
+                  <dt>Address</dt>
+                  <dd>{active.address}</dd>
                 </div>
+                <div>
+                  <dt>Phone</dt>
+                  <dd>
+                    <a href={active.tel} className={styles.factLink} aria-label={`Call Neodent ${active.name}`}>
+                      {active.phone}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Hours</dt>
+                  <dd>{active.hours}</dd>
+                </div>
+              </dl>
+
+              <div className={styles.google}>
+                <p className={styles.googleRating}>
+                  <span className={styles.googleWord} aria-hidden="true">
+                    <span style={{ color: "#8ab4f8" }}>G</span>
+                    <span style={{ color: "#f28b82" }}>o</span>
+                    <span style={{ color: "#fdd663" }}>o</span>
+                    <span style={{ color: "#8ab4f8" }}>g</span>
+                    <span style={{ color: "#81c995" }}>l</span>
+                    <span style={{ color: "#f28b82" }}>e</span>
+                  </span>
+                  <span className={styles.srOnly}>Google rating: </span>
+                  <span className={styles.googleScore}>
+                    {active.google.rating}
+                    <span className={styles.googleStar} aria-hidden="true">
+                      {" "}
+                      ★
+                    </span>
+                  </span>
+                  <span className={styles.googleCount}>
+                    {active.google.reviews} reviews
+                  </span>
+                </p>
+                <a
+                  href={active.google.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.googleLink}
+                  aria-label={`Get directions to Neodent ${active.name} on Google Maps (opens in a new tab)`}
+                >
+                  Get directions <ArrowRight size={13} aria-hidden="true" />
+                </a>
+                <p className={styles.googleNote}>Rating as shown on the Google listing; it may have changed since.</p>
               </div>
             </div>
+          </div>
 
-            <div className={`${styles.secondaryFrame} ${switching ? styles.frameSwitching : ""}`}>
+          <figure className={styles.mediaCol} aria-label={`Neodent ${active.name} photographs`}>
+            <div className={`${styles.plate} ${styles.plateMain} ${switchClass}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={active.primary.src}
+                alt={active.primary.alt}
+                width={active.primary.width}
+                height={active.primary.height}
+                loading="lazy"
+              />
+              <span className={styles.plateLabel}>{active.primary.label}</span>
+            </div>
+
+            <div className={`${styles.plate} ${styles.plateSide} ${switchClass}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={active.secondary.src}
                 alt={active.secondary.alt}
+                width={active.secondary.width}
+                height={active.secondary.height}
                 loading="lazy"
-                style={active.secondary.position ? { objectPosition: active.secondary.position } : undefined}
               />
-              <span className={styles.secondaryLabel}>{active.secondary.label}</span>
+              <span className={styles.plateLabel}>{active.secondary.label}</span>
             </div>
           </figure>
         </div>
 
-        {/* Closing beat -- brand line and CTA share one row bound by a
-            single top rule, so "Two locations. One Neodent standard."
-            and "Explore our clinics" read as one intentional final
-            statement rather than two separately-spaced elements. */}
         <div className={styles.ctaRow}>
           <p className={styles.brandLine}>
             <span className={styles.brandLineTick} aria-hidden="true" />
             Two locations. One Neodent standard.
           </p>
-          <a href="/clinic" className={styles.cta}>
+          <Link href="/clinic" className={styles.cta}>
             Explore our clinics <ArrowRight size={14} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>
