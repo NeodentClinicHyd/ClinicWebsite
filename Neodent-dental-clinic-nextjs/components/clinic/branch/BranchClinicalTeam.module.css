@@ -1,0 +1,157 @@
+.team {
+  --pt: clamp(64px, 7vw, 96px);
+  --pb: clamp(64px, 7vw, 96px);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px var(--gutter);
+  align-items: end;
+}
+.header > h2 {
+  grid-column: 1 / 8;
+}
+.lede {
+  grid-column: 8 / 13;
+  max-width: none;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: start;
+  gap: clamp(28px, 4vw, 52px);
+  margin-top: clamp(32px, 4vw, 52px);
+}
+.figure {
+  min-width: 0;
+  margin: 0;
+}
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px 18px 18px 5px;
+  object-fit: cover;
+}
+.caption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.roster {
+  min-width: 0;
+  padding: 22px 24px 18px;
+  border: 1px solid var(--hair);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+}
+.rosterLabel {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.roster ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.roster li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 0;
+  border-top: 1px solid var(--hair);
+}
+.roster h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--app-font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+.roster li p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.profileLink {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--hair);
+  border-radius: 50%;
+  color: var(--ink);
+  transition: color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+.profileLink:hover {
+  border-color: var(--red);
+  color: var(--red);
+  transform: translateX(2px);
+}
+.profileLink:focus-visible,
+.allDoctors:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+.allDoctors {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 10px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.allDoctors svg {
+  color: var(--red);
+  transition: transform 160ms ease;
+}
+.allDoctors:hover svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 1023px) {
+  .header > h2,
+  .lede {
+    grid-column: 1 / -1;
+  }
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .roster ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+
+@media (max-width: 599px) {
+  .layout {
+    gap: 24px;
+  }
+  .image {
+    border-radius: 14px 14px 14px 4px;
+  }
+  .roster {
+    padding: 18px;
+  }
+  .roster ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

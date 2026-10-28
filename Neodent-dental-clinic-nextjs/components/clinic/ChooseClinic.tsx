@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, MapPin, Phone } from "lucide-react";
 import { AppButton } from "@/components/ui/AppButton";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
@@ -205,6 +206,12 @@ export function ChooseClinic() {
                         to Neodent {branch.name} (opens in a new tab)
                       </span>
                     </a>
+                    <Link
+                      href={`/clinic/${branch.id}`}
+                      className={`button button-ghost ${styles.directions}`}
+                    >
+                      Clinic details <ArrowRight size={15} aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
               </article>

@@ -1,0 +1,31 @@
+/* Styling for the braces and orthodontics illustrations. New classes only;
+   the shared kit's module (illustrations.module.css) is not touched.
+
+   The shared .illus class makes every stroke a non-scaling hairline. Brackets,
+   wire, ties, elastics and appliance wires are physical objects whose
+   thickness must follow the artwork when it is scaled, so groups with
+   .fine switch that off for their shapes. Doubled selector: it has to win
+   over `.illus :where(...)` (specificity 0,1,0) whatever the stylesheet
+   order. */
+
+.fine.fine :where(path, line, polyline, ellipse, circle, rect, polygon) {
+  vector-effect: none;
+}
+
+/* Soft tinted edge on steel parts (never black). */
+.eSteel {
+  stroke: #4a565d;
+  stroke-width: 0.9px;
+}
+.eAcrylic {
+  stroke: #b96a6a;
+  stroke-width: 1.2px;
+}
+.eBand {
+  stroke: #a39b88;
+  stroke-width: 0.8px;
+}
+.eFabric {
+  stroke: #9c9482;
+  stroke-width: 1px;
+}

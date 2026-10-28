@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
   address,
@@ -335,9 +336,9 @@ export function SpacesDesignedAroundCare() {
             <span className={styles.brandLineTick} aria-hidden="true" />
             Two locations. One Neodent standard.
           </p>
-          <a href="/clinic" className={styles.cta}>
+          <Link href="/clinic" className={styles.cta}>
             Explore our clinics <ArrowRight size={14} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

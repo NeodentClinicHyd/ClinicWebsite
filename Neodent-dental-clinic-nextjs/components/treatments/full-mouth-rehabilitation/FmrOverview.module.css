@@ -1,0 +1,222 @@
+/* Overview. Tan ground (#ece7dc, as the implants overview / the home's
+   "Decades" section). Paper cards: #fffefa, 1px rgba(38,48,51,.12), 16px
+   radius (small cards). Dark card: 4px 56px 4px 4px (home). One list style:
+   red dash markers. */
+
+.section {
+  background: #ece7dc;
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: stretch;
+}
+.copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+.note {
+  max-width: 62ch;
+  margin: 24px 0 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--neodent-red);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* The three ideas: a stack of paper cards, red dash on top of each. */
+.cards {
+  width: 100%;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.card {
+  position: relative;
+  min-width: 0;
+  padding: 22px 24px 22px;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
+}
+.card::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.cardTitle {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cardText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* Right column: scene, then the dark terms card taking the leftover height. */
+.side {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.media {
+  min-width: 0;
+}
+.terms {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(24px, 2.6vw, 32px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.termsTitle {
+  margin: 0 0 22px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.termList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0;
+}
+.term {
+  position: relative;
+  padding-left: 22px;
+}
+.term::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.term dt {
+  margin: 0 0 4px;
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.term dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Tablet and mobile: one column in reading order: heading, lede, scene,
+   note, the three ideas, terms. `.copy` and `.side` dissolve so their
+   children can be ordered. */
+@media (max-width: 1023px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .copy,
+  .side {
+    display: contents;
+  }
+  .lede {
+    order: 1;
+  }
+  .media {
+    order: 2;
+    width: 100%;
+    max-width: 640px;
+    margin-top: 32px;
+  }
+  .note {
+    order: 3;
+    margin-top: 32px;
+  }
+  .cards {
+    order: 4;
+  }
+  .terms {
+    order: 5;
+    flex: none;
+    width: 100%;
+    max-width: 640px;
+    margin-top: 28px;
+  }
+}
+/* Tablet (768-1023): the scene and the terms card sit side by side. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    align-items: stretch;
+  }
+  .copy > * {
+    grid-column: 1 / -1;
+  }
+  .media,
+  .terms {
+    grid-column: auto;
+    max-width: none;
+    margin-top: 32px;
+  }
+  .terms {
+    order: 2;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .lede {
+    margin-top: 22px;
+  }
+  .card {
+    padding: 18px 20px;
+  }
+}

@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
   mehdipatnamInteriorImage,
@@ -30,12 +31,14 @@ import styles from "./AboutToday.module.css";
 const clinics = [
   {
     name: "Mehdipatnam",
+    href: "/clinic/mehdipatnam",
     locality: `Mehdipatnam, ${mehdipatnamStructuredAddress.addressLocality}`,
     phone,
     tel: telPhone,
   },
   {
     name: "Nampally",
+    href: "/clinic/nampally",
     locality: `Nampally, ${nampallyStructuredAddress.addressLocality}`,
     phone: nampallyPhone,
     tel: nampallyTelPhone,
@@ -84,13 +87,13 @@ export function AboutToday() {
               </p>
               <p className={shared.lede}>
                 To learn more about what Neodent treats, visit{" "}
-                <a className={shared.inlineLink} href="/treatments">
+                <Link className={shared.inlineLink} href="/treatments">
                   our clinical expertise
-                </a>
+                </Link>
                 , or see both locations in detail on{" "}
-                <a className={shared.inlineLink} href="/clinic">
+                <Link className={shared.inlineLink} href="/clinic">
                   our clinics page
-                </a>
+                </Link>
                 .
               </p>
             </div>
@@ -102,9 +105,9 @@ export function AboutToday() {
                     <div className={styles.clinicHead}>
                       <div>
                         <h3 className={shared.cardName}>
-                          <a href="/clinic" className={styles.clinicLink}>
+                          <Link href={clinic.href} className={styles.clinicLink}>
                             {clinic.name}
-                          </a>
+                          </Link>
                         </h3>
                       </div>
                       <ArrowRight

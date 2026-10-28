@@ -1,0 +1,66 @@
+/* Styling for the scaling and polishing illustrations. New classes only; the
+   shared kit's modules are not touched. Colours are the site tokens: red
+   #d71920, ink #263033, charcoal #161c1e, ivory #f8f6ef, surface #fffefa,
+   muted #657173. Hairline behaviour (vector-effect: non-scaling-stroke)
+   comes from the .illus class that the shared <Scene> wrapper adds. */
+
+.sp {
+  --sp-red: #d71920;
+  --sp-ink: #263033;
+  --sp-charcoal: #161c1e;
+  --sp-ivory: #f8f6ef;
+  --sp-muted: #657173;
+}
+
+/* ---- deposits ---- */
+/* Plaque: a soft, muted film, never a hard edge. */
+.plaque { fill: #657173; fill-opacity: 0.2; stroke: #657173; stroke-opacity: 0.35; stroke-width: 1px; }
+.plaqueDots { fill: #263033; fill-opacity: 0.42; stroke: none; }
+/* Tartar: charcoal, partly see-through, angular and bumpy. */
+.tartar { fill: #161c1e; fill-opacity: 0.62; stroke: #161c1e; stroke-opacity: 0.85; stroke-width: 1.1px; stroke-linejoin: miter; }
+.tartarFacet { fill: none; stroke: #f8f6ef; stroke-opacity: 0.26; stroke-width: 1px; }
+.fleck { fill: #161c1e; fill-opacity: 0.66; stroke: #161c1e; stroke-opacity: 0.85; stroke-width: 1px; stroke-linejoin: miter; }
+/* Surface stain: a faint warm patch along the enamel (the kit's dentin tan). */
+.stain { fill: none; stroke: #c9a97a; stroke-opacity: 0.55; stroke-width: 3.4px; }
+
+/* ---- gum ---- */
+.gap { fill: #b5605f; fill-opacity: 0.4; stroke: none; }
+.gumShade { fill: #be6b69; fill-opacity: 0.16; stroke: none; }
+
+/* ---- instruments: steel with a dark edge, built from two strokes.
+   These are physical objects, so their thickness scales with the artwork
+   (vector-effect: none) and their widths are in scene units. ---- */
+.rodEdge, .rodSteel, .rodShine, .handleEdge, .handleBody, .tip, .bristle, .wire,
+.brushBody, .brushTint, .soft, .glassRim { vector-effect: none; }
+.rodEdge { fill: none; stroke: #4a565d; stroke-width: 3.6px; }
+.rodSteel { fill: none; stroke: #a7b2b9; stroke-width: 2px; }
+.rodShine { fill: none; stroke: #ffffff; stroke-opacity: 0.8; stroke-width: 0.7px; }
+.handleEdge { fill: none; stroke: #4a565d; stroke-width: 7.6px; }
+.handleBody { fill: none; stroke: #c9d1d6; stroke-width: 5.4px; }
+.tip { fill: none; stroke: #d71920; stroke-width: 2.8px; }
+.soft { stroke: #98a0a5; stroke-width: 1px; }
+.glassRim { fill: none; stroke: #4a565d; stroke-width: 2.4px; }
+
+/* ---- brushes ---- */
+.bristle { fill: none; stroke: #263033; stroke-opacity: 0.8; stroke-width: 1.3px; }
+.brushBody { fill: #fffefa; stroke: #263033; stroke-opacity: 0.75; stroke-width: 1px; }
+.brushTint { fill: #f6d4d4; stroke: #263033; stroke-opacity: 0.75; stroke-width: 1px; }
+.wire { fill: none; stroke: #4a565d; stroke-width: 1.6px; }
+
+/* ---- annotation ---- */
+.sheen { fill: none; stroke: #263033; stroke-opacity: 0.6; stroke-width: 1.4px; }
+.halo { fill: none; stroke: #fffaf0; stroke-opacity: 0.9; stroke-width: 5px; }
+.check { fill: none; stroke: #d71920; stroke-width: 3.2px; }
+.divider { fill: none; stroke: #263033; stroke-opacity: 0.4; stroke-width: 1.2px; stroke-dasharray: 4 4; }
+.panelEdge { fill: none; stroke: #263033; stroke-opacity: 0.12; stroke-width: 1px; }
+
+/* A label that has to sit on gum or tooth gets a thin ivory outline. */
+.onArt { stroke: #f8f6ef; stroke-width: 4px; paint-order: stroke; stroke-linejoin: round; }
+
+/* Physical objects (rod thickness etc.) keep their screen thickness. */
+.fine :where(path, line, rect) { vector-effect: none; }
+
+/* Labels and leaders drop out where the tile is too small to hold 12px text. */
+@media (max-width: 767px) {
+  .hideSmall { display: none; }
+}

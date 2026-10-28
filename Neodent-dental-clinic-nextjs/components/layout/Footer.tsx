@@ -36,7 +36,7 @@ import styles from "./Footer.module.css";
      - Explore routes come from `navItems` (lib/site-data.ts); the
        Doctors hub (/doctors) is the only literal route, and it has
        its own app/doctors/page.tsx.
-     - The seven treatments and their destinations come from the
+     - The featured treatments and their destinations come from the
        homepage's `treatments` list (expertise-data.ts), so the footer
        can never drift from the section it mirrors. Dedicated
        treatment pages exist only for dental implants; every other
@@ -46,8 +46,7 @@ import styles from "./Footer.module.css";
      - Google ratings are the approved snapshot figures already shown
        in "Spaces designed around care": Mehdipatnam 4.3 / 261
        (`googleRating`) and Nampally 4.6 / 157 (`nampallyGoogleRating`).
-       The branch pages do not exist yet, so branch names point at the
-       verified /clinic#mehdipatnam and /clinic#nampally anchors.
+       Branch names point to their dedicated pages under /clinic/[slug].
    ------------------------------------------------------------------ */
 
 // Icon lookup for socialLinks (lib/site-data.ts).
@@ -83,7 +82,7 @@ const branches: Branch[] = [
   {
     id: "mehdipatnam",
     name: "Mehdipatnam",
-    pageHref: "/clinic#mehdipatnam",
+    pageHref: "/clinic/mehdipatnam",
     location: heroLocations[0].detail,
     rating: googleRating,
     phoneLabel: phone,
@@ -93,7 +92,7 @@ const branches: Branch[] = [
   {
     id: "nampally",
     name: "Nampally",
-    pageHref: "/clinic#nampally",
+    pageHref: "/clinic/nampally",
     location: `${heroLocations[1].detail}, Hyderabad`,
     rating: nampallyGoogleRating,
     phoneLabel: nampallyPhone,

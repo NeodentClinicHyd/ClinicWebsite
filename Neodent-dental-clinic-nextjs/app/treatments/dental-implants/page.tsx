@@ -8,6 +8,7 @@ import {
 } from "@/lib/structured-data";
 import { BREADCRUMBS, IMPLANT_FAQ, PAGE_PATH } from "@/lib/dental-implants-page";
 import { OG_IMAGE_ALT, OG_IMAGE_SIZE } from "@/lib/og-image";
+import { featuredTreatmentTitle } from "@/lib/featured-treatment-catalog";
 
 /* ------------------------------------------------------------------
    /treatments/dental-implants — hand-built page (no [slug] route, no
@@ -55,7 +56,7 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "MedicalWebPage",
-    name: "Dental implants",
+    name: featuredTreatmentTitle("dental-implants"),
     url,
     description,
     inLanguage: "en-IN",

@@ -1,76 +1,96 @@
-/* Care + doctor. Pattern: ClinicalLeadership. Section ground #15171a and
-   padding, title, 20px card radius, 11-12px caps labels, 140px label
-   column and the `#ece7dc` avatar ground are copied from its module. */
+/* Care + doctor. Pattern: ClinicalLeadership. Section ground #15171a, 20px
+   card radius, 11-12px caps labels, 140px label column and the `#ece7dc`
+   avatar ground are copied from its module. The tips are a stacked list of
+   dark cards (ContactNextStep card surface #191b1f, hairline border) with a
+   red dash marker, or an icon when artwork is supplied. */
 
 .section {
   --red: #d71920;
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
   background: #15171a;
   color: #f1eee7;
-  padding: clamp(64px, 7vw, 96px) 0 clamp(88px, 10vw, 140px);
+  padding: clamp(64px, 8vw, 112px) 0;
 }
 .container {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
   position: relative;
-  z-index: 1;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(32px, 4vw, 56px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: stretch;
 }
 .left {
   min-width: 0;
 }
 
-/* Care points: plain short rows, no icons, no rules. */
-.list {
+/* Care tips: stacked cards. */
+.tips {
   margin: clamp(28px, 3.4vw, 40px) 0 0;
   padding: 0;
   list-style: none;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tip {
+  display: flex;
+  align-items: flex-start;
   gap: 16px;
-  max-width: 520px;
+  padding: 18px 22px;
+  background: #191b1f;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-radius: 16px;
 }
-.list li {
-  position: relative;
-  padding-left: 22px;
+/* Marker: the page's red dash. */
+.tip::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 2px;
+  margin-top: 0.85em;
+  background: var(--red);
+}
+.hasIcon::before {
+  display: none;
+}
+.tipIcon {
+  flex: none;
+  width: 40px;
+}
+.tipText {
   font-size: 16px;
-  line-height: 1.6;
-  color: rgba(241, 238, 231, 0.86);
-}
-.list li::before {
-  content: "–";
-  position: absolute;
-  left: 0;
-  font-weight: 700;
-  color: var(--red);
+  line-height: 1.65;
+  color: rgba(241, 238, 231, 0.9);
 }
 
 /* Doctor card (ClinicalLeadership `.card`). */
 .card {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   padding: 32px;
   background: var(--neodent-surface, #fffefa);
   color: var(--neodent-ink, #263033);
   border: 1px solid rgba(38, 48, 51, 0.12);
   border-radius: 20px;
 }
+/* The portrait takes the height left over, so the card ends level with the
+   last tip card. */
 .portrait {
   position: relative;
-  aspect-ratio: 16 / 11;
+  flex: 1 1 auto;
+  min-height: 300px;
   overflow: hidden;
   border-radius: 10px;
   background: #ece7dc;
 }
 .portraitImg {
   object-fit: cover;
-  object-position: 100% 100%;
+  object-position: right top;
   filter: saturate(0.92) contrast(1.02);
 }
 .identity {
@@ -96,16 +116,11 @@
 .label {
   margin: 0;
   color: rgba(38, 48, 51, 0.78);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   line-height: 1.5;
   text-transform: uppercase;
-}
-@media (min-width: 1024px) {
-  .label {
-    font-size: 12px;
-  }
 }
 
 .facts {
@@ -126,7 +141,7 @@
 }
 .fact dt {
   color: rgba(38, 48, 51, 0.72);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   line-height: 1.5;
@@ -147,17 +162,26 @@
 @media (max-width: 1023px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
-    align-items: start;
+  }
+  .portrait {
+    flex: none;
+    min-height: 0;
+    aspect-ratio: 16 / 11;
   }
 }
 @media (max-width: 767px) {
   .container {
     width: min(100% - 32px, 600px);
   }
+  .tip {
+    padding: 16px 18px;
+  }
   .card {
     padding: 24px;
   }
   .portrait {
+    flex: none;
+    min-height: 0;
     aspect-ratio: 4 / 3;
   }
   .identity {

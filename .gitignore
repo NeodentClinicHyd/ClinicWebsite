@@ -1,0 +1,3 @@
+# local QA / temp output
+qa-page*.txt
+qa-server.log

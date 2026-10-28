@@ -1,0 +1,165 @@
+/* Overview. Tan ground (#ece7dc, as the FMR / Smile Design overview). Paper
+   cards: #fffefa, 1px rgba(38,48,51,.12), 16px radius (small cards). Dark
+   card: 4px 56px 4px 4px (home). One list style: red dash markers. */
+
+.section {
+  background: #ece7dc;
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* Row 1: heading + lede beside the scene. */
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+.copy {
+  min-width: 0;
+}
+.lede {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+.media {
+  min-width: 0;
+}
+
+/* Row 2: scaling, polishing, advice. Red dash on top of each. */
+.cards {
+  margin: clamp(36px, 4.4vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(12px, 1.6vw, 16px);
+}
+.card {
+  min-width: 0;
+  padding: 22px 24px 24px;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
+}
+.card::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.cardTitle {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cardText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* Row 3: terms band. */
+.terms {
+  margin: clamp(12px, 1.6vw, 16px) 0 0;
+  padding: clamp(24px, 2.6vw, 32px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.termsTitle {
+  margin: 0 0 22px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.termList {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px clamp(18px, 2vw, 28px);
+}
+.term {
+  position: relative;
+  min-width: 0;
+  padding-left: 22px;
+}
+.term::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.term dt {
+  margin: 0 0 6px;
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+.term dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1023px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .media {
+    max-width: 640px;
+  }
+  .termList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* Five terms in two columns: the last one spans both. */
+  .term:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .lede {
+    margin-top: 22px;
+  }
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    padding: 18px 20px;
+  }
+  .terms {
+    border-radius: 4px 40px 4px 4px;
+  }
+  .termList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -6,13 +6,17 @@
 // None of that is third-party or tracking, so it isn't offered as a
 // toggle — it simply always runs.
 //
-// WHAT IS OPTIONAL: today that's exactly one thing — the YouTube
-// embeds in the About page's media archive (components/sections/about/
-// BeyondTheClinic.tsx). They already load via a thumbnail facade and
-// only become a live `youtube-nocookie.com` iframe on click; consent
-// gates that click. There is no analytics, tag manager, Google Maps
-// embed or marketing pixel anywhere in this codebase — do not add
-// categories for technologies that don't exist here.
+// WHAT IS OPTIONAL: two things today.
+//  - `media`: the YouTube embeds in the About page's media archive
+//    (components/sections/about/AboutMedia.tsx). They load via a
+//    thumbnail facade and only become a live `youtube-nocookie.com`
+//    iframe on click; consent gates that click.
+//  - `analytics`: Google Analytics 4 (gtag.js), mounted by
+//    components/analytics/GoogleAnalyticsGate.tsx. The script is not
+//    requested at all until this is true.
+// There is no tag manager, Google Maps embed or marketing pixel in
+// this codebase — do not add categories for technologies that don't
+// exist here.
 //
 // HOW CONSENT IS PERSISTED: a single JSON object in `localStorage`
 // under a versioned key. Bumping CONSENT_VERSION invalidates any
@@ -20,13 +24,16 @@
 // do that whenever the categories on offer meaningfully change.
 
 export const CONSENT_STORAGE_KEY = "neodent-cookie-consent-v1";
-export const CONSENT_VERSION = "1";
+// "2": added the `analytics` category (Google Analytics 4).
+export const CONSENT_VERSION = "2";
 
 /** Optional, consent-gated categories. Add a key here only once the
  *  corresponding technology actually exists in the codebase. */
 export interface OptionalConsent {
   /** Third-party YouTube embeds (About page media archive). */
   media: boolean;
+  /** Google Analytics 4 audience measurement. */
+  analytics: boolean;
 }
 
 export interface ConsentRecord extends OptionalConsent {
@@ -38,6 +45,7 @@ export interface ConsentRecord extends OptionalConsent {
 
 export const DEFAULT_OPTIONAL_CONSENT: OptionalConsent = {
   media: false,
+  analytics: false,
 };
 
 function isConsentRecord(value: unknown): value is ConsentRecord {
@@ -46,6 +54,7 @@ function isConsentRecord(value: unknown): value is ConsentRecord {
   return (
     record.necessary === true &&
     typeof record.media === "boolean" &&
+    typeof record.analytics === "boolean" &&
     typeof record.timestamp === "string" &&
     typeof record.version === "string"
   );

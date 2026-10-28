@@ -119,8 +119,8 @@
   gap: 16px;
   margin-top: 14px;
   padding-right: max(32px, calc((100vw - 1180px) / 2));
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 13px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .meta b {
@@ -128,7 +128,7 @@
   font-weight: 700;
 }
 .meta span {
-  color: rgba(241, 238, 231, 0.62);
+  color: rgba(241, 238, 231, 0.8);
   font-weight: 600;
 }
 

@@ -62,11 +62,17 @@ export const address =
   "10-3-14B/11/1, near Masjid-e-Azizia, Humayun Nagar, Royal Colony, Mehdipatnam, Hyderabad, Telangana 500006";
 export const shortLocation = "Humayun Nagar, Hyderabad";
 export const heroLocations = [
-  { number: "01", name: "Humayun Nagar", detail: "Humayun Nagar, Hyderabad" },
+  {
+    number: "01",
+    name: "Humayun Nagar",
+    detail: "Humayun Nagar, Hyderabad",
+    href: "/clinic/mehdipatnam",
+  },
   {
     number: "02",
     name: "Nampally",
     detail: "Medwin Hospital Complex, Nampally",
+    href: "/clinic/nampally",
   },
 ] as const;
 export const directions =

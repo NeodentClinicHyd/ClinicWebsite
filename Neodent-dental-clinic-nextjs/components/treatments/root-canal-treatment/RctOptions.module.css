@@ -1,0 +1,196 @@
+/* Options. Pattern: treatment-atlas (globals.css `.treatment-atlas*`):
+   #242628 ground with the 420px icon tile under a 55% overlay (same recipe
+   as the implants options and FMR include sections). Comparison cards are
+   paper (#fffefa), 20px radius; the first card is told apart by a red top
+   edge only. The red band is the page's red surface (FmrInclude `.note`). */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  background-color: #242628;
+  background-image:
+    linear-gradient(
+      155deg,
+      rgba(36, 38, 40, 0.55),
+      rgba(36, 38, 40, 0.5) 50%,
+      rgba(36, 38, 40, 0.55)
+    ),
+    url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ---- Comparison ------------------------------------------------------ */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(20px, 2.2vw, 26px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.featured {
+  border-top: 3px solid var(--neodent-red);
+}
+.frame {
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+.link:hover {
+  color: var(--neodent-red-dark);
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 2px;
+}
+
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 901px) {
+    .compare {
+      /* frame, name, text */
+      grid-template-rows: auto auto 1fr;
+      row-gap: 0;
+    }
+    .card {
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: 18px;
+    }
+  }
+}
+
+.figureNote {
+  margin: 14px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(241, 238, 231, 0.78);
+}
+
+/* ---- What if you do not treat it? -------------------------------------- */
+.wait {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(24px, 3vw, 40px);
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.waitTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.8vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.waitTitle::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--neodent-ivory);
+}
+.waitText {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .compare {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    column-gap: 24px;
+    row-gap: 14px;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+  }
+  .frame {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  /* The name and text sit as one block, centred beside the frame. */
+  .name {
+    grid-column: 2;
+    align-self: end;
+  }
+  .text {
+    grid-column: 2;
+    align-self: start;
+  }
+  .wait {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px;
+  }
+  .frame,
+  .name,
+  .text {
+    align-self: stretch;
+  }
+  .wait {
+    padding: 26px 22px;
+  }
+}

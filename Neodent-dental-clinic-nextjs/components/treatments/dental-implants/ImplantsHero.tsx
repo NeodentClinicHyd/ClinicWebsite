@@ -32,11 +32,7 @@ export function ImplantsHero() {
             <EditorialHighlight tone="secondary" onDark>
               healthy gums and enough bone
             </EditorialHighlight>
-            , and it needs{" "}
-            <EditorialHighlight tone="quiet" onDark>
-              long-term cleaning and check-ups
-            </EditorialHighlight>
-            . Your dentist can tell you whether it suits you after an
+            , and it needs long-term cleaning and check-ups. Your dentist can tell you whether it suits you after an
             examination.
           </p>
           <div className={styles.actions}>

@@ -1,6 +1,7 @@
 import { AppButton } from "@/components/ui/AppButton";
 import { nampallyTelPhone, telPhone } from "@/lib/site-data";
-import { HealingDetail, IllustrationFigure } from "./ImplantIllustrations";
+import { HealingDetail, ILLUSTRATION_NOTE } from "./ImplantIllustrations";
+import { IllustrationFrame } from "./IllustrationFrame";
 import { SectionHeader } from "./SectionHeader";
 import styles from "./ImplantsHealing.module.css";
 
@@ -28,32 +29,31 @@ const WARNING_SIGNS = [
   "numbness that does not settle",
 ];
 
-/* Pattern: SpacesDesignedAroundCare dark editorial section (charcoal
-   ground, hairline seam, plate with a caption) with the ClinicalLeadership
-   card vocabulary. Left: the healing drawing on a light plate. Right: a
-   paper card and a dark card with a red top edge (the PatientStories quote
-   plate edge). Beneath: the page's second red surface. */
+/* Tan ground. Left: the healing drawing (4:5) on a white card. Right: the
+   paper "After surgery" card and the dark "Risks" card, stretched so their
+   top and bottom edges line up with the diagram card. Beneath: the page's
+   second red surface, as heading | symptoms (two columns) | call buttons. */
 export function ImplantsHealing() {
   return (
     <section className={styles.section} aria-labelledby="di-healing-title">
-      <span className={styles.seam} aria-hidden="true" />
       <div className={styles.container}>
         <SectionHeader
           titleId="di-healing-title"
           sans="Dental implant healing, aftercare"
           accent="and risks."
-          tone="dark"
         />
 
         <div className={styles.grid}>
-          <IllustrationFigure
-            tone="dark"
-            className={styles.figure}
-            plateClassName={styles.figPlate}
-            caption="How bone bonds to a dental implant during healing"
-          >
-            <HealingDetail className={styles.art} />
-          </IllustrationFigure>
+          <div className={styles.diagram}>
+            <IllustrationFrame
+              ratio="4 / 5"
+              padding="md"
+              caption="How bone bonds to a dental implant during healing"
+              note={ILLUSTRATION_NOTE}
+            >
+              <HealingDetail />
+            </IllustrationFrame>
+          </div>
 
           <div className={styles.cards}>
             <article className={`${styles.card} ${styles.after}`} aria-labelledby="di-after-title">
@@ -65,7 +65,7 @@ export function ImplantsHealing() {
                   <li key={item}>{item}</li>
                 ))}
               </ul>
-              <p className={styles.quiet}>Follow your own dentist&apos;s instructions.</p>
+              <p className={styles.foot}>Follow your own dentist&apos;s instructions.</p>
             </article>
 
             <article className={`${styles.card} ${styles.risks}`} aria-labelledby="di-risks-title">
@@ -77,7 +77,7 @@ export function ImplantsHealing() {
                   <li key={item}>{item}</li>
                 ))}
               </ul>
-              <p className={styles.closing}>
+              <p className={styles.foot}>
                 Outcomes vary from person to person. Your dentist can explain
                 what to expect in your case.
               </p>
@@ -86,16 +86,14 @@ export function ImplantsHealing() {
         </div>
 
         <div className={styles.call}>
-          <div className={styles.callCopy}>
-            <h3 className={styles.callTitle}>
-              Call the clinic where you were treated if you notice:
-            </h3>
-            <ul className={styles.signs}>
-              {WARNING_SIGNS.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
+          <h3 className={styles.callTitle}>
+            Call the clinic where you were treated if you notice:
+          </h3>
+          <ul className={styles.signs}>
+            {WARNING_SIGNS.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
           <div className={styles.callActions}>
             <AppButton href={nampallyTelPhone} variant="light">
               Call Nampally

@@ -1,12 +1,12 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowRight, Pause, Play } from "lucide-react";
 import styles from "./ClinicalLeadership.module.css";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import { AppButton } from "@/components/ui/AppButton";
+import { homepageClinicalTeam } from "@/lib/clinical-team";
 
 /* Authentic, client-supplied Dr. Miftah photography, all from
    /public/assets/dr-miftah. Nothing here is stock, generated or
@@ -53,55 +53,6 @@ const MIFTAH_MEDIA = {
       "Dr. Md. Miftah Ur Rahman in a clinical coat at the entrance to the Department of Prosthodontics, SB Patil Dental College & Hospital",
   },
 };
-
-type TeamMember = {
-  label: string;
-  name: ReactNode;
-  degrees: ReactNode;
-  image: string | null;
-  alt: string;
-  initials?: string;
-};
-
-const team: TeamMember[] = [
-  {
-    label: "01 / SENIOR CLINICAL LEADERSHIP",
-    name: <>Dr. Mohd. Siraj<br />Ur Rahman</>,
-    degrees: <>BDS · FCIP · MDS (Chennai)<br />Professor · Director, Neodent · 30+ years</>,
-    image: "/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png",
-    alt: "Dr. Mohd. Siraj Ur Rahman",
-  },
-  {
-    label: "02 / NEODENT TEAM",
-    name: <>Dr. Md. Muti<br />Ur Rahman</>,
-    degrees: <>MBBS (OSM) · MD (Gen. Med.)<br />5+ years</>,
-    image: "/assets/Dr. Md. Muti Ur Rahman - Neodent  dental clinic.png",
-    alt: "Dr. Md. Muti Ur Rahman",
-  },
-  {
-    label: "03 / CLINICAL TEAM",
-    name: <>Dr. Asiya<br />Siraj</>,
-    degrees: <>MBBS (OSM) · MRSH (LON)<br />30+ years</>,
-    image: null,
-    alt: "Dr. Asiya Siraj",
-    initials: "AS",
-  },
-  {
-    label: "04 / CLINICAL TEAM",
-    name: <>Dr. Safoora<br />Talha</>,
-    degrees: <>BDS · 12+ years</>,
-    image: null,
-    alt: "Dr. Safoora Talha",
-    initials: "ST",
-  },
-  {
-    label: "05 / CLINICAL TEAM",
-    name: <>Dr. Muqeet<br />Ur Rahman</>,
-    degrees: <>BDS (OSM) · Dental Surgeon<br />4+ years</>,
-    image: "/assets/Dr.Muqeet-ur-Rahman.png",
-    alt: "Dr. Muqeet Ur Rahman",
-  },
-];
 
 /* Editorial identity plate used only where no authentic Neodent
    portrait exists yet (Dr. Asiya, Dr. Safoora). It intentionally does
@@ -496,8 +447,8 @@ export function ClinicalLeadership() {
             invented likeness) so all four cards still share one
             identical design standard. */}
         <div className={styles.team}>
-          {team.map((member) => (
-            <article className={styles.member} key={member.label}>
+          {homepageClinicalTeam.map((member) => (
+            <article className={styles.member} key={member.id}>
               <div className={styles.memberImage}>
                 {member.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -507,8 +458,12 @@ export function ClinicalLeadership() {
                 )}
               </div>
               <span>{member.label}</span>
-              <h3>{member.name}</h3>
-              <p>{member.degrees}</p>
+              <h3>{member.nameLines[0]}<br />{member.nameLines[1]}</h3>
+              <p>
+                {member.detailLines.map((line, index) => (
+                  <span key={line}>{index > 0 && <br />}{line}</span>
+                ))}
+              </p>
             </article>
           ))}
         </div>

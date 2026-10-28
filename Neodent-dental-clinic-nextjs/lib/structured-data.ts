@@ -1,11 +1,5 @@
-import {
-  SITE_NAME,
-  SITE_URL,
-  mehdipatnamStructuredAddress,
-  nampallyStructuredAddress,
-  telPhone,
-  nampallyTelPhone,
-} from "@/lib/site-data";
+import { SITE_NAME, SITE_URL } from "@/lib/site-data";
+import { clinicLocations } from "@/lib/clinic-data";
 
 /**
  * JSON-LD structured data for the site, built entirely from verified
@@ -47,35 +41,34 @@ export const organizationJsonLd = {
   sameAs: ["https://www.instagram.com/neodent.dental/"],
 };
 
-export const mehdipatnamJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Dentist",
-  "@id": `${SITE_URL}/clinic#mehdipatnam`,
-  name: SITE_NAME,
-  parentOrganization: { "@id": organizationId },
-  url: `${SITE_URL}/clinic`,
-  telephone: telPhone.replace("tel:", ""),
-  address: {
-    "@type": "PostalAddress",
-    ...mehdipatnamStructuredAddress,
-  },
-  openingHours: "Mo-Sa 16:00-20:00",
-};
+function locationJsonLd(
+  clinic: (typeof clinicLocations)[keyof typeof clinicLocations],
+) {
+  const url = `${SITE_URL}/clinic/${clinic.slug}`;
 
-export const nampallyJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Dentist",
-  "@id": `${SITE_URL}/clinic#nampally`,
-  name: SITE_NAME,
-  parentOrganization: { "@id": organizationId },
-  url: `${SITE_URL}/clinic`,
-  telephone: nampallyTelPhone.replace("tel:", ""),
-  address: {
-    "@type": "PostalAddress",
-    ...nampallyStructuredAddress,
-  },
-  openingHours: "Mo-Sa 10:30-17:00",
-};
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dentist",
+    "@id": `${url}#clinic`,
+    name: SITE_NAME,
+    parentOrganization: { "@id": organizationId },
+    url,
+    telephone: clinic.tel.replace("tel:", ""),
+    address: {
+      "@type": "PostalAddress",
+      ...clinic.structuredAddress,
+    },
+    openingHours: clinic.schemaOpeningHours,
+    hasMap: clinic.directions,
+    image: [
+      new URL(clinic.primaryImage.src, SITE_URL).toString(),
+      new URL(clinic.secondaryImage.src, SITE_URL).toString(),
+    ],
+  };
+}
+
+export const mehdipatnamJsonLd = locationJsonLd(clinicLocations.mehdipatnam);
+export const nampallyJsonLd = locationJsonLd(clinicLocations.nampally);
 
 export const websiteJsonLd = {
   "@context": "https://schema.org",

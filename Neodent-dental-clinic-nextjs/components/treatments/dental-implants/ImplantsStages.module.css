@@ -1,113 +1,122 @@
-/* Stages. Pattern: WhatToExpect (.section / .steps / .step: one rule per
-   stage with a growing red run) plus the LegacyStory bento (.stat /
-   .statement). Values copied from those modules. */
+/* Stages. Ivory ground. Stage cards: 16px radius (atlas card), paper surface.
+   One continuous red connector runs down the left of the list, with a node
+   at the centre of each card. The right column is sticky (top 96px) and
+   content-sized. NB: no overflow on the section, or sticky would break. */
 
 .section {
   position: relative;
-  overflow: hidden;
   background: var(--ivory);
   color: var(--ink);
-  padding: clamp(72px, 8vw, 108px) 0 clamp(72px, 8vw, 108px);
+  padding: clamp(64px, 8vw, 112px) 0;
 }
 .container {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
 }
 
-/* Rows left, the two bento cards right; the right column stretches to the
-   height of the rows so neither side has an empty area. */
 .composition {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
-  gap: clamp(24px, 3.4vw, 48px);
-  align-items: stretch;
-  margin-top: clamp(42px, 5.2vw, 62px);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+  margin-top: clamp(40px, 5vw, 64px);
 }
 
+/* ---- Stage cards + connector ----------------------------------------- */
 .steps {
+  --gap: 20px;
+  --rail: 36px;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 var(--rail);
   display: flex;
   flex-direction: column;
+  gap: var(--gap);
   min-width: 0;
 }
 .step {
   position: relative;
-  flex: 1 1 auto;
   display: grid;
-  grid-template-columns: 168px minmax(0, 1fr);
-  gap: clamp(18px, 2.4vw, 32px);
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(18px, 2.4vw, 28px);
   align-items: center;
-  padding: 18px 0 clamp(18px, 2vw, 24px);
+  padding: 16px clamp(18px, 2.4vw, 28px) 16px 16px;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
 }
-.step:nth-child(1) { --n: 1; }
-.step:nth-child(2) { --n: 2; }
-.step:nth-child(3) { --n: 3; }
-.step:nth-child(4) { --n: 4; }
-.step:nth-child(5) { --n: 5; }
-.step:last-child {
-  padding-bottom: 0;
+/* Connector: each card draws the line from its own top edge to the top edge
+   of the next card (through the gap), so the line is unbroken. The first
+   starts at its node, the last stops at its node. */
+.step::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 8px);
+  top: -1px;
+  bottom: calc(var(--gap) * -1 - 1px);
+  width: 2px;
+  background: var(--neodent-red);
 }
-.step::before,
+.step:first-child::before {
+  top: 50%;
+}
+.step:last-child::before {
+  bottom: 50%;
+}
+/* Node. */
 .step::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-.step::before {
-  right: 0;
-  height: 1px;
-  background: rgba(38, 48, 51, 0.2);
-}
-.step::after {
-  width: calc(var(--n) * 20%);
-  height: 2px;
+  left: calc(var(--rail) * -1 + 9px);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
   background: var(--neodent-red);
+  border: 3px solid var(--ivory);
+  border-radius: 50%;
+  box-sizing: content-box;
 }
 .tile {
-  padding: 8px;
+  min-width: 0;
 }
 .stepBody {
   min-width: 0;
 }
 .stepBody h3 {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: var(--ink);
   font-family: var(--app-font-serif);
-  font-size: clamp(23px, 2.3vw, 30px);
+  font-size: clamp(23px, 2.3vw, 28px);
   font-weight: 400;
   letter-spacing: -0.015em;
   line-height: 1.15;
 }
 .stepBody p {
   margin: 0;
-  max-width: 46ch;
-  color: rgba(38, 48, 51, 0.76);
+  max-width: 54ch;
+  color: rgba(38, 48, 51, 0.82);
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-/* Bento: ivory paragraph card + the one red feature card. */
+/* ---- Right column: sticky, content-sized ------------------------------ */
 .side {
-  --lg-pad: clamp(26px, 3vw, 36px);
+  --pad: clamp(26px, 3vw, 32px);
+  position: sticky;
+  top: 96px;
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 2vw, 24px);
+  gap: 20px;
   min-width: 0;
 }
 .stat,
 .statement {
   min-width: 0;
-  padding: var(--lg-pad);
+  padding: var(--pad);
   border-radius: 20px;
 }
 .stat {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   background: var(--neodent-surface);
   border: 1px solid rgba(38, 48, 51, 0.12);
 }
@@ -121,27 +130,25 @@
 .statTitle {
   margin: 0 0 14px;
   font-family: var(--app-font-serif);
-  font-size: clamp(26px, 2.6vw, 34px);
+  font-size: clamp(26px, 2.4vw, 30px);
   font-weight: 400;
   letter-spacing: -0.015em;
-  line-height: 1.1;
+  line-height: 1.12;
 }
-.stat :global(.section-lede) {
+.statText {
   margin: 0;
-  max-width: none;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
 }
 .statement {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: flex-end;
-  min-height: 200px;
   background: var(--neodent-red);
   color: var(--neodent-ivory);
 }
 .statementText {
   margin: 0;
   font-family: var(--app-font-serif);
-  font-size: clamp(30px, 3.4vw, 46px);
+  font-size: clamp(28px, 2.7vw, 36px);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -150,17 +157,22 @@
   display: block;
   font-style: italic;
 }
+.statementSub {
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(248, 246, 239, 0.92);
+}
 
 @media (max-width: 1023px) {
   .composition {
     grid-template-columns: minmax(0, 1fr);
   }
   .side {
+    position: static;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .statement {
-    min-height: 240px;
+    align-items: start;
   }
 }
 @media (max-width: 767px) {
@@ -170,21 +182,31 @@
   .composition {
     margin-top: 32px;
   }
-  .step {
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: 16px;
-    align-items: start;
+  .steps {
+    --gap: 14px;
+    --rail: 26px;
   }
-  .tile {
-    padding: 5px;
+  .step {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    padding: 12px;
+  }
+  .step::before {
+    left: calc(var(--rail) * -1 + 5px);
+  }
+  .step::after {
+    left: calc(var(--rail) * -1 + 6px);
+  }
+  .stepBody h3 {
+    font-size: 21px;
+    margin-bottom: 6px;
   }
   .stepBody p {
+    font-size: 15px;
     max-width: none;
   }
   .side {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .statement {
-    min-height: 180px;
   }
 }

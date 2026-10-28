@@ -30,9 +30,9 @@ const VIDEO_SRC =
 const VIDEO_POSTER =
   "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - after surgery.jpg";
 
-/* Rendered ONLY when SHOW_IMPLANT_CASE_IMAGES is true. Pattern: the
-   ClinicalLeadership captioned plates for the photographs and the
-   PatientStories film frame for the video. */
+/* Rendered ONLY when SHOW_IMPLANT_CASE_IMAGES is true. A tidy bento: row 1
+   is the two before / after cards at equal height; row 2 is the portrait
+   film (9:16, filled edge to edge) beside a compact note card. */
 export function ImplantsCases() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
@@ -57,9 +57,8 @@ export function ImplantsCases() {
             <EditorialHighlight tone="secondary">
               implant treatment at Neodent
             </EditorialHighlight>
-            , shown so you can see what treatment can involve.{" "}
-            <EditorialHighlight tone="primary">Every case is different</EditorialHighlight>
-            , and these images are{" "}
+            , shown so you can see what treatment can involve. Every case is
+            different, and these images are{" "}
             <EditorialHighlight tone="quiet">
               not a prediction for your own mouth
             </EditorialHighlight>
@@ -67,8 +66,8 @@ export function ImplantsCases() {
           </p>
         </SectionHeader>
 
-        <div className={styles.row}>
-          <figure className={styles.main}>
+        <div className={styles.rowOne}>
+          <figure className={`${styles.card} ${styles.nampally}`}>
             <div className={styles.pair}>
               <div className={styles.plate}>
                 <div className={styles.frame}>
@@ -101,7 +100,7 @@ export function ImplantsCases() {
             </figcaption>
           </figure>
 
-          <figure className={styles.small}>
+          <figure className={`${styles.card} ${styles.miftah}`}>
             <div className={styles.smallPair}>
               <div className={styles.smallPlate}>
                 <Image
@@ -110,7 +109,7 @@ export function ImplantsCases() {
                   alt="Close-up of teeth before implant treatment, Dr. Md. Miftah Ur Rahman's case"
                   width={315}
                   height={316}
-                  sizes="180px"
+                  sizes="(max-width: 767px) 40vw, 280px"
                 />
                 <span className={styles.label}>Before treatment</span>
               </div>
@@ -121,7 +120,7 @@ export function ImplantsCases() {
                   alt="Close-up of teeth after implant treatment, Dr. Md. Miftah Ur Rahman's case"
                   width={535}
                   height={413}
-                  sizes="235px"
+                  sizes="(max-width: 767px) 50vw, 360px"
                 />
                 <span className={styles.label}>After treatment</span>
               </div>
@@ -133,7 +132,7 @@ export function ImplantsCases() {
           </figure>
         </div>
 
-        <div className={styles.row}>
+        <div className={styles.rowTwo}>
           <figure className={styles.film}>
             <div className={styles.filmFrame}>
               <video
@@ -161,7 +160,7 @@ export function ImplantsCases() {
                 </button>
               ) : null}
             </div>
-            <figcaption className={styles.caption}>
+            <figcaption className={`${styles.caption} ${styles.filmCaption}`}>
               <b>Mehdipatnam</b>
               <span>Full-mouth rehabilitation using dental implants</span>
             </figcaption>

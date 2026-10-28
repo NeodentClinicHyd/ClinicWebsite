@@ -15,186 +15,99 @@ import styles from "./TreatmentAtlas.module.css";
  * + Additional Services appendix.
  */
 
-// Fill in treatment descriptions with EditorialHighlight integration
+// Concise patient-facing summaries grounded in the research pack.
 const enrichedFeaturedTreatment = {
   ...featuredTreatment,
   description: (
     <p>
-      Full mouth rehabilitation provides{" "}
-      <EditorialHighlight tone="primary">
-        comprehensive restoration
-      </EditorialHighlight>{" "}
-      for patients with multiple missing, damaged or severely compromised teeth.
-      This coordinated treatment approach brings together{" "}
-      <EditorialHighlight tone="secondary">
-        restorative dentistry, dental implants and prosthodontic solutions
-      </EditorialHighlight>{" "}
-      to address{" "}
-      <EditorialHighlight tone="quiet">
-        oral health, function and appearance
-      </EditorialHighlight>
-      . Treatment planning considers the condition of remaining teeth, bite
-      relationships, jaw function and the patient's functional and aesthetic
-      goals. Full mouth rehabilitation often involves staged treatment, with
-      care sequenced to rebuild oral health systematically.
+      Full mouth rehabilitation is a step-by-step plan for restoring oral
+      health, function and appearance when many teeth are affected. Depending
+      on the assessment, it may combine restorative, implant, gum or bite-related
+      care. The dentist explains what the plan includes, the order of treatment
+      and how follow-up will work; there is no single plan that suits everyone.
     </p>
   ),
 };
 
-const enrichedTreatmentAtlas = [
+const enrichedTreatmentDetails = [
   {
-    ...treatmentAtlas[0], // Dental Implants
+    ...treatmentAtlas.find((item) => item.id === "dental-implants")!,
     description: (
       <p>
-        Dental implants provide a solution for{" "}
-        <EditorialHighlight tone="primary">
-          replacing missing teeth
-        </EditorialHighlight>
-        , offering stability and function. An implant is a titanium post
-        surgically placed into the jawbone, which integrates with the bone over
-        time through osseointegration. Once healed, the implant can support a
-        custom crown, bridge or denture. Treatment planning involves{" "}
-        <EditorialHighlight tone="secondary">
-          clinical assessment and imaging
-        </EditorialHighlight>{" "}
-        to evaluate bone quality and the patient's overall oral health. Dental
-        implants may replace a single tooth, multiple teeth or serve as anchors
-        for{" "}
-        <EditorialHighlight tone="quiet">
-          full-arch rehabilitation
-        </EditorialHighlight>
-        . At Neodent Dental Hospital, Mehdipatnam and Nampally, implant
-        treatment follows careful planning to support appropriate placement.
+        A dental implant is a small post placed in the jaw to support a
+        replacement crown, bridge or denture. It is a staged treatment: an
+        assessment helps the dentist consider your oral health and available
+        bone, followed by placement, healing and the restoration. The plan and
+        timing vary from person to person, and implants need ongoing cleaning
+        and check-ups.
       </p>
     ),
   },
   {
-    ...treatmentAtlas[1], // Orthodontics
+    ...treatmentAtlas.find((item) => item.id === "braces-orthodontics")!,
     description: (
       <p>
-        Orthodontic treatment addresses concerns related to{" "}
-        <EditorialHighlight tone="primary">
-          tooth alignment, spacing and bite irregularities
-        </EditorialHighlight>
-        . Misaligned teeth can affect chewing function, oral hygiene and the
-        appearance of the smile. Treatment may involve{" "}
-        <EditorialHighlight tone="secondary">
-          braces or clear aligners
-        </EditorialHighlight>{" "}
-        that apply controlled pressure to gradually move teeth into improved
-        positions. The duration and approach depend on the severity of
-        misalignment, the patient's age and specific treatment goals.
-        Orthodontic care at Neodent begins with{" "}
-        <EditorialHighlight tone="quiet">
-          clinical assessment, imaging and treatment planning
-        </EditorialHighlight>{" "}
-        to determine the most appropriate approach for each patient's
-        orthodontic concerns.
+        Orthodontic treatment gradually moves teeth, usually with braces, and
+        is followed by a retention phase to help keep teeth in their new
+        positions. An orthodontic assessment considers your teeth, bite and
+        goals. Treatment length varies, and careful daily cleaning and keeping
+        adjustment appointments are important while treatment is under way.
       </p>
     ),
   },
   {
-    ...treatmentAtlas[2], // Root Canal Treatment
+    ...treatmentAtlas.find((item) => item.id === "root-canal-treatment")!,
     description: (
       <p>
-        Root canal treatment addresses{" "}
-        <EditorialHighlight tone="primary">
-          infection or damage within a tooth's pulp
-        </EditorialHighlight>{" "}
-        — the soft tissue containing nerves and blood vessels inside the tooth.
-        When a tooth becomes infected due to deep decay, cracks or trauma, root
-        canal treatment may allow the natural tooth to be preserved rather than
-        extracted. The procedure involves removing the infected pulp,{" "}
-        <EditorialHighlight tone="secondary">
-          cleaning and disinfecting the root canal system
-        </EditorialHighlight>
-        , and sealing the space to prevent further infection. Following
-        treatment, the tooth may require a crown for structural protection.
-        Treatment planning considers the tooth's condition, the extent of
-        infection and whether{" "}
-        <EditorialHighlight tone="quiet">
-          preservation is clinically appropriate
-        </EditorialHighlight>
-        .
+        Root canal treatment addresses inflammation or infection in the soft
+        tissue at the centre of a tooth. The dentist cleans and seals the
+        canals, then restores the tooth; a filling, onlay or crown may be
+        needed. An examination and X-rays help determine whether the tooth can
+        be restored and whether root canal treatment is appropriate.
       </p>
     ),
   },
   {
-    ...treatmentAtlas[3], // Smile Design & Cosmetic Dentistry
+    ...treatmentAtlas.find((item) => item.id === "smile-design")!,
     description: (
       <p>
-        Smile design and cosmetic dentistry focus on improving the{" "}
-        <EditorialHighlight tone="primary">
-          appearance, balance and harmony of the smile
-        </EditorialHighlight>{" "}
-        through restorative and aesthetic treatment. This may involve addressing
-        concerns like discolored, chipped, misshapen or poorly aligned teeth.
-        Treatment options include{" "}
-        <EditorialHighlight tone="secondary">
-          veneers, crowns, tooth reshaping, whitening and composite bonding
-        </EditorialHighlight>
-        , selected based on the specific concern and the patient's aesthetic
-        goals. Smile design planning considers tooth proportions, gum line
-        symmetry and facial features to create natural-looking results. At
-        Neodent Dental Hospital, cosmetic treatment is planned through{" "}
-        <EditorialHighlight tone="quiet">
-          careful assessment and communication
-        </EditorialHighlight>{" "}
-        about expected outcomes.
+        Smile design is a planning approach for people who want to change the
+        appearance of their teeth. Depending on the concern, options may include
+        whitening, bonding, veneers or straightening. The dentist discusses
+        what you would like to change, examines your teeth and explains which
+        options are suitable and what each involves.
       </p>
     ),
   },
   {
-    ...treatmentAtlas[4], // Dentures & Prosthodontics
+    ...treatmentAtlas.find((item) => item.id === "composite-build-up")!,
     description: (
       <p>
-        Dentures and prosthodontic treatment replace{" "}
-        <EditorialHighlight tone="primary">
-          multiple missing teeth
-        </EditorialHighlight>{" "}
-        through removable or fixed dental prostheses. Complete dentures replace
-        all teeth in an arch, while partial dentures replace some teeth.
-        Implant-supported dentures can offer improved stability compared to
-        conventional removable dentures. Prosthodontic treatment planning
-        involves assessing{" "}
-        <EditorialHighlight tone="secondary">
-          remaining teeth, bone structure and bite relationships
-        </EditorialHighlight>
-        . Custom prostheses are fabricated to restore{" "}
-        <EditorialHighlight tone="quiet">
-          chewing ability and support facial structure
-        </EditorialHighlight>
-        . At Neodent, denture and prosthodontic care includes impression-taking,
-        bite registration and adjustments to support comfortable function.
+        A composite build-up rebuilds part of a damaged tooth with tooth-coloured
+        resin bonded directly to it. A dentist may discuss it for a chip, worn
+        area or decay, after checking how much healthy tooth remains and where
+        the damage is. A filling, inlay, onlay or crown may be more suitable in
+        some cases.
       </p>
     ),
   },
   {
-    ...treatmentAtlas[5], // Veneers
+    ...treatmentAtlas.find((item) => item.id === "scaling-polishing")!,
     description: (
       <p>
-        Veneers are{" "}
-        <EditorialHighlight tone="primary">
-          thin shells of porcelain or composite resin
-        </EditorialHighlight>{" "}
-        bonded to the front surface of teeth to improve their appearance. They
-        can address concerns like discoloration, chips, gaps or minor
-        misalignment. Veneer treatment involves{" "}
-        <EditorialHighlight tone="secondary">
-          tooth preparation, impression-taking and custom fabrication
-        </EditorialHighlight>{" "}
-        to match the desired shade and shape. Porcelain veneers offer durability
-        and natural translucency, while composite veneers can be completed more
-        quickly. Treatment planning considers the condition of existing teeth,
-        the patient's aesthetic goals and the{" "}
-        <EditorialHighlight tone="quiet">
-          clinical appropriateness
-        </EditorialHighlight>{" "}
-        of veneer treatment.
+        Scaling &amp; Polishing is a routine professional clean that removes plaque
+        and hardened tartar from the teeth, then polishes their surfaces. It is
+        different from deeper cleaning below the gumline, which may be considered
+        for gum disease. A dentist or hygienist can check your gums and advise
+        whether a routine clean is enough and how often you need one.
       </p>
     ),
   },
 ];
+
+const enrichedTreatmentAtlas = treatmentAtlas.map(
+  (treatment) => enrichedTreatmentDetails.find((item) => item.id === treatment.id)!,
+);
 
 export function TreatmentAtlas() {
   const [visible, setVisible] = useState(false);
@@ -299,7 +212,7 @@ export function TreatmentAtlas() {
             02 / Dental Treatments
           </div>
           <h2 id="treatment-atlas-title" className={styles.title}>
-            Seven areas of <span>clinical focus.</span>
+            Featured dental <span>treatments.</span>
           </h2>
           <p className={styles.lede}>
             Neodent approaches different dental concerns through{" "}
@@ -311,7 +224,7 @@ export function TreatmentAtlas() {
               restorative, implant, orthodontic, prosthodontic and cosmetic
               treatment options
             </EditorialHighlight>
-            . The seven areas outlined below represent the primary clinical
+            . These featured treatments represent the primary clinical
             focuses at{" "}
             <EditorialHighlight tone="quiet">
               Neodent Dental Hospital, Mehdipatnam and Nampally
@@ -413,13 +326,13 @@ export function TreatmentAtlas() {
           <header className={styles.additionalHeader}>
             <div className={styles.additionalEyebrow}>
               <span className={styles.eyebrowRule} aria-hidden="true" />
-              OTHER DENTAL SERVICES
+              RESTORATIVE · COSMETIC · PREVENTIVE · SURGICAL
             </div>
             <h3 className={styles.additionalTitle}>
-              Beyond the featured <span>seven.</span>
+              Additional dental <span>services.</span>
             </h3>
             <p className={styles.additionalLede}>
-              Beyond the primary treatment areas, Neodent provides a broader
+              Alongside the featured treatments, Neodent provides a broader
               range of restorative, cosmetic, preventive and surgical dental
               services. These supporting services can form part of routine care
               or be considered alongside more comprehensive treatment, depending

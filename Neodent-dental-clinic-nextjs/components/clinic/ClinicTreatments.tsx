@@ -11,7 +11,7 @@ import shared from "./ClinicShared.module.css";
 import styles from "./ClinicTreatments.module.css";
 
 /* ------------------------------------------------------------------
-   Clinic -- "All seven treatments, at both clinics."
+   Clinic -- featured dental treatments at both clinics.
 
    Pattern: the home "What can we help you with?" card grid -- same
    cards, same data. Names, one-line summaries, action words, icons and
@@ -33,7 +33,7 @@ export function ClinicTreatments() {
     >
       <div className={shared.container}>
         <h2 id="clinic-treatments-title" className={shared.title} data-reveal>
-          All seven treatments, <span>at both clinics.</span>
+          Featured dental treatments, <span>at both clinics.</span>
         </h2>
 
         <ul className={styles.grid} data-reveal>

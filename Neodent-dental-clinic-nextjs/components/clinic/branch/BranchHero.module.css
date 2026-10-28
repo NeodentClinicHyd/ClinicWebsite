@@ -1,0 +1,355 @@
+/* Branch page hero.
+
+   Values copied from ClinicHero.module.css (itself the About / home hero).
+   Differences: a breadcrumb and an hours line sit above/below the lede,
+   and the photograph's frame takes the photo's own aspect ratio (set
+   inline) with object-fit: contain, so nothing is cropped. */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: clamp(560px, 78svh, 740px);
+  overflow: hidden;
+  background: var(--neodent-charcoal);
+  color: var(--neodent-ivory);
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(54% 62% at 82% 38%, rgba(215, 25, 32, 0.1) 0%, rgba(215, 25, 32, 0.03) 42%, transparent 72%),
+    radial-gradient(70% 55% at 8% 95%, rgba(0, 0, 0, 0.5) 0%, transparent 62%);
+}
+.bg::after {
+  content: "";
+  position: absolute;
+  right: 12%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(215, 25, 32, 0.22) 18%,
+    rgba(215, 25, 32, 0.22) 82%,
+    transparent 100%
+  );
+}
+.gridlines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(251, 250, 247, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(251, 250, 247, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.35) 45%, transparent 78%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: calc(var(--nav-height-desktop) + 34px) 0 56px;
+}
+
+.copy {
+  min-width: 0;
+  max-width: 600px;
+}
+
+/* ---- Breadcrumb ---------------------------------------------------- */
+.crumbs {
+  margin: 0 0 28px;
+  animation: rise 0.9s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(251, 250, 247, 0.7);
+}
+.crumbs li {
+  display: inline-flex;
+  align-items: center;
+}
+.crumbs li + li::before {
+  content: "/";
+  margin: 0 10px;
+  color: rgba(251, 250, 247, 0.4);
+}
+.crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(251, 250, 247, 0.3);
+  text-underline-offset: 4px;
+}
+.crumbs a:hover {
+  color: var(--neodent-ivory);
+  text-decoration-color: var(--neodent-red);
+}
+.crumbs a:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.crumbs [aria-current="page"] {
+  color: var(--neodent-ivory);
+  font-weight: 600;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  color: rgba(251, 250, 247, 0.62);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  animation: rise 0.9s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.eyebrow::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+.headline {
+  margin: 20px 0 0;
+  font-size: var(--type-hero-supporting);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  animation: rise 1s 0.08s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.accent {
+  display: block;
+  color: var(--neodent-red);
+  font-family: var(--app-font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.lede {
+  max-width: 540px;
+  margin: 24px 0 0;
+  color: rgba(251, 250, 247, 0.78);
+  font-size: 16.5px;
+  line-height: 1.65;
+  animation: rise 1s 0.22s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+
+.hours {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 0;
+  color: rgba(251, 250, 247, 0.9);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: rise 1s 0.28s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.hours svg {
+  flex: none;
+  color: var(--neodent-red);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  animation: rise 1s 0.32s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.actions .ghost {
+  border-color: rgba(251, 250, 247, 0.45);
+  color: rgba(251, 250, 247, 0.92);
+}
+.actions .ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(251, 250, 247, 0.75);
+  color: var(--neodent-surface);
+}
+.actions :global(.button):focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Framed photograph: offset red hairline + corner tick ----------- */
+.visual {
+  justify-self: end;
+  max-width: 100%;
+  margin: 0;
+  animation: rise 1.1s 0.12s both cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+.portrait {
+  width: clamp(300px, 29vw, 380px);
+}
+.landscape {
+  width: clamp(340px, 36vw, 500px);
+}
+.frame {
+  position: relative;
+  padding: 14px 0 0 14px;
+}
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(215, 25, 32, 0.4);
+  pointer-events: none;
+}
+.frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-top: 1.5px solid var(--neodent-red);
+  border-left: 1.5px solid var(--neodent-red);
+  opacity: 0.85;
+  pointer-events: none;
+}
+/* The inline aspect-ratio is the photograph's own, so `contain` fills the
+   box exactly -- the dark ground only shows as sub-pixel rounding. */
+.imageBox {
+  position: relative;
+  overflow: hidden;
+  background: #1b1d1f;
+}
+.image {
+  object-fit: contain;
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 0 0 14px;
+  color: rgba(251, 250, 247, 0.62);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.caption b {
+  color: var(--neodent-ivory);
+  font-weight: 700;
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    min-height: 0;
+  }
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding: calc(var(--nav-height-mobile) + 40px) 0 56px;
+  }
+  .copy {
+    max-width: 640px;
+  }
+  .visual {
+    justify-self: start;
+  }
+  .portrait {
+    width: min(100%, 380px);
+  }
+  .landscape {
+    width: min(100%, 480px);
+  }
+}
+@media (max-width: 767px) {
+  .inner {
+    width: min(100% - 32px, 600px);
+  }
+  .crumbs {
+    margin-bottom: 22px;
+  }
+  .eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+  }
+  .headline {
+    margin-top: 16px;
+    line-height: 1.03;
+  }
+  .lede {
+    font-size: 16px;
+  }
+  .portrait {
+    width: min(100%, 320px);
+  }
+  .landscape {
+    width: min(100%, 420px);
+  }
+}
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+  }
+  .actions :global(.button) {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crumbs,
+  .eyebrow,
+  .headline,
+  .lede,
+  .hours,
+  .actions,
+  .visual {
+    animation: none;
+  }
+}

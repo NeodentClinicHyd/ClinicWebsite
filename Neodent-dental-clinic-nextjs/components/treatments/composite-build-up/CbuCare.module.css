@@ -1,0 +1,269 @@
+/* Care. Ivory ground (light). Paper feature and care cards are 20px radius
+   (#fffefa, 1px hairline) as the root canal care card. The risks card is the
+   home dark card (4px 56px 4px 4px, charcoal). The call card is the page's
+   red surface, copied from RctAftercare. One list style: red dash markers. */
+
+.section {
+  position: relative;
+  background: var(--ivory);
+  color: var(--ink);
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* ---- Feature card: text | check-up scene ---------------------------------- */
+.lasts {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(24px, 3.4vw, 40px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.lastsBody {
+  min-width: 0;
+}
+.lastsBody::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--neodent-red);
+}
+.lastsTitle {
+  margin: 0 0 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.lastsText {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+.lastsMedia {
+  min-width: 0;
+}
+
+/* ---- After the visit | Risks --------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(16px, 2.4vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(16px, 2.4vw, 24px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 34px);
+}
+.cardTitle {
+  margin: 0 0 22px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.after {
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.afterList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.afterRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.afterText {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.92);
+}
+.afterText::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--neodent-red);
+}
+
+.risks {
+  background: var(--neodent-charcoal);
+  color: #fff;
+  border-radius: 4px 56px 4px 4px;
+}
+.riskList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.riskList li {
+  position: relative;
+  padding-left: 22px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(18px, 1.7vw, 21px);
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  color: rgba(255, 255, 255, 0.94);
+}
+.riskList li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-family: var(--app-font-sans, inherit);
+  font-weight: 700;
+  color: var(--neodent-red);
+}
+
+/* ---- Urgent symptoms: heading | list | buttons ----------------------------- */
+.call {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(200px, 0.55fr);
+  gap: clamp(24px, 3.4vw, 48px);
+  align-items: center;
+  margin-top: clamp(16px, 2.4vw, 24px);
+  padding: clamp(28px, 4vw, 48px);
+  background: var(--neodent-red);
+  color: #fff;
+  border-radius: 20px;
+}
+.callTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.signs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 28px;
+}
+.signs li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #fff;
+}
+.signs li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: #fff;
+}
+.callActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.callActions :global(.button) {
+  width: 100%;
+  min-height: 52px;
+}
+
+@media (max-width: 1239px) {
+  .call {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    grid-template-areas:
+      "title actions"
+      "signs actions";
+    align-items: start;
+  }
+  .callTitle {
+    grid-area: title;
+  }
+  .signs {
+    grid-area: signs;
+  }
+  .callActions {
+    grid-area: actions;
+    align-self: center;
+  }
+}
+@media (max-width: 900px) {
+  .lasts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lastsMedia {
+    max-width: 460px;
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .risks {
+    border-radius: 4px 40px 4px 4px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .lasts {
+    padding: 22px 20px;
+  }
+  .card {
+    padding: 22px 20px;
+  }
+  .afterRow {
+    gap: 14px;
+  }
+  .call {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "signs"
+      "actions";
+    gap: 22px;
+    padding: 28px 22px;
+  }
+  .signs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .callActions {
+    align-self: stretch;
+  }
+}

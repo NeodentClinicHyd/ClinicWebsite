@@ -47,25 +47,25 @@ export function ImplantsQuestions() {
     <section className={styles.section} aria-labelledby="di-questions-title">
       <div className={styles.container}>
         <div className={styles.layout}>
-          <div className={styles.main}>
+          <div className={styles.head}>
             <SectionHeader
               titleId="di-questions-title"
               sans="Dental implant questions,"
               accent="answered."
             />
-            <div className={styles.faq}>
-              {IMPLANT_FAQ.map((item, index) => (
-                <details className={styles.item} key={item.question} open={index === 0}>
-                  <summary className={styles.summary}>
-                    <h3 className={styles.question}>{item.question}</h3>
-                    <ChevronDown className={styles.chevron} size={20} aria-hidden="true" />
-                  </summary>
-                  <p className={styles.answer}>
-                    <Answer item={item} />
-                  </p>
-                </details>
-              ))}
-            </div>
+          </div>
+          <div className={styles.faq}>
+            {IMPLANT_FAQ.map((item, index) => (
+              <details className={styles.item} key={item.question} open={index === 0}>
+                <summary className={styles.summary}>
+                  <h3 className={styles.question}>{item.question}</h3>
+                  <ChevronDown className={styles.chevron} size={20} aria-hidden="true" />
+                </summary>
+                <p className={styles.answer}>
+                  <Answer item={item} />
+                </p>
+              </details>
+            ))}
           </div>
 
           <aside className={styles.ask} aria-labelledby="di-ask-title">

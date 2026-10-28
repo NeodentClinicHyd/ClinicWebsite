@@ -1,23 +1,11 @@
-/* Locations. Ground, padding and hairline seam from
-   SpacesDesignedAroundCare. */
+/* Locations. Flat dark ground (#14161a) from SpacesDesignedAroundCare; the
+   red radial glow is gone. Standard section padding. */
 
 .section {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
   background: #14161a;
   color: #f1eee7;
-  padding: clamp(72px, 8vw, 108px) 0 clamp(80px, 9vw, 120px);
-}
-.section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse at 8% 4%, rgba(215, 25, 32, 0.09), transparent 46%),
-    radial-gradient(ellipse at 92% 92%, rgba(241, 238, 231, 0.03), transparent 55%),
-    #14161a;
+  padding: clamp(64px, 8vw, 112px) 0;
 }
 .container {
   width: min(1180px, calc(100% - 48px));
@@ -25,7 +13,7 @@
   position: relative;
 }
 .cards {
-  margin-top: clamp(36px, 4.4vw, 56px);
+  margin-top: clamp(40px, 5vw, 64px);
 }
 
 @media (max-width: 767px) {

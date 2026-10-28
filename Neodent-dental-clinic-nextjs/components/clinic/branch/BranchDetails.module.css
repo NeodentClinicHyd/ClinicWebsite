@@ -1,0 +1,143 @@
+/* Branch page -- intro + visit details.
+
+   The details card reuses the /clinic branch card surface (surface fill,
+   1px hair border, 20px radius) with the label / value facts set in the
+   same inset panel as ChooseClinic. */
+
+.details {
+  --pt: clamp(56px, 6vw, 88px);
+  --pb: clamp(56px, 6vw, 88px);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: start;
+  gap: clamp(32px, 5vw, 72px);
+}
+
+.prose {
+  min-width: 0;
+}
+.paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.card {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  padding: var(--pad);
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+}
+.cardTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.facts {
+  padding: 20px 22px;
+  background: #f6f3ec;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-sm);
+}
+.facts > div {
+  border-top: 1px solid var(--hair);
+}
+.facts > div:first-child {
+  border-top: 0;
+}
+@container (min-width: 400px) {
+  .facts > div {
+    grid-template-columns: 112px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.address {
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+.phone {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 4px;
+}
+.phone:hover {
+  color: var(--red);
+}
+.phone:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.star {
+  flex: none;
+  margin-top: 3px;
+  color: var(--red);
+  fill: currentColor;
+}
+.note {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.actions > :global(.button) {
+  flex: 1 1 160px;
+}
+.directions {
+  color: var(--ink);
+}
+.directions:hover {
+  background: rgba(38, 48, 51, 0.06);
+}
+.directions:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .facts {
+    padding: 18px;
+  }
+  .actions {
+    flex-direction: column;
+  }
+  .actions > :global(.button) {
+    flex: none;
+    width: 100%;
+  }
+}

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { featuredTreatmentTitle } from "@/lib/featured-treatment-catalog";
 
 /**
  * Treatment data for Section 02 — Treatment Atlas
@@ -54,8 +55,8 @@ export interface Treatment {
 export const featuredTreatment: Treatment = {
   id: "full-mouth-rehabilitation",
   number: "01",
-  eyebrow: "01 / FULL MOUTH REHABILITATION",
-  title: "Full Mouth Rehabilitation",
+  eyebrow: `01 / ${featuredTreatmentTitle("full-mouth-rehabilitation")}`,
+  title: featuredTreatmentTitle("full-mouth-rehabilitation"),
   doctorHref: "/doctors/dr-miftah-ur-rahman",
   description: null, // Will be filled with JSX including EditorialHighlight
   metadata: [
@@ -79,10 +80,30 @@ export const featuredTreatment: Treatment = {
 
 export const treatmentAtlas: Treatment[] = [
   {
-    id: "dental-implants",
+    id: "composite-build-up",
     number: "02",
-    eyebrow: "02 / DENTAL IMPLANTS",
-    title: "Dental Implants",
+    eyebrow: `02 / ${featuredTreatmentTitle("composite-build-up")}`,
+    title: featuredTreatmentTitle("composite-build-up"),
+    description: null,
+    metadata: [
+      {
+        label: "CONCERNS ADDRESSED",
+        value: "Chipped, worn or uneven teeth; small gaps or misshapen edges",
+      },
+    ],
+    beforeAfter: {
+      beforeSrc: "/assets/treatment/Neodent dental hospital Treatment - Composite build up smile design  before.jpg",
+      afterSrc: "/assets/treatment/Neodent dental hospital Treatment - Composite build up smile design after.jpg",
+      beforeLabel: "Before Treatment",
+      afterLabel: "After Treatment",
+      caption: "Composite Build-up — Neodent Dental Hospital",
+    },
+  },
+  {
+    id: "dental-implants",
+    number: "03",
+    eyebrow: `03 / ${featuredTreatmentTitle("dental-implants")}`,
+    title: featuredTreatmentTitle("dental-implants"),
     doctorHref: "/doctors/dr-miftah-ur-rahman",
     description: null, // Will be filled with JSX
     metadata: [
@@ -100,10 +121,27 @@ export const treatmentAtlas: Treatment[] = [
     },
   },
   {
-    id: "orthodontics",
-    number: "03",
-    eyebrow: "03 / ORTHODONTICS",
-    title: "Orthodontics",
+    id: "root-canal-treatment",
+    number: "04",
+    eyebrow: `04 / ${featuredTreatmentTitle("root-canal-treatment")}`,
+    title: featuredTreatmentTitle("root-canal-treatment"),
+    description: null, // Will be filled with JSX
+    metadata: [
+      {
+        label: "CLINICAL GOAL",
+        value: "Tooth preservation where appropriate",
+      },
+    ],
+    video: {
+      src: "/assets/treatment-video/Dr. Miftah Neodent dental clinic Hyderabad-Root canal treatment.mp4",
+      caption: "Root Canal Treatment — Dr. Md. Miftah Ur Rahman, Neodent Dental Hospital",
+    },
+  },
+  {
+    id: "braces-orthodontics",
+    number: "05",
+    eyebrow: `05 / ${featuredTreatmentTitle("braces-orthodontics")}`,
+    title: featuredTreatmentTitle("braces-orthodontics"),
     description: null, // Will be filled with JSX
     metadata: [
       {
@@ -116,31 +154,14 @@ export const treatmentAtlas: Treatment[] = [
       afterSrc: "/assets/treatment/Orthodontics after treatment - neodent dental hospital nampally.jpeg",
       beforeLabel: "Before Treatment",
       afterLabel: "After Treatment",
-      caption: "Orthodontics treatment — Neodent Dental Hospital Nampally",
-    },
-  },
-  {
-    id: "root-canal-treatment",
-    number: "04",
-    eyebrow: "04 / ROOT CANAL TREATMENT",
-    title: "Root Canal Treatment",
-    description: null, // Will be filled with JSX
-    metadata: [
-      {
-        label: "CLINICAL GOAL",
-        value: "Tooth preservation where appropriate",
-      },
-    ],
-    video: {
-      src: "/assets/treatment-video/Dr. Miftah Neodent dental clinic Hyderabad-Root canal treatment.mp4",
-      caption: "Root canal treatment — Dr. Md. Miftah Ur Rahman, Neodent Dental Hospital",
+      caption: "Braces & Orthodontics — Neodent Dental Hospital Nampally",
     },
   },
   {
     id: "smile-design",
-    number: "05",
-    eyebrow: "05 / SMILE DESIGN & COSMETIC DENTISTRY",
-    title: "Smile Design & Cosmetic Dentistry",
+    number: "06",
+    eyebrow: `06 / ${featuredTreatmentTitle("smile-design")}`,
+    title: featuredTreatmentTitle("smile-design"),
     doctorHref: "/doctors/dr-miftah-ur-rahman",
     description: null, // Will be filled with JSX
     metadata: [
@@ -158,39 +179,23 @@ export const treatmentAtlas: Treatment[] = [
     },
   },
   {
-    id: "dentures-prosthodontics",
-    number: "06",
-    eyebrow: "06 / DENTURES & PROSTHODONTICS",
-    title: "Dentures & Prosthodontics",
-    description: null, // Will be filled with JSX
-    metadata: [
-      {
-        label: "TREATMENT OPTIONS",
-        value: "Complete dentures, partial dentures, implant-supported prostheses",
-      },
-    ],
-    image: {
-      src: "/assets/Dentures & Prosthodontics.jpg",
-      alt: "Dentures and prosthodontic treatment at Neodent Dental Hospital",
-      caption: "Dentures & Prosthodontics — Neodent Dental Hospital",
-    },
-  },
-  {
-    id: "veneers",
+    id: "scaling-polishing",
     number: "07",
-    eyebrow: "07 / VENEERS",
-    title: "Veneers",
-    description: null, // Will be filled with JSX
+    eyebrow: `07 / ${featuredTreatmentTitle("scaling-polishing")}`,
+    title: featuredTreatmentTitle("scaling-polishing"),
+    description: null,
     metadata: [
       {
-        label: "MATERIAL OPTIONS",
-        value: "Porcelain veneers, composite resin veneers",
+        label: "CONCERNS ADDRESSED",
+        value: "Plaque and tartar build-up; routine gum and oral hygiene care",
       },
     ],
-    image: {
-      src: "/assets/Veneers treatment.jpg",
-      alt: "Veneers treatment at Neodent Dental Hospital",
-      caption: "Veneers — Neodent Dental Hospital",
+    beforeAfter: {
+      beforeSrc: "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment before.jpg",
+      afterSrc: "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment after.jpg",
+      beforeLabel: "Before Treatment",
+      afterLabel: "After Treatment",
+      caption: "Scaling & Polishing — Neodent Dental Hospital, Mehdipatnam",
     },
   },
 ];
@@ -213,6 +218,7 @@ export const additionalServices: ServiceGroup[] = [
   {
     title: "Cosmetic Dentistry",
     services: [
+      "Veneers",
       "Teeth Whitening",
       "Teeth Reshaping",
       "Cosmetic Procedures",

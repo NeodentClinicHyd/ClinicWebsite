@@ -1,0 +1,254 @@
+/* Aftercare. Dark ground #15171a (ClinicalLeadership / implants care). Paper
+   care card and dark risks card are 20px radius; the risks card keeps the
+   implants healing treatment (#191b1f, hairline, 3px red top edge,
+   4px 20px 20px 20px). The call card is the page's red surface, copied from
+   the implants healing section. One list style: red dash markers. */
+
+.section {
+  position: relative;
+  background: #15171a;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(16px, 2.4vw, 28px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 34px);
+  border-radius: 20px;
+}
+.cardTitle {
+  margin: 0 0 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* ---- Care card ---------------------------------------------------------- */
+.care {
+  background: var(--neodent-surface);
+  color: var(--neodent-ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+}
+.careIntro {
+  max-width: 54ch;
+  margin: 0 0 24px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+.careList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.careRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.careText {
+  margin: 0;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.9);
+}
+.careText strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ---- Risks card ----------------------------------------------------------- */
+.risks {
+  background: #191b1f;
+  color: #f1eee7;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+.list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(241, 238, 231, 0.9);
+}
+.list li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--neodent-red);
+}
+.riskLink {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 4px;
+  color: #f1eee7;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+.riskLink svg {
+  color: var(--neodent-red);
+  transition: transform 180ms ease;
+}
+.riskLink:hover {
+  color: #fff;
+}
+.riskLink:hover svg {
+  transform: translateX(3px);
+}
+.riskLink:focus-visible {
+  outline: 2px solid #f1eee7;
+  outline-offset: 3px;
+}
+
+/* ---- Urgent symptoms: heading | two-column list | buttons ----------------- */
+.call {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(200px, 0.55fr);
+  gap: clamp(24px, 3.4vw, 48px);
+  align-items: center;
+  margin-top: clamp(16px, 2.4vw, 28px);
+  padding: clamp(28px, 4vw, 48px);
+  background: var(--neodent-red);
+  color: #fff;
+  border-radius: 20px;
+}
+.callTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.signs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 28px;
+}
+.signs li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #fff;
+}
+.signs li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: #fff;
+}
+.callActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.callActions :global(.button) {
+  width: 100%;
+  min-height: 52px;
+}
+
+@media (max-width: 1239px) {
+  .call {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    grid-template-areas:
+      "title actions"
+      "signs actions";
+    align-items: start;
+  }
+  .callTitle {
+    grid-area: title;
+  }
+  .signs {
+    grid-area: signs;
+  }
+  .callActions {
+    grid-area: actions;
+    align-self: center;
+  }
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .card {
+    padding: 22px 20px;
+  }
+  .careRow {
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .call {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "signs"
+      "actions";
+    gap: 22px;
+    padding: 28px 22px;
+  }
+  .signs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .callActions {
+    align-self: stretch;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .riskLink svg {
+    transition: none;
+  }
+  .riskLink:hover svg {
+    transform: none;
+  }
+}

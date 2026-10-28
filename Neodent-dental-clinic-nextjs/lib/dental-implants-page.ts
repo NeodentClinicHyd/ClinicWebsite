@@ -4,6 +4,7 @@
    Phones, addresses, hours and directions links are NOT defined here;
    they come from lib/site-data.ts.
    ------------------------------------------------------------------ */
+import { featuredTreatmentTitle } from "@/lib/featured-treatment-catalog";
 
 /** Single switch for ALL patient imagery and the patient video on this
  *  page (the hero uses a non-patient clinic photo and is unaffected).
@@ -17,35 +18,30 @@ export const REVIEWED_BY = "";
 /** Rendered only when non-empty (date string). */
 export const LAST_REVIEWED = "";
 
-/* TODO: switch to /clinic/nampally and /clinic/mehdipatnam when those
-   pages exist. Both ids were confirmed to render on /clinic. */
+/* Branch detail routes share the dynamic /clinic/[slug] page. */
 export const BRANCH_PAGE_HREF = {
-  nampally: "/clinic#nampally",
-  mehdipatnam: "/clinic#mehdipatnam",
+  nampally: "/clinic/nampally",
+  mehdipatnam: "/clinic/mehdipatnam",
 };
 
-/* Hrefs verified against the rendered /treatments page: elements with
-   id="full-mouth-rehabilitation" and id="smile-design" exist there.
-   There is no scaling-and-polishing id, so that entry links to plain
-   /treatments. */
+/* Each entry links to its own page: /treatments/full-mouth-rehabilitation,
+   /treatments/smile-design and /treatments/scaling-and-polishing all exist. */
 export const RELATED = [
   {
-    title: "Full mouth rehabilitation",
+    title: featuredTreatmentTitle("full-mouth-rehabilitation"),
     description: "A planned, phased approach when many teeth are affected.",
-    // TODO: switch to /treatments/full-mouth-rehabilitation when built
-    href: "/treatments#full-mouth-rehabilitation",
+    href: "/treatments/full-mouth-rehabilitation",
   },
   {
-    title: "Smile design",
+    title: featuredTreatmentTitle("smile-design"),
     description: "A planned approach to improving the look of your teeth.",
-    // TODO: switch to /treatments/smile-design when built
-    href: "/treatments#smile-design",
+    href: "/treatments/smile-design",
   },
   {
-    title: "Scaling and polishing",
+    title: featuredTreatmentTitle("scaling-polishing"),
     description: "Cleaning and gum checks, before and after implants.",
-    // TODO: switch to /treatments/scaling-and-polishing when built
-    href: "/treatments",
+    // The scaling-and-polishing page is built, so this links to it directly.
+    href: "/treatments/scaling-and-polishing",
   },
 ];
 
@@ -54,7 +50,7 @@ export const RELATED = [
 export const BREADCRUMBS = [
   { name: "Home", path: "/" },
   { name: "Treatments", path: "/treatments" },
-  { name: "Dental implants", path: "/treatments/dental-implants" },
+  { name: featuredTreatmentTitle("dental-implants"), path: "/treatments/dental-implants" },
 ];
 
 export const PAGE_PATH = "/treatments/dental-implants";
@@ -66,8 +62,10 @@ export const GENERAL_INFO_NOTE =
 /* Body-text link targets, taken from RELATED so the hrefs cannot drift. */
 const relatedHref = (title: string) =>
   RELATED.find((item) => item.title === title)?.href ?? "/treatments";
-export const FULL_MOUTH_REHAB_HREF = relatedHref("Full mouth rehabilitation");
-export const SCALING_HREF = relatedHref("Scaling and polishing");
+export const FULL_MOUTH_REHAB_HREF = relatedHref(
+  featuredTreatmentTitle("full-mouth-rehabilitation"),
+);
+export const SCALING_HREF = relatedHref(featuredTreatmentTitle("scaling-polishing"));
 
 /* ONE source for the visible FAQ accordion and the FAQPage JSON-LD, so the
    two texts match exactly. Answers are plain text; `links` only tells the

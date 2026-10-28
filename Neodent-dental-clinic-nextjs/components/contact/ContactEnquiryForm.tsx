@@ -191,7 +191,7 @@ export function ContactEnquiryForm() {
         </p>
         <button
           type="button"
-          className={styles.sendAnother}
+          className={`button button-dark ${styles.sendAnother}`}
           onClick={sendAnother}
           data-testid="button-send-another-enquiry"
         >
@@ -205,7 +205,11 @@ export function ContactEnquiryForm() {
 
   return (
     <form className={styles.form} onSubmit={submit} noValidate data-testid="form-contact-enquiry">
-      <div className={styles.grid}>
+      {/* Group 1 -- who is asking. Markup wrappers only: field names, ids,
+          handlers and validation are unchanged. */}
+      <fieldset className={styles.group}>
+        <legend className={styles.legend}>About you</legend>
+        <div className={styles.grid}>
         <div className={styles.field}>
           <label htmlFor="enquiry-name">Full name</label>
           <input
@@ -247,7 +251,7 @@ export function ContactEnquiryForm() {
           )}
         </div>
 
-        <div className={styles.field}>
+        <div className={`${styles.field} ${styles.full}`}>
           <label htmlFor="enquiry-email">
             Email address <span className={styles.optional}>(optional)</span>
           </label>
@@ -269,6 +273,13 @@ export function ContactEnquiryForm() {
           )}
         </div>
 
+        </div>
+      </fieldset>
+
+      {/* Group 2 -- what they are asking. */}
+      <fieldset className={styles.group}>
+        <legend className={styles.legend}>Your enquiry</legend>
+        <div className={styles.grid}>
         <div className={styles.field}>
           <label htmlFor="enquiry-clinic">Preferred clinic</label>
           <select
@@ -295,7 +306,7 @@ export function ContactEnquiryForm() {
           )}
         </div>
 
-        <div className={`${styles.field} ${styles.full}`}>
+        <div className={styles.field}>
           <label htmlFor="enquiry-type">
             Treatment / enquiry type <span className={styles.optional}>(optional)</span>
           </label>
@@ -330,10 +341,6 @@ export function ContactEnquiryForm() {
               {errors.message}
             </span>
           )}
-          <p className={styles.privacyNote} id="enquiry-privacy-note">
-            Please avoid sharing sensitive medical information in this form. Our team can
-            discuss treatment details with you directly.
-          </p>
         </div>
 
         {/* Honeypot -- hidden from sighted and screen-reader users alike.
@@ -351,20 +358,29 @@ export function ContactEnquiryForm() {
             onChange={(event) => update("company", event.target.value)}
           />
         </div>
-      </div>
+        </div>
+      </fieldset>
 
       {/* Verification sits between the fields and the submit button. It is
           only rendered when a sitekey is configured -- without one no
           token can exist, so the form stays locked rather than sending an
-          unverified enquiry. */}
-      {turnstileSiteKey && (
-        <TurnstileWidget
-          ref={turnstileRef}
-          siteKey={turnstileSiteKey}
-          onToken={setTurnstileToken}
-          onTokenCleared={() => setTurnstileToken("")}
-        />
-      )}
+          unverified enquiry. The privacy note (same text and id as before,
+          still referenced by the message field's aria-describedby) is
+          grouped with it. */}
+      <div className={styles.confirm}>
+        <p className={styles.privacyNote} id="enquiry-privacy-note">
+          Please avoid sharing sensitive medical information in this form. Our team can
+          discuss treatment details with you directly.
+        </p>
+        {turnstileSiteKey && (
+          <TurnstileWidget
+            ref={turnstileRef}
+            siteKey={turnstileSiteKey}
+            onToken={setTurnstileToken}
+            onTokenCleared={() => setTurnstileToken("")}
+          />
+        )}
+      </div>
 
       {status === "error" && (
         <p className={styles.formError} role="alert" data-testid="text-enquiry-error">

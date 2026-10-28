@@ -129,7 +129,7 @@ function FeaturedFilm({ item }: { item: MediaItem }) {
   // iframe only renders once that AND consent for embedded media exist;
   // otherwise a small inline consent gate takes the facade's place.
   const [requestedPlay, setRequestedPlay] = useState(false);
-  const { consent, acceptAll, openPreferences } = useCookieConsent();
+  const { consent, allowMedia, openPreferences } = useCookieConsent();
   const thumbnail = `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`;
   const mediaAllowed = consent?.media === true;
 
@@ -158,7 +158,7 @@ function FeaturedFilm({ item }: { item: MediaItem }) {
               <button
                 type="button"
                 className={styles.gateAllow}
-                onClick={acceptAll}
+                onClick={allowMedia}
                 data-testid={`button-allow-media-${item.id}`}
               >
                 Allow &amp; play

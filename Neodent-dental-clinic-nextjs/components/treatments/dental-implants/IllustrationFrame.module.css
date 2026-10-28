@@ -1,0 +1,85 @@
+/* IllustrationFrame. Warm-ivory canvas (--neodent-ivory) with a 1px hairline
+   border and a second, fainter inner border, 16px radius (the site's atlas
+   card radius). The artwork is placed in an absolutely positioned box and
+   the SVG is sized 100% x 100%, so its own `preserveAspectRatio` (meet)
+   scales it to fit the frame whatever its proportions. */
+
+.root {
+  margin: 0;
+  min-width: 0;
+}
+.canvas {
+  /* The drawing tokens the artwork reads (same values the old plate set). */
+  --il-stroke: 2px;
+  --il-hair: color-mix(in srgb, var(--neodent-ink) 55%, transparent);
+  --il-gum-line: color-mix(in srgb, var(--neodent-red) 40%, transparent);
+  --il-bone: color-mix(in srgb, var(--neodent-ivory) 65%, var(--neodent-muted));
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--neodent-ivory);
+  border: 1px solid rgba(38, 48, 51, 0.14);
+  border-radius: 16px;
+}
+.canvas::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(38, 48, 51, 0.08);
+  border-radius: 11px;
+  pointer-events: none;
+}
+
+.art {
+  position: absolute;
+  inset: var(--frame-pad, 14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neodent-ink);
+}
+.art > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.art > img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.pad_sm {
+  --frame-pad: 8px;
+}
+.pad_md {
+  --frame-pad: clamp(12px, 2vw, 18px);
+}
+.pad_lg {
+  --frame-pad: clamp(16px, 2.6vw, 26px);
+}
+
+.caption {
+  margin: 12px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.8);
+  text-wrap: balance;
+}
+.onDark .caption {
+  color: rgba(241, 238, 231, 0.8);
+}
+
+.note {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgba(38, 48, 51, 0.72);
+}
+.onDark .note {
+  color: rgba(241, 238, 231, 0.72);
+}

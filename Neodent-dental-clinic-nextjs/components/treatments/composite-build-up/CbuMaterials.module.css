@@ -1,0 +1,217 @@
+/* Materials. Pattern: treatment-atlas (globals.css `.treatment-atlas*`):
+   #242628 ground with the 420px icon tile under a 55% overlay (same recipe
+   as the implants options and root canal options sections). Cards are paper
+   (#fffefa), 20px radius, all four identical. The "Main trade-off" value sits
+   on the soft red surface so the two rows read as two different kinds of
+   fact. The statement is the page's red surface (RctOptions `.wait`). */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  background-color: #242628;
+  background-image:
+    linear-gradient(
+      155deg,
+      rgba(36, 38, 40, 0.55),
+      rgba(36, 38, 40, 0.5) 50%,
+      rgba(36, 38, 40, 0.55)
+    ),
+    url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ---- Four equal cards -------------------------------------------------- */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(16px, 1.8vw, 20px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.frame {
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 1.9vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.rows {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+.row {
+  min-width: 0;
+}
+.label {
+  display: block;
+  margin: 0 0 6px;
+  color: rgba(38, 48, 51, 0.78);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.label::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: var(--neodent-red);
+}
+.value {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.9);
+}
+/* The box is as tall as the tallest sibling's text (the subgrid row below, or
+   the flex row on narrower layouts), never taller. Content sits at the top
+   with the same padding on every side pair, whatever the text length. */
+.trade {
+  flex: 1 1 auto;
+  align-content: start;
+  padding: 14px 16px;
+  background: var(--neodent-red-soft);
+  border-radius: 12px;
+}
+
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 1024px) {
+    .compare {
+      /* frame, name, what, trade */
+      grid-template-rows: auto auto auto 1fr;
+      row-gap: 0;
+    }
+    .card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 16px;
+    }
+    .rows {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      row-gap: 12px;
+    }
+  }
+}
+
+.figureNote {
+  margin: 14px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(241, 238, 231, 0.78);
+}
+
+/* ---- Statement ----------------------------------------------------------- */
+.statement {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(24px, 3vw, 40px);
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.statementLead {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.statementLead::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #fff;
+}
+
+@media (max-width: 1023px) {
+  .compare {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card {
+    padding: 20px;
+  }
+}
+@media (max-width: 900px) {
+  .statement {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .compare {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Mobile: the scene and the name share the first row, the two rows sit
+     full width beneath. */
+  .card {
+    display: grid;
+    grid-template-columns: 124px minmax(0, 1fr);
+    column-gap: 16px;
+    row-gap: 14px;
+    align-items: center;
+    padding: 16px;
+  }
+  .frame {
+    grid-column: 1;
+  }
+  .name {
+    grid-column: 2;
+  }
+  .rows {
+    grid-column: 1 / -1;
+  }
+  .statement {
+    padding: 26px 22px;
+  }
+}

@@ -1,23 +1,46 @@
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { AppButton } from "@/components/ui/AppButton";
+import type { ReactNode } from "react";
+import { TreatmentDoctorCard } from "@/components/treatments/TreatmentDoctorCard";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
-import { doctorImage } from "@/lib/site-data";
+import {
+  IconCheckup,
+  IconCleaning,
+  IconGumHealth,
+  IconNightGuard,
+  IconNoSmoking,
+  IconTile,
+} from "./ImplantIllustrations";
 import { SectionHeader } from "./SectionHeader";
 import styles from "./ImplantsCare.module.css";
 
-const CARE = [
-  "Clean around the implant every day, as your dentist shows you.",
-  "Keep your check-ups. Your dentist sets how often, based on your own gum health and risk.",
-  "Treat gum disease early, ideally before the implant is placed.",
-  "If you smoke, stopping is strongly advised.",
-  "If you grind your teeth, ask whether protection for your teeth is advised.",
+/* `icon` is the (future) 40px artwork slot: it renders only when artwork is
+   supplied, otherwise the card carries the page's red dash marker. */
+const CARE: { text: string; icon?: ReactNode }[] = [
+  {
+    text: "Clean around the implant every day, as your dentist shows you.",
+    icon: <IconTile><IconCleaning /></IconTile>,
+  },
+  {
+    text: "Keep your check-ups. Your dentist sets how often, based on your own gum health and risk.",
+    icon: <IconTile><IconCheckup /></IconTile>,
+  },
+  {
+    text: "Treat gum disease early, ideally before the implant is placed.",
+    icon: <IconTile><IconGumHealth /></IconTile>,
+  },
+  {
+    text: "If you smoke, stopping is strongly advised.",
+    icon: <IconTile><IconNoSmoking /></IconTile>,
+  },
+  {
+    text: "If you grind your teeth, ask whether protection for your teeth is advised.",
+    icon: <IconTile><IconNightGuard /></IconTile>,
+  },
 ];
 
 /* Pattern: ClinicalLeadership ("A steady hand. A human approach."): dark
    ground, serif title with a red italic line, paper doctor card with
    label / value rows. It names one clinician only and does not claim he
-   performs every implant. */
+   performs every implant. The five tips are a stacked card list. */
 export function ImplantsCare() {
   return (
     <section className={styles.section} aria-labelledby="di-care-title">
@@ -42,51 +65,36 @@ export function ImplantsCare() {
                 .
               </p>
             </SectionHeader>
-            <ul className={styles.list}>
-              {CARE.map((item) => (
-                <li key={item}>{item}</li>
+            <ul className={styles.tips}>
+              {CARE.map(({ text, icon }) => (
+                <li className={`${styles.tip} ${icon ? styles.hasIcon : ""}`} key={text}>
+                  {icon ? <span className={styles.tipIcon}>{icon}</span> : null}
+                  <span className={styles.tipText}>{text}</span>
+                </li>
               ))}
             </ul>
           </div>
 
-          <aside className={styles.card} aria-labelledby="di-doctor-name">
-            <div className={styles.portrait}>
-              <Image
-                className={styles.portraitImg}
-                src={doctorImage}
-                alt="Dr. Md. Miftah Ur Rahman, smiling, arms folded, in a white coat"
-                fill
-                sizes="(max-width: 1023px) 92vw, 36vw"
-              />
-              <div className={styles.identity}>
-                <h3 id="di-doctor-name" className={styles.name}>
-                  Dr. Md. Miftah Ur Rahman
-                </h3>
-                <p className={styles.label}>Prosthodontist and Implantologist</p>
-              </div>
-            </div>
-            <dl className={styles.facts}>
-              <div className={styles.fact}>
-                <dt>Qualifications</dt>
-                <dd className={styles.quals}>BDS, MDS, FICOI</dd>
-              </div>
-              <div className={styles.fact}>
-                <dt>Your implant</dt>
-                <dd>
-                  Which clinician places and restores your implant is{" "}
-                  <EditorialHighlight tone="primary">
-                    confirmed at your consultation
-                  </EditorialHighlight>
-                  .
-                </dd>
-              </div>
-            </dl>
-            <div className={styles.cardAction}>
-              <AppButton href="/doctors/dr-miftah-ur-rahman" variant="primary">
-                View profile <ArrowRight size={15} aria-hidden="true" />
-              </AppButton>
-            </div>
-          </aside>
+          <TreatmentDoctorCard
+            headingId="di-doctor-name"
+            doctor={{
+              name: "Dr. Md. Miftah Ur Rahman",
+              designation: "Prosthodontist and Implantologist",
+              qualifications: "BDS, MDS, FICOI",
+              treatmentLabel: "Your implant",
+              profileHref: "/doctors/dr-miftah-ur-rahman",
+              imageAlt: "Dr. Md. Miftah Ur Rahman, smiling, arms folded, in a white coat",
+            }}
+            treatmentCopy={
+              <>
+                Which clinician places and restores your implant is{" "}
+                <EditorialHighlight tone="primary">
+                  confirmed at your consultation
+                </EditorialHighlight>
+                .
+              </>
+            }
+          />
         </div>
       </div>
     </section>

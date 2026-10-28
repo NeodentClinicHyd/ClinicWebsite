@@ -1,0 +1,174 @@
+/* Hero. Values copied from the full-mouth-rehabilitation hero, itself copied
+   from the home Hero (globals.css `.hero`, `.hero-founder-inner`,
+   `.hero-founder-title`, `.hero-lead`) and the ExperienceIntro caption
+   (`.exp-intro-meta`), as RctHero. The source photograph is 4 / 3, the
+   same ratio as the frame, so it is shown whole. */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--neodent-charcoal);
+  color: var(--neodent-ivory);
+  min-height: clamp(640px, 90vh, 860px);
+  display: flex;
+  align-items: center;
+  padding: calc(var(--nav-height-desktop) + 34px) 0 40px;
+}
+
+.inner {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+}
+.copy {
+  min-width: 0;
+  max-width: 540px;
+}
+
+.title {
+  margin: 26px 0 0;
+  font-size: var(--type-hero-supporting);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.sans {
+  display: block;
+}
+.accent {
+  display: block;
+  color: var(--neodent-red);
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin: 26px 0 0;
+  max-width: 460px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 34px;
+}
+.actions :global(.button-primary) {
+  min-width: 214px;
+}
+
+.consult {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 20px;
+  margin: 22px 0 0;
+  color: rgba(251, 250, 247, 0.72);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.consultLink {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--neodent-ivory);
+  text-decoration: underline;
+  text-decoration-color: rgba(241, 238, 231, 0.34);
+  text-underline-offset: 5px;
+  transition: text-decoration-color 0.2s ease;
+}
+.consultLink:hover {
+  text-decoration-color: var(--neodent-red);
+}
+.consultLink:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+
+/* Photograph: bleeds off the viewport's right edge. */
+.visual {
+  margin: 0;
+  min-width: 0;
+  margin-right: calc((min(1180px, 100vw - 64px) - 100vw) / 2);
+}
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgba(251, 250, 247, 0.14);
+  border-right: 0;
+  border-radius: 20px 0 0 20px;
+  background: #1b1d1f;
+}
+.photo {
+  object-fit: cover;
+  object-position: 50% 50%;
+  filter: saturate(0.9) contrast(1.03);
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+  padding-right: max(32px, calc((100vw - 1180px) / 2));
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.meta b {
+  color: var(--neodent-red);
+  font-weight: 700;
+}
+.meta span {
+  color: rgba(241, 238, 231, 0.8);
+  font-weight: 600;
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    min-height: 0;
+    padding-top: calc(var(--nav-height-mobile) + 28px);
+  }
+}
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .copy {
+    max-width: 620px;
+  }
+  .visual {
+    margin-right: 0;
+  }
+  .frame {
+    border-right: 1px solid rgba(251, 250, 247, 0.14);
+    border-radius: 20px;
+  }
+  .meta {
+    padding-right: 0;
+  }
+}
+@media (max-width: 767px) {
+  .inner {
+    width: min(100% - 32px, 600px);
+  }
+  .actions :global(.button) {
+    width: 100%;
+  }
+  .consult {
+    font-size: 14px;
+  }
+  .consultLink {
+    min-height: 44px;
+  }
+  .frame {
+    aspect-ratio: 5 / 4;
+  }
+}

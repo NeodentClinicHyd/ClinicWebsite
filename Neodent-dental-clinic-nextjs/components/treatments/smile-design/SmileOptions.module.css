@@ -1,0 +1,259 @@
+/* Options. Pattern: treatment-atlas (globals.css `.treatment-atlas*`):
+   #242628 ground with the 420px icon tile under a 55% overlay, as the
+   implants options section. Comparison cards are paper (#fffefa), 20px
+   radius, all five alike. "Worth knowing" sits in an ivory panel so the two
+   text blocks read as different kinds of information. Red dash before each
+   label; no tag pills. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  background-color: #242628;
+  background-image:
+    linear-gradient(
+      155deg,
+      rgba(36, 38, 40, 0.55),
+      rgba(36, 38, 40, 0.5) 50%,
+      rgba(36, 38, 40, 0.55)
+    ),
+    url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  color: #f1eee7;
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ---- Grid: 6 columns; three cards of 2, then two cards of 3 ------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(20px, 2.2vw, 26px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.top {
+  grid-column: span 2;
+}
+.bottom {
+  grid-column: span 3;
+}
+.frame {
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2rem, 2.8vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.blockLabel {
+  position: relative;
+  margin: 0;
+  padding-left: 22px;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.blockLabel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 14px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.blockText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.know {
+  padding: 14px 16px 16px;
+  background: var(--ivory);
+  border-radius: 12px;
+}
+.head {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+.link {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 0;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+.link svg {
+  color: var(--neodent-red);
+  transition: transform 180ms ease;
+}
+.link:hover {
+  color: var(--neodent-red-dark);
+}
+.link:hover svg {
+  transform: translateX(3px);
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 3px;
+}
+
+/* Wide screens: the top three share rows (subgrid) so the scene, the name
+   and both text blocks line up exactly. The bottom two lay the same parts
+   out beside the scene. */
+@media (min-width: 1024px) {
+  .bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    column-gap: clamp(20px, 2.4vw, 28px);
+    row-gap: 14px;
+    align-content: center;
+    align-items: start;
+  }
+  .bottom .frame {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+  }
+  .bottom .head,
+  .bottom .block {
+    grid-column: 2;
+  }
+}
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 1024px) {
+    .grid {
+      /* frame, name, does, know (top row); then the bottom row. */
+      grid-template-rows: auto auto auto 1fr auto;
+      row-gap: 0;
+    }
+    .top {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 18px;
+    }
+    .bottom {
+      grid-row: 5;
+      margin-top: clamp(16px, 2vw, 24px);
+    }
+  }
+}
+
+.figNote {
+  margin: 16px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(241, 238, 231, 0.72);
+}
+
+/* Closing strip: paper, red top edge. */
+.closing {
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  padding: clamp(22px, 2.6vw, 30px) clamp(24px, 3vw, 36px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* Tablet: one card per row, scene beside the text. */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .top,
+  .bottom {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    column-gap: 24px;
+    row-gap: 14px;
+    align-content: start;
+    align-items: start;
+  }
+  .frame {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+    align-self: start;
+  }
+  .head,
+  .block {
+    grid-column: 2;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 600px);
+  }
+  .top,
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+  .frame {
+    align-self: stretch;
+  }
+  .link {
+    min-height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .link svg {
+    transition: none;
+  }
+  .link:hover svg {
+    transform: none;
+  }
+}

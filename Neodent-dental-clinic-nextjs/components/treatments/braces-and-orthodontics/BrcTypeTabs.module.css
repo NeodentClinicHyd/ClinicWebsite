@@ -1,0 +1,338 @@
+/* Types selector. Sits on the dark patterned ground of BrcTypes.
+   Tiles: 20px radius (the site's card radius), 1px light border on the dark
+   ground. The active tile turns paper (#fffefa) with a 3px red top edge, as
+   the FmrChoices featured card. Panel: paper card, 20px radius, 1px hairline,
+   no shadow (the option and choice cards carry none). Photographs sit in a
+   16px-radius frame (IllustrationFrame canvas) or 12px on the small tiles.
+   "Key facts" and "Worth knowing" sit in an ivory panel with a 12px radius
+   (FmrChoices `.know`). Markers are the red dash used across the page. */
+
+.root {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+/* ---- Tiles ------------------------------------------------------------ */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+  margin: 0;
+  padding: 0;
+}
+.tab {
+  appearance: none;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 10px 10px 18px;
+  font: inherit;
+  text-align: left;
+  color: #f1eee7;
+  background: transparent;
+  border: 1px solid rgba(241, 238, 231, 0.28);
+  border-top-width: 3px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+.tab:hover {
+  border-color: rgba(241, 238, 231, 0.55);
+}
+.tab:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.tab[aria-selected="true"] {
+  color: var(--ink);
+  background: var(--neodent-surface);
+  border-color: rgba(38, 48, 51, 0.12);
+  border-top-color: var(--neodent-red);
+}
+.tab .photo {
+  border-radius: 12px;
+}
+.tabName {
+  display: block;
+  padding: 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+/* ---- Photograph / placeholder ----------------------------------------- */
+.photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--neodent-ivory);
+  border: 1px solid rgba(38, 48, 51, 0.14);
+  border-radius: 16px;
+}
+.img {
+  object-fit: cover;
+}
+/* Neutral tile for a type whose photograph is missing or was rejected
+   (TODO(types-images)). Tinted ivory, red dash, slot id; decorative. */
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: color-mix(in srgb, var(--neodent-ink) 7%, var(--neodent-ivory));
+}
+.mark {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.slotId {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--neodent-muted);
+}
+
+/* ---- Panels ----------------------------------------------------------- */
+/* All four panels share one grid cell, so the stack is always as tall as the
+   tallest and switching never moves the page. */
+.panels {
+  display: grid;
+  margin-top: clamp(16px, 2vw, 24px);
+}
+.panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  column-gap: clamp(24px, 3.6vw, 52px);
+  align-content: start;
+  padding: clamp(20px, 2.6vw, 32px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 200ms;
+}
+.panel:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.panelActive {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 200ms ease,
+    visibility 0s;
+}
+
+.left,
+.right {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.figure {
+  margin: 0;
+  min-width: 0;
+}
+.caption {
+  margin: 12px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.8);
+  text-wrap: balance;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.summary {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.label {
+  margin: 0;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.text {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+/* Ivory panels: Key facts (left) and Worth knowing (right). */
+.inset {
+  padding: 14px 16px 16px;
+  background: var(--neodent-ivory);
+  border-radius: 12px;
+}
+.facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 22px;
+  row-gap: 8px;
+  margin: 8px 0 0;
+}
+.fact {
+  display: contents;
+}
+.factLabel {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--neodent-muted);
+}
+.factValue {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.know {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.know li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.88);
+}
+.know li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+}
+
+/* ---- Breakpoints ------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .tab {
+    padding: 8px 8px 16px;
+  }
+}
+/* One column from 900px down: image, then text in reading order. The two
+   columns dissolve so the blocks can be ordered. */
+@media (max-width: 900px) {
+  .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .left,
+  .right {
+    display: contents;
+  }
+  .figure {
+    order: 1;
+    width: 100%;
+    max-width: 560px;
+  }
+  .head {
+    order: 2;
+  }
+  .whatIs {
+    order: 3;
+  }
+  .different {
+    order: 4;
+  }
+  .factsPanel {
+    order: 5;
+  }
+  .knowPanel {
+    order: 6;
+  }
+}
+@media (max-width: 767px) {
+  .tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .tab {
+    gap: 12px;
+    padding: 8px 8px 14px;
+    border-radius: 16px;
+  }
+  .tabName {
+    padding: 0 4px;
+    font-size: 15px;
+  }
+  .panel {
+    padding: 18px;
+    border-radius: 16px;
+  }
+  .figure {
+    max-width: none;
+  }
+  .facts {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+  .factValue {
+    margin-bottom: 8px;
+  }
+  .factValue:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab,
+  .panel,
+  .panelActive {
+    transition: none;
+  }
+}
