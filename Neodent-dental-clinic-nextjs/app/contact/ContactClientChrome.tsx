@@ -341,7 +341,7 @@ export function ContactClientChrome() {
 
               <div className={`${styles.vCard} ${styles.vFee}`} data-reveal>
                 <p className={styles.feeLabel}>Consultation</p>
-                <p className={styles.feeValue}>Rs. 500</p>
+                <p className={styles.feeValue}>Rs. 300 - Rs. 500</p>
               </div>
 
               <div className={styles.vCta} data-reveal>
