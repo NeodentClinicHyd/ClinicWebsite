@@ -58,8 +58,10 @@
   text-decoration-thickness: 1.5px;
   text-underline-offset: 4px;
 }
-.nameLink:hover {
-  text-decoration-color: var(--neodent-red);
+@media (hover: hover) and (pointer: fine) {
+  .nameLink:hover {
+    text-decoration-color: var(--neodent-red);
+  }
 }
 .nameLink:focus-visible {
   outline: 2px solid var(--neodent-red);

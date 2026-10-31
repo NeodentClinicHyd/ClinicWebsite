@@ -299,9 +299,19 @@
   outline-offset: 4px;
 }
 
+/* Press state for touch. */
+.outline:active {
+  transform: scale(0.97);
+}
+.action:active {
+  opacity: 0.75;
+}
 @media (prefers-reduced-motion: reduce) {
   .outline,
   .action svg {
     transition: none;
+  }
+  .outline:active {
+    transform: none;
   }
 }
