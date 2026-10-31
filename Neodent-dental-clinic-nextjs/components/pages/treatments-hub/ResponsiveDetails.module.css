@@ -29,6 +29,9 @@
 .details[open] .summary svg {
   transform: rotate(180deg);
 }
+.summary:active {
+  opacity: 0.75;
+}
 .summary:focus-visible {
   outline: 2px solid var(--neodent-red);
   outline-offset: 3px;

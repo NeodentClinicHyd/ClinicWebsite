@@ -16,7 +16,10 @@ import styles from "./ThinkingBehindTreatment.module.css";
    No marker highlights on dark text; key phrases are semibold ivory.
    Doctor names, roles, rows and alt text come from DOCTORS unchanged. */
 
-const focus: Record<string, { position: string; zoom?: number; origin?: string }> = {
+const focus: Record<
+  string,
+  { position: string; zoom?: number; origin?: string }
+> = {
   siraj: { position: "50% 6%" },
   miftah: { position: "100% 6%", zoom: 1.5, origin: "100% 12%" },
 };
@@ -29,7 +32,11 @@ export function ThinkingBehindTreatment() {
     >
       <Backdrop />
       <div className={shared.container}>
-        <Reveal as="h2" id="thinking-title" className={`${shared.title} ${styles.title}`}>
+        <Reveal
+          as="h2"
+          id="thinking-title"
+          className={`${shared.title} ${styles.title}`}
+        >
           The thinking behind treatment.
         </Reveal>
 
@@ -44,20 +51,25 @@ export function ThinkingBehindTreatment() {
             const f = focus[doctor.id] ?? { position: "50% 10%" };
             return (
               <li key={doctor.id} className={styles.doc}>
-                <div className={styles.portrait}>
-                  <Image
-                    src={doctor.image}
-                    alt={doctor.alt}
-                    fill
-                    sizes="(max-width: 767px) 80vw, 560px"
-                    style={{
-                      objectPosition: f.position,
-                      ...(f.zoom
-                        ? { transform: `scale(${f.zoom})`, transformOrigin: f.origin }
-                        : {}),
-                    }}
-                  />
-                </div>
+                <Reveal variant="mask">
+                  <div className={styles.portrait}>
+                    <Image
+                      src={doctor.image}
+                      alt={doctor.alt}
+                      fill
+                      sizes="(max-width: 767px) 80vw, 560px"
+                      style={{
+                        objectPosition: f.position,
+                        ...(f.zoom
+                          ? {
+                              transform: `scale(${f.zoom})`,
+                              transformOrigin: f.origin,
+                            }
+                          : {}),
+                      }}
+                    />
+                  </div>
+                </Reveal>
                 <div className={styles.info}>
                   <h3 className={styles.name}>{doctor.name}</h3>
                   <p className={styles.role}>{doctor.role}</p>
@@ -70,7 +82,10 @@ export function ThinkingBehindTreatment() {
                     ))}
                   </dl>
                   {doctor.href && (
-                    <Link className={`${shared.action} ${styles.link}`} href={doctor.href}>
+                    <Link
+                      className={`${shared.action} ${styles.link}`}
+                      href={doctor.href}
+                    >
                       <span>View Dr. Md. Miftah Ur Rahman&rsquo;s profile</span>
                       <ArrowRight aria-hidden="true" />
                     </Link>
@@ -84,25 +99,34 @@ export function ThinkingBehindTreatment() {
         <Reveal stagger={90} className={styles.body}>
           <p className={shared.lede}>
             Treatment at Neodent begins with{" "}
-            <span className={shared.strong}>understanding the patient&apos;s concern</span>. Not
-            every dental condition requires the same response — some patients need care
-            focused on a single affected tooth, while others may benefit from a more
-            comprehensive treatment plan addressing multiple areas of the mouth.
+            <span className={shared.strong}>
+              understanding the patient&apos;s concern
+            </span>
+            . Not every dental condition requires the same response — some
+            patients need care focused on a single affected tooth, while others
+            may benefit from a more comprehensive treatment plan addressing
+            multiple areas of the mouth.
           </p>
           <ResponsiveDetails summary="More on treatment planning">
             <p className={shared.lede}>
               Clinical assessment considers{" "}
-              <span className={shared.strong}>oral health, function and aesthetic goals together</span>.
-              Where appropriate, the team discusses suitable treatment options, explains what
-              each approach involves, and helps patients understand the clinical
-              considerations relevant to their condition.
+              <span className={shared.strong}>
+                oral health, function and aesthetic goals together
+              </span>
+              . Where appropriate, the team discusses suitable treatment
+              options, explains what each approach involves, and helps patients
+              understand the clinical considerations relevant to their
+              condition.
             </p>
             <p className={shared.lede}>
-              Treatment planning at Neodent is not a fixed sequence — it is shaped by{" "}
-              <span className={shared.strong}>each patient&apos;s specific condition</span>. The
-              clinical team outlines available options, explains what each approach involves,
-              and ensures that every decision is made with the patient&apos;s informed
-              understanding.
+              Treatment planning at Neodent is not a fixed sequence — it is
+              shaped by{" "}
+              <span className={shared.strong}>
+                each patient&apos;s specific condition
+              </span>
+              . The clinical team outlines available options, explains what each
+              approach involves, and ensures that every decision is made with
+              the patient&apos;s informed understanding.
             </p>
           </ResponsiveDetails>
         </Reveal>

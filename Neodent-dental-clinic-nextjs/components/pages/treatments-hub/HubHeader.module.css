@@ -59,8 +59,10 @@
   color: rgba(248, 246, 239, 0.7);
   transition: color 0.2s ease;
 }
-.crumbs a:hover {
-  color: var(--neodent-ivory);
+@media (hover: hover) and (pointer: fine) {
+  .crumbs a:hover {
+    color: var(--neodent-ivory);
+  }
 }
 .crumbs a:focus-visible {
   outline: 2px solid var(--neodent-red);
@@ -109,8 +111,10 @@
   text-underline-offset: 4px;
   transition: text-decoration-color 0.2s ease;
 }
-.nameLink:hover {
-  text-decoration-color: var(--neodent-red);
+@media (hover: hover) and (pointer: fine) {
+  .nameLink:hover {
+    text-decoration-color: var(--neodent-red);
+  }
 }
 .nameLink:focus-visible {
   outline: 2px solid var(--neodent-red);

@@ -56,6 +56,9 @@
 .qa summary::-webkit-details-marker {
   display: none;
 }
+.qa summary:active {
+  background: rgba(38, 48, 51, 0.04);
+}
 .qa summary:focus-visible {
   outline: 2px solid var(--neodent-red);
   outline-offset: 2px;
