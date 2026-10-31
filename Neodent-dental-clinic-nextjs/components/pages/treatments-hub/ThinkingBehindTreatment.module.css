@@ -1,0 +1,194 @@
+/* S4 thinking behind treatment (dark). */
+.section {
+  /* Pattern only in the top-right corner, away from the heading and text. */
+  --pattern-mask: radial-gradient(
+    ellipse min(420px, 34vw) 320px at 100% 0%,
+    #000 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    transparent 100%
+  );
+  --glow-x: 4%;
+  --glow-y: 96%;
+  --glow-rx: min(520px, 46vw);
+  --glow-a: 0.22;
+}
+.title {
+  max-width: 16ch;
+  margin: 0 0 clamp(26px, 3.4vw, 40px);
+}
+
+/* ---- doctor cards ---- */
+.docs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 28px);
+  margin-block: 0;
+  padding: 0;
+  list-style: none;
+}
+.doc {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 14px 14px 24px;
+  background: rgba(248, 246, 239, 0.05);
+  border: 1px solid var(--hub-hair-dark);
+  border-radius: var(--hub-radius);
+  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.7);
+  transition: transform 0.25s var(--hub-ease), border-color 0.25s ease;
+}
+.portrait {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(160deg, #ece7dc 0%, #d9d2c2 100%);
+  border-radius: calc(var(--hub-radius) - 6px);
+}
+.info {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 20px 10px 0;
+}
+.name {
+  margin: 0 0 4px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(25px, 2.3vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.role {
+  margin: 0;
+  color: var(--hub-muted-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.facts {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+.fact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px 20px;
+}
+.fact dt {
+  color: var(--hub-muted-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  color: var(--neodent-ivory);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.fact:first-child dd {
+  font-weight: 600;
+}
+@container (min-width: 440px) {
+  .fact {
+    grid-template-columns: 130px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+.link {
+  margin-top: auto;
+  padding-top: 14px;
+  color: var(--neodent-ivory);
+}
+.link svg {
+  color: var(--neodent-red);
+}
+.facts + .link {
+  margin-top: auto;
+}
+
+/* ---- paragraphs: two balanced columns ---- */
+.body {
+  margin-top: clamp(30px, 3.6vw, 48px);
+  max-width: 70ch;
+}
+.body p {
+  margin: 0 0 18px;
+  break-inside: avoid;
+}
+.body p:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 900px) {
+  .body {
+    max-width: none;
+    columns: 2;
+    column-gap: clamp(32px, 4vw, 56px);
+  }
+  .body > * {
+    break-inside: auto;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .doc:hover {
+    transform: translateY(-3px);
+    border-color: rgba(248, 246, 239, 0.28);
+  }
+}
+
+/* ---- tablet: single column cards ---- */
+@media (max-width: 899px) and (min-width: 768px) {
+  .docs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .portrait {
+    aspect-ratio: 16 / 8;
+  }
+}
+
+/* ---- phone: swipe row, next card peeks ---- */
+@media (max-width: 767px) {
+  .docs {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-right: -16px;
+    padding-right: 16px;
+  }
+  .docs::-webkit-scrollbar {
+    display: none;
+  }
+  .docs:focus-visible {
+    outline: 2px solid var(--neodent-red);
+    outline-offset: 4px;
+  }
+  .docs > * {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+  }
+  .doc {
+    padding: 10px 10px 18px;
+  }
+  .info {
+    padding: 16px 6px 0;
+  }
+  .body {
+    margin-top: 26px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doc {
+    transition: none;
+  }
+}

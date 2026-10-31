@@ -1,0 +1,307 @@
+/* ------------------------------------------------------------------
+   /treatments hub: shared page styles (wrapper, section shells, headings,
+   buttons, cards). Section-specific styles live in each component's own
+   CSS Module.
+
+   Spacing, radii and surfaces are copied from the home sections
+   (LegacyStory / ClinicalLeadership / Hero). Nothing is imported from
+   another module. Tokens used: --neodent-red / -red-dark / -ink /
+   -charcoal / -ivory / -surface, --app-font-serif, --media-max-h(-compact),
+   --nav-height-*.
+
+   Rules kept here (PAGE_PLAN section 6): reveals are applied by JS-added
+   state (see components/motion), final state under reduced motion, no
+   label under 12px, no brackets / ghost numerals / arcs.
+   ------------------------------------------------------------------ */
+
+.page {
+  --hub-pad-y: clamp(56px, 6vw, 88px);
+  --hub-container: 1180px;
+  --hub-radius: 20px;
+  --hub-radius-sm: 14px;
+  --hub-hair: rgba(38, 48, 51, 0.12);
+  --hub-hair-dark: rgba(248, 246, 239, 0.14);
+  --hub-muted: rgba(38, 48, 51, 0.74);
+  --hub-muted-dark: rgba(248, 246, 239, 0.72);
+  --hub-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --hub-shadow: 0 18px 40px -22px rgba(22, 28, 30, 0.35);
+  --hub-shadow-sm: 0 8px 22px -14px rgba(22, 28, 30, 0.28);
+}
+
+/* ---------- container ---------- */
+.container {
+  position: relative;
+  z-index: 1;
+  width: min(var(--hub-container), calc(100% - 48px));
+  margin: 0 auto;
+}
+@media (max-width: 767px) {
+  .container {
+    width: min(100% - 32px, 640px);
+  }
+}
+
+/* ---------- section shells ---------- */
+.light,
+.paper {
+  position: relative;
+  padding: var(--hub-pad-y) 0;
+  color: var(--neodent-ink);
+}
+.light {
+  background: var(--neodent-ivory);
+}
+.paper {
+  background: #f1eee7;
+}
+
+/* Dark band recipe: gradient, red glow, icon pattern as mask-image.
+   The pattern and glow are two spans inside <Backdrop />; the pattern's
+   fade-out shape is set per section with --pattern-mask so that it
+   reaches zero before the text column. */
+.dark {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--hub-pad-y) 0;
+  background: linear-gradient(162deg, #1c2427 0%, #131a1c 52%, #0f1315 100%);
+  color: var(--neodent-ivory);
+}
+.glow,
+.pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.glow {
+  background:
+    radial-gradient(
+      ellipse var(--glow-rx, 520px) var(--glow-ry, 70%) at var(--glow-x, 86%) var(--glow-y, 38%),
+      rgba(215, 25, 32, var(--glow-a, 0.26)) 0%,
+      rgba(215, 25, 32, calc(var(--glow-a, 0.26) * 0.5)) 38%,
+      rgba(215, 25, 32, calc(var(--glow-a, 0.26) * 0.18)) 68%,
+      rgba(215, 25, 32, 0) 100%
+    ),
+    radial-gradient(
+      circle 380px at 3% 106%,
+      rgba(215, 25, 32, 0.1) 0%,
+      rgba(215, 25, 32, 0) 100%
+    );
+}
+.pattern {
+  inset: -14px;
+  display: none;
+}
+@supports (mask-mode: luminance) {
+  .pattern {
+    display: block;
+    opacity: 0.22;
+    filter: url("#hub-pattern-levels");
+  }
+  .tile {
+    position: absolute;
+    inset: 0;
+    background-color: var(--neodent-ivory);
+    mask-image:
+      url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp"),
+      var(--pattern-mask, linear-gradient(#000, #000));
+    mask-mode: luminance, alpha;
+    mask-repeat: repeat, no-repeat;
+    mask-size: 420px 420px, 100% 100%;
+    mask-composite: intersect;
+  }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .glow {
+    animation: hubGlow 9s ease-in-out infinite alternate;
+  }
+  .tile {
+    animation: hubDrift 46s linear infinite alternate;
+  }
+}
+@keyframes hubGlow {
+  from {
+    opacity: 0.78;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hubDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-14px, 10px, 0);
+  }
+}
+
+/* ---------- headings ---------- */
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--hub-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.dark .eyebrow {
+  color: var(--hub-muted-dark);
+}
+
+/* One heading scale for every h2: DM Serif Display, one ink colour.
+   The red italic accent (.accent) is used on the h1, "Featured dental
+   treatments." and "Real cases. Visible outcomes." only. */
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.3rem, 3.8vw, 3.7rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.accent {
+  display: block;
+  color: var(--neodent-red);
+  font-style: italic;
+}
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(2.05rem, 8.6vw, 2.55rem);
+  }
+}
+
+/* Short red rule (LegacyStory). */
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--neodent-red);
+}
+
+/* Body copy. 16px, calm measure. */
+.lede {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 70ch;
+  text-wrap: pretty;
+}
+.dark .lede {
+  color: rgba(248, 246, 239, 0.84);
+}
+.strong {
+  font-weight: 650;
+  color: inherit;
+}
+.dark .strong {
+  color: var(--neodent-ivory);
+}
+
+/* ---------- buttons ---------- */
+/* Red primary buttons come from the global AppButton. The outline
+   secondary is a plain link so it can be used in server components. */
+.outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 24px;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+.dark .outline {
+  border-color: rgba(248, 246, 239, 0.5);
+  color: var(--neodent-ivory);
+}
+.outline svg {
+  flex: none;
+}
+.outline:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dark .outline:hover {
+    border-color: var(--neodent-ivory);
+    background: rgba(248, 246, 239, 0.1);
+  }
+  .light .outline:hover,
+  .paper .outline:hover {
+    background: rgba(38, 48, 51, 0.06);
+  }
+}
+
+/* Text link with arrow (home .treatment-atlas-card-action recipe),
+   14px per the plan (card link labels). */
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--neodent-red);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+.action svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+.action:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .action:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+/* ---------- swipe row (mobile) ---------- */
+.swipe {
+  display: flex;
+  gap: 14px;
+  margin: 0;
+  padding: 0 0 6px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.swipe::-webkit-scrollbar {
+  display: none;
+}
+.swipe > * {
+  flex: 0 0 84%;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+.swipe:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .outline,
+  .action svg {
+    transition: none;
+  }
+}

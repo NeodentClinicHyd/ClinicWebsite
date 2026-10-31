@@ -1,340 +1,271 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
-  Award,
   Crosshair,
   HeartHandshake,
   Leaf,
-  MapPin,
   Pause,
   Play,
-  Smile,
-  Stethoscope,
   type LucideIcon,
 } from "lucide-react";
-import { tourVideo } from "@/lib/site-data";
+import {
+  ESTABLISHED_YEAR,
+  googleRating,
+  nampallyGoogleRating,
+  tourVideo,
+  tourVideoPoster,
+  tourVideoSegment,
+  yearsSinceEstablished,
+} from "@/lib/site-data";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
-import Link from "next/link";
+import { CountUp } from "@/components/motion/CountUp";
+import { Reveal } from "@/components/motion/Reveal";
 
-/* "Why Neodent" card -- edit this array to change the four cells. Icons
-   come from the lucide-react set already used across the site. The
-   "25,000+ smiles changed" figure is client-supplied and must be
-   verified before launch. */
-const whyNeodentStats: {
-  value: string;
+/* ------------------------------------------------------------------
+   Home Section 01: the stat strip, "Care begins the moment you walk
+   in" and one tour video (home redesign reference, Part 6.2).
+
+   Stat strip, in this order (reference Part 7):
+   - years since ESTABLISHED_YEAR, calculated, never hard-coded
+   - 2 clinics (Mehdipatnam and Nampally)
+   - Google reviews across both clinics: googleRating.count (Mehdipatnam,
+     261) + nampallyGoogleRating.count (Nampally, 157). These are
+     screenshot values from the Google listings and may have changed,
+     hence the note under the strip.
+   - "25,000+ patients treated" is client-supplied and must be verified
+     before launch (reference Part 8).
+   ------------------------------------------------------------------ */
+const reviewCount = googleRating.count + nampallyGoogleRating.count;
+
+const stats: {
+  key: string;
+  to: number;
+  suffix?: string;
   label: string;
-  icon: LucideIcon;
+  /** Optional second line under the label. */
+  note?: string;
 }[] = [
-  { value: "30+", label: "years' experience", icon: Award },
-  { value: "Multi-speciality", label: "clinic", icon: Stethoscope },
-  { value: "2", label: "locations", icon: MapPin },
-  { value: "25,000+", label: "smiles changed", icon: Smile },
+  {
+    key: "years",
+    to: yearsSinceEstablished(),
+    label: `years of specialist care, since ${ESTABLISHED_YEAR}`,
+  },
+  {
+    key: "clinics",
+    to: 2,
+    label: "clinics, Mehdipatnam and Nampally",
+    // Restored from the pre-redesign strip (SEO ledger home-t1b1f4faf).
+    note: "Multi-speciality clinic",
+  },
+  { key: "reviews", to: reviewCount, label: "Google reviews across both clinics" },
+  // Client-supplied figure: must be verified before launch.
+  { key: "patients", to: 25000, suffix: "+", label: "patients treated" },
 ];
 
-const careQualities: {
-  name: string;
-  text: string;
-  icon: LucideIcon;
-}[] = [
+const careQualities: { name: string; text: string; icon: LucideIcon }[] = [
   { name: "Calm", text: "An unhurried pace, a reassuring space.", icon: Leaf },
-  {
-    name: "Precise",
-    text: "Careful diagnosis, exact and clear work.",
-    icon: Crosshair,
-  },
-  {
-    name: "Personal",
-    text: "Every plan shaped around you.",
-    icon: HeartHandshake,
-  },
+  { name: "Precise", text: "Careful diagnosis, exact and clear work.", icon: Crosshair },
+  { name: "Personal", text: "Every plan shaped around you.", icon: HeartHandshake },
 ];
 
-export function ExperienceIntro() {
-  const [isVisible, setIsVisible] = useState(false);
-  // Lazy initializer reads the real preference on first client render
-  // instead of setting state synchronously inside an effect; the
-  // effect below only subscribes to later changes.
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
-  const [isPlaying, setIsPlaying] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
+/* Tour video rules (reference Part 3.4): muted, inline, looping,
+   preload="none" with a poster; plays only while at least half of it is
+   on screen; never autoplays under prefers-reduced-motion or Save-Data.
+   Playback is held to tourVideoSegment (see lib/site-data.ts). */
+function useTourVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  // Set once the visitor presses pause, so scrolling back does not
+  // restart a video they stopped.
+  const userPaused = useRef(false);
 
-  // Reveal-on-scroll, matching About.tsx / WhyNeodent.tsx's existing
-  // pattern rather than the scroll-linked parallax Doctor.tsx/Experience.tsx
-  // use elsewhere -- this section is deliberately calmer than those.
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setIsVisible(true);
-        });
-      },
-      { threshold: 0.15 },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  // prefers-reduced-motion gates autoplay: when reduced motion is
-  // requested the video stays paused on its first frame instead of
-  // autoplaying, and a small play/pause control lets the visitor opt in.
-  // Only SUBSCRIBES to later changes here -- the initial value is read
-  // by the lazy useState initializer above, not set from this effect.
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = (event: MediaQueryListEvent) =>
-      setPrefersReducedMotion(event.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
-
-  // Real video metadata drives the frame's aspect ratio -- never an
-  // assumed 9:16. The CSS default on --tour-video-ratio only prevents
-  // layout shift before this fires.
-  useEffect(() => {
-    const video = videoRef.current;
-    const frame = frameRef.current;
-    if (!video || !frame) return;
-
-    const applyRatio = () => {
-      if (video.videoWidth && video.videoHeight) {
-        frame.style.setProperty(
-          "--tour-video-ratio",
-          `${video.videoWidth} / ${video.videoHeight}`,
-        );
-      }
-    };
-
-    if (video.readyState >= 1) applyRatio();
-    video.addEventListener("loadedmetadata", applyRatio);
-    return () => video.removeEventListener("loadedmetadata", applyRatio);
-  }, []);
-
-  // isPlaying mirrors the video element's own play/pause events (wired
-  // up via onPlay/onPause on the <video> below) rather than being set
-  // from inside these effects, so every caller of .play()/.pause() --
-  // autoplay, the visibility observer, and the manual toggle -- stays
-  // in sync through one source of truth instead of three.
-
-  // Autoplay only when motion is welcome; otherwise leave it paused on
-  // its first frame until the visitor presses play.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    const { start, end } = tourVideoSegment;
 
-    if (prefersReducedMotion) {
-      video.pause();
-    } else {
-      video.play().catch(() => {
-        /* Autoplay can be blocked by the browser; the visible toggle
-           still lets the visitor start playback manually. */
-      });
-    }
-  }, [prefersReducedMotion]);
+    const keepInSegment = () => {
+      if (video.currentTime < start - 0.25 || video.currentTime >= end) {
+        video.currentTime = start;
+      }
+    };
+    video.addEventListener("loadedmetadata", keepInSegment);
+    video.addEventListener("timeupdate", keepInSegment);
 
-  // Pause the video once it scrolls out of view (and resume once back
-  // in view, unless reduced motion asked it to stay paused) to control
-  // resource usage -- a second, independent observer from the reveal
-  // one above, since it needs to keep firing after the reveal happens
-  // once.
-  useEffect(() => {
-    const frame = frameRef.current;
-    const video = videoRef.current;
-    if (!frame || !video) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            if (!prefersReducedMotion) {
-              video.play().catch(() => {
-                /* See autoplay effect above. */
-              });
-            }
-          } else {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData = Boolean(
+      (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+        ?.saveData,
+    );
+    let observer: IntersectionObserver | undefined;
+    if (!reduce && !saveData && typeof IntersectionObserver !== "undefined") {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.intersectionRatio >= 0.5) {
+            if (!userPaused.current) video.play().catch(() => {});
+          } else if (!video.paused) {
             video.pause();
           }
-        });
-      },
-      { threshold: 0.2 },
-    );
+        },
+        { threshold: [0, 0.5] },
+      );
+      observer.observe(video);
+    }
 
-    observer.observe(frame);
-    return () => observer.disconnect();
-  }, [prefersReducedMotion]);
+    return () => {
+      observer?.disconnect();
+      video.removeEventListener("loadedmetadata", keepInSegment);
+      video.removeEventListener("timeupdate", keepInSegment);
+    };
+  }, []);
 
-  const togglePlayback = () => {
+  const toggle = () => {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
-      video.play().catch(() => {
-        /* See autoplay effect above. */
-      });
+      userPaused.current = false;
+      video.play().catch(() => {});
     } else {
+      userPaused.current = true;
       video.pause();
     }
   };
 
+  return { videoRef, isPlaying, setIsPlaying, toggle };
+}
+
+export function ExperienceIntro() {
+  const { videoRef, isPlaying, setIsPlaying, toggle } = useTourVideo();
+
   return (
-    <section
-      ref={sectionRef}
-      className={`exp-intro ${isVisible ? "exp-intro-visible" : ""}`}
-      aria-labelledby="exp-intro-title"
-    >
-      <div className="exp-intro-backdrop" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/assets/Neodent dental clinic - modern dental treatment chair.png"
-          alt=""
-        />
-      </div>
-      {/* Bespoke architectural linework -- Section 02's own arch/draft/
-          registration vocabulary (see .archive-atmosphere in LegacyStory)
-          recomposed as a doorway/corridor motif instead of Section 02's
-          archive-arch/tooth-contour story, so both sections read as the
-          same designer's drafting language without literally repeating
-          either one's composition. Purely decorative: aria-hidden and
-          pointer-events:none throughout. */}
-      <div className="exp-intro-atmosphere" aria-hidden="true">
-        <span className="exp-intro-arch exp-intro-arch-door" />
-        <span className="exp-intro-arch exp-intro-arch-door-inner" />
-        <span className="exp-intro-draft exp-intro-draft-horizontal" />
-        <span className="exp-intro-draft exp-intro-draft-vertical" />
-        <span className="exp-intro-registration" />
-      </div>
-      <div className="container exp-intro-why-wrap">
-        {/* Visible title is a plain <p> (not a heading) so it cannot
-            disturb the page's heading order; the <ul> carries the
-            accessible name. Icons are decorative. */}
-        <div className="exp-intro-why">
-          <p className="exp-intro-why-title" aria-hidden="true">
+    <section className="exp-intro" aria-labelledby="exp-intro-title">
+      <div className="container">
+        <div className="exp-intro-stats-wrap">
+          <p className="exp-intro-stats-title" id="exp-intro-stats-title">
             Why Neodent
           </p>
-          <ul className="exp-intro-why-list" aria-label="Why Neodent">
-            {whyNeodentStats.map(({ value, label, icon: Icon }) => (
-              <li className="exp-intro-why-cell" key={value}>
-                <span className="exp-intro-why-icon" aria-hidden="true">
-                  <Icon size={20} strokeWidth={1.5} />
+          <Reveal
+            as="ul"
+            className="exp-intro-stats"
+            stagger={70}
+            aria-labelledby="exp-intro-stats-title"
+          >
+            {stats.map(({ key, to, suffix, label, note }) => (
+              <li className="exp-intro-stat" key={key}>
+                <span className="exp-intro-stat-value">
+                  <CountUp to={to} suffix={suffix} />
                 </span>
-                <span className="exp-intro-why-text">
-                  <span className="exp-intro-why-value">{value}</span>
-                  <span className="exp-intro-why-label">{label}</span>
-                </span>
+                <span className="exp-intro-stat-label">{label}</span>
+                {note ? <span className="exp-intro-stat-note">{note}</span> : null}
               </li>
             ))}
-          </ul>
-        </div>
-      </div>
-      <div className="container exp-intro-grid">
-        <div className="exp-intro-copy">
-          <h2 id="exp-intro-title" className="exp-intro-title">
-            <span>Care begins</span>
-            <span>the moment</span>
-            <span className="serif">you walk in.</span>
-          </h2>
-          <p className="exp-intro-lede exp-intro-lede-lead section-lede">
-            From the first step inside to every stage of treatment, Neodent is
-            designed around a{" "}
-            <EditorialHighlight tone="primary">
-              calmer, more reassuring
-            </EditorialHighlight>{" "}
-            dental experience.
-          </p>
-          <p className="exp-intro-lede section-lede">
-            Clinical expertise meets thoughtful care. You&apos;re guided through
-            each stage with{" "}
-            <EditorialHighlight tone="secondary">
-              clear explanations
-            </EditorialHighlight>
-            , not simply moved through a procedure, and that same{" "}
-            <EditorialHighlight tone="quiet">continuity</EditorialHighlight>{" "}
-            carries from your first visit through to the care that follows.
-          </p>
-          <p className="exp-intro-lede section-lede">
-            Whether you visit Mehdipatnam or Nampally, the standard of care is
-            the same.
-          </p>
-          <p className="exp-intro-lede section-lede">
-            Every detail is considered to make your visit feel{" "}
-            <EditorialHighlight tone="primary">
-              calmer, clearer and more personal
-            </EditorialHighlight>{" "}
-            — from arrival to care.
+          </Reveal>
+          <p className="exp-intro-stats-note">
+            Review count as shown on the Google listings; it may have changed since.
           </p>
         </div>
 
-        <div className="exp-intro-visual">
-          <div className="exp-intro-frame" ref={frameRef}>
-            <video
-              ref={videoRef}
-              className="exp-intro-video"
-              src={tourVideo}
-              aria-label="A short tour of Neodent Dental Hospital"
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-            />
-            <button
-              type="button"
-              className="exp-intro-video-toggle"
-              onClick={togglePlayback}
-              aria-label={isPlaying ? "Pause tour video" : "Play tour video"}
+        <div className="exp-intro-grid">
+          <div className="exp-intro-copy">
+            <Reveal
+              as="h2"
+              id="exp-intro-title"
+              className="exp-intro-title"
+              variant="mask"
+              stagger={90}
             >
-              {isPlaying ? <Pause size={13} /> : <Play size={13} />}
-            </button>
-          </div>
-          {/* Same figcaption pattern Section 02's archive plates use --
-              a bold red primary label (<b>) paired with a muted <span>
-              -- so this caption reads as the same media-metadata
-              language, not a differently-weighted pair of labels.
-              Copy unchanged. */}
-          <div className="exp-intro-meta">
-            <b>Neodent / Inside</b>
-            <span>Hospital tour</span>
-          </div>
-        </div>
+              <span>Care begins the moment</span>
+              <span className="exp-intro-title-accent">you walk in.</span>
+            </Reveal>
 
-        <div className="exp-intro-secondary">
-          <ul className="exp-intro-qualities" aria-label="Our care philosophy">
-            {careQualities.map(({ name, text, icon: Icon }) => (
-              <li className="exp-intro-quality" key={name}>
-                <span className="exp-intro-quality-icon" aria-hidden="true">
-                  <Icon size={20} strokeWidth={1.5} />
-                </span>
-                <span className="exp-intro-quality-body">
-                  <span className="exp-intro-quality-name">{name}</span>
-                  <span className="exp-intro-quality-text">{text}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="container exp-intro-cta-wrap">
-        {/* Not yet wired: the dedicated About / Our Story page does not
-            exist in this multipage site yet. Rendered as plain text
-            (not an <a> or <button>) rather than pointing at a fake
-            route or the in-page #about anchor, so it is visually and
-            semantically complete without claiming to be interactive
-            until it can be wired to that page. Positioned after the
-            qualities panel in DOM/reading order (both desktop and
-            mobile) so the section closes on the CTA. */}
+            <Reveal className="exp-intro-body" stagger={80} delay={120}>
+              <p className="exp-intro-lede section-lede">
+                From the first step inside, Neodent is designed around a{" "}
+                <EditorialHighlight tone="primary">calmer, more reassuring</EditorialHighlight>{" "}
+                dental experience.
+              </p>
+              <p className="exp-intro-lede section-lede">
+                You are guided through each stage with{" "}
+                <EditorialHighlight tone="secondary">clear explanations</EditorialHighlight>,
+                and the same specialist-led care follows you from your first visit
+                through to treatment and beyond. Whether you visit Mehdipatnam or
+                Nampally, the standard is the same.
+              </p>
+            </Reveal>
 
-        <Link href="/about" className="text-link exp-intro-cta">
-          Discover Our Story <span aria-hidden="true">→</span>
-        </Link>
+            {/* Supporting copy from the pre-redesign intro (SEO ledger
+                home-te69bb48e, home-t92a38f2e, home-t586fad82). Native
+                <details>: the text is in the server-rendered HTML. */}
+            <details className="home-more exp-intro-more">
+              <summary>Read more about your visit</summary>
+              <div className="home-more-body">
+                <p>
+                  Clinical expertise meets thoughtful care. You&apos;re guided
+                  through each stage with clear explanations, not simply moved
+                  through a procedure, and that same continuity carries from
+                  your first visit through to the care that follows.
+                </p>
+                <p>
+                  Every detail is considered to make your visit feel calmer,
+                  clearer and more personal — from arrival to care.
+                </p>
+              </div>
+            </details>
+
+            <Reveal
+              as="ul"
+              className="exp-intro-qualities"
+              aria-label="Our care philosophy"
+              delay={200}
+            >
+              {careQualities.map(({ name, text, icon: Icon }) => (
+                <li className="exp-intro-quality" key={name}>
+                  <span className="exp-intro-quality-icon" aria-hidden="true">
+                    <Icon size={18} strokeWidth={1.6} />
+                  </span>
+                  <span className="exp-intro-quality-body">
+                    <span className="exp-intro-quality-name">{name}</span>
+                    <span className="exp-intro-quality-text">{text}</span>
+                  </span>
+                </li>
+              ))}
+            </Reveal>
+
+            <Link href="/about" className="exp-intro-cta">
+              Discover our story <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <Reveal className="exp-intro-visual" variant="fade" delay={160}>
+            <div className="exp-intro-media media-frame" data-media>
+              <video
+                ref={videoRef}
+                className="exp-intro-video"
+                src={`${tourVideo}#t=${tourVideoSegment.start}`}
+                poster={tourVideoPoster}
+                aria-label="A short tour of a Neodent clinic: the waiting area, reception and treatment rooms"
+                muted
+                loop
+                playsInline
+                preload="none"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
+              <button
+                type="button"
+                className="exp-intro-video-toggle"
+                onClick={toggle}
+                aria-label={isPlaying ? "Pause tour video" : "Play tour video"}
+              >
+                {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+              </button>
+            </div>
+            {/* Plain caption for the tour (SEO ledger home-tc1833779). */}
+            <p className="exp-intro-media-caption">Inside Neodent: hospital tour</p>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

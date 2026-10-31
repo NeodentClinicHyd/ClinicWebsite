@@ -9,6 +9,7 @@ import {
   ctaPhone,
   ctaTelPhone,
   directions,
+  ESTABLISHED_YEAR,
   googleRating,
   heroLocations,
   nampallyDirections,
@@ -26,7 +27,7 @@ import styles from "./Footer.module.css";
    Footer -- closing chapter of every page.
 
    Hierarchy, top to bottom:
-     1. Closing brand statement over the faint "1994" year.
+     1. Closing brand statement ("Changing smiles since 1994.").
      2. Navigation: brand + social, Explore, Treatments, Contact.
      3. Locations: one compact summary per clinic (name, brief
         address, Google rating, phone, directions).
@@ -109,11 +110,8 @@ export function Footer() {
       <div className={styles.container}>
         {/* ---- 1. Closing brand statement ------------------------- */}
         <div className={styles.closing}>
-          <span className={styles.year} aria-hidden="true">
-            1994
-          </span>
           <p id="footer-title" className={styles.statement}>
-            Changing smiles <span>since decades.</span>
+            Changing smiles <span>since {ESTABLISHED_YEAR}.</span>
           </p>
         </div>
 

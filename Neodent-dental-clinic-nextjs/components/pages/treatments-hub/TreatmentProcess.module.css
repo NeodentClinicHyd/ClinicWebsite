@@ -1,0 +1,169 @@
+/* S6 treatment process. */
+.section {
+  padding: clamp(52px, 5.6vw, 80px) 0;
+}
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(24px, 3vw, 40px);
+  row-gap: 18px;
+  align-items: end;
+  margin-bottom: clamp(28px, 3.6vw, 44px);
+}
+.title,
+.intro {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+@media (min-width: 1024px) {
+  .title {
+    grid-column: 1 / 6;
+  }
+  .intro {
+    grid-column: 6 / -1;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+.photoWrap {
+  min-width: 0;
+  margin: 0;
+}
+.photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: var(--media-max-h);
+  overflow: hidden;
+  border: 1px solid var(--hub-hair);
+  border-radius: 18px;
+  background: #e2ddd0;
+  box-shadow: var(--hub-shadow);
+}
+.photo img {
+  object-fit: cover;
+  /* Focal point toward the dental chair. */
+  object-position: 62% 50%;
+  filter: saturate(0.94) contrast(1.02);
+}
+
+/* ---- stepper ----
+   Each step carries one dot and one line segment that runs from its dot
+   to the next dot. Each segment draws with the scroll where
+   animation-timeline: view() is supported; elsewhere the steps rise in
+   order (Reveal) and the segments are simply shown. */
+.stepper {
+  --dot: 16px;
+  --dot-y: 41px;
+  --dot-y-first: 25px;
+  --gutter: 40px;
+  min-width: 0;
+  padding-left: var(--gutter);
+}
+.steps {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  position: relative;
+  padding: 24px 0 26px;
+  border-top: 1px solid var(--hub-hair);
+}
+.step:first-child {
+  border-top: 0;
+  padding-top: 8px;
+}
+.step:last-child {
+  padding-bottom: 8px;
+}
+.step::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--gutter) * -1);
+  top: calc(var(--dot-y) - var(--dot) / 2);
+  width: var(--dot);
+  height: var(--dot);
+  border: 2px solid var(--neodent-red);
+  border-radius: 50%;
+  background: #f1eee7;
+  box-sizing: border-box;
+}
+.step:first-child::before {
+  top: calc(var(--dot-y-first) - var(--dot) / 2);
+}
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--gutter) * -1 + var(--dot) / 2 - 1px);
+  top: var(--dot-y);
+  width: 2px;
+  height: 100%;
+  background: var(--neodent-red);
+  transform-origin: top center;
+}
+.step:first-child:not(:last-child)::after {
+  top: var(--dot-y-first);
+  height: calc(100% - var(--dot-y-first) + var(--dot-y));
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .step:not(:last-child)::after {
+      animation: processDraw linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 55%;
+    }
+  }
+}
+@keyframes processDraw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.step h3 {
+  margin: 0 0 6px;
+  color: var(--neodent-ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.5vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.step p {
+  margin: 0;
+  max-width: 52ch;
+  color: var(--hub-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+@media (max-width: 899px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+    align-items: start;
+  }
+}
+@media (max-width: 767px) {
+  .section {
+    padding: 40px 0 44px;
+  }
+  .photo {
+    aspect-ratio: auto;
+    height: 30dvh;
+    max-height: none;
+  }
+  .stepper {
+    --gutter: 34px;
+  }
+}

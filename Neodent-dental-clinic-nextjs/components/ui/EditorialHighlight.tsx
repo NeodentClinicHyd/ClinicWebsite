@@ -65,13 +65,12 @@ export function EditorialHighlight({
     const node = ref.current;
     if (!node) return;
 
+    // Reduced motion: the stylesheet shows the finished decoration, so
+    // there is nothing to observe (and no state to set from the effect).
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (reducedMotion) {
-      setRevealed(true);
-      return;
-    }
+    if (reducedMotion) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {

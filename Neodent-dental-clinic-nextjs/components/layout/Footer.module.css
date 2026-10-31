@@ -6,7 +6,7 @@
    so it reads as the final room.
 
    Hierarchy, strongest to quietest:
-     1. .statement  -- the closing brand line, over the faint .year
+     1. .statement  -- the closing brand line
      2. .grid       -- navigation columns, then .locations
      3. .legal      -- copyright, legal links, developer credit
 
@@ -29,7 +29,10 @@
   isolation: isolate;
   background: var(--charcoal);
   color: var(--ivory);
-  padding: clamp(64px, 7vw, 104px) 0 0;
+  /* --mobile-bar-space is set by the .mobile-bar rules in globals.css on
+     phones, so the room kept free for the fixed call bar is footer
+     colour instead of the page's cream background. */
+  padding: clamp(64px, 7vw, 104px) 0 var(--mobile-bar-space, 0px);
   border-top: 1px solid var(--rule);
 }
 .footer::before {
@@ -60,24 +63,10 @@
 }
 
 /* ---- 1. Closing statement -------------------------------------------
-   The year is a quiet backdrop; the statement bleeds up into it (the
-   same negative-margin mechanic as the homepage chapter numerals) and
-   is the loudest thing in the footer. On desktop it sits on one line;
-   it wraps naturally below 900px. */
+   The loudest thing in the footer. On desktop it sits on one line; it
+   wraps naturally below 900px. */
 .closing {
   position: relative;
-}
-.year {
-  display: block;
-  margin: 0 0 -0.4em -0.04em;
-  color: rgba(241, 238, 231, 0.065);
-  font-family: var(--app-font-serif);
-  font-size: clamp(6.5rem, 18vw, 16rem);
-  font-weight: 400;
-  line-height: 0.8;
-  letter-spacing: -0.03em;
-  pointer-events: none;
-  user-select: none;
 }
 .statement {
   position: relative;
@@ -118,9 +107,9 @@
   margin: 0 0 14px;
   color: var(--quiet);
   font-family: var(--app-font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -128,6 +117,7 @@
 /* Brand column */
 .brandCol :global(.brand) {
   margin-bottom: 18px;
+  min-height: 44px; /* tap target; the lockup itself is 42px */
 }
 .brandSentence {
   max-width: 290px;
@@ -174,6 +164,7 @@
   display: inline-flex;
   align-items: center;
   min-height: var(--link-h);
+  min-width: 44px;
   color: var(--ivory);
   font-size: 15px;
   line-height: 1.35;
@@ -215,7 +206,9 @@
 .contactCall {
   display: inline-flex;
   flex-direction: column;
+  justify-content: center;
   gap: 4px;
+  min-height: 48px;
   margin-bottom: 14px;
   color: var(--ivory);
   font-size: 18px;
@@ -313,6 +306,9 @@
   line-height: 1.15;
 }
 .branchName a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--ivory);
   text-decoration: none;
   transition: color 0.2s ease;
@@ -417,6 +413,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  min-width: 44px;
   color: var(--muted);
   text-decoration: none;
   transition: color 0.2s ease;
@@ -496,6 +493,9 @@
     gap: 40px 32px;
   }
   .brandSentence { max-width: 420px; }
+  /* Touch-sized link rows from tablet down. */
+  .footer { --link-h: 44px; }
+  .linkList a::after { bottom: 9px; }
 }
 
 /* Mobile: deliberate reading order -- brand, Explore + Treatments side
@@ -524,7 +524,10 @@
   }
 }
 
-@media (max-width: 389px) {
+/* Single column only below 360px: at 360 the two link columns are 152px
+   wide, enough for every label (long ones wrap to two lines), and keep
+   the footer about 330px shorter. */
+@media (max-width: 359px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:

@@ -1,0 +1,106 @@
+/* Dark-band layers. Recipe copied from the home hero (globals.css
+   .hero-bg-glow / .hero-bg-pattern / .hero-bg-tile), with its values
+   read from the custom properties set on .page in AboutPage.module.css.
+   No grid lines, no grain. */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glow,
+.pattern {
+  position: absolute;
+  inset: 0;
+}
+
+.glow {
+  background-image:
+    radial-gradient(
+      ellipse var(--about-glow-rx) var(--about-glow-ry) at var(--about-glow-x) var(--about-glow-y),
+      rgba(215, 25, 32, var(--about-glow-a)) 0%,
+      rgba(215, 25, 32, calc(var(--about-glow-a) * 0.5)) 38%,
+      rgba(215, 25, 32, calc(var(--about-glow-a) * 0.25)) 69%,
+      rgba(215, 25, 32, 0) 100%
+    ),
+    radial-gradient(
+      circle 380px at 3% 104%,
+      rgba(215, 25, 32, var(--about-glow2-a)) 0%,
+      rgba(215, 25, 32, 0) 100%
+    );
+}
+
+/* The pattern box overhangs by 14px so the drift never shows an edge.
+   The tile is a luminance mask over an ivory fill. Browsers without
+   mask-mode get no pattern. */
+.pattern {
+  inset: -14px;
+  display: none;
+}
+@supports (mask-mode: luminance) {
+  .pattern {
+    display: block;
+    opacity: var(--about-pattern-o);
+    filter: url("#about-pattern-levels");
+  }
+  .tile {
+    position: absolute;
+    inset: 0;
+    background-color: var(--neodent-ivory);
+    mask-image:
+      url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp"),
+      radial-gradient(
+        ellipse var(--about-pattern-rx) var(--about-pattern-ry) at var(--about-glow-x) var(--about-glow-y),
+        #000 0%,
+        #000 46%,
+        rgba(0, 0, 0, 0.78) 74%,
+        transparent 100%
+      );
+    mask-mode: luminance, alpha;
+    mask-repeat: repeat, no-repeat;
+    mask-size: var(--about-pattern-size) var(--about-pattern-size), 100% 100%;
+    mask-composite: intersect;
+  }
+}
+
+.filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Continuous motion: tablet and desktop only, never under reduced
+   motion. will-change lives only on these two animated layers. */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-14px, 14px, 0);
+  }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .glow {
+    will-change: transform, opacity;
+    animation: breathe 11s ease-in-out infinite;
+  }
+  .pattern {
+    will-change: transform;
+    animation: drift 40s linear infinite alternate;
+  }
+}

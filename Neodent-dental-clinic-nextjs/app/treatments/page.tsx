@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TreatmentsClientChrome } from "./TreatmentsClientChrome";
+import { TreatmentsHubPage } from "@/components/pages/treatments-hub/TreatmentsHubPage";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
 import {
   HUB_BREADCRUMBS,
@@ -53,7 +53,7 @@ export default function TreatmentsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <TreatmentsClientChrome />
+      <TreatmentsHubPage />
     </>
   );
 }

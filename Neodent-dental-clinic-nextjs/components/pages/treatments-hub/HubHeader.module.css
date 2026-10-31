@@ -1,0 +1,273 @@
+/* S0 page header. Load animation is pure CSS (animation-fill-mode: both),
+   so it needs no JavaScript, never leaves content hidden, and does not
+   delay the poster (the LCP element). Reduced motion: final state. */
+
+.header {
+  --glow-x: 76%;
+  --glow-y: 50%;
+  --glow-rx: min(480px, 36vw);
+  --glow-a: 0.36;
+  --pattern-mask: radial-gradient(
+    ellipse min(330px, 25vw) 92% at 76% 50%,
+    #000 0%,
+    #000 40%,
+    rgba(0, 0, 0, 0.7) 72%,
+    transparent 100%
+  );
+  --hdr-media-h: min(var(--media-max-h-compact), calc(100dvh - 190px));
+  padding: calc(var(--nav-height-desktop) + 22px) 0 clamp(28px, 3.4vw, 44px);
+}
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+}
+.copy {
+  min-width: 0;
+  max-width: 640px;
+}
+
+/* ---- breadcrumb (the eyebrow): 12px, plain ---- */
+.crumbs {
+  margin-bottom: clamp(16px, 2.2vw, 24px);
+}
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(248, 246, 239, 0.9);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.crumbs a {
+  display: inline-flex;
+  min-width: 44px;
+  align-items: center;
+  min-height: 44px;
+  color: rgba(248, 246, 239, 0.7);
+  transition: color 0.2s ease;
+}
+.crumbs a:hover {
+  color: var(--neodent-ivory);
+}
+.crumbs a:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+.sep {
+  color: rgba(248, 246, 239, 0.45);
+}
+
+/* ---- h1: sans line plus the red serif accent ---- */
+.title {
+  margin: 0 0 20px;
+  max-width: 20ch;
+  font-size: clamp(2.1rem, 3.7vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.line {
+  display: block;
+  overflow: hidden;
+  overflow: clip;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.lineInner {
+  display: block;
+}
+.titleAccent {
+  color: var(--neodent-red);
+  font-family: var(--app-font-serif);
+  font-style: italic;
+}
+
+.lede {
+  margin: 0;
+  max-width: 54ch;
+}
+.nameLink {
+  color: var(--neodent-ivory);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: rgba(215, 25, 32, 0.8);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s ease;
+}
+.nameLink:hover {
+  text-decoration-color: var(--neodent-red);
+}
+.nameLink:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(22px, 2.6vw, 30px);
+}
+
+/* ---- media + caption card ---- */
+.media {
+  width: min(100%, 320px);
+  margin: 0;
+  justify-self: center;
+  min-width: 0;
+}
+.mediaIn {
+  width: min(100%, calc(var(--hdr-media-h) * 0.75));
+  margin: 0 auto;
+}
+.frame {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--hub-hair-dark);
+  border-radius: 18px;
+  box-shadow: 0 28px 60px -28px rgba(0, 0, 0, 0.75);
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 12px 16px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(16, 21, 23, 0.72);
+  box-shadow: 0 14px 32px -14px rgba(0, 0, 0, 0.65);
+  color: rgba(248, 246, 239, 0.8);
+}
+@supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
+  .caption {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+.caption b {
+  color: var(--neodent-ivory);
+  font-family: var(--app-font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.caption span {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* ---- tablet and phone ---- */
+@media (max-width: 1023px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .copy {
+    max-width: 680px;
+  }
+  .header {
+    --glow-x: 50%;
+    --glow-y: 78%;
+    --glow-rx: min(420px, 80vw);
+    --pattern-mask: radial-gradient(
+      ellipse min(320px, 70vw) 36% at 50% 78%,
+      #000 0%,
+      #000 40%,
+      rgba(0, 0, 0, 0.7) 72%,
+      transparent 100%
+    );
+  }
+}
+@media (max-width: 900px) {
+  .header {
+    padding-top: calc(var(--nav-height-mobile) + 14px);
+  }
+}
+@media (max-width: 767px) {
+  .header {
+    --hdr-media-h: 38dvh;
+    padding-bottom: 36px;
+  }
+  .title {
+    max-width: none;
+    font-size: clamp(2rem, 9vw, 2.45rem);
+  }
+  .actions > * {
+    flex: 1 1 150px;
+    padding: 0 16px;
+    white-space: nowrap;
+  }
+  .media {
+    width: min(100%, 300px);
+  }
+}
+
+/* ---- load motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .lineInner {
+    animation: hdrLine 780ms var(--hub-ease) both;
+    animation-delay: calc(80ms + var(--i, 0) * 100ms);
+  }
+  .in,
+  .captionIn {
+    animation: hdrRise 720ms var(--hub-ease) both;
+    animation-delay: var(--d, 0ms);
+  }
+  .captionIn {
+    animation-delay: 450ms;
+  }
+  .mediaIn {
+    animation: hdrMedia 900ms var(--hub-ease) 260ms both;
+  }
+}
+@keyframes hdrLine {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hdrRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hdrMedia {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crumbs a,
+  .nameLink {
+    transition: none;
+  }
+}

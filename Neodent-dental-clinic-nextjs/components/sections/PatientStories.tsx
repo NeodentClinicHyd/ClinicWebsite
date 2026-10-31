@@ -1,282 +1,554 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Pause, Play, Star } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Pause,
+  Play,
+  Star,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
+import { CountUp } from "@/components/motion/CountUp";
+import { Reveal } from "@/components/motion/Reveal";
+import {
+  directions,
+  googleRating,
+  nampallyDirections,
+  nampallyGoogleRating,
+} from "@/lib/site-data";
 import styles from "./PatientStories.module.css";
 
 /* ------------------------------------------------------------------
-   Homepage Section 05 — "Patient Experiences / Real Stories".
+   Home: "What patients say" (home redesign reference, Part 6.6).
 
-   The emotional-proof chapter: after clinic (01), legacy (02),
-   treatments (03) and people (04), this section answers what the
-   experience actually feels like for patients. One of Neodent's three
-   authentic patient-testimonial films is visually dominant at a time
-   -- video, story number, theme label and pull quote change together
-   as a single unit when the visitor switches stories via the 01/02/03
-   selector -- never three equal cards, never a generic carousel.
+   Heading and the Google rating summary on one row, then a single
+   mixed row of patient-video cards and Google review cards (owner's
+   choice, option A). Desktop shows about four cards at a time with
+   arrows; phones get one swipe row. Only one video plays at a time.
 
-   SOURCE-MATERIAL INTEGRITY (do not edit without re-checking the
-   original recordings):
-   - Pull quotes are verified, non-paraphrased patient statements
-     (or, for 02, corrected to the words the PATIENT actually says --
-     the source recording's "your confidence increases" line is
-     spoken by the dentist, not the patient, so it is never placed in
-     quotation marks or attributed to the patient here).
-   - Theme labels (COMFORT & RELIEF / CONFIDENCE & CHANGE / BETTER
-     THAN EXPECTED) are editorial descriptors of the recordings, not
-     quotations, and are never rendered with quotation marks.
-   - The full spoken transcripts are internal research material only
-     and must never be displayed, linked or downloadable from the
-     site.
-   - The Google review excerpt is reproduced verbatim from the
-     supplied review; no location, treatment or date is invented.
+   SOURCE-MATERIAL INTEGRITY (re-check the originals before editing):
+   - Google reviews are reproduced verbatim (spelling and punctuation
+     unchanged), with the reviewer's name as shown on Google. All were
+     supplied by the owner. Never invent a review, a reviewer, a date
+     or a branch.
+   - Video captions are the patients' own words. For the Mehdipatnam
+     film the line "your confidence increases" is spoken by the
+     dentist, not the patient, so it is never quoted here. The full
+     spoken transcripts are internal material and are never shown,
+     linked or offered for download.
+   - The videos and the written reviews come from different patients.
+   - Ratings and counts are screenshot values from the two Google
+     listings (lib/site-data.ts), hence the "may have changed" note.
    ------------------------------------------------------------------ */
 
-type Story = {
-  index: string;
-  theme: string;
-  quote: string;
-  video: string;
-  place: string;
+type Review = {
+  kind: "review";
+  author: string;
+  /** Verbatim review text. An ellipsis marks an excerpt. */
+  text: string;
+  /** Star rating shown on Google, 1 to 5. */
+  rating: number;
 };
 
-const stories: Story[] = [
+type Video = {
+  kind: "video";
+  id: string;
+  src: string;
+  quote: string;
+  /** Branch named in the film's file name; omitted when it names none. */
+  place?: string;
+  /** object-position for the 4:5 crop of the 9:16 source. */
+  focal: string;
+  /** Optional zoom (transform-origin = focal) for a tighter crop. */
+  zoom?: number;
+};
+
+const VIDEO_DIR = "/assets/happy-patients/";
+
+/* Reviews interleaved with videos. Gaddam Sanjeeva's review, the one
+   the section already had, stays first. */
+const stories: (Review | Video)[] = [
   {
-    index: "01",
-    theme: "Comfort & relief",
+    kind: "review",
+    author: "Gaddam Sanjeeva",
+    text: "Extremely kind, gentle and professional\u2026 he made me very comfortable throughout the entire visit.",
+    rating: 5,
+  },
+  {
+    kind: "video",
+    id: "hyderabad",
+    src: `${VIDEO_DIR}Neodent dental hospital Hyderabad -Happy Patients after treatment.mp4`,
     quote: "Not at all, not at all.",
-    video: "/assets/happy-patients/Neodent dental hospital Hyderabad -Happy Patients after treatment.mp4",
-    place: "Hyderabad",
+    // The face is blurred in the upper third: zoom into the lower half
+    // (gown and chair) so only the edge of the blur shows.
+    focal: "50% 95%",
+    zoom: 1.3,
   },
   {
-    index: "02",
-    theme: "Confidence & change",
+    kind: "review",
+    author: "Mohammed Shariq yezdani",
+    text: "I was advised extraction of my teeth but the Doctor here saved the teeth and gave supporting crowns and changed my smile. I'm very happy.",
+    rating: 5,
+  },
+  {
+    kind: "video",
+    id: "mehdipatnam",
+    src: `${VIDEO_DIR}Neodent dental hospital Mehdipatnam - Happy Patients after treatment.mp4`,
     quote: "It was very beneficial, and I am feeling good.",
-    video: "/assets/happy-patients/Neodent dental hospital Mehdipatnam - Happy Patients after treatment.mp4",
     place: "Mehdipatnam",
+    focal: "50% 40%",
   },
   {
-    index: "03",
-    theme: "Better than expected",
+    kind: "review",
+    author: "Khadijah",
+    text: "I got my treatment done here. I had 3 sittings for RCT as well as crown. My pain is gone .Doctor here was a life saver as I had severe pain. I have gained trust in doctors here.",
+    rating: 5,
+  },
+  {
+    kind: "video",
+    id: "nampally",
+    src: `${VIDEO_DIR}Neodent dental hospital Nampally- Happy Patients after treatment.mp4`,
     quote: "It went even better than we expected.",
-    video: "/assets/happy-patients/Neodent dental hospital Nampally- Happy Patients after treatment.mp4",
     place: "Nampally",
+    focal: "50% 50%",
+  },
+  {
+    kind: "review",
+    author: "Mdshoaibuddin Uddin",
+    text: "We consulted Dr. Siraj ur Rahman for my mother\u2019s dental treatment, and we are very satisfied with his care. He explained everything clearly, especially about fixing caps to her teeth, which gave us great confidence. His professional approach and kind explanation made the treatment experience very comfortable. Highly recommended!",
+    rating: 5,
+  },
+  {
+    kind: "review",
+    author: "Shivaji Prasad Jaiswal",
+    text: "I went to neodent dental clinic in nampally Dr miftah is so knowledgeable and he explained very well each and every procedure Dr miftah help me choosing the right treatment plan Dr miftah very calm ,polite nature dr I would definitely recommend this clinic to everyone who might be looking for a quick , efficient treatment",
+    rating: 5,
   },
 ];
 
-export function PatientStories() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [visible, setVisible] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [switching, setSwitching] = useState(false);
-  const [playing, setPlaying] = useState(true);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
+const clinics = [
+  { name: "Mehdipatnam", score: Number(googleRating.score), count: googleRating.count, href: directions },
+  { name: "Nampally", score: Number(nampallyGoogleRating.score), count: nampallyGoogleRating.count, href: nampallyDirections },
+];
+const totalReviews = googleRating.count + nampallyGoogleRating.count;
 
-  const active = stories[activeIndex];
+/* Video rules (reference Part 3.4): muted, inline, looping; a video
+   plays only while at least half of it is on screen, and only one
+   plays at a time (the most visible one); never autoplays under
+   prefers-reduced-motion or Save-Data. No posters exist for these
+   films, so they preload metadata only, to show a first frame. */
+function useVideoGroup() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [playingId, setPlayingId] = useState<string | null>(null);
+  // Videos the visitor paused: scrolling back does not restart them.
+  const userPaused = useRef(new Set<string>());
+  // The video the visitor last started by hand wins while it is in view.
+  const preferred = useRef<string | null>(null);
+  const ratios = useRef(new Map<string, number>());
+
+  const videosIn = (root: HTMLElement) =>
+    [...root.querySelectorAll<HTMLVideoElement>("video[data-video-id]")];
 
   useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.12 },
+    const root = rootRef.current;
+    if (!root) return;
+    const videos = videosIn(root);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData = Boolean(
+      (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+        ?.saveData,
     );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
+    if (typeof IntersectionObserver === "undefined") return;
+    // Under reduced motion or Save-Data nothing autoplays, but a video
+    // the visitor started still pauses once it leaves the screen.
+    const autoplay = !reduce && !saveData;
 
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = (event: MediaQueryListEvent) => setPrefersReducedMotion(event.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
+    const inView = (id: string) => (ratios.current.get(id) ?? 0) >= 0.5;
+    const pick = () => {
+      if (!autoplay) {
+        for (const v of videos) {
+          if (!v.paused && !inView(v.dataset.videoId!)) v.pause();
+        }
+        return;
+      }
+      let best: string | null = null;
+      if (preferred.current && inView(preferred.current)) {
+        best = preferred.current;
+      } else {
+        let bestRatio = 0;
+        for (const v of videos) {
+          const id = v.dataset.videoId!;
+          const r = ratios.current.get(id) ?? 0;
+          if (inView(id) && !userPaused.current.has(id) && r > bestRatio) {
+            best = id;
+            bestRatio = r;
+          }
+        }
+      }
+      for (const v of videos) {
+        if (v.dataset.videoId === best) {
+          if (v.paused) v.play().catch(() => {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      }
+    };
 
-  // Play/pause the featured film based on section visibility, matching
-  // ClinicalLeadership's pattern -- resource-conscious autoplay rather
-  // than a permanently running background loop.
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) void videoRef.current?.play().catch(() => undefined);
-        else videoRef.current?.pause();
+      (entries) => {
+        for (const e of entries) {
+          const id = (e.target as HTMLElement).querySelector("video")?.dataset.videoId;
+          if (id) ratios.current.set(id, e.intersectionRatio);
+        }
+        pick();
       },
-      { threshold: 0.2 },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] },
     );
-    observer.observe(node);
+    // Observe each card's frame, not the video: a zoomed video's box is
+    // larger than what is visible, which would understate its ratio.
+    videos.forEach((v) => v.parentElement && observer.observe(v.parentElement));
     return () => observer.disconnect();
   }, []);
 
-  const selectStory = (nextIndex: number) => {
-    if (nextIndex === activeIndex) return;
-
-    if (prefersReducedMotion) {
-      setActiveIndex(nextIndex);
-      setPlaying(true);
-      return;
-    }
-
-    // Crossfade as one coordinated unit: fade the stage out, swap the
-    // story once hidden, then fade back in. The frame keeps its fixed
-    // aspect ratio throughout, so section height never jumps.
-    setSwitching(true);
-    window.setTimeout(() => {
-      setActiveIndex(nextIndex);
-      setPlaying(true);
-      window.setTimeout(() => setSwitching(false), 20);
-    }, 220);
-  };
-
-  const togglePlayback = () => {
-    const video = videoRef.current;
+  const toggle = (id: string) => {
+    const root = rootRef.current;
+    if (!root) return;
+    const videos = videosIn(root);
+    const video = videos.find((v) => v.dataset.videoId === id);
     if (!video) return;
     if (video.paused) {
-      void video.play().catch(() => undefined);
-      setPlaying(true);
+      userPaused.current.delete(id);
+      preferred.current = id;
+      videos.forEach((v) => v !== video && v.pause());
+      video.play().catch(() => {});
     } else {
+      userPaused.current.add(id);
+      if (preferred.current === id) preferred.current = null;
       video.pause();
-      setPlaying(false);
     }
   };
 
+  /* Sound. Videos always start muted: browsers block autoplay with
+     sound. The visitor's click is the gesture that allows audio, so
+     unmuting also starts that video and makes it the playing one.
+     Only one video has sound at a time. */
+  const [soundId, setSoundId] = useState<string | null>(null);
+  const toggleSound = (id: string) => {
+    const root = rootRef.current;
+    if (!root) return;
+    const videos = videosIn(root);
+    const video = videos.find((v) => v.dataset.videoId === id);
+    if (!video) return;
+    if (!video.muted) {
+      video.muted = true;
+      setSoundId(null);
+      return;
+    }
+    videos.forEach((v) => {
+      if (v !== video) {
+        v.muted = true;
+        v.pause();
+      }
+    });
+    video.muted = false;
+    setSoundId(id);
+    userPaused.current.delete(id);
+    preferred.current = id;
+    video.play().catch(() => {
+      // Some browsers still refuse; fall back to muted playback.
+      video.muted = true;
+      setSoundId(null);
+      video.play().catch(() => {});
+    });
+  };
+
+  return { rootRef, playingId, setPlayingId, toggle, soundId, toggleSound };
+}
+
+/* Tracks whether the row overflows and where it is scrolled, for the
+   previous / next buttons. */
+function useRowScroll() {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState({ scrollable: false, atStart: true, atEnd: true });
+
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const update = () => {
+      const max = row.scrollWidth - row.clientWidth;
+      setState({
+        scrollable: max > 1,
+        atStart: row.scrollLeft <= 1,
+        atEnd: row.scrollLeft >= max - 1,
+      });
+    };
+    const resize = new ResizeObserver(update);
+    resize.observe(row);
+    if (row.firstElementChild) resize.observe(row.firstElementChild);
+    row.addEventListener("scroll", update, { passive: true });
+    return () => {
+      resize.disconnect();
+      row.removeEventListener("scroll", update);
+    };
+  }, []);
+
+  // Scrolls by about one viewport of cards, snapping to the next card.
+  const step = (dir: 1 | -1) => {
+    const row = rowRef.current;
+    if (!row) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    row.scrollBy({ left: dir * row.clientWidth * 0.75, behavior: reduce ? "auto" : "smooth" });
+  };
+
+  return { rowRef, ...state, step };
+}
+
+function Stars({ rating }: { rating: number }) {
   return (
-    <section
-      ref={sectionRef}
-      className={`${styles.section} ${visible ? styles.visible : ""}`}
-      id="stories"
-      aria-labelledby="stories-title"
-    >
-      {/* Patient-story / quotation / editorial-dossier geometry --
-          deliberately distinct from Section 02's archive/arch motif,
-          Section 03's clinical drafting grid and Section 04's portrait
-          framing: an oversized translucent quotation glyph, two quiet
-          conversation arcs and a registration hairline, nothing
-          figurative (no speech bubbles, no tooth icons). */}
-      <div className={styles.atmosphere} aria-hidden="true">
-        <span className={styles.quoteGlyph}>&ldquo;</span>
-        <span className={styles.arc + " " + styles.arcOuter} />
-        <span className={styles.arc + " " + styles.arcInner} />
-        <span className={styles.registration} />
-      </div>
+    <span className={styles.stars} role="img" aria-label={`Rated ${rating} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          size={14}
+          strokeWidth={0}
+          aria-hidden="true"
+          className={i < rating ? styles.starOn : styles.starOff}
+        />
+      ))}
+    </span>
+  );
+}
 
+/* Long reviews show six lines; the rest sits behind "Read more" and
+   stays in the DOM (reference Part 3.4). */
+function ReviewCard({ review }: { review: Review }) {
+  const textRef = useRef<HTMLQuoteElement>(null);
+  const [clamped, setClamped] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+    const measure = () => setClamped(el.scrollHeight > el.clientHeight + 1);
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <li className={styles.card} data-story-card data-kind="review">
+      <figure className={styles.cardInner}>
+        <div className={styles.cardHead}>
+          <span className={styles.googleMark} aria-hidden="true">
+            <span>G</span>
+            <span>o</span>
+            <span>o</span>
+            <span>g</span>
+            <span>l</span>
+            <span>e</span>
+          </span>
+          <span className={styles.cardKind}>Google review</span>
+        </div>
+        <Stars rating={review.rating} />
+        <blockquote
+          ref={textRef}
+          className={styles.cardText}
+          data-expanded={expanded || undefined}
+        >
+          &ldquo;{review.text}&rdquo;
+        </blockquote>
+        {(clamped || expanded) && (
+          <button
+            type="button"
+            className={styles.readMore}
+            aria-expanded={expanded}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            {expanded ? "Show less" : "Read more"}
+          </button>
+        )}
+        <figcaption className={styles.cardAuthor}>{review.author}</figcaption>
+      </figure>
+    </li>
+  );
+}
+
+function VideoCard({
+  video,
+  playing,
+  sound,
+  onToggle,
+  onToggleSound,
+  onPlayState,
+}: {
+  video: Video;
+  playing: boolean;
+  sound: boolean;
+  onToggle: () => void;
+  onToggleSound: () => void;
+  onPlayState: (playing: boolean) => void;
+}) {
+  const label = video.place ? `Patient video, ${video.place}` : "Patient video";
+  const name = label.toLowerCase();
+  return (
+    <li className={`${styles.card} ${styles.videoCard}`} data-story-card data-kind="video">
+      <figure className={styles.videoInner}>
+        <video
+          data-video-id={video.id}
+          src={video.src}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          style={{
+            objectPosition: video.focal,
+            ...(video.zoom
+              ? { transform: `scale(${video.zoom})`, transformOrigin: video.focal }
+              : null),
+          }}
+          aria-label={`${label}: a patient after treatment at Neodent`}
+          onPlay={() => onPlayState(true)}
+          onPause={() => onPlayState(false)}
+        />
+        <div className={styles.videoControls}>
+          <button
+            type="button"
+            className={styles.videoControl}
+            onClick={onToggleSound}
+            aria-pressed={sound}
+            aria-label={sound ? `Mute ${name}` : `Turn on sound for ${name}`}
+          >
+            {sound ? <Volume2 size={15} aria-hidden="true" /> : <VolumeX size={15} aria-hidden="true" />}
+          </button>
+          <button
+            type="button"
+            className={styles.videoControl}
+            onClick={onToggle}
+            aria-label={playing ? `Pause ${name}` : `Play ${name}`}
+          >
+            {playing ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
+          </button>
+        </div>
+        <figcaption className={styles.videoCaption}>
+          <span className={styles.videoQuote}>&ldquo;{video.quote}&rdquo;</span>
+          <span className={styles.videoMeta}>{label}</span>
+        </figcaption>
+      </figure>
+    </li>
+  );
+}
+
+export function PatientStories() {
+  const { rootRef, playingId, setPlayingId, toggle, soundId, toggleSound } = useVideoGroup();
+  const { rowRef, scrollable, atStart, atEnd, step } = useRowScroll();
+
+  return (
+    <section className={styles.section} id="stories" aria-labelledby="stories-title">
       <div className={styles.container}>
-        <header className={styles.header}>
-          <h2 id="stories-title" className={styles.title}>
-            What patients say.
-            <br />
-            <span>In their own words.</span>
-          </h2>
-          <p className={`${styles.lede} section-lede`}>
-            Real experiences from patients who trusted Neodent with their care.
-          </p>
-        </header>
-
-        <div className={styles.stage}>
-          <div className={styles.filmColumn}>
-            <figure
-              className={`${styles.film} ${switching ? styles.filmSwitching : ""}`}
-            >
-              <div className={styles.frame}>
-                <span className={styles.frameRegistration} aria-hidden="true" />
-                <video
-                  ref={videoRef}
-                  key={active.video}
-                  src={active.video}
-                  muted
-                  loop
-                  playsInline
-                  autoPlay
-                  preload="metadata"
-                  aria-label={`Patient testimonial film — ${active.theme}`}
-                  onPlay={() => setPlaying(true)}
-                  onPause={() => setPlaying(false)}
-                />
-                <button
-                  type="button"
-                  className={styles.control}
-                  onClick={togglePlayback}
-                  aria-label={playing ? "Pause patient film" : "Play patient film"}
-                >
-                  {playing ? <Pause size={14} /> : <Play size={14} />}
-                </button>
-              </div>
-
-              {/* The quote plate overlaps the frame's bottom-left corner
-                  directly so video and quote read as one editorial
-                  object. It carries only the patient's words. */}
-              <div
-                className={`${styles.quotePlate} ${switching ? styles.quotePlateSwitching : ""}`}
-              >
-                <p className={styles.quotePlateQuote}>
-                  &ldquo;{active.quote}&rdquo;
-                </p>
-              </div>
-            </figure>
+        <div className={styles.header}>
+          <div className={styles.titleBlock}>
+            <Reveal as="h2" variant="mask" stagger={90} id="stories-title" className={styles.title}>
+              <span>What patients say.</span>
+              <em>In their own words.</em>
+            </Reveal>
+            {/* Lede restored from the baseline (ledger home-te2b25f9f). */}
+            <Reveal as="p" delay={80} className={styles.lede}>
+              Real experiences from patients who trusted Neodent with their care.
+            </Reveal>
           </div>
 
-          <div className={styles.rail}>
-            <nav className={styles.selector} aria-label="Choose a patient film">
-              <ul>
-                {stories.map((story, index) => {
-                  const isActive = index === activeIndex;
-                  return (
-                    <li key={story.index}>
-                      <button
-                        type="button"
-                        className={`${styles.selectorItem} ${isActive ? styles.selectorItemActive : ""}`}
-                        onClick={() => selectStory(index)}
-                        aria-current={isActive ? "true" : undefined}
-                      >
-                        {story.theme}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            <figure className={styles.review}>
-              <figcaption className={styles.reviewHead}>
-                <span className={styles.googleMark} role="img" aria-label="Google">
-                  <span aria-hidden="true">G</span>
-                  <span aria-hidden="true">o</span>
-                  <span aria-hidden="true">o</span>
-                  <span aria-hidden="true">g</span>
-                  <span aria-hidden="true">l</span>
-                  <span aria-hidden="true">e</span>
-                </span>
-                <span className={styles.reviewKind}>Patient review</span>
-              </figcaption>
-              <div className={styles.reviewStars} role="img" aria-label="Rated 5 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={14} strokeWidth={0} aria-hidden="true" />
-                ))}
-              </div>
-              <blockquote className={styles.reviewExcerpt}>
-                &ldquo;Extremely kind, gentle and professional&hellip; he made me
-                very comfortable throughout the entire visit.&rdquo;
-              </blockquote>
-              <p className={styles.reviewAuthor}>Gaddam Sanjeeva</p>
-            </figure>
-          </div>
+          <Reveal delay={120} className={styles.summary}>
+            <ul className={styles.clinics} aria-label="Google ratings by clinic">
+              {clinics.map((clinic) => (
+                <li key={clinic.name}>
+                  <a
+                    className={styles.clinic}
+                    href={clinic.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Neodent ${clinic.name}: rated ${clinic.score} out of 5 from ${clinic.count} Google reviews. Open on Google Maps (opens in a new tab)`}
+                  >
+                    <span className={styles.score}>
+                      <CountUp to={clinic.score} decimals={1} duration={1100} />
+                      <Star size={18} strokeWidth={0} aria-hidden="true" className={styles.scoreStar} />
+                    </span>
+                    <span className={styles.clinicMeta}>
+                      <span className={styles.clinicName}>
+                        {clinic.name}
+                        <ArrowUpRight size={14} aria-hidden="true" />
+                      </span>
+                      <span className={styles.clinicCount}>{clinic.count} reviews</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className={styles.total}>
+              <strong>
+                <CountUp to={totalReviews} duration={1300} /> reviews
+              </strong>{" "}
+              across both clinics.{" "}
+              <span className={styles.note}>
+                Rating as shown on the Google listing; it may have changed since.
+              </span>
+            </p>
+          </Reveal>
         </div>
 
-        <div className={styles.ctaRow}>
-          {/* Not yet wired: a dedicated patient-stories page does not
-              exist in this multipage site yet. Rendered as plain text
-              (matching ExperienceIntro's "Discover Our Story" pattern)
-              rather than pointing at a fake route or a self-referential
-              in-page anchor, so it reads as intentional and complete
-              without claiming to be interactive until that page exists. */}
-          <span className={styles.cta}>
-            Explore all patient stories <ArrowRight size={14} aria-hidden="true" />
-          </span>
+        <div className={styles.stories} ref={rootRef}>
+          <div
+            ref={rowRef}
+            className={styles.row}
+            data-story-row
+            tabIndex={scrollable ? 0 : undefined}
+            role={scrollable ? "region" : undefined}
+            aria-label={scrollable ? "Patient videos and Google reviews, scroll sideways for more" : undefined}
+          >
+            <Reveal as="ul" stagger={80} className={styles.list}>
+              {stories.map((story) =>
+                story.kind === "review" ? (
+                  <ReviewCard key={story.author} review={story} />
+                ) : (
+                  <VideoCard
+                    key={story.id}
+                    video={story}
+                    playing={playingId === story.id}
+                    sound={soundId === story.id}
+                    onToggle={() => toggle(story.id)}
+                    onToggleSound={() => toggleSound(story.id)}
+                    onPlayState={(on) =>
+                      setPlayingId((cur) => (on ? story.id : cur === story.id ? null : cur))
+                    }
+                  />
+                ),
+              )}
+            </Reveal>
+          </div>
+          {scrollable && (
+            <div className={styles.controls}>
+              <button
+                type="button"
+                className={styles.arrow}
+                onClick={() => step(-1)}
+                disabled={atStart}
+                aria-label="Previous stories"
+              >
+                <ArrowLeft size={16} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className={styles.arrow}
+                onClick={() => step(1)}
+                disabled={atEnd}
+                aria-label="More stories"
+              >
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

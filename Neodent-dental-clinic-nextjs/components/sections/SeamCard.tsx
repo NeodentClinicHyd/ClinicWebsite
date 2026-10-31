@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 import Image from "next/image";
+import { ESTABLISHED_YEAR } from "@/lib/site-data";
 import styles from "./SeamCard.module.css";
 
 /* ------------------------------------------------------------------
@@ -54,7 +55,7 @@ export type SeamCardImage = {
 
 export type SeamCardProps = {
   ariaLabel?: string;
-  label?: string;
+  label?: string | null;
   lead?: string;
   emphasis?: string;
   attribution?: string | null;
@@ -184,11 +185,14 @@ function useTilt(
   }, [stageRef, cardRef]);
 }
 
+/* Defaults are the home page's "Since 1994" statement (reference Part 7):
+   no eyebrow label and no portrait, since Dr. Siraj already appears in the
+   hero and in the section below. */
 export function SeamCard({
   ariaLabel = "Neodent brand statement",
-  label = "Neodent Standard",
-  lead = "We maintain",
-  emphasis = "peak performance",
+  label = null,
+  lead = "Specialist-led care.",
+  emphasis = `Since ${ESTABLISHED_YEAR}.`,
   attribution = "— Neodent Dental Hospital",
   location = "Mehdipatnam · Nampally",
   image = null,
@@ -242,7 +246,7 @@ export function SeamCard({
           )}
           <div className={styles.textLayer}>
             <div className={styles.copy}>
-              <p className={styles.label}>{label}</p>
+              {label && <p className={styles.label}>{label}</p>}
               <p className={styles.statement}>
                 <span className={styles.lead}>{lead}</span>
                 <span className={styles.emphasis}>{emphasis}</span>

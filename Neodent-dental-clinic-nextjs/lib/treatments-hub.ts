@@ -19,7 +19,7 @@ import {
   closingCta,
   treatments as homeTreatments,
 } from "@/components/sections/expertise-data";
-import { SITE_URL } from "@/lib/site-data";
+import { SITE_URL, founder } from "@/lib/site-data";
 
 /** Set to false if the National Dental Commission advisory review requires it. */
 export const SHOW_TREATMENT_CASE_MEDIA = true;
@@ -145,11 +145,11 @@ export const DOCTORS = [
     rows: [
       { label: "Qualifications", value: "BDS · FCIP · MDS (Chennai)" },
       { label: "Specialism", value: "Prosthodontist & Implantologist" },
-      { label: "Experience", value: "30+ years of clinical practice" },
+      { label: "Experience", value: `${founder.experienceYears} years of clinical practice` },
       {
         label: "Approach",
         value:
-          "Specialist training in prosthodontics and implantology, and 30+ years of clinical practice, inform how Neodent assesses and plans treatment for each patient.",
+          `Specialist training in prosthodontics and implantology, and ${founder.experienceYears} years of clinical practice, inform how Neodent assesses and plans treatment for each patient.`,
       },
     ],
     href: undefined as string | undefined,

@@ -37,6 +37,15 @@ export const rootCanalTreatmentVideo =
 export const defaultTreatmentVideo =
   "/assets/treatment-video/dr-miftah-neodent-clinical-treatment-detailed.mp4";
 
+/**
+ * Mouth-only crop for a photo in the home detail panel's 3:2 frame.
+ * `focal` is used as both object-position and transform-origin, and the
+ * image is scaled by `zoom` around it. The values were worked out from
+ * each photo so the visible area starts below the nose: no eyes and none
+ * of the triangle mosaic baked into the source files are ever in frame.
+ */
+export type MediaCrop = { focal: string; zoom?: number };
+
 export type Treatment = {
   /** Two-digit id used for element ids and React keys (never shown). */
   number: string;
@@ -44,7 +53,7 @@ export type Treatment = {
   title: string;
   /** Action word (REPAIR / REPLACE / PRESERVE / ALIGN / REFINE / REBUILD / MAINTAIN). */
   intent: string;
-  /** Lucide icon shown on the card while it is not selected. */
+  /** Lucide icon shown on the card (in every state) and in the panel. */
   icon: LucideIcon;
   /** One-line card description. */
   summary: string;
@@ -52,16 +61,26 @@ export type Treatment = {
   description: string;
   /** Two or three short supporting points for the panel. */
   points: string[];
-  /** Case tag shown in the detail panel (small caps, red). */
+  /** Case tag shown in the detail panel (small caps, red). Must describe
+      the media actually shown for this treatment. */
   proof?: string;
-  /** "After" / primary image (also used as the video poster). */
+  /** "After" / primary image (also the video poster unless `poster` is set).
+      Also read by lib/treatments-hub.ts for the /treatments page. */
   visual: string;
   /** Alt text for the primary image. */
   alt: string;
+  /** Home panel crop for `visual`. */
+  visualCrop?: MediaCrop;
   /** "Before" image — presence enables the before/after compare slider. */
   before?: string;
   /** Alt text for the before image. */
   beforeAlt?: string;
+  /** Home panel crop for `before`. */
+  beforeCrop?: MediaCrop;
+  /** Film poster for the home panel; falls back to `visual`. */
+  poster?: string;
+  /** Home panel crop for `poster`. */
+  posterCrop?: MediaCrop;
   /** True when the media is a clinical film rather than a still comparison. */
   video?: boolean;
   /** Optional explicit video source; falls back to defaultTreatmentVideo. */
@@ -85,14 +104,19 @@ export const treatments: Treatment[] = [
       "Small gaps or misshapen teeth",
       "Whether a build-up or another restoration is suitable",
     ],
-    proof: "REAL CASE / COMPOSITE SMILE DESIGN",
+    // The tag names this card's own photos. The case was previously labelled
+    // "COMPOSITE SMILE DESIGN" and played the generic clinical film (a
+    // different procedure and patient); the panel now shows this case's own
+    // before/after pair in the compare slider.
+    proof: "REAL CASE / COMPOSITE BUILD-UP",
     visual:
       "/assets/treatment/Neodent dental hospital Treatment - Composite build up smile design after.jpg",
+    visualCrop: { focal: "50% 66%", zoom: 1.86 },
     before:
       "/assets/treatment/Neodent dental hospital Treatment - Composite build up smile design  before.jpg",
+    beforeCrop: { focal: "60.2% 68%", zoom: 1.86 },
     alt: "Composite build-up smile design after treatment",
     beforeAlt: "Smile before composite build-up treatment",
-    video: true,
     href: "/treatments/composite-build-up",
   },
   {
@@ -110,8 +134,10 @@ export const treatments: Treatment[] = [
     ],
     visual:
       "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - after surgery.jpg",
+    visualCrop: { focal: "45.8% 70.5%", zoom: 1.6 },
     before:
       "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - before surgery.jpg",
+    beforeCrop: { focal: "25% 65.3%", zoom: 1.14 },
     alt: "Upper arch rehabilitation with implants after surgery at Neodent Dental Hospital",
     beforeAlt: "Upper arch rehabilitation before surgery at Neodent Dental Hospital",
     proof: "REAL CASE / UPPER ARCH REHABILITATION",
@@ -132,7 +158,13 @@ export const treatments: Treatment[] = [
     ],
     visual: "/assets/treatment/after treatment.jpg",
     alt: "Root canal treatment at Neodent Dental Hospital",
-    proof: "REAL CASE / RESTORATIVE CARE",
+    // The panel shows the root canal film, which explains the treatment on a
+    // model board (not a patient case), so the tag says film, not real case.
+    // Its poster is the existing root canal page poster (a hand and the model
+    // board, no face). `visual` stays for the /treatments hub.
+    proof: "TREATMENT FILM / ROOT CANAL TREATMENT",
+    poster: "/assets/treatment-video/posters/root-canal-treatment-poster.webp",
+    posterCrop: { focal: "50% 46%" },
     video: true,
     videoSrc: rootCanalTreatmentVideo,
     href: "/treatments/root-canal-treatment",
@@ -156,7 +188,10 @@ export const treatments: Treatment[] = [
       "/assets/treatment/Orthodontics before treatment - neodent dental hospital nampally.jpeg",
     alt: "Orthodontics result after treatment at Neodent Dental Hospital Nampally",
     beforeAlt: "Orthodontics before treatment at Neodent Dental Hospital Nampally",
-    proof: "REAL CASE / SMILE ALIGNMENT",
+    // Already a mouth-only photo (no eyes in the source).
+    visualCrop: { focal: "50% 55%" },
+    beforeCrop: { focal: "50% 55%" },
+    proof: "REAL CASE / ORTHODONTICS",
     href: "/treatments/braces-and-orthodontics",
   },
   {
@@ -172,11 +207,13 @@ export const treatments: Treatment[] = [
       "Teeth that differ in colour, size or shape",
       "Comparing suitable cosmetic options",
     ],
-    proof: "REAL CASE / ZIRCONIA CROWNS",
+    proof: "REAL CASE / SMILE DESIGN WITH ZIRCONIA CROWNS",
     visual:
       "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -after treatment.jpg",
+    visualCrop: { focal: "61.8% 65.3%", zoom: 2.13 },
     before:
       "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -before treatment.jpg",
+    beforeCrop: { focal: "70.8% 72.5%", zoom: 1.33 },
     alt: "Anterior smile design with zirconia crowns after treatment",
     beforeAlt: "Anterior smile before zirconia crown treatment",
     href: "/treatments/smile-design",
@@ -196,8 +233,10 @@ export const treatments: Treatment[] = [
     ],
     visual:
       "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - after surgery.jpg",
+    visualCrop: { focal: "47.1% 35.7%", zoom: 1.03 },
     before:
       "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - before surgery.jpg",
+    beforeCrop: { focal: "50% 61.8%", zoom: 1.07 },
     alt: "Full mouth rehabilitation with implants after surgery",
     beforeAlt: "Full mouth condition before implant rehabilitation",
     proof: "REAL CASE / FULL MOUTH REHABILITATION",
@@ -222,7 +261,7 @@ export const treatments: Treatment[] = [
       "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment before.jpg",
     alt: "Scaling and polishing result at Neodent Dental Hospital",
     beforeAlt: "Teeth before scaling and polishing at Neodent Dental Hospital",
-    proof: "REAL CASE / GUM HEALTH",
+    proof: "REAL CASE / SCALING AND POLISHING",
     href: "/treatments/scaling-and-polishing",
   },
 ];

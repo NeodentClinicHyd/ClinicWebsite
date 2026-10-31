@@ -1,0 +1,54 @@
+/* About page wrapper.
+
+   The page's custom properties live here so every band reads the same
+   values. Section padding is copied from LegacyStory.module.css
+   (clamp(72px, 8vw, 112px)). A band overrides a value by setting the
+   same property on its own section class; AboutBackdrop never
+   re-declares them.
+
+   Band rhythm (plan section 4): dark header + strip -> light -> dark
+   -> light -> dark -> light -> seam -> dark -> light -> dark -> light
+   -> consultation (dark) -> footer (dark). */
+
+.page {
+  /* Dark-band layer recipe (plan 3.6): glow centre and strength. */
+  --about-glow-x: calc(50% + min(290px, 23vw));
+  --about-glow-y: 50%;
+  --about-glow-a: 0.3;
+  --about-glow-rx: min(460px, 36vw);
+  --about-glow-ry: 72%;
+  --about-glow2-a: 0.12;
+
+  /* Pattern tile: strength, size and the mask that fades it out
+     before the text column. */
+  --about-pattern-o: 0.125;
+  --about-pattern-size: 420px;
+  --about-pattern-rx: min(345px, 26vw);
+  --about-pattern-ry: 86%;
+
+  /* Section rhythm. */
+  --about-pad-y: clamp(72px, 8vw, 112px);
+  --about-container: min(1180px, calc(100% - 48px));
+  --about-radius: 0.35rem;
+  --about-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Dark surfaces. */
+  --about-dark-top: var(--neodent-charcoal);
+  --about-dark-bottom: #0f1315;
+  --about-glass: rgba(16, 21, 23, 0.72);
+  --about-glass-line: rgba(255, 255, 255, 0.12);
+  --about-ivory-muted: rgba(248, 246, 239, 0.78);
+}
+
+@media (max-width: 1023px) {
+  .page {
+    /* Below 1024px the media sits under the copy, so the light moves
+       to the lower middle of the band. */
+    --about-glow-x: 50%;
+    --about-glow-y: 78%;
+    --about-glow-rx: min(420px, 90vw);
+    --about-pattern-rx: min(420px, 92vw);
+    --about-pattern-ry: 46%;
+    --about-container: min(100% - 32px, 640px);
+  }
+}

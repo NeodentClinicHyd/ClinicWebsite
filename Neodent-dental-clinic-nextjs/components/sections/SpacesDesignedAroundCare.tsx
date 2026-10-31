@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useState, useSyncExternalStore, type CSSProperties, type KeyboardEvent } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MapPin, Phone } from "lucide-react";
 import {
   address,
   directions,
@@ -13,6 +14,7 @@ import {
   nampallyAddress,
   nampallyDirections,
   nampallyExteriorImage,
+  nampallyGoogleRating,
   nampallyHours,
   nampallyInteriorImage,
   nampallyPhone,
@@ -20,326 +22,352 @@ import {
   phone,
   telPhone,
 } from "@/lib/site-data";
-import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
+import { Reveal } from "@/components/motion/Reveal";
 import styles from "./SpacesDesignedAroundCare.module.css";
 
 /* ------------------------------------------------------------------
-   Homepage Section 07 — "Spaces designed around care."
+   Home section: "Spaces designed around care."
 
-   One composed location panel per branch: the selected branch's name,
-   supporting copy, contact details, Google rating and directions on
-   the left, its photographs on the right. Selecting a branch swaps the
-   whole panel on a single active index.
+   One location panel per branch. The switcher picks a branch; the
+   details (left) and the photographs (right) of every branch are all
+   rendered, stacked in one grid cell each, and crossfade on the active
+   index. Inactive copies are inert and aria-hidden. Because the stacks
+   share a cell, switching never changes the section's height.
 
-   PHOTOGRAPHY: every photograph is rendered at its own aspect ratio
-   (width/height attributes + `height: auto`) -- never cropped,
-   stretched or object-fit'd. The primary plate's width is capped in
-   CSS so its height stays laptop-friendly; the smaller entrance /
-   frontage plate sits beside it (bottom-aligned), never over it.
-   Pixel sizes below were measured from the files in /public/assets.
+   PHOTOGRAPHY (reference Part 3.1): photographs are cropped with
+   object-fit: cover around a per-image focal point. On desktop the
+   primary photo fills the right column (as tall as the details column,
+   capped at --media-max-h) and the second photo is a smaller inset over
+   its lower-left corner. Below 900px the two photos are a scroll-snap row.
 
-   GOOGLE RATING: the figures are values read from the supplied Google
-   listing screenshots, not live data, and are kept inside each branch
-   record so they cannot be swapped. Mehdipatnam reuses the existing
-   `googleRating` constant (4.3 / 261, also used by the Hero). Nampally
-   (4.6 / 157) comes from the client-supplied screenshot.
+   OPEN-NOW CHIP: worked out in the browser from each branch's hours
+   string in lib/site-data.ts, in Asia/Kolkata time. Both branches are
+   open Monday to Saturday with Sunday as the weekly holiday (the same
+   closure lib/clinic-data.ts lists for both). A branch whose hours
+   string is empty or cannot be parsed gets no chip. The server render
+   has no chip (the page is static), so there is no hydration mismatch.
 
-   DIRECTIONS LINKS: the two share.google links supplied for this
-   section redirect to a generic "Neodent Dental Hospital" search with
-   no address/name that distinguishes the branches, so they could not
-   be matched confidently and are NOT used. Each branch keeps its
-   existing, address-based Google Maps directions link.
+   GOOGLE RATING: values read from the Google listing screenshots, not
+   live data (googleRating / nampallyGoogleRating).
 
-   Dark editorial surface scoped to `.section`'s local CSS variables;
-   nothing here edits globals.css or any other section.
+   DIRECTIONS: each branch keeps its address-based Google Maps link.
    ------------------------------------------------------------------ */
 
-type BranchImage = { src: string; alt: string; label: string; width: number; height: number };
+const TIME_ZONE = "Asia/Kolkata";
+const CLOSED_WEEKDAYS = [0]; // Sunday
+
+type BranchImage = { src: string; alt: string; label: string; focal: string; ratio: string };
 type Branch = {
+  id: string;
   name: string;
-  body: ReactNode;
+  locality: string;
+  body: string;
   address: string;
   phone: string;
   tel: string;
   hours: string;
-  google: { rating: string; reviews: number; href: string };
+  directions: string;
+  google: { score: string; count: number };
   primary: BranchImage;
-  secondary: BranchImage;
+  inset: BranchImage;
 };
 
 const branches: Branch[] = [
   {
+    id: "mehdipatnam",
     name: "Mehdipatnam",
-    body: (
-      <>
-        Neodent&apos;s{" "}
-        <EditorialHighlight tone="primary" onDark>
-          original Hyderabad location
-        </EditorialHighlight>
-        , in Humayun Nagar. The practice began here in 1994 and continues to
-        offer{" "}
-        <EditorialHighlight tone="secondary" onDark>
-          specialist-led dental care
-        </EditorialHighlight>{" "}
-        across restorative, prosthodontic, implant and preventive needs.
-      </>
-    ),
+    locality: "Humayun Nagar",
+    body:
+      "Neodent's original Hyderabad location, in Humayun Nagar. The practice began here in 1994 and continues to offer specialist-led dental care across restorative, prosthodontic, implant and preventive needs.",
     address,
     phone,
     tel: telPhone,
-    hours: `${mehdipatnamHours} · Sunday holiday`,
-    google: { rating: googleRating.score, reviews: googleRating.count, href: directions },
+    hours: mehdipatnamHours,
+    directions,
+    google: googleRating,
     primary: {
       src: mehdipatnamInteriorImage,
-      alt: "Neodent Dental Hospital Mehdipatnam — the patient waiting lounge",
+      alt: "Neodent Dental Hospital Mehdipatnam, the patient waiting lounge",
       label: "Waiting lounge",
-      width: 960,
-      height: 1280,
+      focal: "50% 45%",
+      ratio: "3 / 4",
     },
-    secondary: {
+    inset: {
       src: mehdipatnamExteriorImage,
-      alt: "Neodent Dental Hospital Mehdipatnam — the carved entrance doorway",
+      alt: "Neodent Dental Hospital Mehdipatnam, the carved entrance doorway",
       label: "Entrance",
-      width: 382,
-      height: 510,
+      focal: "50% 40%",
+      ratio: "4 / 5",
     },
   },
   {
+    id: "nampally",
     name: "Nampally",
-    body: (
-      <>
-        Set within the{" "}
-        <EditorialHighlight tone="secondary" onDark>
-          Medwin Hospital Complex
-        </EditorialHighlight>{" "}
-        in central Hyderabad, the Nampally clinic offers{" "}
-        <EditorialHighlight tone="primary" onDark>
-          multi-speciality dental care
-        </EditorialHighlight>
-        : consultation, treatment planning, treatment and follow-up, with
-        attention to comfort and long-term oral health.
-      </>
-    ),
+    locality: "Medwin Hospital Complex",
+    body:
+      "Set within the Medwin Hospital Complex in central Hyderabad, the Nampally clinic offers multi-speciality dental care: consultation, treatment planning, treatment and follow-up, with attention to comfort and long-term oral health.",
     address: nampallyAddress,
     phone: nampallyPhone,
     tel: nampallyTelPhone,
-    hours: `${nampallyHours} · Sunday holiday`,
-    google: { rating: "4.6", reviews: 157, href: nampallyDirections },
+    hours: nampallyHours,
+    directions: nampallyDirections,
+    google: nampallyGoogleRating,
     primary: {
       src: nampallyInteriorImage,
-      alt: "Neodent Dental Hospital Nampally — the reception and consultation wing",
+      alt: "Neodent Dental Hospital Nampally, the reception and consultation wing",
       label: "Reception",
-      width: 1280,
-      height: 1707,
+      focal: "40% 62%",
+      ratio: "3 / 4",
     },
-    secondary: {
+    inset: {
       src: nampallyExteriorImage,
-      alt: "Neodent Dental Hospital Nampally — the street frontage and signage",
+      alt: "Neodent Dental Hospital Nampally, the street frontage and signage",
       label: "Street frontage",
-      width: 1280,
-      height: 960,
+      focal: "50% 30%",
+      ratio: "4 / 3",
     },
   },
 ];
 
+/* ---- Opening status --------------------------------------------------- */
+
+type Hours = { open: number; close: number; openLabel: string };
+const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+/** "4:00 PM – 8:00 PM" -> minutes after midnight. Null if unparseable. */
+function parseHours(text: string): Hours | null {
+  const times = [...text.matchAll(/(\d{1,2}):(\d{2})\s*([AP])M/gi)];
+  if (times.length !== 2) return null;
+  const toMinutes = (m: RegExpMatchArray) => ((Number(m[1]) % 12) + (m[3].toUpperCase() === "P" ? 12 : 0)) * 60 + Number(m[2]);
+  const open = toMinutes(times[0]);
+  const close = toMinutes(times[1]);
+  if (close <= open) return null;
+  return { open, close, openLabel: times[0][0].replace(/\s*([AP]M)/i, " $1").toUpperCase() };
+}
+
+/** Weekday (0 = Sunday) and minutes after midnight in Asia/Kolkata. */
+function kolkataNow(timestamp: number) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: TIME_ZONE,
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date(timestamp));
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
+  return { day, minutes: Number(get("hour")) * 60 + Number(get("minute")) };
+}
+
+type Status = { open: boolean; label: string };
+
+function openingStatus(hoursText: string, timestamp: number): Status | null {
+  const hours = parseHours(hoursText);
+  if (!hours) return null;
+  const { day, minutes } = kolkataNow(timestamp);
+  if (day < 0) return null;
+  const openToday = !CLOSED_WEEKDAYS.includes(day);
+  if (openToday && minutes >= hours.open && minutes < hours.close) return { open: true, label: "Open now" };
+  if (openToday && minutes < hours.open) return { open: false, label: `Opens at ${hours.openLabel}` };
+  // Closed for the rest of today: find the next open day.
+  for (let ahead = 1; ahead <= 7; ahead += 1) {
+    const next = (day + ahead) % 7;
+    if (CLOSED_WEEKDAYS.includes(next)) continue;
+    const when = ahead === 1 ? "tomorrow" : WEEKDAYS[next];
+    return { open: false, label: `Opens ${when} at ${hours.openLabel}` };
+  }
+  return null;
+}
+
+// The current minute, re-read every 30s. null on the server.
+const subscribeMinute = (onChange: () => void) => {
+  const id = window.setInterval(onChange, 30_000);
+  return () => window.clearInterval(id);
+};
+const minuteSnapshot = () => Math.floor(Date.now() / 60_000) * 60_000;
+const serverSnapshot = () => null;
+
+/* ---- Component -------------------------------------------------------- */
+
 export function SpacesDesignedAroundCare() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [switching, setSwitching] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
+  const now = useSyncExternalStore(subscribeMinute, minuteSnapshot, serverSnapshot);
 
-  const active = branches[activeIndex];
-
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.12 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = (event: MediaQueryListEvent) => setPrefersReducedMotion(event.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
-
-  const selectBranch = (nextIndex: number) => {
-    if (nextIndex === activeIndex) return;
-
-    if (prefersReducedMotion) {
-      setActiveIndex(nextIndex);
-      return;
-    }
-
-    // Fade out, swap once hidden, fade back in.
-    setSwitching(true);
-    window.setTimeout(() => {
-      setActiveIndex(nextIndex);
-      window.setTimeout(() => setSwitching(false), 20);
-    }, 220);
+  const onTabKey = (event: KeyboardEvent<HTMLButtonElement>) => {
+    const keys: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+    let next: number | null = null;
+    if (event.key in keys) next = (activeIndex + keys[event.key] + branches.length) % branches.length;
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = branches.length - 1;
+    if (next === null) return;
+    event.preventDefault();
+    setActiveIndex(next);
+    document.getElementById(`clinic-tab-${branches[next].id}`)?.focus();
   };
 
-  const switchClass = switching ? styles.switching : "";
-
   return (
-    <section
-      ref={sectionRef}
-      className={`${styles.section} ${visible ? styles.visible : ""}`}
-      id="clinics"
-      aria-labelledby="clinics-title"
-    >
+    <section className={styles.section} id="clinics" aria-labelledby="clinics-title">
       <span className={styles.seam} aria-hidden="true" />
 
-      <div className={styles.atmosphere} aria-hidden="true">
-        <span className={styles.draftVertical} />
-        <span className={styles.draftHorizontal} />
-      </div>
-
       <div className={styles.container}>
-        <header className={styles.header}>
+        <Reveal as="header" className={styles.header}>
           <h2 id="clinics-title" className={styles.title}>
-            Spaces designed
-            <br />
-            <span>around care.</span>
+            Spaces designed <span>around care.</span>
           </h2>
-          <p className={`${styles.lede} section-lede section-lede--on-dark`}>
-            Across Mehdipatnam and Nampally, Neodent brings the same{" "}
-            <EditorialHighlight tone="primary" onDark>
-              patient-focused approach
-            </EditorialHighlight>{" "}
-            into spaces designed for focused, comfortable dental care.
-          </p>
-        </header>
+          <div className={styles.headerAside}>
+            <p className={`${styles.lede} section-lede section-lede--on-dark`}>
+              Across Mehdipatnam and Nampally, Neodent brings the same patient-focused approach into spaces
+              designed for focused, comfortable dental care.
+            </p>
+            <Link href="/clinic" className={styles.cta}>
+              Explore our clinics <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </div>
+        </Reveal>
 
-        <div className={styles.composition}>
-          <div className={styles.panel}>
-            <nav className={styles.selector} aria-label="Choose a Neodent clinic location">
-              <ul>
-                {branches.map((branch, index) => {
-                  const isActive = index === activeIndex;
-                  return (
-                    <li key={branch.name}>
-                      <button
-                        type="button"
-                        className={`${styles.selectorItem} ${isActive ? styles.selectorItemActive : ""}`}
-                        onClick={() => selectBranch(index)}
-                        aria-current={isActive ? "true" : undefined}
-                        aria-label={`${branch.name}, Neodent Dental Hospital, Hyderabad`}
-                      >
-                        <span className={styles.selectorLabelGroup}>
-                          <span className={styles.selectorName}>{branch.name}</span>
-                          <span className={styles.selectorSub}>Neodent Dental Hospital · Hyderabad</span>
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            <div className={`${styles.details} ${switchClass}`} aria-live="polite">
-              <p className={styles.description}>{active.body}</p>
-
-              <dl className={styles.facts}>
-                <div>
-                  <dt>Address</dt>
-                  <dd>{active.address}</dd>
-                </div>
-                <div>
-                  <dt>Phone</dt>
-                  <dd>
-                    <a href={active.tel} className={styles.factLink} aria-label={`Call Neodent ${active.name}`}>
-                      {active.phone}
-                    </a>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Hours</dt>
-                  <dd>{active.hours}</dd>
-                </div>
-              </dl>
-
-              <div className={styles.google}>
-                <p className={styles.googleRating}>
-                  <span className={styles.googleWord} aria-hidden="true">
-                    <span style={{ color: "#8ab4f8" }}>G</span>
-                    <span style={{ color: "#f28b82" }}>o</span>
-                    <span style={{ color: "#fdd663" }}>o</span>
-                    <span style={{ color: "#8ab4f8" }}>g</span>
-                    <span style={{ color: "#81c995" }}>l</span>
-                    <span style={{ color: "#f28b82" }}>e</span>
-                  </span>
-                  <span className={styles.srOnly}>Google rating: </span>
-                  <span className={styles.googleScore}>
-                    {active.google.rating}
-                    <span className={styles.googleStar} aria-hidden="true">
-                      {" "}
-                      ★
-                    </span>
-                  </span>
-                  <span className={styles.googleCount}>
-                    {active.google.reviews} reviews
-                  </span>
-                </p>
-                <a
-                  href={active.google.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.googleLink}
-                  aria-label={`Get directions to Neodent ${active.name} on Google Maps (opens in a new tab)`}
+        <Reveal className={styles.composition} delay={120}>
+          <div className={styles.selector} role="tablist" aria-label="Choose a Neodent clinic">
+            {branches.map((branch, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <button
+                  key={branch.id}
+                  id={`clinic-tab-${branch.id}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`clinic-panel-${branch.id}`}
+                  tabIndex={isActive ? 0 : -1}
+                  className={styles.selectorItem}
+                  onClick={() => setActiveIndex(index)}
+                  onKeyDown={onTabKey}
                 >
-                  Get directions <ArrowRight size={13} aria-hidden="true" />
-                </a>
-                <p className={styles.googleNote}>Rating as shown on the Google listing; it may have changed since.</p>
-              </div>
-            </div>
+                  <span className={styles.selectorName}>{branch.name}</span>
+                  <span className={styles.selectorSub}>{branch.locality}</span>
+                </button>
+              );
+            })}
           </div>
 
-          <figure className={styles.mediaCol} aria-label={`Neodent ${active.name} photographs`}>
-            <div className={`${styles.plate} ${styles.plateMain} ${switchClass}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={active.primary.src}
-                alt={active.primary.alt}
-                width={active.primary.width}
-                height={active.primary.height}
-                loading="lazy"
-              />
-              <span className={styles.plateLabel}>{active.primary.label}</span>
-            </div>
+          <div className={styles.mediaStack}>
+            {branches.map((branch, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <div
+                  key={branch.id}
+                  className={styles.media}
+                  data-active={isActive}
+                  inert={!isActive}
+                  aria-hidden={!isActive}
+                  role="region"
+                  aria-label={`Photographs of Neodent ${branch.name}`}
+                  tabIndex={isActive ? 0 : -1}
+                >
+                  {[branch.primary, branch.inset].map((image, i) => (
+                    <figure
+                      key={image.src}
+                      className={i === 0 ? styles.shotPrimary : styles.shotInset}
+                      style={{ "--focal": image.focal, "--ratio": image.ratio } as CSSProperties}
+                    >
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        sizes={
+                          i === 0
+                            ? "(min-width: 1228px) 540px, (min-width: 900px) 44vw, 84vw"
+                            : "(min-width: 1228px) 200px, (min-width: 900px) 17vw, 84vw"
+                        }
+                      />
+                      <figcaption className={styles.shotLabel}>{image.label}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
 
-            <div className={`${styles.plate} ${styles.plateSide} ${switchClass}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={active.secondary.src}
-                alt={active.secondary.alt}
-                width={active.secondary.width}
-                height={active.secondary.height}
-                loading="lazy"
-              />
-              <span className={styles.plateLabel}>{active.secondary.label}</span>
-            </div>
-          </figure>
-        </div>
+          <div className={styles.detailStack}>
+            {branches.map((branch, index) => {
+              const isActive = index === activeIndex;
+              const status = now === null ? null : openingStatus(branch.hours, now);
+              return (
+                <div
+                  key={branch.id}
+                  id={`clinic-panel-${branch.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`clinic-tab-${branch.id}`}
+                  className={styles.details}
+                  data-active={isActive}
+                  inert={!isActive}
+                  aria-hidden={!isActive}
+                >
+                  <p className={styles.description}>{branch.body}</p>
 
-        <div className={styles.ctaRow}>
-          <p className={styles.brandLine}>
-            <span className={styles.brandLineTick} aria-hidden="true" />
-            Two locations. One Neodent standard.
-          </p>
-          <Link href="/clinic" className={styles.cta}>
-            Explore our clinics <ArrowRight size={14} aria-hidden="true" />
-          </Link>
-        </div>
+                  <dl className={styles.facts}>
+                    <div>
+                      <dt>Address</dt>
+                      <dd>{branch.address}</dd>
+                    </div>
+                    <div>
+                      <dt>Phone</dt>
+                      <dd>{branch.phone}</dd>
+                    </div>
+                    <div>
+                      <dt>Hours</dt>
+                      <dd className={styles.hours}>
+                        <span>{branch.hours} · Sunday holiday</span>
+                        {status && (
+                          <span className={styles.chip} data-open={status.open}>
+                            <span className={styles.chipDot} aria-hidden="true" />
+                            {status.label}
+                          </span>
+                        )}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <div className={styles.actions}>
+                    <a href={branch.tel} className={`${styles.action} ${styles.actionPrimary}`}>
+                      <Phone size={16} aria-hidden="true" />
+                      Call {branch.name}
+                    </a>
+                    <a
+                      href={branch.directions}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${styles.action} ${styles.actionSecondary}`}
+                      aria-label={`Directions to Neodent ${branch.name} on Google Maps (opens in a new tab)`}
+                    >
+                      <MapPin size={16} aria-hidden="true" />
+                      Directions
+                    </a>
+                  </div>
+
+                  <p className={styles.google}>
+                    <span className={styles.googleWord} aria-hidden="true">
+                      <span style={{ color: "#8ab4f8" }}>G</span>
+                      <span style={{ color: "#f28b82" }}>o</span>
+                      <span style={{ color: "#fdd663" }}>o</span>
+                      <span style={{ color: "#8ab4f8" }}>g</span>
+                      <span style={{ color: "#81c995" }}>l</span>
+                      <span style={{ color: "#f28b82" }}>e</span>
+                    </span>
+                    <span className={styles.srOnly}>Google rating: </span>
+                    <span className={styles.googleScore}>
+                      {branch.google.score}
+                      <span className={styles.googleStar} aria-hidden="true">
+                        {" "}★
+                      </span>
+                    </span>
+                    <span className={styles.googleCount}>{branch.google.count} reviews</span>
+                    <span className={styles.googleNote}>As shown on the Google listing; it may have changed since.</span>
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
