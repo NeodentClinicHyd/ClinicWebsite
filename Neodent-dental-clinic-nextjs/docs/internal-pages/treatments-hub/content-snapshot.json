@@ -1,0 +1,1046 @@
+{
+  "slug": "treatments-hub",
+  "route": "/treatments",
+  "takenAt": "2026-10-30T20:21:19.637Z",
+  "metadata": {
+    "title": "Dental Treatments in Hyderabad | Neodent Dental Hospital",
+    "description": "Explore dental treatments at Neodent Dental Hospital in Hyderabad, including composite build-up, implants, root canal treatment, orthodontics, smile design, full mouth rehabilitation and scaling and polishing.",
+    "canonical": "https://www.neodentdentalhospitals.com/treatments",
+    "robots": "index, follow",
+    "ogTitle": "Dental Treatments in Hyderabad | Neodent Dental Hospital",
+    "ogDescription": "Explore featured dental treatments and additional restorative, cosmetic, preventive and surgical services at Neodent Dental Hospital in Hyderabad.",
+    "ogUrl": "https://www.neodentdentalhospitals.com/treatments",
+    "twitterTitle": "Dental Treatments in Hyderabad | Neodent Dental Hospital"
+  },
+  "jsonLd": [
+    "{\"@context\":\"https://schema.org\",\"@type\":\"MedicalOrganization\",\"@id\":\"https://www.neodentdentalhospitals.com/#organization\",\"name\":\"Neodent Dental Hospital\",\"url\":\"https://www.neodentdentalhospitals.com\",\"logo\":\"https://www.neodentdentalhospitals.com/assets/Neodent%20dental%20hospital%20hyderabad%20logo.jpeg\",\"foundingDate\":\"1994\",\"sameAs\":[\"https://www.instagram.com/neodent.dental/\"]}",
+    "{\"@context\":\"https://schema.org\",\"@type\":\"Dentist\",\"@id\":\"https://www.neodentdentalhospitals.com/clinic/mehdipatnam#clinic\",\"name\":\"Neodent Dental Hospital\",\"parentOrganization\":{\"@id\":\"https://www.neodentdentalhospitals.com/#organization\"},\"url\":\"https://www.neodentdentalhospitals.com/clinic/mehdipatnam\",\"telephone\":\"+919030648393\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"10-3-14B/11/1, near Masjid-e-Azizia, Humayun Nagar, Royal Colony, Mehdipatnam\",\"addressLocality\":\"Hyderabad\",\"addressRegion\":\"Telangana\",\"postalCode\":\"500006\",\"addressCountry\":\"IN\"},\"openingHours\":\"Mo-Sa 16:00-20:00\",\"hasMap\":\"https://www.google.com/maps/search/?api=1&query=10-3-14B%2F11%2F1%2C%20near%20Masjid-e-Azizia%2C%20Humayun%20Nagar%2C%20Royal%20Colony%2C%20Mehdipatnam%2C%20Hyderabad%2C%20Telangana%20500006%2C%20India\",\"image\":[\"https://www.neodentdentalhospitals.com/assets/neodent-clinic-mehdipatnam/neodent%20dental%20hospital-mehdipatnam-interior.jpg\",\"https://www.neodentdentalhospitals.com/assets/neodent-clinic-mehdipatnam/Neodent%20dental%20hospital%20-%20mehdipatnam%20Exterior.jpg\"]}",
+    "{\"@context\":\"https://schema.org\",\"@type\":\"Dentist\",\"@id\":\"https://www.neodentdentalhospitals.com/clinic/nampally#clinic\",\"name\":\"Neodent Dental Hospital\",\"parentOrganization\":{\"@id\":\"https://www.neodentdentalhospitals.com/#organization\"},\"url\":\"https://www.neodentdentalhospitals.com/clinic/nampally\",\"telephone\":\"+919030598081\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"Medwin Hospital Complex, Pillar #A1270, Raghav Ratna Towers, Chirag Ali Lane, Mahesh Nagar Colony, Nampally\",\"addressLocality\":\"Hyderabad\",\"addressRegion\":\"Telangana\",\"postalCode\":\"500001\",\"addressCountry\":\"IN\"},\"openingHours\":\"Mo-Sa 10:30-17:00\",\"hasMap\":\"https://www.google.com/maps/search/?api=1&query=Neodent%20Dental%20Hospital%2C%20Medwin%20Hospital%20Complex%2C%20Pillar%20%23A1270%2C%20Raghav%20Ratna%20Towers%2C%20Chirag%20Ali%20Lane%2C%20Mahesh%20Nagar%20Colony%2C%20Nampally%2C%20Hyderabad%2C%20Telangana%20500001%2C%20India\",\"image\":[\"https://www.neodentdentalhospitals.com/assets/neodent-clinic-nampally/Neodent%20dental%20hospital%20-%20nampally%20Exterior.jpg\",\"https://www.neodentdentalhospitals.com/assets/neodent-clinic-nampally/Neodent%20dental%20hospital%20-%20nampally%20Interior.jpg\"]}",
+    "{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"@id\":\"https://www.neodentdentalhospitals.com/#website\",\"name\":\"Neodent Dental Hospital\",\"url\":\"https://www.neodentdentalhospitals.com\"}",
+    "[{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://www.neodentdentalhospitals.com\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Treatments\",\"item\":\"https://www.neodentdentalhospitals.com/treatments\"}]},{\"@context\":\"https://schema.org\",\"@type\":\"CollectionPage\",\"name\":\"Dental treatments\",\"url\":\"https://www.neodentdentalhospitals.com/treatments\",\"description\":\"Explore dental treatments at Neodent Dental Hospital in Hyderabad, including composite build-up, implants, root canal treatment, orthodontics, smile design, full mouth rehabilitation and scaling and polishing.\",\"mainEntity\":{\"@type\":\"ItemList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Full Mouth Rehabilitation\",\"url\":\"https://www.neodentdentalhospitals.com/treatments/full-mouth-rehabilitation\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Composite Build-up\",\"url\":\"https://www.neodentdentalhospitals.com/treatments/composite-build-up\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Dental Implants\",\"url\":\"https://www.neodentdentalhospitals.com/treatments/dental-implants\"},{\"@type\":\"ListItem\",\"position\":4,\"name\":\"Root Canal Treatment\",\"url\":\"https://www.neodentdentalhospitals.com/treatments/root-canal-treatment\"},{\"@type\":\"ListItem\",\"position\":5,\"name\":\"Braces & Orthodontics\",\"url\":\"https://www.neodentdentalhospitals.com/treatments/braces-and-orthodontics\"},{\"@type\":\"ListItem\",\"position\":6,\"name\":\"Smile Design & Cosmetic Dentistry\",\"url\":\"https://www.neodentdentalhospitals.com/treatments/smile-design\"},{\"@type\":\"ListItem\",\"position\":7,\"name\":\"Scaling & Polishing\",\"url\":\"https://www.neodentdentalhospitals.com/treatments/scaling-and-polishing\"}]}},{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"How do I know which dental treatment I need?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Treatment recommendations are based on a clinical assessment of your dental condition. During a consultation, the dentist will evaluate your oral health and discuss suitable treatment options with you based on your specific concerns and goals.\"}},{\"@type\":\"Question\",\"name\":\"What is full mouth rehabilitation?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Full mouth rehabilitation is a comprehensive approach to restoring oral health and function when multiple teeth are affected. It may involve a combination of treatments such as dental implants, crowns, bridges and other restorative procedures, planned together to address the overall condition.\"}},{\"@type\":\"Question\",\"name\":\"When are dental implants considered?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Dental implants may be considered as a treatment option for replacing one or more missing teeth. The suitability of implants depends on factors including the condition of the jawbone, overall oral health, and individual patient factors, which are assessed during consultation.\"}},{\"@type\":\"Question\",\"name\":\"What is root canal treatment?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Root canal treatment is a procedure aimed at addressing problems within the inner portion of an affected tooth. The goal is to preserve the natural tooth where clinically appropriate, rather than extracting it.\"}},{\"@type\":\"Question\",\"name\":\"What is smile designing?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Smile designing refers to the aesthetic planning and treatment focused on improving the appearance of the smile. This may involve procedures such as veneers, crowns, orthodontics or other cosmetic dental work, depending on the patient's goals and clinical suitability.\"}},{\"@type\":\"Question\",\"name\":\"Can multiple dental treatments be planned together?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Yes, in cases where multiple dental concerns need to be addressed, treatments can be coordinated as part of a comprehensive treatment plan. The sequence and approach will depend on your specific condition and priorities.\"}}]}]"
+  ],
+  "headings": [
+    {
+      "level": 1,
+      "text": "Dental care for the concerns that bring you to Neodent."
+    },
+    {
+      "level": 2,
+      "text": "Featured dental treatments."
+    },
+    {
+      "level": 3,
+      "text": "Full Mouth Rehabilitation"
+    },
+    {
+      "level": 3,
+      "text": "Composite Build-up"
+    },
+    {
+      "level": 3,
+      "text": "Dental Implants"
+    },
+    {
+      "level": 3,
+      "text": "Root Canal Treatment"
+    },
+    {
+      "level": 3,
+      "text": "Braces & Orthodontics"
+    },
+    {
+      "level": 3,
+      "text": "Smile Design & Cosmetic Dentistry"
+    },
+    {
+      "level": 3,
+      "text": "Scaling & Polishing"
+    },
+    {
+      "level": 3,
+      "text": "Not sure which treatment you need?"
+    },
+    {
+      "level": 2,
+      "text": "Additional dental services."
+    },
+    {
+      "level": 2,
+      "text": "The thinking behind treatment."
+    },
+    {
+      "level": 3,
+      "text": "Dr. Mohd. Siraj Ur Rahman"
+    },
+    {
+      "level": 3,
+      "text": "Dr. Md. Miftah Ur Rahman"
+    },
+    {
+      "level": 2,
+      "text": "Understanding DMLS Crowns & Functional Strength"
+    },
+    {
+      "level": 2,
+      "text": "How treatment takes shape."
+    },
+    {
+      "level": 3,
+      "text": "Understand"
+    },
+    {
+      "level": 3,
+      "text": "Assess"
+    },
+    {
+      "level": 3,
+      "text": "Plan"
+    },
+    {
+      "level": 3,
+      "text": "Treat"
+    },
+    {
+      "level": 2,
+      "text": "Real cases. Visible outcomes."
+    },
+    {
+      "level": 3,
+      "text": "See the work behind the treatment."
+    },
+    {
+      "level": 2,
+      "text": "Experience, evidence & what patients see."
+    },
+    {
+      "level": 2,
+      "text": "Questions about treatment"
+    },
+    {
+      "level": 3,
+      "text": "How do I know which dental treatment I need?"
+    },
+    {
+      "level": 3,
+      "text": "What is full mouth rehabilitation?"
+    },
+    {
+      "level": 3,
+      "text": "When are dental implants considered?"
+    },
+    {
+      "level": 3,
+      "text": "What is root canal treatment?"
+    },
+    {
+      "level": 3,
+      "text": "What is smile designing?"
+    },
+    {
+      "level": 3,
+      "text": "Can multiple dental treatments be planned together?"
+    },
+    {
+      "level": 3,
+      "text": "Ready to discuss your dental concerns?"
+    }
+  ],
+  "units": [
+    {
+      "tag": "a",
+      "text": "Home"
+    },
+    {
+      "tag": "li",
+      "text": "Treatments"
+    },
+    {
+      "tag": "h1",
+      "text": "Dental care for the concerns that bring you to Neodent."
+    },
+    {
+      "tag": "p",
+      "text": "From dental implants and full mouth rehabilitation to orthodontic alignment, root canal treatment, crowns, dentures, veneers and smile-focused cosmetic dentistry, Neodent brings different areas of dental care together around the concerns that matter to each patient."
+    },
+    {
+      "tag": "a",
+      "text": "Call Neodent"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Dr. Md. Miftah Ur RahmanBDS · MDS · FICOI (U.S.A.) · Prosthodontist & Implantologist"
+    },
+    {
+      "tag": "p",
+      "text": "Whether the concern is a missing tooth, damaged or worn teeth, tooth pain, difficulty chewing, changes in alignment or the appearance of a smile, the right treatment begins with understanding what is happening clinically and what the patient wants to achieve."
+    },
+    {
+      "tag": "p",
+      "text": "Every treatment begins with careful assessment rather than a one-size-fits-all approach. The condition of the teeth and gums, bite and function, existing dental work, overall oral health and the patient's treatment goals can all influence the treatment plan. Depending on the concern, care may involve restorative dentistry, prosthodontics, implant dentistry, orthodontics or cosmetic treatment, with the approach shaped around what is clinically appropriate."
+    },
+    {
+      "tag": "p",
+      "text": "For more complex concerns, treatment may involve several stages or more than one area of dentistry. Full mouth rehabilitation, for example, can require careful coordination of restorative and prosthodontic treatment to address multiple functional and dental concerns together. Similarly, replacing missing teeth with dental implants involves assessment, planning and restoration rather than simply placing an implant."
+    },
+    {
+      "tag": "p",
+      "text": "Across these treatments, Neodent's approach remains focused on clear clinical explanation, thoughtful planning and care that considers oral health, function and appearance together. With locations in Mehdipatnam and Nampally, Hyderabad, the practice provides access to a broad range of specialist-led dental treatment within the same clinical environment."
+    },
+    {
+      "tag": "h2",
+      "text": "Featured dental treatments."
+    },
+    {
+      "tag": "p",
+      "text": "Neodent approaches different dental concerns through clinical assessment and treatment planning, drawing on a range of restorative, implant, orthodontic, prosthodontic and cosmetic treatment options. These featured treatments represent the primary clinical focuses at Neodent Dental Hospital, Mehdipatnam and Nampally."
+    },
+    {
+      "tag": "h3",
+      "text": "Full Mouth Rehabilitation"
+    },
+    {
+      "tag": "p",
+      "text": "Plan staged care when many teeth or the bite need attention."
+    },
+    {
+      "tag": "a",
+      "text": "Full Mouth Rehabilitation in detail"
+    },
+    {
+      "tag": "h3",
+      "text": "Composite Build-up"
+    },
+    {
+      "tag": "p",
+      "text": "Rebuild part of a damaged tooth with tooth-coloured composite resin."
+    },
+    {
+      "tag": "a",
+      "text": "Composite Build-up in detail"
+    },
+    {
+      "tag": "h3",
+      "text": "Dental Implants"
+    },
+    {
+      "tag": "p",
+      "text": "Replace a missing tooth with an implant-supported crown, bridge or denture."
+    },
+    {
+      "tag": "a",
+      "text": "Dental Implants in detail"
+    },
+    {
+      "tag": "h3",
+      "text": "Root Canal Treatment"
+    },
+    {
+      "tag": "p",
+      "text": "Treat infection or inflammation inside a tooth so it may be kept."
+    },
+    {
+      "tag": "a",
+      "text": "Root Canal Treatment in detail"
+    },
+    {
+      "tag": "h3",
+      "text": "Braces & Orthodontics"
+    },
+    {
+      "tag": "p",
+      "text": "Gradually move teeth into position, then use retainers to help hold them."
+    },
+    {
+      "tag": "a",
+      "text": "Braces & Orthodontics in detail"
+    },
+    {
+      "tag": "h3",
+      "text": "Smile Design & Cosmetic Dentistry"
+    },
+    {
+      "tag": "p",
+      "text": "Plan cosmetic options around the changes you want to make to your smile."
+    },
+    {
+      "tag": "a",
+      "text": "Smile Design & Cosmetic Dentistry in detail"
+    },
+    {
+      "tag": "h3",
+      "text": "Scaling & Polishing"
+    },
+    {
+      "tag": "p",
+      "text": "Remove plaque and tartar, then polish the tooth surfaces."
+    },
+    {
+      "tag": "a",
+      "text": "Scaling & Polishing in detail"
+    },
+    {
+      "tag": "h3",
+      "text": "Not sure which treatment you need?"
+    },
+    {
+      "tag": "p",
+      "text": "Explore our treatments or speak with our team to understand your options."
+    },
+    {
+      "tag": "a",
+      "text": "Speak with our team"
+    },
+    {
+      "tag": "h2",
+      "text": "Additional dental services."
+    },
+    {
+      "tag": "p",
+      "text": "Alongside the featured treatments, Neodent provides a broader range of restorative, cosmetic, preventive and surgical dental services. These services can form part of routine care or be considered alongside more comprehensive treatment, depending on the patient's clinical needs."
+    },
+    {
+      "tag": "dt",
+      "text": "Restorative & Prosthodontics"
+    },
+    {
+      "tag": "li",
+      "text": "Crowns & Bridges"
+    },
+    {
+      "tag": "li",
+      "text": "Complete Dentures"
+    },
+    {
+      "tag": "li",
+      "text": "Removable Partial Dentures"
+    },
+    {
+      "tag": "li",
+      "text": "Fillings & Sealants"
+    },
+    {
+      "tag": "dt",
+      "text": "Cosmetic Dentistry"
+    },
+    {
+      "tag": "li",
+      "text": "Veneers"
+    },
+    {
+      "tag": "li",
+      "text": "Teeth Whitening"
+    },
+    {
+      "tag": "li",
+      "text": "Teeth Reshaping"
+    },
+    {
+      "tag": "li",
+      "text": "Cosmetic Procedures"
+    },
+    {
+      "tag": "dt",
+      "text": "General & Preventive"
+    },
+    {
+      "tag": "li",
+      "text": "Teeth Cleaning"
+    },
+    {
+      "tag": "li",
+      "text": "Extractions"
+    },
+    {
+      "tag": "li",
+      "text": "Paediatric Dentistry"
+    },
+    {
+      "tag": "li",
+      "text": "Mouth Guards"
+    },
+    {
+      "tag": "dt",
+      "text": "Surgical"
+    },
+    {
+      "tag": "li",
+      "text": "Oral Surgery"
+    },
+    {
+      "tag": "li",
+      "text": "Laser Dentistry"
+    },
+    {
+      "tag": "h2",
+      "text": "The thinking behind treatment."
+    },
+    {
+      "tag": "h3",
+      "text": "Dr. Mohd. Siraj Ur Rahman"
+    },
+    {
+      "tag": "p",
+      "text": "Founder & Director"
+    },
+    {
+      "tag": "dt",
+      "text": "Qualifications"
+    },
+    {
+      "tag": "dd",
+      "text": "BDS · FCIP · MDS (Chennai)"
+    },
+    {
+      "tag": "dt",
+      "text": "Specialism"
+    },
+    {
+      "tag": "dd",
+      "text": "Prosthodontist & Implantologist"
+    },
+    {
+      "tag": "dt",
+      "text": "Experience"
+    },
+    {
+      "tag": "dd",
+      "text": "30+ years of clinical practice"
+    },
+    {
+      "tag": "dt",
+      "text": "Approach"
+    },
+    {
+      "tag": "dd",
+      "text": "Specialist training in prosthodontics and implantology, and 30+ years of clinical practice, inform how Neodent assesses and plans treatment for each patient."
+    },
+    {
+      "tag": "h3",
+      "text": "Dr. Md. Miftah Ur Rahman"
+    },
+    {
+      "tag": "p",
+      "text": "Assistant Director"
+    },
+    {
+      "tag": "dt",
+      "text": "Qualifications"
+    },
+    {
+      "tag": "dd",
+      "text": "BDS · MDS · FICOI (U.S.A.)"
+    },
+    {
+      "tag": "dt",
+      "text": "Specialism"
+    },
+    {
+      "tag": "dd",
+      "text": "Prosthodontist & Implantologist"
+    },
+    {
+      "tag": "dt",
+      "text": "Recognition"
+    },
+    {
+      "tag": "dd",
+      "text": "Gold Medallist"
+    },
+    {
+      "tag": "dt",
+      "text": "Approach"
+    },
+    {
+      "tag": "dd",
+      "text": "Specialist qualifications in prosthodontics and implantology, including FICOI (U.S.A.), underpin his approach to restorative and implant-based treatment at Neodent."
+    },
+    {
+      "tag": "a",
+      "text": "View Dr. Md. Miftah Ur Rahman’s profile"
+    },
+    {
+      "tag": "p",
+      "text": "Treatment at Neodent begins with understanding the patient's concern. Not every dental condition requires the same response — some patients need care focused on a single affected tooth, while others may benefit from a more comprehensive treatment plan addressing multiple areas of the mouth."
+    },
+    {
+      "tag": "p",
+      "text": "Clinical assessment considers oral health, function and aesthetic goals together. Where appropriate, the team discusses suitable treatment options, explains what each approach involves, and helps patients understand the clinical considerations relevant to their condition."
+    },
+    {
+      "tag": "p",
+      "text": "Treatment planning at Neodent is not a fixed sequence — it is shaped by each patient's specific condition. The clinical team outlines available options, explains what each approach involves, and ensures that every decision is made with the patient's informed understanding."
+    },
+    {
+      "tag": "h2",
+      "text": "Understanding DMLS Crowns & Functional Strength"
+    },
+    {
+      "tag": "p",
+      "text": "Dr. Md. Miftah Ur Rahman explains the functional characteristics of DMLS crowns, including their masticatory efficiency and clinical strength. Part of Neodent's approach to helping patients understand the materials and methods used in their treatment."
+    },
+    {
+      "tag": "dt",
+      "text": "Clinician"
+    },
+    {
+      "tag": "dd",
+      "text": "Dr. Md. Miftah Ur Rahman"
+    },
+    {
+      "tag": "dt",
+      "text": "Qualifications"
+    },
+    {
+      "tag": "dd",
+      "text": "BDS · MDS · FICOI (U.S.A.)"
+    },
+    {
+      "tag": "dt",
+      "text": "Specialism"
+    },
+    {
+      "tag": "dd",
+      "text": "Prosthodontist & Implantologist"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Clinical EducationDr. Md. Miftah Ur Rahman / DMLS Crowns & Masticatory Efficiency"
+    },
+    {
+      "tag": "h2",
+      "text": "How treatment takes shape."
+    },
+    {
+      "tag": "p",
+      "text": "Every treatment begins with understanding the patient's concern, followed by clinical assessment and treatment planning. The approach then moves into appropriate treatment and follow-up according to the patient's clinical situation."
+    },
+    {
+      "tag": "h3",
+      "text": "Understand"
+    },
+    {
+      "tag": "p",
+      "text": "Understand the patient's concern, symptoms and goals."
+    },
+    {
+      "tag": "h3",
+      "text": "Assess"
+    },
+    {
+      "tag": "p",
+      "text": "Evaluate the dental condition and areas requiring attention."
+    },
+    {
+      "tag": "h3",
+      "text": "Plan"
+    },
+    {
+      "tag": "p",
+      "text": "Consider suitable treatment options based on the clinical situation."
+    },
+    {
+      "tag": "h3",
+      "text": "Treat"
+    },
+    {
+      "tag": "p",
+      "text": "Carry out the selected treatment and appropriate follow-up."
+    },
+    {
+      "tag": "h2",
+      "text": "Real cases. Visible outcomes."
+    },
+    {
+      "tag": "p",
+      "text": "Selected cases from Neodent showing treatment outcomes across restorative, implant and smile procedures. Each case reflects the clinical work carried out at Neodent."
+    },
+    {
+      "tag": "figcaption",
+      "text": "Clinical FilmFull Mouth Rehabilitation Using Dental Implants / Neodent Dental Hospital · Mehdipatnam"
+    },
+    {
+      "tag": "h3",
+      "text": "See the work behind the treatment."
+    },
+    {
+      "tag": "p",
+      "text": "These films are a record of real clinical work carried out at Neodent Dental Hospital, Hyderabad — procedures performed by Dr. Md. Miftah Ur Rahman using the same methods and materials discussed during patient consultation."
+    },
+    {
+      "tag": "p",
+      "text": "This clinical film captures a full mouth rehabilitation procedure using dental implants at Neodent Dental Hospital, Mehdipatnam. The footage offers a closer view of the clinical work involved in restoring missing teeth through an implant-based treatment approach."
+    },
+    {
+      "tag": "figcaption",
+      "text": "Clinical Treatment DetailReal clinical treatment by the Neodent team"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Crown CementationCementation procedure / Dr. Md. Miftah Ur Rahman"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Treatment in PracticeClinical dental procedure at Neodent"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Anterior Smile DesignSmile restoration following an accident, using zirconia crowns"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Full Mouth Rehabilitation with ImplantsComprehensive rehabilitation using dental implants at Mehdipatnam"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Upper Arch Rehabilitation with ImplantsUpper arch restoration using implant-supported prosthetics at Nampally"
+    },
+    {
+      "tag": "figcaption",
+      "text": "Scaling & PolishingProfessional cleaning and polishing treatment"
+    },
+    {
+      "tag": "h2",
+      "text": "Experience, evidence & what patients see."
+    },
+    {
+      "tag": "p",
+      "text": "Patient reviews"
+    },
+    {
+      "tag": "p",
+      "text": "Mehdipatnam"
+    },
+    {
+      "tag": "p",
+      "text": "Nampally"
+    },
+    {
+      "tag": "p",
+      "text": "Three decades of practice, two Hyderabad locations, and a clinical approach built around considered care."
+    },
+    {
+      "tag": "li",
+      "text": "Established 1994Three decades of clinical practice in Hyderabad"
+    },
+    {
+      "tag": "li",
+      "text": "Specialist-LedProsthodontic and implant expertise"
+    },
+    {
+      "tag": "li",
+      "text": "Two LocationsMehdipatnam and Nampally, Hyderabad"
+    },
+    {
+      "tag": "h2",
+      "text": "Questions about treatment"
+    },
+    {
+      "tag": "h3",
+      "text": "How do I know which dental treatment I need?"
+    },
+    {
+      "tag": "p",
+      "text": "Treatment recommendations are based on a clinical assessment of your dental condition. During a consultation, the dentist will evaluate your oral health and discuss suitable treatment options with you based on your specific concerns and goals."
+    },
+    {
+      "tag": "h3",
+      "text": "What is full mouth rehabilitation?"
+    },
+    {
+      "tag": "p",
+      "text": "Full mouth rehabilitation is a comprehensive approach to restoring oral health and function when multiple teeth are affected. It may involve a combination of treatments such as dental implants, crowns, bridges and other restorative procedures, planned together to address the overall condition."
+    },
+    {
+      "tag": "h3",
+      "text": "When are dental implants considered?"
+    },
+    {
+      "tag": "p",
+      "text": "Dental implants may be considered as a treatment option for replacing one or more missing teeth. The suitability of implants depends on factors including the condition of the jawbone, overall oral health, and individual patient factors, which are assessed during consultation."
+    },
+    {
+      "tag": "h3",
+      "text": "What is root canal treatment?"
+    },
+    {
+      "tag": "p",
+      "text": "Root canal treatment is a procedure aimed at addressing problems within the inner portion of an affected tooth. The goal is to preserve the natural tooth where clinically appropriate, rather than extracting it."
+    },
+    {
+      "tag": "h3",
+      "text": "What is smile designing?"
+    },
+    {
+      "tag": "p",
+      "text": "Smile designing refers to the aesthetic planning and treatment focused on improving the appearance of the smile. This may involve procedures such as veneers, crowns, orthodontics or other cosmetic dental work, depending on the patient's goals and clinical suitability."
+    },
+    {
+      "tag": "h3",
+      "text": "Can multiple dental treatments be planned together?"
+    },
+    {
+      "tag": "p",
+      "text": "Yes, in cases where multiple dental concerns need to be addressed, treatments can be coordinated as part of a comprehensive treatment plan. The sequence and approach will depend on your specific condition and priorities."
+    },
+    {
+      "tag": "h3",
+      "text": "Ready to discuss your dental concerns?"
+    },
+    {
+      "tag": "a",
+      "text": "send an enquiry"
+    },
+    {
+      "tag": "a",
+      "text": "Call Neodent"
+    },
+    {
+      "tag": "a",
+      "text": "Call"
+    },
+    {
+      "tag": "a",
+      "text": "Directions"
+    },
+    {
+      "tag": "a",
+      "text": "Call"
+    },
+    {
+      "tag": "a",
+      "text": "Directions"
+    },
+    {
+      "tag": "p",
+      "text": "Sunday holiday"
+    }
+  ],
+  "links": [
+    {
+      "href": "/",
+      "text": "Home",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "tel:+919246348485",
+      "text": "Call Neodent",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/treatments/full-mouth-rehabilitation",
+      "text": "Full Mouth Rehabilitation in detail",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/treatments/composite-build-up",
+      "text": "Composite Build-up in detail",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/treatments/dental-implants",
+      "text": "Dental Implants in detail",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/treatments/root-canal-treatment",
+      "text": "Root Canal Treatment in detail",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/treatments/braces-and-orthodontics",
+      "text": "Braces & Orthodontics in detail",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/treatments/smile-design",
+      "text": "Smile Design & Cosmetic Dentistry in detail",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/treatments/scaling-and-polishing",
+      "text": "Scaling & Polishing in detail",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/contact",
+      "text": "Speak with our team",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/doctors/dr-miftah-ur-rahman",
+      "text": "View Dr. Md. Miftah Ur Rahman’s profile",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "/contact",
+      "text": "send an enquiry",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "tel:+919246348485",
+      "text": "Call Neodent",
+      "ariaLabel": null,
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "tel:+919030648393",
+      "text": "Call",
+      "ariaLabel": "Call Neodent Mehdipatnam",
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "https://www.google.com/maps/search/?api=1&query=10-3-14B%2F11%2F1%2C%20near%20Masjid-e-Azizia%2C%20Humayun%20Nagar%2C%20Royal%20Colony%2C%20Mehdipatnam%2C%20Hyderabad%2C%20Telangana%20500006%2C%20India",
+      "text": "Directions",
+      "ariaLabel": "Directions to Neodent Mehdipatnam (opens in a new tab)",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+    },
+    {
+      "href": "tel:+919030598081",
+      "text": "Call",
+      "ariaLabel": "Call Neodent Nampally",
+      "rel": null,
+      "target": null
+    },
+    {
+      "href": "https://www.google.com/maps/search/?api=1&query=Neodent%20Dental%20Hospital%2C%20Medwin%20Hospital%20Complex%2C%20Pillar%20%23A1270%2C%20Raghav%20Ratna%20Towers%2C%20Chirag%20Ali%20Lane%2C%20Mahesh%20Nagar%20Colony%2C%20Nampally%2C%20Hyderabad%2C%20Telangana%20500001%2C%20India",
+      "text": "Directions",
+      "ariaLabel": "Directions to Neodent Nampally (opens in a new tab)",
+      "rel": "noopener noreferrer",
+      "target": "_blank"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "",
+      "ariaLabel": "Play: Dr. Md. Miftah Ur Rahman explaining DMLS crowns and masticatory efficiency"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Play: Full mouth rehabilitation using dental implants at Neodent Dental Hospital Mehdipatnam"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Play: Clinical Treatment Detail. The reception and consultation wing at Neodent Dental Hospital Nampally"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Play: Crown Cementation. A dental model of DMLS crowns held against a glass plate, side view"
+    },
+    {
+      "text": "",
+      "ariaLabel": "Play: Treatment in Practice. Clinical dental treatment in progress at Neodent Dental Hospital"
+    }
+  ],
+  "images": [
+    {
+      "src": "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - after surgery.jpg",
+      "alt": "Full mouth rehabilitation with implants after surgery",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental hospital Treatment - Composite build up smile design after.jpg",
+      "alt": "Composite build-up smile design after treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - after surgery.jpg",
+      "alt": "Upper arch rehabilitation with implants after surgery at Neodent Dental Hospital",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/after treatment.jpg",
+      "alt": "Root canal treatment at Neodent Dental Hospital",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Orthodontics after treatment - neodent dental hospital nampally.jpeg",
+      "alt": "Orthodontics result after treatment at Neodent Dental Hospital Nampally",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -after treatment.jpg",
+      "alt": "Anterior smile design with zirconia crowns after treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment after.jpg",
+      "alt": "Scaling and polishing result at Neodent Dental Hospital",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png",
+      "alt": "Dr. Mohd. Siraj Ur Rahman, Prosthodontist and Implantologist, founder and director of Neodent Dental Hospital",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/dr-miftah/Dr. Md. Miftah Ur Rahman - Neodent Dental Hospital.png",
+      "alt": "Dr. Md. Miftah Ur Rahman, Prosthodontist and Implantologist, assistant director of Neodent Dental Hospital",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/neodent-clinic-mehdipatnam/Neodent dental hospital mehdipatnam treatment room 1.jpeg",
+      "alt": "Neodent Dental Hospital Mehdipatnam — a fully equipped dental treatment room",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -before treatment.jpg",
+      "alt": "Anterior smile design case at Neodent - before treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental hospital Hyderabad - Anterior Smile design of an accident case with zirconia crowns -after treatment.jpg",
+      "alt": "Anterior smile design case at Neodent - after treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - before surgery.jpg",
+      "alt": "Full mouth rehabilitation case at Neodent Mehdipatnam - before treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - after surgery.jpg",
+      "alt": "Full mouth rehabilitation case at Neodent Mehdipatnam - after treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - before surgery.jpg",
+      "alt": "Upper arch rehabilitation case at Neodent Nampally - before treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/Neodent dental hospital Nampally - Upper Arch Rehab with implants - after surgery.jpg",
+      "alt": "Upper arch rehabilitation case at Neodent Nampally - after treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment before.jpg",
+      "alt": "Scaling and polishing treatment at Neodent - before treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    },
+    {
+      "src": "/assets/treatment/neodent dental hospital mehdipatnam - scaling and polishing treatment after.jpg",
+      "alt": "Scaling and polishing treatment at Neodent - after treatment",
+      "width": null,
+      "height": null,
+      "loading": "lazy",
+      "fetchpriority": null
+    }
+  ],
+  "embeds": [
+    {
+      "tag": "video",
+      "src": null,
+      "title": null,
+      "poster": "/assets/treatment-video/dr-miftah-explains-dmls-crowns-masticatory-efficiency.jpg"
+    },
+    {
+      "tag": "video",
+      "src": null,
+      "title": null,
+      "poster": "/assets/neodent-dmls-crowns-dental-model-front-view.jpg"
+    },
+    {
+      "tag": "video",
+      "src": null,
+      "title": null,
+      "poster": "/assets/treatment/Neodent dental Hospital Mehdipatnam - full mouth rehab with implants - after surgery.jpg"
+    },
+    {
+      "tag": "video",
+      "src": null,
+      "title": null,
+      "poster": "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg"
+    },
+    {
+      "tag": "video",
+      "src": null,
+      "title": null,
+      "poster": "/assets/neodent-dmls-crowns-dental-model-side-view.jpg"
+    },
+    {
+      "tag": "video",
+      "src": null,
+      "title": null,
+      "poster": "/assets/Dr Siraj and Dr. Miftah Neodent dental clinic - during treatment.webp"
+    }
+  ],
+  "text": "Home›TreatmentsDental care for the concerns that bring you to Neodent.From dental implants and full mouth rehabilitation to orthodontic alignment, root canal treatment, crowns, dentures, veneers and smile-focused cosmetic dentistry, Neodent brings different areas of dental care together around the concerns that matter to each patient. Call Neodent Dr. Md. Miftah Ur RahmanBDS · MDS · FICOI (U.S.A.) · Prosthodontist & ImplantologistWhether the concern is a missing tooth, damaged or worn teeth, tooth pain, difficulty chewing, changes in alignment or the appearance of a smile, the right treatment begins with understanding what is happening clinically and what the patient wants to achieve.Every treatment begins with careful assessment rather than a one-size-fits-all approach. The condition of the teeth and gums, bite and function, existing dental work, overall oral health and the patient's treatment goals can all influence the treatment plan. Depending on the concern, care may involve restorative dentistry, prosthodontics, implant dentistry, orthodontics or cosmetic treatment, with the approach shaped around what is clinically appropriate.For more complex concerns, treatment may involve several stages or more than one area of dentistry. Full mouth rehabilitation, for example, can require careful coordination of restorative and prosthodontic treatment to address multiple functional and dental concerns together. Similarly, replacing missing teeth with dental implants involves assessment, planning and restoration rather than simply placing an implant.Across these treatments, Neodent's approach remains focused on clear clinical explanation, thoughtful planning and care that considers oral health, function and appearance together. With locations in Mehdipatnam and Nampally, Hyderabad, the practice provides access to a broad range of specialist-led dental treatment within the same clinical environment.Featured dental treatments.Neodent approaches different dental concerns through clinical assessment and treatment planning, drawing on a range of restorative, implant, orthodontic, prosthodontic and cosmetic treatment options. These featured treatments represent the primary clinical focuses at Neodent Dental Hospital, Mehdipatnam and Nampally.Full Mouth RehabilitationPlan staged care when many teeth or the bite need attention.Full Mouth Rehabilitation in detail Composite Build-upRebuild part of a damaged tooth with tooth-coloured composite resin.Composite Build-up in detail Dental ImplantsReplace a missing tooth with an implant-supported crown, bridge or denture.Dental Implants in detail Root Canal TreatmentTreat infection or inflammation inside a tooth so it may be kept.Root Canal Treatment in detail Braces & OrthodonticsGradually move teeth into position, then use retainers to help hold them.Braces & Orthodontics in detail Smile Design & Cosmetic DentistryPlan cosmetic options around the changes you want to make to your smile.Smile Design & Cosmetic Dentistry in detail Scaling & PolishingRemove plaque and tartar, then polish the tooth surfaces.Scaling & Polishing in detail Not sure which treatment you need?Explore our treatments or speak with our team to understand your options.Speak with our team Additional dental services.Alongside the featured treatments, Neodent provides a broader range of restorative, cosmetic, preventive and surgical dental services. These services can form part of routine care or be considered alongside more comprehensive treatment, depending on the patient's clinical needs.Restorative & ProsthodonticsCrowns & BridgesComplete DenturesRemovable Partial DenturesFillings & SealantsCosmetic DentistryVeneersTeeth WhiteningTeeth ReshapingCosmetic ProceduresGeneral & PreventiveTeeth CleaningExtractionsPaediatric DentistryMouth GuardsSurgicalOral SurgeryLaser DentistryThe thinking behind treatment.Dr. Mohd. Siraj Ur RahmanFounder & DirectorQualificationsBDS · FCIP · MDS (Chennai)SpecialismProsthodontist & ImplantologistExperience30+ years of clinical practiceApproachSpecialist training in prosthodontics and implantology, and 30+ years of clinical practice, inform how Neodent assesses and plans treatment for each patient.Dr. Md. Miftah Ur RahmanAssistant DirectorQualificationsBDS · MDS · FICOI (U.S.A.)SpecialismProsthodontist & ImplantologistRecognitionGold MedallistApproachSpecialist qualifications in prosthodontics and implantology, including FICOI (U.S.A.), underpin his approach to restorative and implant-based treatment at Neodent.View Dr. Md. Miftah Ur Rahman’s profile Treatment at Neodent begins with understanding the patient's concern. Not every dental condition requires the same response — some patients need care focused on a single affected tooth, while others may benefit from a more comprehensive treatment plan addressing multiple areas of the mouth.Clinical assessment considers oral health, function and aesthetic goals together. Where appropriate, the team discusses suitable treatment options, explains what each approach involves, and helps patients understand the clinical considerations relevant to their condition.Treatment planning at Neodent is not a fixed sequence — it is shaped by each patient's specific condition. The clinical team outlines available options, explains what each approach involves, and ensures that every decision is made with the patient's informed understanding.Understanding DMLS Crowns & Functional StrengthDr. Md. Miftah Ur Rahman explains the functional characteristics of DMLS crowns, including their masticatory efficiency and clinical strength. Part of Neodent's approach to helping patients understand the materials and methods used in their treatment.ClinicianDr. Md. Miftah Ur RahmanQualificationsBDS · MDS · FICOI (U.S.A.)SpecialismProsthodontist & ImplantologistClinical EducationDr. Md. Miftah Ur Rahman / DMLS Crowns & Masticatory EfficiencyHow treatment takes shape.Every treatment begins with understanding the patient's concern, followed by clinical assessment and treatment planning. The approach then moves into appropriate treatment and follow-up according to the patient's clinical situation.UnderstandUnderstand the patient's concern, symptoms and goals.AssessEvaluate the dental condition and areas requiring attention.PlanConsider suitable treatment options based on the clinical situation.TreatCarry out the selected treatment and appropriate follow-up.Real cases. Visible outcomes.Selected cases from Neodent showing treatment outcomes across restorative, implant and smile procedures. Each case reflects the clinical work carried out at Neodent.Clinical FilmFull Mouth Rehabilitation Using Dental Implants / Neodent Dental Hospital · MehdipatnamSee the work behind the treatment.These films are a record of real clinical work carried out at Neodent Dental Hospital, Hyderabad — procedures performed by Dr. Md. Miftah Ur Rahman using the same methods and materials discussed during patient consultation.This clinical film captures a full mouth rehabilitation procedure using dental implants at Neodent Dental Hospital, Mehdipatnam. The footage offers a closer view of the clinical work involved in restoring missing teeth through an implant-based treatment approach.Clinical Treatment DetailReal clinical treatment by the Neodent teamCrown CementationCementation procedure / Dr. Md. Miftah Ur RahmanTreatment in PracticeClinical dental procedure at NeodentBeforeAfterAnterior Smile DesignSmile restoration following an accident, using zirconia crownsBeforeAfterFull Mouth Rehabilitation with ImplantsComprehensive rehabilitation using dental implants at MehdipatnamBeforeAfterUpper Arch Rehabilitation with ImplantsUpper arch restoration using implant-supported prosthetics at NampallyBeforeAfterScaling & PolishingProfessional cleaning and polishing treatmentExperience, evidence & what patients see.Patient reviewsMehdipatnam4.3★★★★☆260 reviewsNampally4.5★★★★½155 reviewsThree decades of practice, two Hyderabad locations, and a clinical approach built around considered care.Established 1994Three decades of clinical practice in HyderabadSpecialist-LedProsthodontic and implant expertiseTwo LocationsMehdipatnam and Nampally, HyderabadQuestions about treatmentHow do I know which dental treatment I need?Treatment recommendations are based on a clinical assessment of your dental condition. During a consultation, the dentist will evaluate your oral health and discuss suitable treatment options with you based on your specific concerns and goals.What is full mouth rehabilitation?Full mouth rehabilitation is a comprehensive approach to restoring oral health and function when multiple teeth are affected. It may involve a combination of treatments such as dental implants, crowns, bridges and other restorative procedures, planned together to address the overall condition.When are dental implants considered?Dental implants may be considered as a treatment option for replacing one or more missing teeth. The suitability of implants depends on factors including the condition of the jawbone, overall oral health, and individual patient factors, which are assessed during consultation.What is root canal treatment?Root canal treatment is a procedure aimed at addressing problems within the inner portion of an affected tooth. The goal is to preserve the natural tooth where clinically appropriate, rather than extracting it.What is smile designing?Smile designing refers to the aesthetic planning and treatment focused on improving the appearance of the smile. This may involve procedures such as veneers, crowns, orthodontics or other cosmetic dental work, depending on the patient's goals and clinical suitability.Can multiple dental treatments be planned together?Yes, in cases where multiple dental concerns need to be addressed, treatments can be coordinated as part of a comprehensive treatment plan. The sequence and approach will depend on your specific condition and priorities.Ready to discuss your dental concerns?Call us to arrange a consultation. You don't need to know which treatment you need before reaching out. You can also send an enquiry on our contact page. Call Neodent Mehdipatnam4:00 PM – 8:00 PMCallDirectionsNampally10:30 AM – 5:00 PMCallDirectionsSunday holiday"
+}

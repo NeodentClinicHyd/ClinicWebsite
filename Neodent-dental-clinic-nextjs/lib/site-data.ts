@@ -16,10 +16,34 @@
 export const SITE_URL = "https://www.neodentdentalhospitals.com";
 export const SITE_NAME = "Neodent Dental Hospital";
 
+/* ------------------------------------------------------------------
+   Founding year — the clinic's "Since 1994" benchmark (home redesign
+   reference, Parts 3.6 and 7). The clinic's age is always calculated,
+   never hard-coded: 32 in 2026. Dr. Siraj founded the clinic that year,
+   so his years of experience (founder.experienceYears) are counted from
+   the same year: "32+" in 2026 (owner, 31 Oct 2026).
+   legacyStats.established below still holds the same year as a string;
+   it is left untouched until the sections that render it are migrated.
+   ------------------------------------------------------------------ */
+export const ESTABLISHED_YEAR = 1994;
+
+export function yearsSinceEstablished(): number {
+  return new Date().getFullYear() - ESTABLISHED_YEAR;
+}
+
 export const entranceImage = "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg";
 export const waitingImage = "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg";
 export const doctorImage = "/assets/dr-miftah/Dr. Md. Miftah Ur Rahman - Neodent Dental Hospital.png";
 export const recognitionImage =
+  "/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png";
+/* Home hero slide 1 portrait (the transparent cut-out of Dr. Siraj).
+   To use a re-cut file, change this one path. The hero CSS lays the
+   figure out from the current file's proportions (714x623, head centre
+   0.168 x width from the top, face from 0.41 to 0.67 of the width; see
+   "Slide 1: portrait stage" in app/globals.css), so a cut-out framed
+   differently needs those numbers checked. Kept separate from
+   recognitionImage, which other sections use. */
+export const heroPortraitImage =
   "/assets/Dr. Mohd. Siraj Ur Rahman - Neodent Dental Hospital Hyd.png";
 export const treatmentVideo =
   "/assets/treatment-video/Dr. Miftah Neodent dental clinic Hyderabad - treatment video.mp4";
@@ -28,6 +52,14 @@ export const treatmentVideo =
    which is Dr. Miftah's clinical demonstration used by Doctor.tsx)
    because the two videos serve different sections and subjects. */
 export const tourVideo = "/assets/Neodent dental clinic tour video.mp4";
+/* The part of the 21 s tour that ExperienceIntro plays, chosen from
+   frames extracted at 1 s steps (home redesign P2). 0-2 s is a close-up
+   of a red pillar, 17 s passes another pillar and 19-21 s is a promo
+   card ("almost 3 decades", "free consultation") that conflicts with the
+   site's "Since 1994" copy. 3-16.5 s is the waiting area, reception,
+   awards wall and treatment rooms. The poster is the 3 s frame. */
+export const tourVideoSegment = { start: 3, end: 16.5 } as const;
+export const tourVideoPoster = "/assets/neodent-tour-video-poster-waiting-area.webp";
 /* Section 01's atmospheric background layer -- a real, generic clinic
    interior (not tied to either Mehdipatnam or Nampally specifically,
    so it never repeats Hero Slide 02's location story). Used heavily
@@ -183,34 +215,23 @@ export const galleryItems = [
    aria-label ("Show <label> slide") and its data-testid both read
    from here, so the label has to describe the slide's real subject. */
 export const heroSlideMeta = [
-  { id: "hospital", label: "Hospitals" },
-  { id: "locations", label: "Locations" },
+  { id: "hospital", label: "Since 1994" },
+  { id: "locations", label: "Our two clinics" },
   { id: "record", label: "Recognition" },
 ] as const;
 export const HERO_AUTOPLAY_MS = 7000;
 
 /* ------------------------------------------------------------------
-   Hero Slide 02 — "Where Neodent is": the two Hyderabad locations.
+   Hero Slide 02 — "Two clinics. One standard of care."
 
-   Only branch names and location detail ALREADY VERIFIED inside this
-   project are used here. Nampally's "Medwin Hospital Complex" comes
-   from `heroLocations` above (and is legible on the branch's own
-   signboard in the supplied photograph). No street address is
-   invented for Mehdipatnam, so that branch carries the city only.
-
-   Asset -> plate mapping is deliberate rather than mechanical. Each
-   branch's LARGER plate uses the higher-resolution file of its pair,
-   and the smaller overlapping plane uses the lower-resolution one, so
-   no photograph is ever upscaled past its native size:
-
-     Mehdipatnam  plate = interior  (960 x 1280)
-                  inset = exterior  (384 x 512, entrance/threshold)
-     Nampally     plate = exterior  (2240 x 1680, street frontage)
-                  inset = interior  (1668 x 2224, reception)
-
-   That also gives the two branches different subjects at different
-   scales -- street presence vs. arrival -- instead of two identical
-   cards.
+   One photograph per branch, shown at the same height, each with a
+   tappable caption row that links to the branch page. Descriptors use
+   only location detail already verified in this file (the Mehdipatnam
+   address above, and "Medwin Hospital Complex" from heroLocations).
+   Each branch uses the higher-resolution file of its pair, so no photo
+   is upscaled:
+     Mehdipatnam  interior  (960 x 1280, waiting lounge)
+     Nampally     exterior  (2240 x 1680, street frontage and signage)
    ------------------------------------------------------------------ */
 export const mehdipatnamExteriorImage =
   "/assets/neodent-clinic-mehdipatnam/Neodent dental hospital - mehdipatnam Exterior.jpg";
@@ -335,52 +356,47 @@ export const clinicGalleryImages: readonly ClinicGalleryImage[] = [
   },
 ] as const;
 
-export type HeroBranchPhoto = { src: string; alt: string };
 export type HeroBranch = {
-  /** Editorial index used for the oversized background numeral. */
-  index: string;
+  id: "mehdipatnam" | "nampally";
   name: string;
-  /**
-   * Location metadata, one entry per segment. Never an invented address.
-   * Kept as parts rather than a pre-joined string so the component can
-   * bind each "·" separator to the word before it -- otherwise a narrow
-   * mobile column wraps and leaves a separator stranded at the start of
-   * a line.
-   */
-  meta: readonly string[];
-  /** Variant token that drives this branch's composition in CSS. */
-  variant: "a" | "b";
-  plate: HeroBranchPhoto;
-  inset: HeroBranchPhoto;
+  /** Short location descriptor shown under the name. Never invented. */
+  descriptor: string;
+  href: string;
+  photo: {
+    src: string;
+    alt: string;
+    /** object-position focal point for the cover crop. */
+    focal: string;
+  };
 };
 
 export const heroBranches: readonly HeroBranch[] = [
   {
-    index: "01",
+    id: "mehdipatnam",
     name: "Mehdipatnam",
-    meta: ["Dental hospital", "Hyderabad"],
-    variant: "a",
-    plate: {
+    descriptor: "Humayun Nagar, Hyderabad",
+    href: "/clinic/mehdipatnam",
+    photo: {
       src: mehdipatnamInteriorImage,
-      alt: "Neodent Dental Hospital Mehdipatnam interior — the patient waiting lounge",
-    },
-    inset: {
-      src: mehdipatnamExteriorImage,
-      alt: "Neodent Dental Hospital Mehdipatnam exterior — the entrance doorway and registration counter",
+      alt: "Neodent Dental Hospital Mehdipatnam interior, the patient waiting lounge",
+      focal: "50% 40%",
     },
   },
   {
-    index: "02",
+    id: "nampally",
     name: "Nampally",
-    meta: ["Medwin Hospital Complex", "Hyderabad"],
-    variant: "b",
-    plate: {
+    descriptor: "Medwin Hospital Complex, Hyderabad",
+    href: "/clinic/nampally",
+    photo: {
       src: nampallyExteriorImage,
-      alt: "Neodent Dental Hospital Nampally exterior — the street frontage and signage",
-    },
-    inset: {
-      src: nampallyInteriorImage,
-      alt: "Neodent Dental Hospital Nampally interior — the reception and registration counter",
+      alt: "Neodent Dental Hospital Nampally exterior, the street frontage and signage",
+      /* The 1280x960 photo is always cropped at the sides (the card is
+         narrower than 4:3). The sign's lettering runs from about x 290
+         to x 890. The card's height is capped by its width (hero CSS:
+         1.45 x on phones, 1.52 x on desktop) so at least about 630
+         source px stay visible; at 42% the visible window then starts
+         at about x 273 and ends past x 900, so the whole name reads. */
+      focal: "42% 50%",
     },
   },
 ] as const;
@@ -428,65 +444,51 @@ export const tvInterviewImage = "/assets/dr-siraj-tv-interview.jpg";
 export const awardsWallImage = "/assets/neodent-awards-recognition.jpg";
 
 export type HeroRecordItem = {
-  /** Editorial index used by the channel list and the ghost numeral system. */
-  index: string;
-  /** Channel label for the index list. Kept to one or two words. */
-  channel: string;
-  /**
-   * Caption parts, outlet only — never a person. Kept as parts rather
-   * than a pre-joined string so the component can bind each "·"
-   * separator to the word before it with a non-breaking space, exactly
-   * as heroBranches does; otherwise a narrow column wraps and strands a
-   * separator at the start of a line.
-   */
-  source: readonly string[];
-  /** Variant token that drives this plate's composition in CSS. */
-  variant: "press" | "media" | "award";
+  id: "press" | "media" | "award";
+  /** Caption: the outlet or what the artifact is, never a person. */
+  caption: string;
+  /** Documents (newspaper cuttings) use contain; photographs use cover. */
+  kind: "document" | "photo";
+  /** object-position focal point (photos only). */
+  focal?: string;
   src: string;
   alt: string;
   sizes: string;
 };
 
-/* Order is the reading order of the evidence: press, then public
-   media, then the institutional recognition band. The awards plate is
-   the conditional third plane — it earns its place only because the
-   band crop (see --record-* tokens in globals.css) reads as a wall of
-   recognition rather than a trophy shelf. */
+/* Reading order of the evidence: the press cutting (shown whole, as a
+   document), then the broadcast frame, then the awards display.
+   No English translation of the Siasat headline is shown: the proposed
+   caption in the redesign reference (Part 8) still needs the clinic's
+   approval. */
 export const heroRecordItems: readonly HeroRecordItem[] = [
   {
-    index: "01",
-    channel: "Press",
-    source: ["The Siasat Daily", "Hyderabad"],
-    variant: "press",
+    id: "press",
+    caption: "The Siasat Daily, Hyderabad",
+    kind: "document",
     src: siasatPressImage,
-    alt: "The Siasat Daily, Hyderabad — newspaper coverage of a Neodent Dental Hospital dental implant camp and lecture.",
-    sizes: "(max-width: 767px) 46vw, (max-width: 1023px) 40vw, 30vw",
+    alt: "The Siasat Daily, Hyderabad: newspaper coverage of a Neodent Dental Hospital dental implant camp and lecture.",
+    sizes: "(max-width: 767px) 40vw, 300px",
   },
   {
-    index: "02",
-    channel: "Public media",
-    source: ["News18 Urdu"],
-    variant: "media",
+    id: "media",
+    caption: "News18 Urdu",
+    kind: "photo",
+    focal: "50% 30%",
     src: tvInterviewImage,
-    alt: "News18 Urdu television — a dental health segment on the programme Hello Parwaz featuring Neodent Dental Hospital.",
-    sizes: "(max-width: 767px) 40vw, (max-width: 1023px) 36vw, 27vw",
+    alt: "News18 Urdu television: a dental health segment on the programme Hello Parwaz featuring Neodent Dental Hospital.",
+    sizes: "(max-width: 767px) 60vw, 420px",
   },
   {
-    index: "03",
-    channel: "Recognition",
-    source: ["Institutional recognition"],
-    variant: "award",
+    id: "award",
+    caption: "Awards and certificates",
+    kind: "photo",
+    focal: "50% 62%",
     src: awardsWallImage,
     alt: "Awards, mementos and certificates received by Neodent Dental Hospital, on display at the hospital.",
-    /* Deliberately larger than this plate's rendered width. The plate
-       applies a crop zoom on top of object-position (see
-       --record-crop-zoom in globals.css), so only part of the served
-       file ends up on screen — requesting the plate's own width would
-       leave the visible crop soft. */
-    sizes: "(max-width: 767px) 70vw, (max-width: 1023px) 58vw, 44vw",
+    sizes: "(max-width: 767px) 60vw, 420px",
   },
 ] as const;
-
 
 /* ------------------------------------------------------------------
    Homepage legacy section (components/sections/LegacyStory.tsx) —
@@ -513,7 +515,7 @@ export const founder = {
   academicTitle: founderAcademicTitle,
   academicInstitution: founderAcademicInstitution,
   academicPost: `${founderAcademicTitle}, ${founderAcademicInstitution}`,
-  experienceYears: "30+",
+  experienceYears: `${yearsSinceEstablished()}+`,
   image: recognitionImage,
   imageAlt:
     "Dr. Mohd. Siraj Ur Rahman, founder and director of Neodent Dental Hospital",

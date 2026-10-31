@@ -1,0 +1,55 @@
+/* S1 intro: statement left (5/12), reading column right (7/12). */
+.intro {
+  padding: clamp(48px, 5.4vw, 80px) 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(24px, 4vw, 56px);
+  row-gap: 28px;
+  align-items: start;
+}
+.deck {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.statement {
+  margin: 0;
+  max-width: 34em;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.4rem, 2.1vw, 1.95rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
+  text-wrap: balance;
+}
+.body {
+  grid-column: 1 / -1;
+  min-width: 0;
+  max-width: 70ch;
+}
+.body p {
+  margin: 0 0 18px;
+}
+.body p:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 1024px) {
+  .deck {
+    grid-column: 1 / 6;
+    position: sticky;
+    top: calc(var(--nav-height-desktop) + 24px);
+  }
+  .body {
+    grid-column: 6 / -1;
+    max-width: none;
+  }
+  .body p {
+    max-width: 70ch;
+  }
+}
+@media (max-width: 767px) {
+  .intro {
+    padding: 40px 0 44px;
+  }
+}

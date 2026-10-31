@@ -1,0 +1,58 @@
+/* ResponsiveDetails: a disclosure on phones, plain text from 768px. */
+.details {
+  min-width: 0;
+}
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0;
+  list-style: none;
+  color: var(--neodent-red);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  border-top: 1px solid var(--hub-hair, rgba(38, 48, 51, 0.12));
+}
+.summary::-webkit-details-marker {
+  display: none;
+}
+.summary svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+.details[open] .summary svg {
+  transform: rotate(180deg);
+}
+.summary:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+.body {
+  min-width: 0;
+  padding-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .summary {
+    display: none;
+  }
+  /* Always show the text, even if a phone-sized toggle closed it. */
+  .details::details-content {
+    content-visibility: visible;
+    display: block;
+  }
+  .body {
+    padding-top: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .summary svg {
+    transition: none;
+  }
+}

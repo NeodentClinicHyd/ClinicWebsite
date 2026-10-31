@@ -1,0 +1,128 @@
+/* S5 DMLS split. */
+.section {
+  padding: clamp(52px, 5.6vw, 80px) 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(24px, 4vw, 56px);
+  row-gap: 32px;
+  align-items: center;
+}
+.card {
+  grid-column: 1 / -1;
+  min-width: 0;
+  padding: 24px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--hub-hair);
+  border-radius: var(--hub-radius);
+  box-shadow: var(--hub-shadow-sm);
+}
+.title {
+  font-size: clamp(2.1rem, 3.4vw, 3.3rem);
+}
+.lede {
+  margin: 18px 0 0;
+}
+.rows {
+  display: grid;
+  gap: 14px;
+  margin: 26px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--hub-hair);
+}
+.rows > div {
+  display: grid;
+  gap: 2px 24px;
+}
+.rows dt {
+  color: var(--hub-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.rows dd {
+  margin: 0;
+  color: var(--neodent-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.rows > div:first-child dd {
+  font-weight: 600;
+}
+.nameLink {
+  text-decoration: underline;
+  text-decoration-color: rgba(215, 25, 32, 0.7);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+.nameLink:hover {
+  text-decoration-color: var(--neodent-red);
+}
+.nameLink:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+
+/* ---- film + caption ---- */
+.figure {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0;
+  justify-self: center;
+  width: min(100%, calc(var(--media-max-h-compact) * 0.75));
+}
+.shadow {
+  border-radius: 18px;
+  box-shadow: var(--hub-shadow);
+}
+.frame {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--hub-hair);
+  border-radius: 18px;
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 4px 0;
+  color: var(--hub-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.caption b {
+  color: var(--neodent-red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 36px;
+  }
+  .rows > div {
+    grid-template-columns: 140px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+@media (min-width: 1024px) {
+  .card {
+    grid-column: 1 / 8;
+    grid-row: 1;
+  }
+  .figure {
+    grid-column: 8 / -1;
+    grid-row: 1;
+    justify-self: center;
+  }
+}
+@media (max-width: 767px) {
+  .section {
+    padding: 40px 0 44px;
+  }
+}

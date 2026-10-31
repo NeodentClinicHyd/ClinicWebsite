@@ -1,23 +1,26 @@
-/* Section 08 — Let's make your next step feel simple.
+/* Home section: Book a consultation (id="get-in-touch").
 
-   Same dark-room tokens and surface treatment as Section 07
-   (SpacesDesignedAroundCare): local charcoal / ivory / red, DM Serif
-   Display title with a red italic closing line, .section-lede body copy.
-   The content is one floating card in normal flow -- no absolute
-   positioning, so it cannot overlap the navigation or the footer.
-   Nothing here edits globals.css or any other section. */
+   Dark surface with local tokens, like the other dark home sections.
+   Desktop (960px and up): intro and the two clinic call cards on the
+   left, the form on an ivory card on the right. Below that everything
+   stacks: intro, call cards, form. Nothing here edits globals.css. */
 
 .section {
   --charcoal: #121316;
   --ivory: #f1eee7;
-  --muted: rgba(241, 238, 231, 0.58);
+  --paper: #fffefa;
+  --ink: #263033;
+  --ink-soft: rgba(38, 48, 51, 0.72);
+  --line-dark: rgba(241, 238, 231, 0.14);
+  --line-light: rgba(38, 48, 51, 0.22);
   --red: #d71920;
+  --red-dark: #b5121a;
   position: relative;
   overflow: hidden;
   isolation: isolate;
   background: var(--charcoal);
   color: var(--ivory);
-  padding: clamp(64px, 8vw, 104px) 0;
+  padding: clamp(64px, 7vw, 104px) 0;
 }
 .section::before {
   content: "";
@@ -31,137 +34,378 @@
 }
 
 .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  align-items: center;
+  gap: 40px clamp(40px, 6vw, 88px);
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
 }
 
-/* ---- Card -----------------------------------------------------------
-   ~80% of the viewport on wide screens, never wider than the site
-   container. Below 1100px it takes the full container so text keeps a
-   comfortable measure. Centred in the container. */
-.card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(32px, 5vw, 72px);
-  width: min(80vw, 100%);
-  margin: 0 auto;
-  padding: clamp(40px, 5vw, 72px) clamp(36px, 5.5vw, 80px);
-  background: #191b1f;
-  border: 1px solid rgba(241, 238, 231, 0.14);
-  border-radius: 20px;
-  box-shadow: 0 36px 80px -36px rgba(0, 0, 0, 0.75);
-  transition:
-    opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+/* ---- Intro + call cards ------------------------------------------- */
+.intro {
+  min-width: 0;
 }
-.section:not(.visible) .card {
-  opacity: 0;
-  transform: translateY(16px);
-}
-
 .title {
   margin: 0;
   font-family: var(--app-font-serif);
-  font-size: clamp(2.3rem, 3.6vw, 3.6rem);
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
   font-weight: 400;
-  letter-spacing: -0.04em;
-  line-height: 1.06;
-  text-wrap: balance;
-}
-.title span {
-  display: block;
-  color: var(--red);
-  font-style: italic;
-}
-
-/* Message column, set off from the title by a single hairline. */
-.body {
-  padding-left: clamp(32px, 5vw, 72px);
-  border-left: 1px solid rgba(241, 238, 231, 0.14);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
 }
 /* Type (size / leading / colour / measure) comes from .section-lede. */
 .lede {
-  margin: 0;
+  margin: 18px 0 0;
+  max-width: 480px;
 }
 
-/* Contact link: solid red, readable on charcoal, 48px touch target. */
-.cta {
+.clinics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.clinic {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid var(--line-dark);
+  border-radius: 16px;
+  background: rgba(241, 238, 231, 0.04);
+}
+.clinicName {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.clinicHours {
+  margin: 6px 0 16px;
+  color: rgba(241, 238, 231, 0.72);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.call {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 9px;
   min-height: 48px;
-  margin-top: 28px;
-  padding: 0 24px;
-  border: 1px solid var(--red);
+  margin-top: auto;
+  padding: 0 16px;
   border-radius: 999px;
   background: var(--red);
   color: #fff;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: background-color 0.2s ease, color 0.2s ease, gap 0.2s ease;
+  white-space: nowrap;
+  transition: background-color 200ms ease;
 }
-.cta:hover,
-.cta:focus-visible {
-  background: transparent;
-  color: var(--ivory);
-  gap: 14px;
-}
-.cta:focus-visible {
+.call:hover { background: var(--red-dark); }
+.call:focus-visible {
   outline: 2px solid var(--ivory);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
-/* ---- Tablet / small laptop: stack, card fills the container --------- */
-@media (max-width: 1100px) {
-  .card {
-    width: 100%;
-  }
+/* ---- Form card ----------------------------------------------------- */
+.card {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 20px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 36px 80px -36px rgba(0, 0, 0, 0.75);
+}
+.form {
+  display: grid;
+  gap: 18px;
+}
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 16px;
+}
+.field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.field label,
+.choice legend {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.optional {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  border: 1px solid var(--line-light);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 16px; /* 16px stops iOS zooming on focus */
+  line-height: 1.4;
+}
+.field select {
+  appearance: none;
+  padding-right: 40px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+.field textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+  border-color: var(--ink);
+}
+.field [aria-invalid="true"] {
+  border-color: var(--red-dark);
+}
+.fieldError {
+  color: var(--red-dark);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-@media (max-width: 860px) {
-  .card {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    padding: 44px 40px;
-  }
-  .body {
-    padding-left: 0;
-    padding-top: 28px;
-    border-left: none;
-    border-top: 1px solid rgba(241, 238, 231, 0.14);
-  }
+/* Clinic: two radio pills */
+.choice {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.choice legend {
+  margin-bottom: 6px;
+  padding: 0;
+}
+.choiceRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.choiceOption {
+  position: relative;
+  display: flex;
+}
+.choiceOption input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.choiceOption span {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 8px;
+  border: 1px solid var(--line-light);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.row .choiceOption span {
+  font-size: 14px;
+}
+.choiceOption input:checked + span {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.choiceOption input:focus-visible + span {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.choiceOption input[data-invalid="true"] + span {
+  border-color: var(--red-dark);
+}
+.choice .fieldError {
+  display: block;
+  margin-top: 6px;
 }
 
-/* ---- Mobile: in flow, no overflow ----------------------------------- */
-@media (max-width: 767px) {
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.consent {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.consent a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-underline-offset: 3px;
+}
+.consent a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.verify {
+  min-width: 0;
+}
+/* Same height as the loaded TurnstileWidget block: label (14px x 1.4),
+   8px gap and Cloudflare's 71px "flexible" widget (measured: 99px). */
+.verifyPending {
+  min-height: calc(14px * 1.4 + 8px + 71px);
+}
+
+.formError {
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 3px solid var(--red);
+  border-radius: 6px;
+  background: rgba(215, 25, 32, 0.08);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+.submit:hover:not(:disabled) { background: var(--red-dark); }
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+.submit:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Success ------------------------------------------------------- */
+.success {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding: 8px 0;
+}
+.successMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+}
+.successTitle {
+  margin: 4px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+.successCopy {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.secondary {
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 0 22px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.secondary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ---- Responsive ---------------------------------------------------- */
+@media (max-width: 959px) {
   .container {
-    width: min(100% - 32px, 600px);
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 640px;
   }
-  .card {
-    padding: 32px 22px;
-    border-radius: 16px;
-  }
-  .title {
-    font-size: clamp(2rem, 9vw, 2.5rem);
-  }
-  .cta {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
+}
+
+@media (max-width: 767px) {
+  .container { width: min(100% - 32px, 600px); gap: 28px; }
+  .title { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+  .clinics { margin-top: 24px; gap: 12px; }
+  .card { padding: 22px 18px; border-radius: 16px; }
+}
+
+@media (max-width: 479px) {
+  .clinics,
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .clinic { padding: 16px; }
+  .clinicHours { margin-bottom: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .cta {
-    transition: none;
-  }
-  .section:not(.visible) .card {
-    opacity: 1;
-    transform: none;
-  }
+  .call,
+  .submit,
+  .choiceOption span { transition: none; }
+  .spinner { animation: none; }
 }

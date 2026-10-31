@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
+import { founder } from "@/lib/site-data";
 import { useReveal } from "./useReveal";
 import shared from "./shared.module.css";
 import styles from "./AboutFounder.module.css";
@@ -43,7 +44,7 @@ export function AboutFounder() {
                   <p className={shared.label}>Founder · Director · Neodent</p>
                 </div>
                 <p className={shared.exp}>
-                  <strong>30+</strong>
+                  <strong>{founder.experienceYears}</strong>
                   <span>Years of experience</span>
                 </p>
               </div>
@@ -125,7 +126,7 @@ export function AboutFounder() {
             <p className={shared.lede}>
               With{" "}
               <EditorialHighlight tone="quiet">
-                30+ years of experience
+                {founder.experienceYears} years of experience
               </EditorialHighlight>{" "}
               in dentistry, Dr. Mohd. Siraj Ur Rahman&apos;s clinical
               philosophy has always placed the patient conversation ahead of

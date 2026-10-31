@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
+import { founder } from "@/lib/site-data";
 import styles from "./TreatmentThinking.module.css";
 
 /* ------------------------------------------------------------------
@@ -214,7 +215,7 @@ export function TreatmentThinking() {
                 <p className={styles.doctorSpecialty}>Prosthodontist &amp; Implantologist</p>
                 <p className={styles.doctorContext}>
                   Specialist training in prosthodontics and implantology, and
-                  30+ years of clinical practice, inform how Neodent assesses
+                  {founder.experienceYears} years of clinical practice, inform how Neodent assesses
                   and plans treatment for each patient.
                 </p>
               </div>

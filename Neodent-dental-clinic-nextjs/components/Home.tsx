@@ -19,13 +19,50 @@ import { AppButton } from "@/components/ui/AppButton";
 import {
   ctaTelPhone,
   LEAD_CAPTURE_SESSION_KEY,
-  recognitionImage,
 } from "@/lib/site-data";
 
 export function Home() {
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
   const [leadCaptureOpen, setLeadCaptureOpen] = useState(false);
   const leadCaptureShown = useRef(false);
+  /* The fixed mobile call bar hides while any hero "Call for
+     Consultation" button is on screen (reference Part 3.4). */
+  const [heroCallVisible, setHeroCallVisible] = useState(true);
+
+  useEffect(() => {
+    // IntersectionObserver is in every supported browser; without it the
+    // bar simply stays hidden and the hero's own call button remains.
+    if (typeof IntersectionObserver === "undefined") return;
+    const buttons = document.querySelectorAll<HTMLElement>("#home .hero-primary");
+    if (buttons.length === 0) return;
+    const visible = new Set<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
+      }
+      setHeroCallVisible(visible.size > 0);
+    });
+    buttons.forEach((button) => observer.observe(button));
+    return () => observer.disconnect();
+  }, []);
+
+  /* The site's floating call button (FloatingCta) hides on phones while
+     any part of the hero is on screen; the CSS in the hero block of
+     globals.css reads this attribute (home redesign P1c). */
+  useEffect(() => {
+    const root = document.documentElement;
+    const hero = document.getElementById("home");
+    if (!hero || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(([entry]) => {
+      root.dataset.heroInView = entry.isIntersecting ? "true" : "false";
+    });
+    observer.observe(hero);
+    return () => {
+      observer.disconnect();
+      delete root.dataset.heroInView;
+    };
+  }, []);
 
   useEffect(() => {
     const original = document.body.style.overflow;
@@ -45,13 +82,17 @@ export function Home() {
       // sessionStorage unavailable; fall back to in-memory tracking only.
     }
 
+    // The modal waits until half the page has been read on desktop, and
+    // until about 70% on phones, where it covers most of the screen.
+    const threshold = window.matchMedia("(max-width: 767px)").matches ? 0.7 : 0.5;
+
     const onScroll = () => {
       if (leadCaptureShown.current) return;
       const doc = document.documentElement;
       const scrollable = doc.scrollHeight - window.innerHeight;
       if (scrollable <= 0) return;
       const progress = window.scrollY / scrollable;
-      if (progress >= 0.5) {
+      if (progress >= threshold) {
         leadCaptureShown.current = true;
         try {
           sessionStorage.setItem(LEAD_CAPTURE_SESSION_KEY, "1");
@@ -72,19 +113,9 @@ export function Home() {
       <main>
         <Hero />
         <ExperienceIntro />
-        {/* Sits on the seam: ExperienceIntro pads its bottom by
-            var(--seam-pad-above), LegacyStory its top by var(--seam-pad-below). */}
-        <SeamCard
-          image={{
-            src: recognitionImage,
-            alt: "Dr. Mohd. Siraj Ur Rahman, Director of Neodent Dental Hospital, Hyderabad",
-            width: 714,
-            height: 623,
-            topTrim: 2.1,
-            bottomTrim: 8.2,
-            focusX: 53,
-          }}
-        />
+        {/* Sits on the seam. Text-only (no portrait), so ExperienceIntro pads
+            its bottom by var(--seam-pad-above-text). */}
+        <SeamCard />
         <LegacyStory />
         <Expertise />
         <ClinicalLeadership />
@@ -94,7 +125,12 @@ export function Home() {
         <ContactNextStep />
       </main>
       <Footer />
-      <div className="mobile-bar">
+      <div
+        className="mobile-bar"
+        data-hidden={heroCallVisible ? "true" : undefined}
+        aria-hidden={heroCallVisible || undefined}
+        inert={heroCallVisible}
+      >
         <AppButton href={ctaTelPhone} variant="primary">
           <Phone size={14} /> Call Neodent <ArrowRight size={14} />
         </AppButton>

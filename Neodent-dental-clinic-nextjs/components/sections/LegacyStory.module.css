@@ -1,17 +1,14 @@
-/* Homepage legacy section — "Decades of changing smiles."
+/* Homepage legacy section: "Decades of changing smiles."
 
-   Rebuilt on the site's standard .container with a 12-column grid,
-   24–32px gutters and an 8px spacing scale. Only existing tokens are
-   used (--neodent-red / -ink / -ivory / -surface, --app-font-*,
-   --seam-card-h); the handful of local values below are scoped to
-   this module.
+   Layout on the site's .container: the "Since 1994" lockup across the
+   top, then a 12-column story (title, founder card, paragraph | press
+   record), then one closing band. Existing tokens only (--neodent-*,
+   --app-font-*, --media-max-h*, --seam-pad-below-text); local values
+   are scoped to .section.
 
-   Surfaces:  one large radius (20px — the same as the SeamCard above)
-              for cards, one small radius (8px) for press figures.
-   Red:       title accent, the experience numeral, the short rule and
-              the closing statement card. Nowhere else.
-   Motion:    one 12px / 400ms fade-up per block (see useReveal in the
-              component). No parallax, no count-up. */
+   Red: title accent, the experience numeral, the lockup markers and
+   the closing band. Motion comes from components/motion (Reveal,
+   CountUp, drawLineClass); this file only sizes and places. */
 
 .section {
   --lg-ink: var(--neodent-ink);
@@ -24,26 +21,30 @@
   --lg-radius-sm: 8px;
   --lg-pad: 24px;
   --lg-gutter: clamp(24px, 2.5vw, 32px);
-  --ghost: clamp(140px, 17vw, 240px);
+  /* Press plate height: inside the shared media cap and never taller
+     than 600px, so cutting plus caption stays well under 80% of the
+     viewport. */
+  --lg-lead-h: min(var(--media-max-h), 600px);
 
   position: relative;
+  /* clip, not hidden: overflow: hidden would make the section a scroll
+     container, and the draw lines' view() timeline would then track the
+     (non-scrolling) section instead of the page. */
   overflow: hidden;
+  overflow: clip;
   background: #ece7dc;
   color: var(--lg-ink);
-  /* The statement card hangs half its height below the seam
-     (--seam-card-h / 2); the clear space under it is added on top. */
-  padding: calc(var(--seam-card-h) / 2 + 72px) 0 clamp(88px, 8vw, 120px);
+  /* The text-only seam card above hangs into this section. */
+  padding: var(--seam-pad-below-text) 0 clamp(72px, 8vw, 112px);
 }
 
 @media (min-width: 768px) {
   .section {
     --lg-pad: 32px;
-    padding-top: calc(var(--seam-card-h) / 2 + clamp(96px, 12vw, 160px));
   }
 }
 
-/* The faint background grid that already existed in this section; the
-   arches, crosshairs, draft lines and vertical caption are gone. */
+/* The faint background grid this section already had. */
 .bgGrid {
   position: absolute;
   inset: 0;
@@ -60,31 +61,148 @@
   z-index: 1;
 }
 
-/* ---------- Shared type ---------- */
-
-.label,
-.chapter {
+.label {
   margin: 0;
   color: var(--lg-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   line-height: 1.5;
   text-transform: uppercase;
 }
+
+/* ---------- Since 1994 lockup ---------- */
+
+.lockup {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "year est"
+    "track track"
+    "today today";
+  align-items: end;
+  column-gap: 16px;
+  row-gap: 12px;
+  padding-bottom: 32px;
+  margin-bottom: clamp(40px, 6vw, 72px);
+  border-bottom: 1px solid var(--lg-hair);
+}
 @media (min-width: 1024px) {
-  .label,
-  .chapter {
-    font-size: 12px;
+  .lockup {
+    grid-template-columns: auto auto minmax(120px, 1fr) auto;
+    grid-template-areas: "year est track today";
+    column-gap: 32px;
   }
 }
 
-.chapter {
-  margin-bottom: 16px;
-  font-variant-numeric: tabular-nums;
+.year {
+  grid-area: year;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
-.chapter span {
+.since {
+  color: var(--neodent-red);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.yearNum {
+  margin-top: 8px;
   color: var(--lg-ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(88px, 26vw, 112px);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+}
+@media (min-width: 768px) {
+  .yearNum {
+    font-size: clamp(112px, 12vw, 168px);
+  }
+}
+
+.est {
+  grid-area: est;
+  margin: 0;
+  padding-bottom: 4px;
+  color: var(--lg-ink);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.est span {
+  display: block;
+  white-space: nowrap;
+}
+@media (min-width: 768px) {
+  .est {
+    font-size: 16px;
+  }
+}
+
+.track {
+  grid-area: track;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  min-width: 0;
+  margin-top: 12px;
+}
+@media (min-width: 1024px) {
+  .track {
+    align-self: end;
+    margin-top: 0;
+    /* Sit on the same line as the bottom of "Today". */
+    margin-bottom: 14px;
+  }
+}
+.trackStart,
+.trackEnd {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.trackStart {
+  background: var(--neodent-red);
+}
+.trackEnd {
+  background: var(--lg-surface);
+  border: 2px solid var(--neodent-red);
+}
+.trackLine {
+  flex: 1 1 auto;
+  height: 1px;
+  background: rgba(38, 48, 51, 0.45);
+}
+
+.today {
+  grid-area: today;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  text-align: right;
+}
+.today strong {
+  color: var(--lg-ink);
+  font-family: var(--app-font-serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+}
+.today span {
+  color: var(--lg-muted);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
 /* ---------- Story block ---------- */
@@ -93,7 +211,7 @@
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--lg-gutter);
-  row-gap: 56px;
+  row-gap: 48px;
   align-items: start;
 }
 .left,
@@ -113,51 +231,25 @@
 .left {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 32px;
 }
 
-/* Title + ghost year */
-.titleWrap {
-  position: relative;
-  isolation: isolate;
-  padding-top: calc(var(--ghost) * 0.3);
-}
-.ghost {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: -1;
-  color: rgba(38, 48, 51, 0.07);
-  font-family: var(--app-font-serif);
-  font-size: var(--ghost);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 0.8;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
 .title {
-  position: relative;
   margin: 0;
   font-family: var(--app-font-serif);
   font-size: clamp(2.5rem, 11.5vw, 3.6rem);
   font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 0.96;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 @media (min-width: 768px) {
   .title {
-    font-size: clamp(3rem, 5vw, 5.2rem);
+    font-size: clamp(3rem, 4.6vw, 4.4rem);
   }
 }
-.title span {
-  display: block;
+.title em {
   color: var(--neodent-red);
   font-style: italic;
-}
-.intro .label {
-  margin-top: 16px;
 }
 
 /* ---------- Founder card ---------- */
@@ -227,7 +319,7 @@
 }
 .exp span {
   color: var(--lg-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   line-height: 1.4;
@@ -261,8 +353,7 @@
   }
 }
 
-/* Credentials: same label / value rhythm as the Dr. Miftah profile
-   index (.practiceRow) so both doctor blocks read as one system. */
+/* Credentials: same label / value rhythm as the Dr. Miftah profile. */
 .facts {
   margin: 24px 0 0;
   border-top: 1px solid var(--lg-hair);
@@ -280,7 +371,7 @@
 }
 .fact dt {
   color: var(--lg-muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   line-height: 1.5;
@@ -302,115 +393,182 @@
   }
 }
 
-/* ---------- Body copy ---------- */
-
 .body {
   max-width: 62ch;
-}
-.body p {
-  margin: 0 0 16px;
+  margin: 0;
   color: var(--lg-body);
   font-size: 16px;
   line-height: 1.65;
 }
-.body p:last-child {
-  margin-bottom: 0;
-}
 @media (min-width: 1024px) {
-  .body p {
+  .body {
     font-size: 17px;
   }
 }
 
-/* ---------- The record ---------- */
+/* ---------- SEO restorations (S2) ----------
+   Plain supporting line under the headline, the founder "About" disclosure
+   (base look from .home-more in globals.css), the profile link and the
+   press-row title. */
+.support {
+  /* Sits close under the headline: .left has a 32px gap. */
+  margin: -18px 0 0;
+  color: var(--lg-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.more {
+  margin-top: 16px;
+  border-top: 1px solid var(--lg-hair);
+}
+.profileLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--lg-ink);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(38, 48, 51, 0.3);
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+.profileLink:hover,
+.profileLink:focus-visible {
+  color: var(--neodent-red);
+  text-decoration-color: currentColor;
+}
+.profileLink:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+.recordTitle {
+  margin: 0 0 16px;
+  color: var(--lg-ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2vw, 26px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* ---------- Press record ----------
+   >= 768px: the cutting on the left at its own width (height-capped),
+   the two thumbnails stacked beside it, sharing its height.
+   < 768px: one scroll-snap row of three equal-height cards. */
 
 .record {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.record:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+  border-radius: var(--lg-radius-sm);
 }
 @media (min-width: 768px) and (max-width: 1023px) {
   .record {
-    max-width: 560px;
+    max-width: 640px;
   }
-}
-
-.recordHead {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 4px 16px;
-  margin-bottom: -8px;
-}
-.recordHead .chapter {
-  margin-bottom: 0;
 }
 
 .figure {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   margin: 0;
   padding: 6px;
   background: #fff;
   border: 1px solid var(--lg-hair);
   border-radius: var(--lg-radius-sm);
 }
-.frame {
+.lead {
+  grid-row: 1 / span 2;
+}
+.thumb {
+  min-height: 0;
+}
+
+.zoomButton {
   position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  padding: 0;
   overflow: hidden;
   background: #ece7dc;
+  border: 0;
   border-radius: 4px;
+  color: inherit;
+  cursor: zoom-in;
 }
-.frame_press {
-  aspect-ratio: 4 / 5;
+.zoomButton:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
 }
-.frame_tv,
-.frame_recognition {
-  aspect-ratio: 3 / 2;
+.zoomHint {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: var(--lg-ink);
+  background: rgba(255, 254, 250, 0.92);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(22, 28, 30, 0.18);
 }
-.img {
+
+/* The cutting: whole, never cropped (Part 3.1 rule 5). */
+.leadFrame {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: #f4f1ea;
+}
+.leadFrame > .leadImg {
+  width: auto;
+  max-width: 100%;
+  height: var(--lg-lead-h);
+  max-height: var(--lg-lead-h);
+}
+
+.thumbFrame {
+  position: relative;
+  display: block;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 96px;
+}
+.thumbImg {
   object-fit: cover;
 }
-/* Headline of the clipping stays in frame. */
-.img_press {
-  object-position: top;
-}
-/* Window chosen so the whole "BIG BREAKING" banner (and the programme
-   strip above it) survives the crop. */
-.img_tv {
+/* Window chosen so the whole "BIG BREAKING" banner survives the crop. */
+.frame_tv .thumbImg {
   object-position: 62% 50%;
 }
-.img_recognition {
+.frame_recognition .thumbImg {
   object-position: 50% 30%;
 }
 
 .caption {
   display: flex;
-  flex: 1 1 auto;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 6px 6px;
+  gap: 2px;
+  padding: 10px 6px 4px;
 }
 .source {
   color: var(--lg-ink);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  line-height: 1.5;
+  letter-spacing: 0.12em;
+  line-height: 1.45;
   text-transform: uppercase;
-}
-.numeral {
-  display: inline-block;
-  min-width: 2ch;
-  margin-right: 8px;
-  color: var(--lg-muted);
-  font-family: var(--app-font-serif);
-  font-size: 13px;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
 }
 .medium {
   color: var(--lg-muted);
@@ -419,121 +577,193 @@
   line-height: 1.4;
 }
 
-.pair {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: stretch;
-  gap: 16px;
-}
-.pairItem {
-  min-width: 0;
-}
-@media (max-width: 479px) {
-  /* Two-up stays two-up on phones; give the captions room to wrap. */
-  .numeral {
-    min-width: 0;
-    margin-right: 6px;
+@media (max-width: 767px) {
+  .section {
+    --lg-row-h: min(var(--media-max-h-compact), 360px);
+  }
+  .right {
+    /* Gives .record a 100cqw equal to the text column (see below). */
+    container-type: inline-size;
+  }
+  .record {
+    display: flex;
+    gap: 12px;
+    /* Bleed to the screen edges so the next card peeks in. The gutter
+       is measured in container units of .right (100cqw = the text
+       column), not %: inside a scroll container, % in scroll-padding
+       resolves against the scroller itself, which snapped the first
+       card flush to the screen edge. */
+    --lg-bleed: calc((100vw - 100cqw) / 2);
+    margin-inline: calc(-1 * var(--lg-bleed));
+    padding: 4px var(--lg-bleed) 8px;
+    scroll-padding-inline: var(--lg-bleed);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .record::-webkit-scrollbar {
+    display: none;
+  }
+  .figure {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+  }
+  .leadFrame > .leadImg {
+    height: var(--lg-row-h);
+    max-height: var(--lg-row-h);
+  }
+  .thumbFrame {
+    flex: none;
+    height: var(--lg-row-h);
   }
 }
 
-/* ---------- Closing row ---------- */
+/* ---------- Enlarged press item (native <dialog>) ---------- */
 
-.closing {
-  margin-top: clamp(72px, 8vw, 112px);
+.zoom {
+  width: min(100vw - 24px, 1100px);
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--neodent-charcoal);
+  border: 0;
+  border-radius: 12px;
+  color: var(--neodent-ivory);
 }
-.closingChapter .chapter {
-  margin-bottom: 16px;
+.zoom[data-kind="document"] {
+  width: min(100vw - 24px, 663px);
 }
-.bento {
+.zoom::backdrop {
+  background: rgba(22, 28, 30, 0.82);
+}
+.zoomFigure {
+  position: relative;
+  margin: 0;
+  padding: 16px;
+}
+.zoomImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+/* Photos fit the window; the cutting shows at its full width and the
+   dialog scrolls, so the Urdu text is readable. */
+.zoom[data-kind="photo"] .zoomImg {
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - 120px);
+  margin-inline: auto;
+  object-fit: contain;
+}
+.zoomCaption {
+  padding-top: 12px;
+  color: rgba(248, 246, 239, 0.82);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.zoomClose {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--lg-gutter);
-  align-items: stretch;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 0 -44px auto;
+  color: var(--neodent-ivory);
+  background: rgba(22, 28, 30, 0.88);
+  border: 1px solid rgba(248, 246, 239, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
 }
-.bentoCard {
-  grid-column: 1 / -1;
-  min-width: 0;
-  min-height: 240px;
-  padding: var(--lg-pad);
+.zoomClose:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 2px;
+}
+
+/* ---------- Draw-line fallback ----------
+   Used when the view() timeline cannot follow the page (see the
+   component): draw once as the parent <Reveal> is shown. */
+.section[data-draw-linked="false"] [data-draw] {
+  animation: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .section[data-draw-linked="false"] [data-reveal-ready]:not([data-shown]) [data-draw] {
+    transform: scaleX(0);
+  }
+  .section[data-draw-linked="false"] [data-shown="true"] [data-draw] {
+    /* 120ms + 560ms ends before <Reveal> marks itself done (640 + 80ms),
+       which drops this rule; a longer draw would snap to full. */
+    transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+  }
+}
+
+/* ---------- Closing band ---------- */
+
+.band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  margin-top: clamp(56px, 7vw, 96px);
+  padding: 28px var(--lg-pad);
+  background: var(--neodent-red);
   border-radius: var(--lg-radius);
+  color: var(--neodent-ivory);
 }
 @media (min-width: 768px) {
-  .stat {
-    grid-column: 1 / 6;
-  }
-  .statement {
-    grid-column: 6 / 13;
-  }
-}
-@media (min-width: 1024px) {
-  .stat {
-    grid-column: 1 / 5;
-  }
-  .statement {
-    grid-column: 5 / 13;
+  .band {
+    grid-template-columns: minmax(200px, 4fr) 8fr;
+    align-items: center;
+    gap: 40px;
+    padding-block: 40px;
   }
 }
 
-.stat {
-  container-type: inline-size;
+.bandFigure {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  background: var(--lg-surface);
-  border: 1px solid var(--lg-hair);
+  justify-content: center;
+  gap: 16px;
 }
-.rule {
-  display: block;
-  width: 28px;
-  height: 2px;
-  margin-bottom: 16px;
-  background: var(--neodent-red);
+@media (min-width: 768px) {
+  .bandFigure {
+    padding-right: 40px;
+    border-right: 1px solid rgba(248, 246, 239, 0.35);
+  }
 }
-.statFigure {
+.bandNumber {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: baseline;
+  gap: 12px;
   margin: 0;
 }
-.statFigure strong {
-  /* clamp(56px, 7vw, 88px), additionally bounded by the card so the
-     seven glyphs never outgrow it at narrow desktop widths. */
-  font-size: clamp(48px, min(7vw, 22cqi), 88px);
+.bandNumber strong {
   font-family: var(--app-font-serif);
+  font-size: clamp(64px, 7vw, 96px);
   font-weight: 400;
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: -0.02em;
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 0.9;
 }
-
-.statement {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 40px;
-  background: var(--neodent-red);
-  color: var(--neodent-ivory);
-}
-.statementText {
-  margin: 0;
-  font-family: var(--app-font-serif);
-  font-size: clamp(32px, 4.5vw, 56px);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  text-align: left;
-}
-.statementText em {
-  display: block;
-  font-style: italic;
+/* Direct child only: CountUp renders its own nested spans. */
+.bandNumber > span {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .timeline {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.14em;
@@ -543,38 +773,19 @@
 .timelineLine {
   flex: 1 1 auto;
   height: 1px;
-  background: rgba(248, 246, 239, 0.5);
-}
-.timelineDot {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  margin-left: -12px;
-  background: var(--neodent-ivory);
-  border-radius: 50%;
-}
-@media (min-width: 1024px) {
-  .timeline {
-    font-size: 12px;
-  }
+  background: rgba(248, 246, 239, 0.7);
 }
 
-/* ---------- Reveal: one 12px fade-up, 400ms ---------- */
-
-.section [data-reveal] {
-  transition:
-    opacity 400ms ease,
-    transform 400ms ease;
+.statement {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(30px, 4.2vw, 52px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
 }
-.section[data-reveal-ready] [data-reveal]:not([data-shown]) {
-  opacity: 0;
-  transform: translateY(12px);
-}
-.section [data-shown="instant"] {
-  transition: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .section [data-reveal] {
-    transition: none;
-  }
+.statement em {
+  display: block;
+  font-style: italic;
 }

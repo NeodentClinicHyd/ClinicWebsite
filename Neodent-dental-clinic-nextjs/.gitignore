@@ -45,6 +45,7 @@ yarn-error.log*
 next-env.d.ts
 
 # local QA output / temp files (never committed)
+/.audit/
 /qa-shots/
 /_tmp_shots/
 /.frame-audit/

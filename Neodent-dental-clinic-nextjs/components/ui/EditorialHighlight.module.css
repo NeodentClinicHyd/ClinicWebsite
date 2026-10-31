@@ -96,4 +96,11 @@ mark.highlight {
   .highlight {
     transition: none;
   }
+  /* Final state without waiting for the observer. */
+  .secondary {
+    background-size: 100% 2px;
+  }
+  .quiet {
+    background-size: 100% 60%;
+  }
 }

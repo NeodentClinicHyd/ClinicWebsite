@@ -1,5 +1,19 @@
 import type { Metadata } from "next";
-import { AboutClientChrome } from "./AboutClientChrome";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { ContactNextStep } from "@/components/sections/ContactNextStep";
+import { AboutHeader } from "@/components/pages/about/AboutHeader";
+import { AboutFacts } from "@/components/pages/about/AboutFacts";
+import { AboutPractice } from "@/components/sections/about/AboutPractice";
+import { AboutFounder } from "@/components/sections/about/AboutFounder";
+import { AboutMiftah } from "@/components/sections/about/AboutMiftah";
+import { AboutPress } from "@/components/sections/about/AboutPress";
+import { AboutRecognition } from "@/components/sections/about/AboutRecognition";
+import { AboutMedia } from "@/components/sections/about/AboutMedia";
+import { AboutCommunity } from "@/components/sections/about/AboutCommunity";
+import { AboutToday } from "@/components/sections/about/AboutToday";
+import { AboutExplore } from "@/components/sections/about/AboutExplore";
+import styles from "@/components/pages/about/AboutPage.module.css";
 
 const title = "About Neodent Dental Hospital | Specialist-Led Dental Care Since 1994";
 const description =
@@ -31,5 +45,31 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutClientChrome />;
+  return (
+    // The global `.site { overflow: hidden }` would stop the S9 film panel
+    // from sticking (an overflow:hidden ancestor becomes its scroll
+    // container). `clip` keeps the same no-sideways-scroll guarantee
+    // without creating one. Scoped to this page only.
+    <div
+      className={`site ${styles.page}`}
+      style={{ overflowX: "clip", overflowY: "visible" }}
+    >
+      <Navbar overHero />
+      <main>
+        <AboutHeader />
+        <AboutFacts />
+        <AboutPractice />
+        <AboutFounder />
+        <AboutMiftah />
+        <AboutPress />
+        <AboutRecognition />
+        <AboutMedia />
+        <AboutCommunity />
+        <AboutToday />
+        <AboutExplore />
+        <ContactNextStep />
+      </main>
+      <Footer />
+    </div>
+  );
 }
