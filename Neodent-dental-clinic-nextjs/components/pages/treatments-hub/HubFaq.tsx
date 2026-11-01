@@ -11,7 +11,7 @@ import {
   nampallyTelPhone,
   telPhone,
 } from "@/lib/site-data";
-import { TREATMENTS_FAQ } from "@/lib/treatments-hub";
+import { HUB_FAQ } from "@/lib/pages/treatments-hub-content";
 import { Backdrop } from "./Backdrop";
 import shared from "./TreatmentsHub.module.css";
 import styles from "./HubFaq.module.css";
@@ -49,7 +49,7 @@ export function HubFaq() {
           </div>
 
           <Reveal stagger={80} className={styles.list}>
-            {TREATMENTS_FAQ.map((item, index) => (
+            {HUB_FAQ.map((item, index) => (
               <details
                 key={item.question}
                 className={styles.qa}

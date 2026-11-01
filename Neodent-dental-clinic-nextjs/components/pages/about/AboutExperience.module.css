@@ -1,0 +1,88 @@
+/* S5 layout. Desktop: photo left (sticky while the longer text column
+   scrolls), heading, both paragraphs and the doctor card right. Mobile
+   order: heading, first paragraph, photo (at most 38dvh), card and
+   button, second paragraph. */
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  grid-template-areas:
+    "fig head"
+    "fig p1"
+    "fig p2"
+    "fig card";
+  grid-template-rows: auto auto auto 1fr;
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+.head {
+  grid-area: head;
+  margin-bottom: 24px;
+}
+.p1 {
+  grid-area: p1;
+}
+.p2 {
+  grid-area: p2;
+  margin-top: 16px;
+}
+.cardWrap {
+  grid-area: card;
+  margin-top: 28px;
+}
+.fig {
+  grid-area: fig;
+  align-self: center;
+  position: sticky;
+  top: calc(var(--nav-height-desktop) + 24px);
+}
+
+/* The photo keeps its own 4:3 proportion: no crop, no filter. */
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-height: var(--media-max-h);
+  width: 100%;
+  overflow: hidden;
+  background: #e2ddd0;
+  border-radius: var(--about-radius);
+  box-shadow: var(--c-card-shadow);
+}
+.image {
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.action {
+  margin-top: 16px;
+}
+
+@media (max-width: 899px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "p1"
+      "fig"
+      "card"
+      "p2";
+    grid-template-rows: none;
+  }
+  .head {
+    margin-bottom: 18px;
+  }
+  .fig {
+    position: static;
+    margin-top: 28px;
+  }
+  .photo {
+    max-height: 38dvh;
+  }
+  .cardWrap {
+    margin-top: 24px;
+  }
+  .p2 {
+    margin-top: 28px;
+  }
+}

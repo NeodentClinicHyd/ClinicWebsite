@@ -1,0 +1,121 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(10, 13, 14, 0.9);
+}
+
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(100%, 1100px);
+  max-height: 100%;
+  color: var(--neodent-ivory);
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  max-width: 100%;
+}
+.image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - 170px);
+  background: #f4efe3;
+  border-radius: 4px;
+  box-shadow: 0 22px 60px -20px rgba(0, 0, 0, 0.8);
+}
+
+.close {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(16, 21, 23, 0.82);
+  color: var(--neodent-ivory);
+  cursor: pointer;
+}
+.close:hover,
+.nav:not(:disabled):hover {
+  border-color: var(--neodent-red);
+}
+.close:focus-visible,
+.nav:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+}
+.nav {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--neodent-ivory);
+  cursor: pointer;
+}
+.nav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  text-align: center;
+}
+.captionText {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.captionSource {
+  color: rgba(248, 246, 239, 0.72);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .backdrop {
+    animation: fadeIn 240ms var(--about-ease, ease-out) both;
+  }
+  .image {
+    animation: fadeIn 320ms var(--about-ease, ease-out) both;
+  }
+}

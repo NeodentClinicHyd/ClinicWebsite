@@ -1,0 +1,335 @@
+/* S9 layout. Desktop: heading, intro and the ten-row playlist on the
+   left; the player in a dark glass frame on the right, sticky while
+   the list scrolls. Below 1024px: intro, player, then the list. */
+
+.voice {
+  --about-glow-x: calc(50% + min(300px, 24vw));
+  --about-glow-y: 38%;
+  --about-glow-rx: min(480px, 38vw);
+  --about-pattern-rx: min(420px, 34vw);
+  padding-top: clamp(40px, 5vw, 72px);
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  grid-template-areas:
+    "copy panel"
+    "cards panel";
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(32px, 4vw, 64px);
+  row-gap: clamp(36px, 4vw, 52px);
+  align-items: start;
+}
+.copy {
+  grid-area: copy;
+  min-width: 0;
+}
+.copy > p {
+  margin-top: 18px;
+}
+.copy > h2 + p {
+  margin-top: clamp(22px, 2.4vw, 30px);
+}
+.cards {
+  grid-area: cards;
+  min-width: 0;
+}
+.panel {
+  grid-area: panel;
+  align-self: start;
+  position: sticky;
+  top: calc(var(--nav-height-desktop) + 24px);
+  min-width: 0;
+}
+
+/* ---- Playlist rows ---------------------------------------------------- */
+.cardsTitle {
+  margin: 0 0 18px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 84px;
+  padding: 16px 18px;
+  border: 1px solid var(--about-glass-line);
+  border-radius: var(--about-radius);
+  background: var(--about-glass);
+  color: var(--neodent-ivory);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--about-ease),
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+.card:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 2px;
+}
+.card:active {
+  transform: scale(0.992);
+}
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.cardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cardIntent {
+  color: rgba(248, 246, 239, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.cardArrow {
+  flex: none;
+  color: var(--neodent-red);
+  transition: transform 0.25s var(--about-ease);
+}
+.cardActive {
+  border-color: rgba(215, 25, 32, 0.6);
+  background: rgba(36, 44, 47, 0.92);
+}
+.cardActive .cardIntent {
+  color: var(--neodent-ivory);
+}
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(248, 246, 239, 0.32);
+  }
+  .card:hover .cardArrow {
+    transform: translateX(3px);
+  }
+}
+
+/* ---- Player frame ---------------------------------------------------- */
+.panelInner {
+  padding: 18px;
+  border: 1px solid var(--about-glass-line);
+  border-radius: var(--about-radius);
+  background: var(--about-glass);
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.75);
+}
+@supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
+  .panelInner {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+.film {
+  display: block;
+}
+.media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: var(--media-max-h-compact);
+  overflow: hidden;
+  border-radius: var(--about-radius);
+  background: #1c1e20;
+}
+.facade {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.facade:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: -2px;
+}
+.poster {
+  object-fit: cover;
+}
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(248, 246, 239, 0.85);
+  border-radius: 50%;
+  color: var(--neodent-ivory);
+  background: rgba(22, 28, 30, 0.5);
+  transform: translate(-50%, -50%);
+  transition: background-color 0.25s ease;
+}
+.play svg {
+  margin-left: 3px;
+}
+.facade:hover .play {
+  background: rgba(22, 28, 30, 0.72);
+}
+.iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.gate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  background: #1c1e20;
+}
+.gateText {
+  margin: 0;
+  max-width: 34ch;
+  color: rgba(248, 246, 239, 0.88);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.gateActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.gateAllow,
+.gateManage {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+.gateAllow {
+  border: 1px solid var(--neodent-red);
+  background: var(--neodent-red);
+  color: #fff;
+}
+.gateManage {
+  border: 1px solid rgba(248, 246, 239, 0.5);
+  background: transparent;
+  color: var(--neodent-ivory);
+}
+.gateAllow:focus-visible,
+.gateManage:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+
+.panelLabel {
+  margin: 18px 0 8px;
+  color: rgba(248, 246, 239, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.panelTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.5rem, 2.1vw, 1.9rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.panelText {
+  margin: 12px 0 0;
+  color: var(--about-ivory-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* Crossfade when the selected film changes (the panel re-mounts). */
+@keyframes filmIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .film {
+    animation: filmIn 420ms var(--about-ease) both;
+  }
+}
+
+/* ---- Below 1024px: intro, player, list ------------------------------- */
+@media (max-width: 1023px) {
+  .voice {
+    --about-glow-x: 50%;
+    --about-glow-y: 40%;
+    --about-glow-rx: min(420px, 90vw);
+    --about-pattern-rx: min(420px, 92vw);
+  }
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "copy"
+      "panel"
+      "cards";
+    grid-template-rows: none;
+  }
+  .panel {
+    position: static;
+  }
+  .panelInner {
+    padding: 14px;
+  }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardArrow,
+  .play {
+    transition: none;
+  }
+  .card:hover,
+  .card:active,
+  .card:hover .cardArrow {
+    transform: none;
+  }
+}

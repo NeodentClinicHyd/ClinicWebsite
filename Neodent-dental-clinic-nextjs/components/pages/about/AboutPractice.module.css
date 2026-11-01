@@ -1,0 +1,63 @@
+/* S3 layout. Desktop: heading and first two paragraphs in one reading
+   column on the left, the facts card on the right, the disclosure under
+   the column. Mobile order: heading, first paragraph, card, second
+   paragraph, disclosure. */
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  grid-template-areas:
+    "head card"
+    "p1 card"
+    "p2 card"
+    "more card";
+  column-gap: clamp(32px, 5vw, 80px);
+  row-gap: 0;
+  align-items: start;
+}
+
+.head {
+  grid-area: head;
+  margin-bottom: 28px;
+}
+.p1 {
+  grid-area: p1;
+}
+.p2 {
+  grid-area: p2;
+  margin-top: 16px;
+}
+.card {
+  grid-area: card;
+  align-self: start;
+  padding-top: 8px;
+}
+.more {
+  grid-area: more;
+  margin-top: 24px;
+}
+.more p {
+  max-width: 68ch;
+}
+
+@media (max-width: 899px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "p1"
+      "card"
+      "p2"
+      "more";
+  }
+  .head {
+    margin-bottom: 20px;
+  }
+  .card {
+    margin-top: 28px;
+    padding-top: 0;
+  }
+  .p2 {
+    margin-top: 28px;
+  }
+}

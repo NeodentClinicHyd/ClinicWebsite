@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { ClinicClientChrome } from "./ClinicClientChrome";
+import { ClinicPageView } from "@/components/pages/clinic/ClinicPageView";
+import { breadcrumbJsonLd } from "@/lib/structured-data";
+import {
+  CLINIC_BREADCRUMBS,
+  clinicFaqJsonLd,
+} from "@/lib/pages/clinic-content";
 
 const title = "Neodent Dental Clinics in Hyderabad | Mehdipatnam & Nampally";
 const description =
@@ -31,5 +36,22 @@ export const metadata: Metadata = {
 };
 
 export default function ClinicPage() {
-  return <ClinicClientChrome />;
+  /* New page-level JSON-LD (Q6, approved): BreadcrumbList and FAQPage,
+     each built from the arrays the page renders, so the schema matches
+     the visible text word for word. No ratings, no reviews. */
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd(CLINIC_BREADCRUMBS)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicFaqJsonLd()) }}
+      />
+      <ClinicPageView />
+    </>
+  );
 }

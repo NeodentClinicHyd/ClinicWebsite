@@ -47,8 +47,8 @@
 }
 .photo img {
   object-fit: cover;
-  /* Focal point toward the dental chair. */
-  object-position: 62% 50%;
+  /* Focal point: reception desk, stairs and consultation doors. */
+  object-position: 50% 58%;
   filter: saturate(0.94) contrast(1.02);
 }
 

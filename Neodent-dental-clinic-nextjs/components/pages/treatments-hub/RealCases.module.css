@@ -89,14 +89,28 @@
   line-height: 1.7;
 }
 @media (min-width: 1024px) {
+  .film {
+    align-items: stretch;
+  }
   .filmFigure {
-    grid-column: 1 / 6;
+    grid-column: 1 / 5;
     grid-row: 1;
   }
   .filmCard {
-    grid-column: 6 / -1;
+    grid-column: 5 / -1;
     grid-row: 1;
-    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 52px 56px;
+  }
+  .filmCard h3 {
+    font-size: clamp(32px, 3vw, 42px);
+  }
+  .filmCard p {
+    font-size: 17px;
+    line-height: 1.75;
+    max-width: 66ch;
   }
 }
 

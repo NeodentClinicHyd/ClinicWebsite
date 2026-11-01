@@ -1,0 +1,138 @@
+/* FAQ on a light band (paper tone, one step off the ivory band after it).
+   Desktop: heading left (sticky), the five disclosures right. Phones: the
+   heading, then the list. */
+
+.faq {
+  background: #f1eee7;
+  color: var(--neodent-ink);
+  padding: clamp(52px, 5.6vw, 84px) 0;
+  scroll-margin-top: calc(var(--nav-height-desktop) + 16px);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(24px, 4vw, 64px);
+  row-gap: 28px;
+  align-items: start;
+  width: var(--clinic-container);
+  margin: 0 auto;
+}
+.side {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.3rem, 3.8vw, 3.7rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.list {
+  grid-column: 1 / -1;
+  min-width: 0;
+  border-top: 1px solid rgba(38, 48, 51, 0.14);
+}
+@media (min-width: 1024px) {
+  .side {
+    grid-column: 1 / 6;
+    position: sticky;
+    top: calc(var(--nav-height-desktop) + 28px);
+  }
+  .list {
+    grid-column: 6 / -1;
+  }
+}
+@media (max-width: 767px) {
+  .faq {
+    padding: 44px 0 48px;
+  }
+  .title {
+    font-size: clamp(2.05rem, 8.6vw, 2.55rem);
+  }
+}
+
+/* ---- Disclosures ---------------------------------------------------------- */
+.qa {
+  border-bottom: 1px solid rgba(38, 48, 51, 0.14);
+}
+.qa summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 64px;
+  padding: 16px 4px;
+  list-style: none;
+  cursor: pointer;
+}
+.qa summary::-webkit-details-marker {
+  display: none;
+}
+.qa summary:active {
+  background: rgba(38, 48, 51, 0.04);
+}
+.qa summary:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+.qa h3 {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.qa summary svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--neodent-red);
+  transition: transform 0.25s var(--clinic-ease);
+}
+.qa[open] summary svg {
+  transform: rotate(180deg);
+}
+.qa p {
+  margin: 0;
+  max-width: 70ch;
+  padding: 0 40px 24px 4px;
+  color: rgba(38, 48, 51, 0.8);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.qa[open] p {
+  animation: faqIn 380ms var(--clinic-ease) both;
+}
+@keyframes faqIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .qa summary:hover h3 {
+    color: var(--neodent-red-dark);
+  }
+}
+@media (max-width: 767px) {
+  .qa p {
+    padding-right: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qa[open] p {
+    animation: none;
+  }
+  .qa summary svg {
+    transition: none;
+  }
+}

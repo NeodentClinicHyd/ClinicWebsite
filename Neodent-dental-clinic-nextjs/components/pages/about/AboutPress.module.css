@@ -1,0 +1,175 @@
+/* S6 layout. Desktop: heading and archive link left, the two paragraphs
+   right, then all four cuttings in one even row at one height cap.
+   Mobile: heading, paragraphs, archive link, then a swipe row. */
+
+.press {
+  --about-glow-x: 80%;
+  --about-glow-y: 26%;
+  --about-glow-rx: min(520px, 40vw);
+  --about-pattern-rx: min(480px, 38vw);
+  /* Height of a plate's paper (image area); the caption sits below it. */
+  --ph: calc(var(--media-max-h) - 76px);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-areas:
+    "head text"
+    "arch text";
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.head {
+  grid-area: head;
+}
+.text {
+  grid-area: text;
+}
+.archive {
+  grid-area: arch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.archiveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 1px solid rgba(248, 246, 239, 0.42);
+  border-radius: 0;
+  background: transparent;
+  color: var(--neodent-ivory);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+.archiveBtn:hover {
+  border-color: rgba(248, 246, 239, 0.8);
+  background: rgba(248, 246, 239, 0.08);
+}
+.archiveBtn:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.archiveBtn:active {
+  transform: translateY(1px);
+}
+
+.gallery {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+/* ---- Plates ----------------------------------------------------------- */
+.plate {
+  margin: 0;
+}
+.open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.open:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 4px;
+}
+.paper {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ar);
+  background: #f4efe3;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  box-shadow: 0 18px 36px -18px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+.img {
+  object-fit: contain;
+}
+
+@media (min-width: 1024px) {
+  .row {
+    --swipe-gap: clamp(16px, 2vw, 28px);
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  /* Widths follow each cutting's proportion, so every plate has the
+     same height; the cap keeps that height under --ph. */
+  .rowItem {
+    flex: var(--ar) 1 0%;
+    max-width: calc(var(--ph) * var(--ar));
+  }
+}
+@media (min-width: 768px) {
+  .open {
+    transition: transform 0.35s var(--about-ease);
+  }
+}
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .open:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .press {
+    --about-glow-x: 50%;
+    --about-glow-y: 60%;
+    --about-glow-rx: min(420px, 90vw);
+    --about-pattern-rx: min(420px, 92vw);
+  }
+}
+
+@media (max-width: 899px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "text"
+      "arch";
+  }
+  .text {
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .press {
+    --ph: min(38dvh, 340px);
+  }
+  /* Swipe cards (phones and tablets): the plate's own width at the common
+     height, never more than 86% of the row so the next card peeks. */
+  .rowItem {
+    --swipe-item-w: min(86%, calc(var(--ph) * var(--ar)));
+  }
+}
+@media (max-width: 767px) {
+  .gallery {
+    margin-top: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archiveBtn,
+  .open {
+    transition: none;
+  }
+  .open:hover,
+  .archiveBtn:active {
+    transform: none;
+  }
+}

@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { TreatmentsHubPage } from "@/components/pages/treatments-hub/TreatmentsHubPage";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
-import {
-  HUB_BREADCRUMBS,
-  collectionPageJsonLd,
-  faqJsonLd,
-} from "@/lib/treatments-hub";
+import { HUB_BREADCRUMBS, collectionPageJsonLd } from "@/lib/treatments-hub";
+import { hubFaqJsonLd } from "@/lib/pages/treatments-hub-content";
 
 const title = "Dental Treatments in Hyderabad | Neodent Dental Hospital";
 const description =
@@ -38,12 +35,12 @@ export const metadata: Metadata = {
 
 /* JSON-LD: BreadcrumbList + CollectionPage (ItemList of the featured
    treatments; url only where a dedicated page exists) + FAQPage built
-   from the same TREATMENTS_FAQ array the visible accordion renders.
+   from the same HUB_FAQ array (TREATMENTS_FAQ plus two owner-approved items) the visible accordion renders.
    No ratings, no reviews. */
 const jsonLd = [
   breadcrumbJsonLd(HUB_BREADCRUMBS),
   collectionPageJsonLd(description),
-  faqJsonLd(),
+  hubFaqJsonLd(),
 ];
 
 export default function TreatmentsPage() {

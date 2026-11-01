@@ -315,3 +315,9 @@
     transform: none;
   }
 }
+
+/* Photos fill their frames without stretching. next/image fill leaves
+   object-fit at its default (fill), which squashed every cropped photo. */
+.page main img {
+  object-fit: cover;
+}

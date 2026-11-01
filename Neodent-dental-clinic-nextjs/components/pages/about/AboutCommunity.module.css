@@ -1,0 +1,127 @@
+/* S10 layout. Desktop: text left; right, the two photos side by side
+   (a larger and a smaller, bottom-aligned, never equal tiles), and the
+   two cuttings on plates under them. Mobile: text, a swipe row of the
+   photos, a swipe row of the cuttings. */
+
+.community {
+  --ph: calc(var(--media-max-h-compact) - 76px);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.copy {
+  min-width: 0;
+}
+.prose {
+  margin-top: clamp(22px, 2.6vw, 32px);
+}
+.prose p + p {
+  margin-top: 16px;
+}
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3vw, 40px);
+  min-width: 0;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: var(--media-max-h);
+  width: 100%;
+  overflow: hidden;
+  background: #e2ddd0;
+  border-radius: var(--about-radius);
+  box-shadow: var(--c-card-shadow);
+}
+.image {
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* ---- Cuttings on paper plates ---------------------------------------- */
+.open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.open:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+}
+.paper {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ar);
+  background: #f4efe3;
+  border: 1px solid var(--c-hair);
+  border-radius: 4px;
+  box-shadow: var(--c-card-shadow);
+  overflow: hidden;
+}
+.img {
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .photoRow {
+    --swipe-gap: 16px;
+    align-items: flex-end;
+  }
+  .photoItem {
+    flex: var(--w) 1 0%;
+  }
+  .clipRow {
+    --swipe-gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .clipItem {
+    flex: var(--ar) 1 0%;
+    max-width: calc(var(--ph) * var(--ar));
+  }
+  .open {
+    transition: transform 0.35s var(--about-ease);
+  }
+}
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .open:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 899px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 36px;
+  }
+}
+@media (max-width: 767px) {
+  .community {
+    --ph: min(38dvh, 340px);
+  }
+  .photoItem {
+    --swipe-item-w: 86%;
+  }
+  .clipItem {
+    --swipe-item-w: min(86%, calc(var(--ph) * var(--ar)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open {
+    transition: none;
+  }
+  .open:hover {
+    transform: none;
+  }
+}

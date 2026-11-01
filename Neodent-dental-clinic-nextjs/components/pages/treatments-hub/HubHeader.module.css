@@ -30,7 +30,7 @@
 
 /* ---- breadcrumb (the eyebrow): 12px, plain ---- */
 .crumbs {
-  margin-bottom: clamp(16px, 2.2vw, 24px);
+  margin-bottom: clamp(8px, 1.4vw, 16px);
 }
 .crumbs ol {
   display: flex;
@@ -74,7 +74,7 @@
 
 /* ---- h1: sans line plus the red serif accent ---- */
 .title {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   max-width: 20ch;
   font-size: clamp(2.1rem, 3.7vw, 3.4rem);
   font-weight: 400;
@@ -102,6 +102,14 @@
   margin: 0;
   max-width: 54ch;
 }
+/* A1: plain supporting line under the paragraph. */
+.support {
+  margin: 10px 0 0;
+  max-width: 54ch;
+  color: var(--hub-muted-dark);
+  font-size: 14px;
+  line-height: 1.55;
+}
 .nameLink {
   color: var(--neodent-ivory);
   font-weight: 650;
@@ -125,7 +133,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: clamp(22px, 2.6vw, 30px);
+  margin-top: clamp(16px, 1.7vw, 22px);
 }
 
 /* ---- media + caption card ---- */
