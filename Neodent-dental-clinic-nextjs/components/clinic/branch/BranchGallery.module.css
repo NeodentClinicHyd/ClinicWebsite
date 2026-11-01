@@ -1,44 +1,78 @@
-/* Branch page -- photograph gallery.
+/* S3 gallery. Dark band (gradient + BranchBackdrop, glow high right so it
+   stays clear of the photographs' captions). Heading scale and section
+   padding match the other bands. */
 
-   Column-flow (masonry) layout: each item keeps its photograph's own
-   aspect ratio (width/height are set on the <Image>, CSS only sets
-   width: 100% / height: auto), so nothing is cropped or stretched.
-   Radii match the clinic gallery tiles (16px). Captions sit under the
-   photograph, never over it. */
+.section {
+  --clinic-glow-x: 94%;
+  --clinic-glow-y: 6%;
+  --clinic-glow-rx: min(520px, 42vw);
+  --clinic-glow-a: 0.22;
+  --clinic-pattern-rx: min(480px, 38vw);
+  --clinic-pattern-ry: 54%;
 
-.header {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--gutter);
-  row-gap: 24px;
-  align-items: end;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--neodent-ivory);
+  background-color: var(--clinic-dark-top);
+  background-image: linear-gradient(162deg, #1c2427 0%, #131a1c 52%, var(--clinic-dark-bottom) 100%);
+  padding: var(--clinic-pad-y) 0;
+  scroll-margin-top: calc(var(--nav-height-desktop) + 16px);
 }
-.header > h2 {
-  grid-column: 1 / 7;
-}
-.lede {
-  grid-column: 7 / 13;
-  max-width: none;
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--clinic-container);
+  margin: 0 auto;
 }
 
+/* ---- Heading ------------------------------------------------------- */
+.head {
+  max-width: 820px;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.3rem, 3.8vw, 3.7rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  color: var(--neodent-ivory);
+  text-wrap: balance;
+}
+.support {
+  max-width: 62ch;
+  margin: 18px 0 0;
+  color: rgba(248, 246, 239, 0.8);
+  font-size: 16px;
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  .support {
+    font-size: 17px;
+  }
+}
+
+/* ---- Desktop: masonry flow in four columns -------------------------- */
+.wrap {
+  margin-top: clamp(32px, 4vw, 52px);
+}
 .set {
-  column-count: 3;
-  column-gap: 16px;
-  margin: clamp(36px, 4.5vw, 56px) 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
+  column-count: 4;
+  column-gap: 20px;
 }
-/* A two-photograph set (one landscape, one portrait) stays in two
-   columns at every width above the phone breakpoint. */
-.pair {
-  column-count: 2;
+.set:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 6px;
 }
 .item {
-  display: block;
-  margin: 0 0 16px;
   break-inside: avoid;
+  margin: 0 0 24px;
 }
-
 .figure {
   margin: 0;
 }
@@ -46,93 +80,137 @@
   position: relative;
   display: block;
   width: 100%;
-  margin: 0;
   padding: 0;
-  overflow: hidden;
-  border: 1px solid rgba(241, 238, 231, 0.14);
-  border-radius: 16px;
-  background: #1b1d1f;
+  border: 0;
+  background: none;
   color: inherit;
-  line-height: 0;
   cursor: zoom-in;
-  transition: border-color 200ms ease;
+  text-align: left;
 }
-.button:hover {
-  border-color: rgba(241, 238, 231, 0.42);
+.frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  max-height: var(--media-max-h-compact);
+  border: 1px solid rgba(248, 246, 239, 0.14);
+  border-radius: var(--clinic-radius);
+  background: #1b1d1f;
 }
-.button:focus-visible {
-  outline: 2px solid var(--neodent-ivory);
-  outline-offset: 3px;
+.tall .frame {
+  aspect-ratio: 3 / 4;
+}
+.short .frame {
+  aspect-ratio: 4 / 3;
 }
 .image {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: saturate(0.92) contrast(1.02);
+  object-fit: cover;
+  object-position: 50% 42%;
+  transition: transform 500ms var(--clinic-ease);
 }
 .zoom {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  right: 10px;
+  bottom: 10px;
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
-  background: var(--neodent-charcoal);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  background: rgba(22, 28, 30, 0.72);
   color: var(--neodent-ivory);
-  line-height: 1;
   opacity: 0;
   transition: opacity 200ms ease;
   pointer-events: none;
 }
-.button:hover .zoom,
+@media (hover: hover) and (pointer: fine) {
+  .button:hover .image {
+    transform: scale(1.03);
+  }
+  .button:hover .zoom {
+    opacity: 1;
+  }
+}
+/* The reveal mask clips anything outside the photograph, so the focus
+   ring is drawn inside it. */
+.button:focus-visible {
+  outline: 3px solid var(--neodent-ivory);
+  outline-offset: -4px;
+  border-radius: var(--clinic-radius);
+}
 .button:focus-visible .zoom {
   opacity: 1;
 }
 .caption {
-  padding: 10px 2px 0;
-  color: var(--body);
-  font-size: 13px;
+  margin-top: 10px;
+  color: rgba(248, 246, 239, 0.86);
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.02em;
   line-height: 1.4;
+  letter-spacing: 0.01em;
 }
 
+.pair {
+  column-count: 2;
+}
+
+.dots {
+  display: none;
+}
+
+/* ---- Below 1024px: one snap-scrolling row with dots ------------------ */
 @media (max-width: 1023px) {
-  .header > h2 {
-    grid-column: 1 / 8;
+  .set,
+  .pair {
+    display: flex;
+    column-count: auto;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0;
+    padding-bottom: 6px;
+    scrollbar-width: none;
   }
-  .lede {
-    grid-column: 1 / -1;
-  }
-  .set {
-    column-count: 2;
-    column-gap: 12px;
+  .set::-webkit-scrollbar {
+    display: none;
   }
   .item {
-    margin-bottom: 12px;
+    flex: 0 0 86%;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+  .tall .frame,
+  .short .frame {
+    aspect-ratio: 4 / 3;
+    max-height: min(var(--media-max-h-compact), 46dvh);
+  }
+  .zoom {
+    opacity: 1;
+  }
+  .dots {
+    display: flex;
+  }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .item {
+    flex-basis: 46%;
   }
 }
 @media (max-width: 767px) {
-  .header > h2 {
-    grid-column: 1 / -1;
+  .title {
+    font-size: clamp(2.05rem, 8.6vw, 2.55rem);
   }
-}
-@media (max-width: 559px) {
-  .set,
-  .pair {
-    column-count: 1;
-  }
-}
-@media (hover: none) {
-  .zoom {
-    display: none;
+  .section {
+    padding: clamp(48px, 12vw, 64px) 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .button,
+  .image,
   .zoom {
     transition: none;
+  }
+  .button:hover .image {
+    transform: none;
   }
 }

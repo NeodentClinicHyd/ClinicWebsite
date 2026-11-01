@@ -1,0 +1,482 @@
+/* Page header. Layout follows the home hero (copy left, framed media
+   right). The dark ground comes from DrMiftahBackdrop. The load animation
+   is plain CSS keyframes (transform and opacity), switched off under
+   reduced motion, so it needs no JavaScript and never leaves content hidden. */
+
+.header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--neodent-ivory);
+  background-color: var(--mf-dark-top);
+  background-image: linear-gradient(180deg, var(--mf-dark-top) 0%, var(--mf-dark-bottom) 100%);
+  padding: calc(var(--nav-height-desktop) + clamp(2px, 1vw, 12px)) 0 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  width: var(--mf-container);
+  margin: 0 auto;
+}
+
+.copy {
+  min-width: 0;
+  max-width: 620px;
+}
+
+/* ---- Breadcrumb ----------------------------------------------------- */
+.crumbList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.crumb [aria-current="page"] {
+  color: var(--neodent-ivory);
+}
+.crumbLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 6px;
+  margin: 0 -6px;
+  color: rgba(248, 246, 239, 0.78);
+  transition: color 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .crumbLink:hover {
+    color: var(--neodent-ivory);
+    text-decoration: underline;
+  }
+}
+.crumbLink:focus-visible,
+.inline:focus-visible,
+.textLink:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 2px;
+}
+.sep {
+  color: rgba(248, 246, 239, 0.4);
+}
+
+/* ---- Text ----------------------------------------------------------- */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+.eyebrow::before {
+  content: "";
+  flex: none;
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+.headline {
+  margin: 10px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: var(--type-hero-supporting);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+/* Headline lines are clip boxes so a line can rise from behind its lower
+   edge on load. The padding keeps ascenders inside the clip. */
+.line {
+  display: block;
+  overflow: hidden;
+  overflow: clip;
+  padding-block: 0.1em;
+  margin-block: -0.1em;
+}
+.lineInner {
+  display: block;
+}
+.line + .line {
+  margin-top: -0.2em;
+}
+
+.tagline {
+  margin: 14px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.1vw, 28px);
+  line-height: 1.2;
+  color: var(--neodent-ivory);
+}
+.accent {
+  color: var(--neodent-red);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.credentials {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(248, 246, 239, 0.16);
+  color: var(--neodent-ivory);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+}
+.role {
+  margin: 4px 0 0;
+  color: var(--mf-ivory-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.lede {
+  max-width: 520px;
+  margin: 12px 0 0;
+  color: var(--mf-ivory-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.inline {
+  color: var(--neodent-ivory);
+  text-decoration: underline;
+  text-decoration-color: rgba(215, 25, 32, 0.9);
+  text-underline-offset: 3px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+.actions :global(.button) {
+  min-height: 44px;
+}
+.actions .ghost {
+  border-color: rgba(248, 246, 239, 0.45);
+  color: rgba(248, 246, 239, 0.92);
+}
+.actions .ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(248, 246, 239, 0.75);
+  color: var(--neodent-surface);
+}
+.actions :global(.button):focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+
+.textLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 22px;
+  margin-top: 4px;
+}
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  color: rgba(248, 246, 239, 0.82);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .textLink:hover {
+    color: var(--neodent-ivory);
+    text-decoration: underline;
+  }
+}
+
+/* ---- Media ----------------------------------------------------------- */
+.figure {
+  position: relative;
+  justify-self: end;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+.photo {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  max-height: var(--media-max-h);
+  width: 100%;
+  overflow: hidden;
+  background: #1b1d1f;
+  border-radius: var(--mf-radius);
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.75), 0 2px 8px rgba(0, 0, 0, 0.28);
+}
+.image {
+  object-fit: cover;
+}
+.tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 6px 10px;
+  border-radius: 3px;
+  background: rgba(16, 21, 23, 0.72);
+  color: var(--neodent-ivory);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 44px 16px 14px;
+  background: linear-gradient(180deg, rgba(15, 19, 21, 0) 0%, rgba(15, 19, 21, 0.86) 100%);
+  color: var(--neodent-ivory);
+  font-size: 13px;
+  line-height: 1.35;
+}
+.caption b {
+  font-size: 14px;
+  font-weight: 700;
+}
+.caption span {
+  color: var(--mf-ivory-muted);
+}
+
+/* ---- Fact strip ------------------------------------------------------ */
+.facts {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 28px;
+  width: var(--mf-container);
+  margin: clamp(16px, 2vw, 24px) auto 0;
+  padding: 0 0 clamp(18px, 2.4vw, 28px);
+  list-style: none;
+  border-top: 1px solid rgba(248, 246, 239, 0.14);
+  padding-top: 14px;
+  color: var(--mf-ivory-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.fact {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.factQuiet {
+  gap: 18px;
+  color: rgba(248, 246, 239, 0.62);
+}
+.mono {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 24px;
+  padding: 0 7px;
+  border: 1px solid rgba(248, 246, 239, 0.28);
+  border-radius: 3px;
+  color: var(--neodent-ivory);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---- Tablet and phone: copy and actions first, then photo, facts ----- */
+@media (max-width: 1023px) {
+  .header {
+    padding-top: calc(var(--nav-height-mobile) + 4px);
+  }
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .copy {
+    max-width: 640px;
+  }
+  .figure {
+    justify-self: start;
+    width: min(100%, 640px);
+  }
+  .photo {
+    max-height: 38dvh;
+  }
+  .facts {
+    margin-top: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .headline {
+    margin-top: 8px;
+    line-height: 1.06;
+  }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 16px;
+  }
+  .actions :global(.button) {
+    width: 100%;
+  }
+  .photo {
+    aspect-ratio: 4 / 3;
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 16px;
+  }
+  .fact {
+    align-items: flex-start;
+  }
+  .factQuiet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+/* ---- Load animation: class-keyed, transform and opacity only -------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes photoRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes lineUp {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .in0,
+  .in1,
+  .in2,
+  .in3,
+  .in4,
+  .in5 {
+    animation: rise 700ms var(--mf-ease) both;
+  }
+  .in0 {
+    animation-delay: 0ms;
+  }
+  .in1 {
+    animation-delay: 60ms;
+  }
+  .in2 {
+    animation-delay: 260ms;
+  }
+  .in3 {
+    animation-delay: 360ms;
+  }
+  .in4 {
+    animation-delay: 460ms;
+  }
+  .in5 {
+    animation-delay: 560ms;
+  }
+  .lineIn1,
+  .lineIn2 {
+    animation: lineUp 760ms var(--mf-ease) both;
+  }
+  .lineIn1 {
+    animation-delay: 140ms;
+  }
+  .lineIn2 {
+    animation-delay: 240ms;
+  }
+  .inPhoto .photo {
+    animation: photoRise 800ms 120ms var(--mf-ease) both;
+  }
+  .inPhoto .image {
+    animation: settle 1200ms 120ms var(--mf-ease) both;
+  }
+}
+
+/* ---- Buttons: hover lift on fine pointers from 768px, press state on
+   touch. Transform only; the global .button transition list is repeated
+   so its colour changes keep animating. --------------------------------- */
+.actions :global(.button) {
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.22s var(--mf-ease);
+}
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .actions :global(.button):hover {
+    transform: translateY(-2px);
+  }
+}
+.actions :global(.button):active {
+  transform: scale(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+  .actions :global(.button) {
+    transition: none;
+  }
+  .actions :global(.button):hover,
+  .actions :global(.button):active {
+    transform: none;
+  }
+}

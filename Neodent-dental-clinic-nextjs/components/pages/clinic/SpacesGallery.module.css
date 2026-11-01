@@ -4,9 +4,11 @@
    (hidden until JavaScript adds .enhanced; until then both panels show
    one after the other). Desktop bento: Mehdipatnam is a four-column grid,
    the first photograph spans two columns and two rows and the last spans
-   two columns, so three rows fill with no hole; Nampally is two photos
-   side by side over the same two-row height. Phones: a snap-scrolling
-   row per panel with progress dots. Captions sit below the photos. */
+   two columns, so three rows fill with no hole; Nampally uses the same
+   grid with portrait tiles one column by two rows and the landscape
+   tile two by two. Phones: a snap-scrolling row per panel with progress
+   dots (Nampally tiles take each photograph's own shape). Captions sit
+   below the photos. */
 
 .section {
   position: relative;
@@ -144,8 +146,22 @@
   grid-auto-rows: clamp(150px, 14.5vw, 210px);
   gap: 16px;
 }
-.pair .row {
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+/* Nampally uses the same four-column bento as Mehdipatnam, with tiles
+   sized to the photographs: a portrait takes one column and two rows, a
+   landscape takes two columns and two rows, so the grid fills with no
+   hole and each frame is close to its photograph's own shape. Row height
+   is derived from the column width so a portrait tile stays about 0.72
+   wide-to-tall at every desktop width. */
+.natural .row {
+  grid-auto-rows: calc((min(1180px, 100vw - 48px) - 48px) / 5.76 + 4.5px);
+}
+.natural .tall {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+.natural .land {
+  grid-column: span 2;
+  grid-row: span 2;
 }
 .row:focus-visible {
   outline: 2px solid var(--neodent-red);
@@ -165,14 +181,6 @@
 }
 .wide {
   grid-column: span 2;
-}
-.pair .key {
-  grid-column: span 7;
-  grid-row: span 2;
-}
-.pair .small {
-  grid-column: span 5;
-  grid-row: span 2;
 }
 
 .maskFill {
@@ -264,6 +272,12 @@
   .row {
     gap: 12px;
   }
+  /* Below 1024px the page container is a fixed 640px, so each column is
+     about 151px wide; this row height keeps a one-column, two-row
+     portrait tile close to portrait shape. */
+  .natural .row {
+    grid-auto-rows: 112px;
+  }
 }
 
 /* ---- Phone: one swipe row per panel ------------------------------------------- */
@@ -288,7 +302,7 @@
   }
 
   .row,
-  .pair .row {
+  .natural .row {
     display: flex;
     gap: 12px;
     padding: 0 0 4px;
@@ -308,6 +322,10 @@
     flex: none;
     aspect-ratio: 4 / 3;
     max-height: var(--media-max-h);
+  }
+  .natural .media {
+    aspect-ratio: var(--ar);
+    max-height: none;
   }
   .zoom {
     display: none;

@@ -13,7 +13,7 @@ import {
 } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Pause, Phone, Play, Star } from "lucide-react";
+import { ArrowRight, Pause, Phone, Play, Star, X, ZoomIn } from "lucide-react";
 import { AppButton } from "@/components/ui/AppButton";
 import { Reveal } from "@/components/motion/Reveal";
 import {
@@ -109,28 +109,56 @@ function Slide({ index, active, variant, labelledBy, children }: SlideProps) {
 
 /* Photos get the caption on a dark gradient over their lower edge.
    The press cutting is a document: it stays whole and readable, so its
-   caption sits on a solid band below the cutting inside the same card. */
-function RecordFigure({ item }: { item: HeroRecordItem }) {
+   caption sits on a solid band below the cutting inside the same card.
+   The cutting is tap-to-zoom (reference Part 3.1, rule 5): the image
+   area is a button that opens a native dialog with the cutting at full
+   size, because at 190 to 230px wide the Urdu headline cannot be read
+   in the card. The dialog image is rendered only while it is open, so
+   the page's alt texts are unchanged. */
+function RecordFigure({
+  item,
+  onZoom,
+}: {
+  item: HeroRecordItem;
+  onZoom?: () => void;
+}) {
   const isDocument = item.kind === "document";
+  const image = (
+    <Image
+      className={isDocument ? "hero-record-photo" : "hero-record-photo hero-zoom"}
+      src={item.src}
+      alt={item.alt}
+      fill
+      sizes={item.sizes}
+      style={{
+        objectFit: isDocument ? "contain" : "cover",
+        objectPosition: item.focal ?? "50% 50%",
+      }}
+    />
+  );
   return (
     <figure
       className={`hero-plate hero-record-plate hero-record-item-${item.id}${
         isDocument ? " hero-plate-document" : ""
       }`}
     >
-      <div className="hero-plate-media">
-        <Image
-          className={isDocument ? "hero-record-photo" : "hero-record-photo hero-zoom"}
-          src={item.src}
-          alt={item.alt}
-          fill
-          sizes={item.sizes}
-          style={{
-            objectFit: isDocument ? "contain" : "cover",
-            objectPosition: item.focal ?? "50% 50%",
-          }}
-        />
-      </div>
+      {isDocument && onZoom ? (
+        <button
+          type="button"
+          className="hero-plate-media hero-plate-zoom"
+          onClick={onZoom}
+          aria-haspopup="dialog"
+          aria-label={`Enlarge the cutting: ${item.caption}`}
+          data-testid="button-hero-zoom-press"
+        >
+          {image}
+          <span className="hero-plate-zoom-icon" aria-hidden="true">
+            <ZoomIn size={14} />
+          </span>
+        </button>
+      ) : (
+        <div className="hero-plate-media">{image}</div>
+      )}
       <figcaption className="hero-plate-caption">
         <strong>{item.caption}</strong>
       </figcaption>
@@ -139,6 +167,61 @@ function RecordFigure({ item }: { item: HeroRecordItem }) {
 }
 
 const [recordPress, ...recordSide] = heroRecordItems;
+
+/* Native modal dialog for the press cutting (tap-to-zoom). Escape and the
+   backdrop close it, focus returns to the button that opened it, and the
+   image exists only while the dialog is open. */
+function PressZoomDialog({
+  item,
+  open,
+  onClose,
+}: {
+  item: HeroRecordItem | undefined;
+  open: boolean;
+  onClose: () => void;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+    if (open && !dialog.open) dialog.showModal();
+    if (!open && dialog.open) dialog.close();
+  }, [open]);
+  if (!item) return null;
+  return (
+    <dialog
+      ref={ref}
+      className="hero-zoom-dialog"
+      aria-label={`${item.caption}: the cutting, enlarged`}
+      onClose={onClose}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      {open ? (
+        <div className="hero-zoom-dialog-body">
+          <Image
+            src={item.src}
+            alt={item.alt}
+            width={631}
+            height={1280}
+            sizes="(max-width: 767px) 92vw, 631px"
+            className="hero-zoom-dialog-image"
+          />
+          <button
+            type="button"
+            className="hero-zoom-dialog-close"
+            onClick={onClose}
+            aria-label="Close the enlarged cutting"
+            data-testid="button-hero-zoom-close"
+          >
+            <X size={20} aria-hidden="true" />
+          </button>
+        </div>
+      ) : null}
+    </dialog>
+  );
+}
 
 export function Hero() {
   const [active, setActive] = useState(0);
@@ -150,6 +233,7 @@ export function Hero() {
   const [focused, setFocused] = useState(false);
   const [touching, setTouching] = useState(false);
   const [userPaused, setUserPaused] = useState(false);
+  const [zoomOpen, setZoomOpen] = useState(false);
   const [inView, setInView] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -179,7 +263,7 @@ export function Hero() {
     return () => io.disconnect();
   }, []);
 
-  const paused = hovered || focused || touching || userPaused || !inView;
+  const paused = hovered || focused || touching || userPaused || zoomOpen || !inView;
 
   const onFocus = (e: FocusEvent<HTMLElement>) => {
     // Keyboard focus only: a mouse click on a dot should not leave the
@@ -416,7 +500,9 @@ export function Hero() {
           </div>
 
           <div className="hero-media hero-record">
-            {recordPress ? <RecordFigure item={recordPress} /> : null}
+            {recordPress ? (
+              <RecordFigure item={recordPress} onZoom={() => setZoomOpen(true)} />
+            ) : null}
             <div className="hero-record-side">
               {recordSide.map((item) => (
                 <RecordFigure key={item.id} item={item} />
@@ -478,6 +564,11 @@ export function Hero() {
           ) : null}
         </div>
       </div>
+      <PressZoomDialog
+        item={recordPress}
+        open={zoomOpen}
+        onClose={() => setZoomOpen(false)}
+      />
     </section>
   );
 }

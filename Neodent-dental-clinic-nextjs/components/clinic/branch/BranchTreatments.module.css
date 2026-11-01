@@ -1,264 +1,321 @@
-/* Branch page -- treatment cards.
+/* S4 featured treatments + additional services. Light band. Cards are the
+   home atlas card (16px radius, surface fill, hairline, red 42px icon)
+   at 15px+ body text. Hover lift only on fine pointers, desktop only.
+   The DOM order inside each card is title, summary, action word; the
+   icon is moved to the top with `order`. */
 
-   The home atlas card (ClinicTreatments.module.css: 16px radius, 22px
-   padding, 19px / 600 title, 14px summary, red 42px icon, 12px / .14em
-   intent) on the ivory ground. The card surface is the page's white
-   `--surface` with a hair border so it separates from the ivory. */
-
-.header {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--gutter);
-  row-gap: 24px;
-  align-items: end;
+.section {
+  background: var(--neodent-ivory);
+  color: var(--neodent-ink);
+  padding: var(--clinic-pad-y) 0;
+  scroll-margin-top: calc(var(--nav-height-desktop) + 16px);
 }
-.header > h2 {
-  grid-column: 1 / 8;
-}
-.lede {
-  grid-column: 8 / 13;
-  max-width: none;
+.container {
+  width: var(--clinic-container);
+  margin: 0 auto;
 }
 
+/* ---- Heading ------------------------------------------------------- */
+.head {
+  max-width: 820px;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.3rem, 3.8vw, 3.7rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  color: var(--neodent-ink);
+  text-wrap: balance;
+}
+.support {
+  max-width: 62ch;
+  margin: 18px 0 0;
+  color: rgba(38, 48, 51, 0.8);
+  font-size: 16px;
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  .support {
+    font-size: 17px;
+  }
+}
+
+/* ---- Cards ---------------------------------------------------------- */
+.wrap {
+  margin-top: clamp(32px, 4vw, 52px);
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
-  margin: clamp(36px, 4.5vw, 56px) 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
-.grid li {
+.grid:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 6px;
+}
+.item {
   display: flex;
   min-width: 0;
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 210px;
+  min-height: 230px;
   padding: 22px;
-  border: 1px solid var(--hair);
+  border: 1px solid var(--clinic-hairline);
   border-radius: 16px;
-  background-color: var(--surface);
+  background-color: var(--neodent-surface);
   color: #252525;
   text-align: left;
   text-decoration: none;
+  box-shadow: 0 10px 28px -22px rgba(22, 28, 30, 0.3);
   transition:
-    transform 180ms ease,
-    border-color 180ms ease;
+    transform 260ms var(--clinic-ease),
+    box-shadow 260ms var(--clinic-ease),
+    border-color 200ms ease;
 }
-.card:hover {
-  border-color: rgba(37, 37, 37, 0.3);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37, 37, 37, 0.3);
+    box-shadow: 0 22px 36px -22px rgba(22, 28, 30, 0.4);
+  }
+  .card:hover .arrow {
+    transform: translateX(3px);
+  }
+}
+.card:active {
+  transform: scale(0.985);
 }
 .card:focus-visible {
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--neodent-red);
   outline-offset: 3px;
+}
+
+/* Icon first, then title and summary, then the action. */
+.cardBottom {
+  display: contents;
+}
+.icon {
+  order: -1;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 18px;
+  stroke-width: 1.5;
+  color: var(--neodent-red);
 }
 .cardTitle {
   font-size: 19px;
   font-weight: 600;
-  line-height: 1.2;
-  color: #252525;
+  line-height: 1.25;
   text-wrap: balance;
 }
 .cardSummary {
   margin-top: 8px;
-  font-size: 14px;
-  line-height: 1.45;
-  color: #535353;
-}
-.cardBottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 48px;
-  margin-top: auto;
-  padding-top: 16px;
-}
-.icon {
-  flex: none;
-  width: 42px;
-  height: 42px;
-  stroke-width: 1.5;
-  color: var(--neodent-red);
+  color: #44484a;
+  font-size: 15px;
+  line-height: 1.5;
 }
 .action {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-left: auto;
-}
-.intent {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  min-height: 44px;
+  margin-top: auto;
+  padding-top: 14px;
   color: var(--neodent-red-dark);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+/* The data holds the category words in capitals; show "Repair" etc. */
+.intent {
+  display: inline-block;
+  text-transform: lowercase;
+}
+.intent::first-letter {
+  text-transform: uppercase;
 }
 .arrow {
+  flex: none;
   width: 16px;
   height: 16px;
-  color: var(--neodent-red-dark);
-  transition: transform 180ms ease;
-}
-.card:hover .arrow {
-  transform: translateX(3px);
+  transition: transform 200ms ease;
 }
 
+/* ---- Eighth cell: dark card holding the "Explore all treatments" link -- */
 .all {
-  margin: 28px 0 0;
+  justify-content: center;
+  min-height: 230px;
+  background-color: var(--neodent-charcoal);
+  border-color: rgba(248, 246, 239, 0.14);
+  color: var(--neodent-ivory);
 }
+.allLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--neodent-ivory);
+  font-family: var(--app-font-serif);
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  text-wrap: balance;
+}
+.allLink .arrow {
+  width: 22px;
+  height: 22px;
+  color: var(--neodent-red);
+}
+/* The whole dark card is the tap target. */
+.allLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.allLink:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 6px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .all:hover {
+    background-color: #1e272a;
+    border-color: rgba(248, 246, 239, 0.4);
+  }
+}
+
+.dots {
+  display: none;
+}
+
+/* ---- Additional dental services ------------------------------------ */
 .additional {
-  margin-top: clamp(48px, 6vw, 76px);
-  padding: clamp(24px, 3.5vw, 40px);
-  border: 1px solid var(--hair);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.58);
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  gap: clamp(24px, 4vw, 56px);
+  margin-top: clamp(24px, 3vw, 36px);
+  padding: clamp(24px, 3vw, 40px);
+  background: var(--neodent-surface);
+  border: 1px solid var(--clinic-hairline);
+  border-radius: 20px;
+  box-shadow: var(--clinic-card-shadow);
 }
 .additionalHeader {
-  display: grid;
-  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1fr);
-  gap: 24px;
-  align-items: end;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--hair);
+  min-width: 0;
 }
 .additionalTitle {
   margin: 0;
   font-family: var(--app-font-serif);
-  font-size: clamp(1.65rem, 2.4vw, 2.25rem);
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 .additionalIntro {
-  max-width: 620px;
-  margin: 0;
-  color: var(--body);
+  margin: 12px 0 0;
+  color: rgba(38, 48, 51, 0.8);
   font-size: 15px;
   line-height: 1.6;
 }
-.additionalGroups {
-  margin: 0;
-}
-.additionalGroup {
+.groups {
   display: grid;
-  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1fr);
-  gap: 24px;
-  padding: 18px 0;
-  border-bottom: 1px solid var(--hair);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 28px;
+  margin: 0;
+  min-width: 0;
 }
-.additionalGroup:last-child {
-  padding-bottom: 0;
-  border-bottom: 0;
-}
-.additionalGroup dt {
-  color: var(--muted);
-  font-size: 11px;
+.group dt {
+  margin: 0 0 10px;
+  color: var(--neodent-ink);
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1.5;
-  text-transform: uppercase;
+  line-height: 1.3;
 }
-.additionalGroup dd {
+.group dd {
   margin: 0;
 }
-.additionalGroup ul {
+.group ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 22px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.additionalGroup li {
-  color: var(--ink);
+.group li {
+  padding: 7px 13px;
+  border: 1px solid var(--clinic-hairline);
+  border-radius: 999px;
+  background: var(--neodent-ivory);
+  color: rgba(38, 48, 51, 0.9);
   font-size: 14px;
-  line-height: 1.5;
-}
-.allLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  color: var(--neodent-red-dark);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 5px;
-  transition: text-decoration-color 180ms ease;
-}
-.allLink:hover {
-  text-decoration-color: currentColor;
-}
-.allLink:focus-visible {
-  outline: 2px solid var(--red);
-  outline-offset: 3px;
+  line-height: 1.35;
 }
 
+/* ---- Tablet and phone: one snap-scrolling row with dots -------------- */
 @media (max-width: 1023px) {
-  .header > h2 {
-    grid-column: 1 / -1;
-  }
-  .lede {
-    grid-column: 1 / -1;
-  }
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+    scrollbar-width: none;
   }
-  .card {
-    min-height: 190px;
+  .grid::-webkit-scrollbar {
+    display: none;
   }
-  .additionalHeader,
-  .additionalGroup {
-    grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1fr);
+  .item {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
   }
-}
-@media (max-width: 599px) {
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+  .card,
+  .all {
+    min-height: 220px;
   }
-  .card {
-    min-height: 0;
-    padding: 20px;
-  }
-  .cardBottom {
-    min-height: 0;
-    padding-top: 18px;
-  }
-  .icon {
-    width: 32px;
-    height: 32px;
+  .dots {
+    display: flex;
   }
   .additional {
-    padding: 22px 18px;
+    grid-template-columns: minmax(0, 1fr);
   }
-  .additionalHeader,
-  .additionalGroup {
-    grid-template-columns: 1fr;
-    gap: 10px;
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .item {
+    flex-basis: 44%;
   }
-  .additionalHeader {
-    padding-bottom: 18px;
+}
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(2.05rem, 8.6vw, 2.55rem);
   }
-  .additionalGroup ul {
-    gap: 7px 16px;
+  .section {
+    padding: clamp(48px, 12vw, 64px) 0;
+  }
+  .groups {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .card,
-  .arrow,
-  .allLink {
+  .arrow {
     transition: none;
   }
-  .card:hover {
+  .card:hover,
+  .card:active {
     transform: none;
   }
 }

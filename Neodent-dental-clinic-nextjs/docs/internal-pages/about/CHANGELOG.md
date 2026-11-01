@@ -26,7 +26,7 @@
 ## R1: Page wrapper, S1 header, S2 fact strip (31 Oct 2026)
 
 **Files changed / created**
-- pp/about/page.tsx: imports and the component body only (metadata export untouched, verified with git diff). The page now composes Navbar, sections and Footer directly instead of rendering AboutClientChrome (left untouched, now unused). S3 to S12 still render the old About components.
+- app/about/page.tsx: imports and the component body only (metadata export untouched, verified with git diff). The page now composes Navbar, sections and Footer directly instead of rendering AboutClientChrome (left untouched, now unused). S3 to S12 still render the old About components.
 - New: components/pages/about/AboutPage.module.css, AboutBackdrop.tsx + .module.css, AboutHeader.tsx + .module.css, AboutFacts.tsx + .module.css.
 - Tooling only: .audit/about/tools/ (un.mjs hard-timeout wrapper, shot-section.mjs, 
 ojs-top.mjs).
@@ -44,9 +44,9 @@ ojs-top.mjs).
 
 ## R2: S3 practice, S4 founder (31 Oct 2026)
 
-**Files:** new components/pages/about/AboutShared.module.css (shared section system for R2 to R5: light/dark tones, title, lede, label, card, facts, native details, figure), AboutPractice.tsx + .module.css, AboutFounder.tsx + .module.css. pp/about/page.tsx imports changed to the new S3/S4 (body order unchanged). Old files in components/sections/about/ untouched.
+**Files:** new components/pages/about/AboutShared.module.css (shared section system for R2 to R5: light/dark tones, title, lede, label, card, facts, native details, figure), AboutPractice.tsx + .module.css, AboutFounder.tsx + .module.css. app/about/page.tsx imports changed to the new S3/S4 (body order unchanged). Old files in components/sections/about/ untouched.
 
-**S3 (light):** ghost "1994" no longer drawn; kept in the DOM as visually hidden ria-hidden text (CONTENT_QUESTIONS Q5). Grid lines gone. Heading plain ink (no red accent). Paragraphs 1 and 2 visible in one reading column; facts card (light, hairline, soft shadow, rows as <dl>, 80 ms stagger); paragraphs 3 and 4 in a native <details> "Read more" (full text in server HTML). Highlight marks cut from 3 to 2; the third phrase is the same words as plain text. Mobile order: heading, paragraph 1, card, paragraph 2, details.
+**S3 (light):** ghost "1994" no longer drawn; kept in the DOM as visually hidden aria-hidden text (CONTENT_QUESTIONS Q5). Grid lines gone. Heading plain ink (no red accent). Paragraphs 1 and 2 visible in one reading column; facts card (light, hairline, soft shadow, rows as <dl>, 80 ms stagger); paragraphs 3 and 4 in a native <details> "Read more" (full text in server HTML). Highlight marks cut from 3 to 2; the third phrase is the same words as plain text. Mobile order: heading, paragraph 1, card, paragraph 2, details.
 **S4 (dark, with AboutBackdrop):** red italic accent kept on "specialist care." Portrait on a dark panel, cut-out shown whole (contain, resting on the panel edge), caption in its own strip, panel height at most --media-max-h (38dvh on phones), mask reveal. Founder card as dark glass with <dl> rows; "30+" uses CountUp (server HTML reads "30+"). First paragraph visible, other four in a <details> (two columns on desktop). No highlight marks in dark body text (same words, plain). Link "Neodent's clinical expertise" kept (/treatments).
 
 **Content check:** missing: 0, shortened: 0.
@@ -56,7 +56,7 @@ ojs-top.mjs).
 
 ## R3: S5 experience, S6 press, DocumentViewer (31 Oct 2026)
 
-**Files (all new in components/pages/about/):** AboutExperience.tsx + .module.css, AboutPress.tsx + .module.css, DocumentViewer.tsx + .module.css, SwipeRow.tsx + .module.css (reusable scroll-snap row with dots, reused in R5). pp/about/page.tsx now imports the new S5/S6. Old AboutMiftah/AboutPress and ArchiveViewer left in place; the new S6 imports ArchiveViewer and ARCHIVE_IMAGES from components/sections/about/ArchiveViewer unchanged.
+**Files (all new in components/pages/about/):** AboutExperience.tsx + .module.css, AboutPress.tsx + .module.css, DocumentViewer.tsx + .module.css, SwipeRow.tsx + .module.css (reusable scroll-snap row with dots, reused in R5). app/about/page.tsx now imports the new S5/S6. Old AboutMiftah/AboutPress and ArchiveViewer left in place; the new S6 imports ArchiveViewer and ARCHIVE_IMAGES from components/sections/about/ArchiveViewer unchanged.
 
 **S5 (light):** photo left (sticky while the right column scrolls), shown at its own 4:3 proportion, no crop or filter, so the pixelated face is untouched; caption below. Right: plain heading, both paragraphs (both visible, together short), doctor card, red "View profile" (same label, href /doctors/dr-miftah-ur-rahman) under the card. Highlight marks 3 to 2. Mobile order: heading, paragraph 1, photo (at most 38dvh), card + button, paragraph 2.
 **S6 (dark):** heading, both paragraphs, "View full archive" (same aria-label, still opens the 16-item ArchiveViewer) with "16 press items in the archive". Four cuttings on paper plates (contain, whole, hairline, soft shadow), each with its original two-line caption and alt, opening DocumentViewer. Mobile: one swipe row (scroll-snap, next plate peeks, progress dots, focusable track).
@@ -70,7 +70,7 @@ ojs-top.mjs).
 
 ## R4: S7 recognition, S8 seam card, S9 voice (31 Oct 2026)
 
-**Files (new in components/pages/about/):** AboutRecognition.tsx + .module.css (S7 only), AboutSeam.tsx + .module.css (S8), AboutVoice.tsx + .module.css (S9). pp/about/page.tsx order is now AboutRecognition, AboutSeam, AboutVoice. Old AboutRecognition (which held S7 and S8) and AboutMedia are unused, not deleted.
+**Files (new in components/pages/about/):** AboutRecognition.tsx + .module.css (S7 only), AboutSeam.tsx + .module.css (S8), AboutVoice.tsx + .module.css (S9). app/about/page.tsx order is now AboutRecognition, AboutSeam, AboutVoice. Old AboutRecognition (which held S7 and S8) and AboutMedia are unused, not deleted.
 
 **S7 (light):** D1 unticked, so the red card stays. Restyled inside it: no tall minimum height or empty gap (text sits together), consistent radius, soft shadow. Heading keeps its italic "over time." (words already carried it). Both bold runs kept. Awards photo cover with focal point on the trophy shelf, capped at --media-max-h, caption below ("Institutional recognition / Neodent Dental Hospital"). A7 unticked: no Madina Gold Medal line added.
 **S8 (seam card, used once):** a two-tone band (ivory above, the S9 dark below) with one card across the line. The statement is now an h2 (was a <p>; same words, no red italic) and the ceremony photo with its caption and alt sits in the card's side column. Nothing added.
@@ -84,7 +84,7 @@ ojs-top.mjs).
 
 ## R5: S10 community, S11 today, S12 cross-links (31 Oct 2026)
 
-**Files (new in components/pages/about/):** AboutCommunity.tsx + .module.css, AboutToday.tsx + .module.css, AboutCrossLinks.tsx + .module.css. pp/about/page.tsx now uses only new components for S1 to S12 (plus Navbar, ContactNextStep, Footer). The whole of components/sections/about/* and pp/about/AboutClientChrome.tsx are now unused; nothing was deleted.
+**Files (new in components/pages/about/):** AboutCommunity.tsx + .module.css, AboutToday.tsx + .module.css, AboutCrossLinks.tsx + .module.css. app/about/page.tsx now uses only new components for S1 to S12 (plus Navbar, ContactNextStep, Footer). The whole of components/sections/about/* and app/about/AboutClientChrome.tsx are now unused; nothing was deleted.
 
 **S10 (light):** red italic accent kept on "wider community." (words already carried it). Paragraphs one and two visible, the third in a native <details>. Two highlight marks (was three). Photos: Republic Day address (larger) and Television (smaller), bottom-aligned, each at its own 16:9 so the text baked into the Republic Day picture is never cropped. Two cuttings on paper plates (contain, whole, tap to zoom through the same DocumentViewer from R3). Mobile: text, a swipe row of the two photos, a separate swipe row of the two cuttings, dots on both.
 **S11 (dark, was beige):** plain heading; three paragraphs with both inline links (/treatments, /clinic); two dark glass clinic cards (name link to /clinic/mehdipatnam and /clinic/nampally, locality, 	el: phone links, all read from lib/site-data.ts; the whole card is the link, the phone is its own link); photos "Waiting lounge" and "Reception" as a capped pair (one swipe row on mobile). Highlight marks removed (dark body text, same words plain). A4 (opening hours) unticked, so none added.
@@ -116,18 +116,18 @@ ojs-top.mjs).
 
 ## R8: Final fast check and screenshots (31 Oct 2026) , WHOLE REDESIGN SUMMARY
 
-**Fast check (run id inal):** 	sc clean in owned paths; eslint clean; content check **missing: 0, shortened: 0**; git diff of pp/about/page.tsx shows no change to the metadata export (title, description, canonical, robots, Open Graph, Twitter are byte-identical; only imports and the component body changed).
+**Fast check (run id inal):** 	sc clean in owned paths; eslint clean; content check **missing: 0, shortened: 0**; git diff of app/about/page.tsx shows no change to the metadata export (title, description, canonical, robots, Open Graph, Twitter are byte-identical; only imports and the component body changed).
 **Audit numbers (360 / 390 / 768 / 1366x650 / 1440):** horizontal overflow 0 at every width; media over 70% of the viewport 0 at every width (baseline R0: 0 / 0 / 1 / 10); text under 12 px 0 (baseline 6 to 7); one h1; S1 photo preloaded and no other image. Tap targets under 44 px at 768 and below: 1, the consult-company input inside ContactNextStep (read-only shared block, not changed). Section heights at 390x844 (screens): S3 1.40, S4 1.55, S5 1.75, S6 1.42, S7 1.08, S8 0.55, S9 2.54, S10 1.64, S11 1.82, S12 0.47. Page height at 390: 16,260 px (baseline 19,546); at 1366: 11,003 px (baseline 13,330).
 
 **Files changed (commit by path):**
-- pp/about/page.tsx (imports and body JSX only)
+- app/about/page.tsx (imports and body JSX only)
 - New, all in components/pages/about/: AboutPage.module.css, AboutBackdrop.tsx + .module.css, AboutShared.module.css, AboutHeader.tsx + .module.css, AboutFacts.tsx + .module.css, AboutPractice.tsx + .module.css, AboutFounder.tsx + .module.css, AboutExperience.tsx + .module.css, AboutPress.tsx + .module.css, DocumentViewer.tsx + .module.css, SwipeRow.tsx + .module.css, AboutRecognition.tsx + .module.css, AboutSeam.tsx + .module.css, AboutVoice.tsx + .module.css, AboutCommunity.tsx + .module.css, AboutToday.tsx + .module.css, AboutCrossLinks.tsx + .module.css
 - Docs: docs/internal-pages/about/ (CHANGELOG.md, CONTENT_QUESTIONS.md, DISCOVERY.md, OWNERSHIP.md, content-snapshot.json; PAGE_PLAN.md is yours)
 - Tooling and evidence, not site code: .audit/about/ (tools in .audit/about/tools/, screenshots per run)
 
 **Additions:** the page-header action pair (primary "Call for Consultation" to ctaTelPhone, secondary "Send an enquiry" to /contact), required by the standard; the live header had none. No A-items were ticked, so no breadcrumb, eyebrows, opening hours, extra cross-links, FAQ or Madina line were added.
 **Forks:** none. All S1 to S12 components were About-only, so new files were created beside them and the old ones were left alone.
-**Now unused, not deleted (owner may remove):** pp/about/AboutClientChrome.tsx and everything in components/sections/about/ except ArchiveViewer.tsx and its CSS, which S6 still imports.
+**Now unused, not deleted (owner may remove):** app/about/AboutClientChrome.tsx and everything in components/sections/about/ except ArchiveViewer.tsx and its CSS, which S6 still imports.
 **Shared-change requests:** none (docs/internal-pages/_shared-requests.md does not exist and nothing needed it).
 
 **Deviations from the plan, for the owner:**
@@ -161,7 +161,7 @@ ojs-top.mjs).
 ## Added at owner request: clinical team section (1 Nov 2026)
 
 **Request:** list the doctors on /about, like the home page, after "Experience carried forward." (S5). This is outside the original plan.
-**Files (new):** components/pages/about/AboutTeam.tsx + .module.css; pp/about/page.tsx renders it right after AboutExperience.
+**Files (new):** components/pages/about/AboutTeam.tsx + .module.css; app/about/page.tsx renders it right after AboutExperience.
 **What it shows:** heading "The Neodent clinical team.", the home page's own supporting line and lede, the two leadership cards (Dr. Mohd. Siraj Ur Rahman with 32+ years; Dr. Md. Miftah Ur Rahman with 15+ years and a "View profile" link to /doctors/dr-miftah-ur-rahman), then the five other doctors in the home page's portrait style (monogram plate for Dr. Hafsa Taha, who has no photo). Below 1024 px the five-doctor row is a swipe row with dots.
 **Source of truth:** names, roles, credentials, years, portraits and crops are read from lib/clinical-team.ts (read-only), never retyped, so the About page and the home page stay in step. Dr. Siraj's data link points to this page, so only Dr. Miftah's profile link is shown.
 **Checks:** tsc, eslint clean; content check missing: 0, shortened: 0 (additions only: links +3 vs baseline, images 16 to 22). Audit: no overflow, media over 70% 0, text under 12 px 0 at 360/390/768/1366/1440; motion check: no hidden state, reduced motion clean, phone has 0 continuous animations.

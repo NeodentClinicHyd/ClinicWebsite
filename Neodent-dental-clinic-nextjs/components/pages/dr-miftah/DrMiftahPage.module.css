@@ -1,0 +1,51 @@
+/* Dr. Miftah page wrapper. The page's custom properties live here so every
+   band reads the same values (same recipe as /doctors, /clinic and /about:
+   the dark-band glow and icon pattern come from the home hero). A band
+   overrides a value by setting the same property on its own class.
+
+   Band rhythm (PAGE_PLAN section 4): dark header, light 01 and 02, dark 03
+   with the case story, light 04, dark 05, light 06, dark 07, light 08,
+   dark 09, [photograph wall, dark], light 10, dark closing block. */
+
+.page {
+  /* Dark-band layer recipe: glow centre and strength. */
+  --mf-glow-x: calc(50% + min(290px, 23vw));
+  --mf-glow-y: 50%;
+  --mf-glow-a: 0.3;
+  --mf-glow-rx: min(460px, 36vw);
+  --mf-glow-ry: 72%;
+  --mf-glow2-a: 0.12;
+
+  /* Pattern tile: strength, size and the mask that fades it out
+     before the text column. */
+  --mf-pattern-o: 0.125;
+  --mf-pattern-size: 420px;
+  --mf-pattern-rx: min(345px, 26vw);
+  --mf-pattern-ry: 86%;
+
+  /* Section rhythm. */
+  --mf-pad-y: clamp(72px, 8vw, 112px);
+  --mf-container: min(1180px, calc(100% - 48px));
+  --mf-radius: 0.35rem;
+  --mf-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Dark surfaces. */
+  --mf-dark-top: var(--neodent-charcoal);
+  --mf-dark-bottom: #0f1315;
+  --mf-glass: rgba(16, 21, 23, 0.72);
+  --mf-glass-line: rgba(255, 255, 255, 0.12);
+  --mf-ivory-muted: rgba(248, 246, 239, 0.78);
+}
+
+@media (max-width: 1023px) {
+  .page {
+    /* Below 1024px the media sits under the copy, so the light moves
+       to the lower middle of the band. */
+    --mf-glow-x: 50%;
+    --mf-glow-y: 78%;
+    --mf-glow-rx: min(420px, 90vw);
+    --mf-pattern-rx: min(420px, 92vw);
+    --mf-pattern-ry: 46%;
+    --mf-container: min(100% - 32px, 640px);
+  }
+}

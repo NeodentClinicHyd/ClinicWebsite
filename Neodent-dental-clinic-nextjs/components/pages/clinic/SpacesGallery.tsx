@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type CSSProperties,
   type KeyboardEvent,
   type UIEvent,
 } from "react";
@@ -13,6 +14,7 @@ import { ZoomIn } from "lucide-react";
 import { EditorialHighlight } from "@/components/ui/EditorialHighlight";
 import { Reveal } from "@/components/motion/Reveal";
 import { clinicGalleryImages, type ClinicGalleryImage } from "@/lib/site-data";
+import { NAMPALLY_SPACES_IMAGES } from "@/lib/pages/clinic-content";
 import { GalleryLightbox } from "./GalleryLightbox";
 import styles from "./SpacesGallery.module.css";
 
@@ -41,10 +43,20 @@ import styles from "./SpacesGallery.module.css";
 const BRANCHES = ["Mehdipatnam", "Nampally"] as const;
 type Branch = (typeof BRANCHES)[number];
 
-const groups = BRANCHES.map((branch) => ({
-  branch,
-  images: clinicGalleryImages.filter((image) => image.branch === branch),
-}));
+/* width/height are present only where the tile is shaped to the
+   photograph (Nampally). */
+type GalleryImage = ClinicGalleryImage & { width?: number; height?: number };
+
+/* Nampally uses its own list (lib/pages/clinic-content.ts) whose photographs
+   carry their real pixel size, so they render at natural aspect ratio. */
+const groups: { branch: Branch; images: readonly GalleryImage[] }[] =
+  BRANCHES.map((branch) => ({
+    branch,
+    images:
+      branch === "Nampally"
+        ? NAMPALLY_SPACES_IMAGES
+        : clinicGalleryImages.filter((image) => image.branch === branch),
+  }));
 
 const noopSubscribe = () => () => {};
 const useEnhanced = () =>
@@ -62,7 +74,7 @@ function Panel({
   onOpen,
 }: {
   branch: Branch;
-  images: readonly ClinicGalleryImage[];
+  images: readonly GalleryImage[];
   active: boolean;
   enhanced: boolean;
   onOpen: (index: number, trigger: HTMLElement) => void;
@@ -85,6 +97,8 @@ function Panel({
   };
 
   const roleFor = (index: number) => {
+    const { width, height } = images[index];
+    if (!isMain && width && height) return width > height ? styles.land : styles.tall;
     if (index === 0) return styles.key;
     if (isMain && index === images.length - 1) return styles.wide;
     return styles.small;
@@ -96,7 +110,7 @@ function Panel({
       role={enhanced ? "tabpanel" : "group"}
       aria-labelledby={enhanced ? `spaces-tab-${branch}` : `spaces-name-${branch}`}
       className={`${styles.panel} ${active ? styles.panelOn : styles.panelOff} ${
-        isMain ? styles.main : styles.pair
+        isMain ? styles.main : styles.natural
       }`}
     >
       <h3 id={`spaces-name-${branch}`} className={styles.groupName}>
@@ -145,19 +159,29 @@ function Media({
   role,
   onOpen,
 }: {
-  image: ClinicGalleryImage;
+  image: GalleryImage;
   index: number;
   role: "key" | "wide" | "small";
   onOpen: (index: number, trigger: HTMLElement) => void;
 }) {
-  const sizes =
-    role === "small"
+  const natural = Boolean(image.width && image.height);
+  const landscape = natural && (image.width ?? 0) > (image.height ?? 0);
+  const sizes = natural
+    ? landscape
+      ? "(min-width: 1024px) 590px, (min-width: 768px) 50vw, 85vw"
+      : "(min-width: 1024px) 290px, (min-width: 768px) 25vw, 85vw"
+    : role === "small"
       ? "(min-width: 1024px) 290px, (min-width: 768px) 28vw, 85vw"
       : "(min-width: 1024px) 590px, (min-width: 768px) 50vw, 85vw";
   return (
     <button
       type="button"
       className={styles.media}
+      style={
+        natural
+          ? ({ "--ar": `${image.width} / ${image.height}` } as CSSProperties)
+          : undefined
+      }
       onClick={(event) => onOpen(index, event.currentTarget)}
       aria-label={`View full photograph: ${image.branch} — ${image.label}`}
     >

@@ -1,0 +1,238 @@
+/* 05 Education and training: dark band. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--neodent-ivory);
+  background-color: var(--mf-dark-top);
+  background-image: linear-gradient(180deg, var(--mf-dark-bottom) 0%, var(--mf-dark-top) 100%);
+  padding: var(--mf-pad-y) 0;
+  --mf-glow-x: 82%;
+  --mf-glow-y: 60%;
+  --mf-glow-a: 0.2;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--mf-container);
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+  margin-top: clamp(32px, 4vw, 52px);
+}
+
+/* ---- Stepper ----------------------------------------------------------- */
+.journey {
+  min-width: 0;
+  max-width: 600px;
+}
+.steps {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Connecting line: drawn with scroll where animation-timeline is
+   supported; otherwise it is simply drawn in full. */
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 67px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(248, 246, 239, 0.34), var(--neodent-red));
+  transform-origin: top center;
+}
+@keyframes drawDown {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .steps::before {
+      animation: drawDown linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 55%;
+    }
+  }
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 24px minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: start;
+  padding: 0 0 clamp(22px, 2.6vw, 32px);
+}
+.step:last-child {
+  padding-bottom: 0;
+}
+.stepNumber {
+  padding-top: 2px;
+  font-family: var(--app-font-serif);
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--neodent-red);
+}
+.node {
+  position: relative;
+  z-index: 1;
+  width: 11px;
+  height: 11px;
+  margin: 8px 0 0 6px;
+  border: 1px solid var(--neodent-red);
+  border-radius: 999px;
+  background: var(--mf-dark-top);
+}
+.final .node {
+  background: var(--neodent-red);
+  box-shadow: 0 0 0 4px rgba(215, 25, 32, 0.22);
+}
+.kicker {
+  display: block;
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.final .kicker {
+  color: #ff8a8f;
+}
+.stepTitle {
+  margin: 4px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--neodent-ivory);
+}
+.stepLine {
+  margin: 6px 0 0;
+  color: rgba(248, 246, 239, 0.82);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.stepLine + .stepLine {
+  margin-top: 2px;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: clamp(24px, 3vw, 36px);
+  padding-top: 14px;
+  border-top: 1px solid rgba(248, 246, 239, 0.16);
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---- Photographs ------------------------------------------------------ */
+.platesWrap {
+  min-width: 0;
+}
+.plates {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.plate {
+  margin: 0;
+  width: 100%;
+}
+.plateSmall {
+  width: 62%;
+  align-self: flex-end;
+}
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  max-height: var(--media-max-h-compact);
+  overflow: hidden;
+  border: 1px solid rgba(248, 246, 239, 0.14);
+  border-radius: var(--mf-radius);
+  background: #17191a;
+  box-shadow: 0 22px 44px -24px rgba(0, 0, 0, 0.7);
+}
+.image {
+  object-fit: cover;
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 10px;
+  color: rgba(248, 246, 239, 0.82);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.label {
+  color: #ff8a8f;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.dots {
+  display: none;
+}
+
+/* ---- Below 1024 px: stepper, then the photographs as a swipe row ------ */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .plates {
+    flex-direction: row;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .plates::-webkit-scrollbar {
+    display: none;
+  }
+  .plate,
+  .plateSmall {
+    flex: 0 0 min(84%, 400px);
+    width: auto;
+    align-self: auto;
+    scroll-snap-align: start;
+  }
+  .frame {
+    max-height: 38dvh;
+  }
+  .dots {
+    display: flex;
+  }
+}
+@media (max-width: 479px) {
+  .steps::before {
+    left: 61px;
+  }
+  .step {
+    grid-template-columns: 40px 22px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+}
+

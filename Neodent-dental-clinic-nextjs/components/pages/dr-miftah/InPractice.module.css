@@ -1,0 +1,106 @@
+/* 07 In practice: dark band, heading left, three reels right. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--neodent-ivory);
+  background-color: var(--mf-dark-top);
+  background-image: linear-gradient(180deg, var(--mf-dark-top) 0%, var(--mf-dark-bottom) 100%);
+  padding: var(--mf-pad-y) 0;
+  --mf-glow-x: 30%;
+  --mf-glow-y: 40%;
+  --mf-glow-a: 0.18;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--mf-container);
+  margin: 0 auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+.head {
+  position: sticky;
+  top: calc(var(--nav-height-desktop) + 24px);
+}
+
+.reel {
+  min-width: 0;
+}
+.reelRule {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(248, 246, 239, 0.18);
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.films {
+  display: flex;
+  gap: clamp(12px, 1.6vw, 20px);
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+/* The reel width comes from the media cap: a 9:16 poster never
+   exceeds var(--media-max-h). */
+.film {
+  flex: 0 1 auto;
+  width: min(33.333%, calc(var(--media-max-h) * 9 / 16 + 2px));
+  min-width: 0;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(248, 246, 239, 0.18);
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.dots {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .head {
+    position: static;
+  }
+  .films {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .films::-webkit-scrollbar {
+    display: none;
+  }
+  .film {
+    flex: 0 0 auto;
+    width: min(62%, calc(38dvh * 9 / 16 + 2px));
+    min-width: 150px;
+    scroll-snap-align: start;
+  }
+  .dots {
+    display: flex;
+  }
+}

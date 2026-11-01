@@ -20,6 +20,7 @@ import {
   telPhone,
 } from "@/lib/site-data";
 import { featuredTreatmentCatalog } from "@/lib/featured-treatment-catalog";
+import { NAMPALLY_SPACES_IMAGES } from "@/lib/pages/clinic-content";
 
 export const clinicLocationSlugs = ["mehdipatnam", "nampally"] as const;
 
@@ -149,7 +150,7 @@ export const clinicLocations = {
       alt: "Reception and staircase inside Neodent Dental Hospital, Nampally",
       label: "Reception",
     },
-    gallery: clinicGalleryImages.filter((image) => image.branch === "Nampally"),
+    gallery: NAMPALLY_SPACES_IMAGES,
     doctors: [sharedDoctor],
     treatments: clinicTreatments,
     patientStory: {

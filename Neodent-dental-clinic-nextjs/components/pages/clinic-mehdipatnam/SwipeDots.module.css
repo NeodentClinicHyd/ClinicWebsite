@@ -1,0 +1,42 @@
+.dots {
+  --dot-off: rgba(38, 48, 51, 0.28);
+  --dot-on: var(--neodent-red);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.dark {
+  --dot-off: rgba(248, 246, 239, 0.36);
+}
+.dot {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--dot-off);
+  transition: transform 250ms var(--clinic-ease, ease), background-color 250ms ease;
+}
+.dot[aria-current="true"] .mark {
+  transform: scaleX(2.6);
+  background: var(--dot-on);
+}
+.dot:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: -4px;
+  border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    transition: none;
+  }
+}

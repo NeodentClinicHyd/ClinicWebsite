@@ -1,69 +1,68 @@
-"use client";
-
-import { useRef } from "react";
 import { MapPin, Phone, Star } from "lucide-react";
 import { AppButton } from "@/components/ui/AppButton";
+import { Reveal } from "@/components/motion/Reveal";
 import type { ClinicLocation } from "@/lib/clinic-data";
 import { branchContent } from "./branch-content";
-import { useReveal } from "../useReveal";
-import shared from "../ClinicShared.module.css";
 import styles from "./BranchDetails.module.css";
 
 /* ------------------------------------------------------------------
-   Branch page -- local introduction + visit details.
+   Branch page -- S2 local introduction + Visit & contact card.
 
-   Left: this branch's own prose. Right: the About-style label / value
-   facts in one inset panel (address, phone, hours, Google rating with
-   its snapshot note), with the call and directions buttons. Every fact
-   is read straight from the shared clinic data.
+   Left: this branch's own prose in a reading column (about 68
+   characters wide). Right: the label / value facts in one card that
+   stays in view below the navigation on desktop (address, phone, hours,
+   Google rating with its snapshot note), with the call and directions
+   buttons. Every fact is read straight from the shared clinic data.
+
+   The heading is set in plain ink (the red italic is kept only on the
+   page h1, "your care." and "in their own words.").
    ------------------------------------------------------------------ */
 
 export function BranchDetails({ clinic }: { clinic: ClinicLocation }) {
-  const sectionRef = useRef<HTMLElement>(null);
-  useReveal(sectionRef);
   const content = branchContent[clinic.slug];
 
   return (
     <section
-      ref={sectionRef}
-      className={`${shared.section} ${shared.ivory} ${shared.grid} ${styles.details}`}
+      className={styles.section}
       id="visit-details"
       aria-labelledby="details-title"
     >
-      <div className={`${shared.container} ${styles.layout}`}>
-        <div className={styles.prose} data-reveal>
-          <h2 id="details-title" className={shared.title}>
-            {content.introTitle[0]} <span>{content.introTitle[1]}</span>
-          </h2>
-          <div className={styles.paragraphs}>
+      <div className={styles.layout}>
+        <div className={styles.prose}>
+          <Reveal as="h2" variant="mask" stagger={90} id="details-title" className={styles.title}>
+            <span>{content.introTitle[0]} </span>
+            <span>{content.introTitle[1]}</span>
+          </Reveal>
+          <Reveal className={styles.paragraphs} stagger={100} delay={120}>
             {content.intro.map((paragraph) => (
-              <p key={paragraph} className={shared.lede}>
+              <p key={paragraph} className={styles.lede}>
                 {paragraph}
               </p>
             ))}
-          </div>
+          </Reveal>
         </div>
 
-        <aside
+        <Reveal
+          as="aside"
           className={styles.card}
           aria-labelledby="contact-card-title"
-          data-reveal
+          delay={200}
         >
           <h3 id="contact-card-title" className={styles.cardTitle}>
             Visit &amp; contact
-            <span className={shared.srOnly}> — Neodent {clinic.name}</span>
+            <span className={styles.srOnly}> — Neodent {clinic.name}</span>
           </h3>
 
-          <dl className={`${shared.facts} ${styles.facts}`}>
-            <div className={shared.fact}>
+          <dl className={styles.facts}>
+            <div className={styles.fact}>
               <dt>Address</dt>
               <dd>
                 <address className={styles.address}>{clinic.address}</address>
               </dd>
             </div>
-            <div className={shared.fact}>
+            <div className={styles.fact}>
               <dt>Phone</dt>
-              <dd className={shared.strong}>
+              <dd className={styles.strong}>
                 <a
                   href={clinic.tel}
                   className={styles.phone}
@@ -73,7 +72,7 @@ export function BranchDetails({ clinic }: { clinic: ClinicLocation }) {
                 </a>
               </dd>
             </div>
-            <div className={shared.fact}>
+            <div className={styles.fact}>
               <dt>Hours</dt>
               <dd>
                 {clinic.weeklyHours}
@@ -81,7 +80,7 @@ export function BranchDetails({ clinic }: { clinic: ClinicLocation }) {
                 {clinic.hours} · {clinic.weeklyClosure}
               </dd>
             </div>
-            <div className={shared.fact}>
+            <div className={styles.fact}>
               <dt>Google rating</dt>
               <dd>
                 <span className={styles.rating}>
@@ -99,7 +98,7 @@ export function BranchDetails({ clinic }: { clinic: ClinicLocation }) {
           <div className={styles.actions}>
             <AppButton href={clinic.tel} variant="primary">
               <Phone size={15} aria-hidden="true" /> Call
-              <span className={shared.srOnly}> Neodent {clinic.name}</span>
+              <span className={styles.srOnly}> Neodent {clinic.name}</span>
             </AppButton>
             <a
               href={clinic.directions}
@@ -108,13 +107,13 @@ export function BranchDetails({ clinic }: { clinic: ClinicLocation }) {
               className={`button button-ghost ${styles.directions}`}
             >
               <MapPin size={15} aria-hidden="true" /> Get directions
-              <span className={shared.srOnly}>
+              <span className={styles.srOnly}>
                 {" "}
                 to Neodent {clinic.name} (opens in a new tab)
               </span>
             </a>
           </div>
-        </aside>
+        </Reveal>
       </div>
     </section>
   );

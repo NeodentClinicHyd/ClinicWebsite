@@ -392,11 +392,12 @@ export const heroBranches: readonly HeroBranch[] = [
       alt: "Neodent Dental Hospital Nampally exterior, the street frontage and signage",
       /* The 1280x960 photo is always cropped at the sides (the card is
          narrower than 4:3). The sign's lettering runs from about x 290
-         to x 890. The card's height is capped by its width (hero CSS:
-         1.45 x on phones, 1.52 x on desktop) so at least about 630
-         source px stay visible; at 42% the visible window then starts
-         at about x 273 and ends past x 900, so the whole name reads. */
-      focal: "42% 50%",
+         to x 930 (P1d measured the "L" of HOSPITAL at the right end).
+         The card's height is capped by its width (hero CSS: 1.4 x on
+         desktop) so at least about 686 source px stay visible; at 45%
+         the visible window then runs from about x 267 to x 953, so the
+         whole name reads. */
+      focal: "45% 50%",
     },
   },
 ] as const;
