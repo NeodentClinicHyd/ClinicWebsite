@@ -1,0 +1,273 @@
+/* ------------------------------------------------------------------
+   Page loader: a charcoal plate with the Neodent logo on a white disc,
+   a thin red arc turning around it and five line-drawn instruments
+   orbiting slowly on a hairline. Transform and opacity only.
+
+   Layering: above everything else on the site (the highest other layer
+   is the consent banner at z-index 90).
+   ------------------------------------------------------------------ */
+
+.loader {
+  --orbit: 244px;
+  --disc: 128px;
+  --icon: 32px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background-color: var(--neodent-charcoal);
+  background-image:
+    radial-gradient(
+      circle 340px at 50% 46%,
+      rgba(215, 25, 32, 0.16) 0%,
+      rgba(215, 25, 32, 0.06) 55%,
+      rgba(215, 25, 32, 0) 100%
+    ),
+    linear-gradient(180deg, var(--neodent-charcoal) 0%, #0f1315 100%);
+  color: var(--neodent-ivory);
+  /* The overlay covers the viewport, so this stops touch scrolling of
+     the page underneath even before scripts have loaded. */
+  touch-action: none;
+  overscroll-behavior: contain;
+  opacity: 1;
+  transition: opacity 320ms ease, visibility 0s linear 0s;
+}
+/* Shown again for a page change: a short fade in from the old page. On
+   the first load the overlay is in the HTML and starts opaque. */
+.loader[data-js][data-state="visible"] {
+  @starting-style {
+    opacity: 0;
+  }
+  transition: opacity 160ms ease;
+}
+/* Fallback if scripts fail to run (blocked, crashed): the overlay must
+   never trap the visitor. Scripts mark it data-js on hydration. */
+.loader:not([data-js]) {
+  animation: giveUp 0s linear 10s forwards;
+}
+@keyframes giveUp {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+.loader[data-state="leaving"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 320ms ease, visibility 0s linear 320ms;
+}
+.loader[data-state="hidden"] {
+  display: none;
+}
+
+.inner {
+  display: grid;
+  justify-items: center;
+  gap: 30px;
+}
+
+/* ---- Stage: orbit, ring and disc share one centre ---- */
+.stage {
+  position: relative;
+  width: var(--orbit);
+  height: var(--orbit);
+  display: grid;
+  place-items: center;
+}
+.stage > * {
+  grid-area: 1 / 1;
+}
+
+/* Hairline orbit the instruments travel on. */
+.track {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(248, 246, 239, 0.09);
+}
+
+/* Registration ticks at the four points of the orbit. */
+.ticks {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.ticks i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 7px;
+  margin: -3.5px 0 0 -0.5px;
+  background: rgba(248, 246, 239, 0.22);
+  transform: rotate(var(--a)) translateY(calc(var(--orbit) / -2));
+}
+
+.orbit {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: spin 26s linear infinite;
+}
+.slot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--icon);
+  height: var(--icon);
+  margin: calc(var(--icon) / -2) 0 0 calc(var(--icon) / -2);
+  transform: rotate(var(--a)) translateY(calc(var(--orbit) / -2)) rotate(calc(var(--a) * -1));
+}
+/* Counter-rotates with the orbit so each instrument stays upright, and
+   bobs very slightly so the orbit feels alive rather than mechanical. */
+.icon {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--neodent-charcoal);
+  color: rgba(248, 246, 239, 0.72);
+  animation: spin 26s linear infinite reverse;
+}
+.icon svg {
+  width: 20px;
+  height: 20px;
+  animation: bob 3.2s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+}
+.iconAccent {
+  color: var(--neodent-red);
+}
+
+/* Red arc turning around the disc on a faint full ring. */
+.ring {
+  width: calc(var(--disc) + 30px);
+  height: calc(var(--disc) + 30px);
+  overflow: visible;
+}
+.ringBase {
+  fill: none;
+  stroke: rgba(248, 246, 239, 0.12);
+  stroke-width: 1;
+}
+.ringArc {
+  fill: none;
+  stroke: var(--neodent-red);
+  stroke-width: 2;
+  stroke-linecap: round;
+  /* About a quarter of the circumference (2 * pi * 49 = 308). */
+  stroke-dasharray: 78 308;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 1.5s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
+}
+
+.disc {
+  position: relative;
+  width: var(--disc);
+  height: var(--disc);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 18px 40px -16px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+.logo {
+  object-fit: contain;
+  padding: 13%;
+}
+
+/* ---- Caption ---- */
+.caption {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--app-font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(248, 246, 239, 0.78);
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bob {
+  from {
+    transform: translateY(-1.5px);
+  }
+  to {
+    transform: translateY(1.5px);
+  }
+}
+@keyframes breathe {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 767px) {
+  .loader {
+    --orbit: 212px;
+    --disc: 112px;
+    --icon: 28px;
+  }
+  .icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+}
+
+/* Reduced motion: nothing travels or turns. The arc holds still and
+   breathes so the screen still reads as "working". */
+@media (prefers-reduced-motion: reduce) {
+  .orbit,
+  .icon,
+  .icon svg,
+  .ringArc {
+    animation: none;
+  }
+  .ringArc {
+    animation: breathe 1.6s ease-in-out infinite alternate;
+  }
+}

@@ -221,6 +221,12 @@
 html {
   scroll-behavior: smooth;
 }
+/* Page loader (components/ui/PageLoader): no wheel/keyboard scrolling
+   of the page underneath while it is up. Programmatic scrolling (route
+   changes, hash targets) still works with overflow: hidden. */
+html:has([data-page-loader][data-js][data-state="visible"]) {
+  overflow: hidden;
+}
 body {
   margin: 0;
   background: var(--ivory);
@@ -1636,12 +1642,6 @@ button {
     transform: translate3d(0, 20px, 0) scale(1.035);
   }
 }
-@keyframes heroBloom {
-  from {
-    opacity: 0;
-    transform: scale(0.86);
-  }
-}
 @keyframes heroBreathe {
   from {
     opacity: 1;
@@ -1660,47 +1660,46 @@ button {
 }
 /* `backwards` (not `both`): once finished, the element falls back to
    its own styles, so <Reveal>'s own state is never overridden. */
-.hero-slide-active .hero-title > span > span {
+:where(html[data-page-ready]) .hero-slide-active .hero-title > span > span {
   animation: heroLineIn 700ms var(--hero-ease) 80ms backwards;
 }
-.hero-slide-active .hero-title > span:nth-child(2) > span {
+:where(html[data-page-ready]) .hero-slide-active .hero-title > span:nth-child(2) > span {
   animation-delay: 180ms;
 }
-.hero-slide-active .hero-sub {
+:where(html[data-page-ready]) .hero-slide-active .hero-sub {
   animation: heroFadeUp 600ms var(--hero-ease) 300ms backwards;
 }
-.hero-slide-active .hero-founder-meta {
+:where(html[data-page-ready]) .hero-slide-active .hero-founder-meta {
   animation: heroFadeUp 600ms var(--hero-ease) 380ms backwards;
 }
-.hero-slide-active .hero-actions {
+:where(html[data-page-ready]) .hero-slide-active .hero-actions {
   animation: heroFadeUp 600ms var(--hero-ease) 460ms backwards;
 }
 /* Entrance order (P1d): headline lines, supporting line, doctor line,
    actions, then the media in 100ms steps. The portrait is the page's
    LCP element, so it starts early (120ms) and settles slowly instead
-   of waiting its turn; the spotlight blooms behind it. */
-.hero-slide-active .hero-founder-spotlight {
-  animation: heroBloom 1300ms var(--hero-ease) 80ms backwards;
-}
-.hero-slide-active .hero-founder-figure {
+   of waiting its turn. The spotlight behind it does not animate: it is
+   a CSS gradient that paints before the portrait has downloaded, so a
+   bloom read as a red oval growing on its own on slow connections. */
+:where(html[data-page-ready]) .hero-slide-active .hero-founder-figure {
   animation: heroSettle 1100ms var(--hero-ease) 120ms backwards;
 }
-.hero-slide-active .hero-glass-since {
+:where(html[data-page-ready]) .hero-slide-active .hero-glass-since {
   animation: heroFadeUp 500ms var(--hero-ease) 560ms backwards;
 }
-.hero-slide-active .hero-glass-call {
+:where(html[data-page-ready]) .hero-slide-active .hero-glass-call {
   animation: heroFadeUp 500ms var(--hero-ease) 680ms backwards;
 }
-.hero-slide-active .hero-branch-item,
-.hero-slide-active .hero-record > .hero-plate,
-.hero-slide-active .hero-record-side > .hero-plate {
+:where(html[data-page-ready]) .hero-slide-active .hero-branch-item,
+:where(html[data-page-ready]) .hero-slide-active .hero-record > .hero-plate,
+:where(html[data-page-ready]) .hero-slide-active .hero-record-side > .hero-plate {
   animation: heroFadeUp 700ms var(--hero-ease) 560ms backwards;
 }
-.hero-slide-active .hero-branch-item + .hero-branch-item,
-.hero-slide-active .hero-record-side > .hero-plate:first-child {
+:where(html[data-page-ready]) .hero-slide-active .hero-branch-item + .hero-branch-item,
+:where(html[data-page-ready]) .hero-slide-active .hero-record-side > .hero-plate:first-child {
   animation-delay: 660ms;
 }
-.hero-slide-active .hero-record-side > .hero-plate + .hero-plate {
+:where(html[data-page-ready]) .hero-slide-active .hero-record-side > .hero-plate + .hero-plate {
   animation-delay: 760ms;
 }
 /* Atmosphere: on the active slide only, 768px and wider. */
@@ -2049,7 +2048,6 @@ button {
   .hero-slide-active .hero-sub,
   .hero-slide-active .hero-founder-meta,
   .hero-slide-active .hero-actions,
-  .hero-slide-active .hero-founder-spotlight,
   .hero-slide-active .hero-founder-figure,
   .hero-slide-active .hero-glass-since,
   .hero-slide-active .hero-glass-call,
@@ -6953,15 +6951,83 @@ button {
 }
 .lead-panel {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
   background: var(--ink-deep);
   color: var(--paper);
-  width: min(440px, 100%);
-  padding: 40px 36px 34px;
+  width: min(760px, 100%);
+  padding: 0;
   border-radius: 2px;
   box-shadow:
     0 30px 70px rgba(12, 30, 32, 0.4),
     0 10px 24px rgba(12, 30, 32, 0.25);
   animation: rise 0.4s cubic-bezier(0.16, 0.72, 0.2, 1) both;
+}
+.lead-body {
+  padding: 40px 36px 34px;
+  min-width: 0;
+}
+.lead-panel:focus {
+  outline: none;
+}
+/* Portrait plate: the founder's cut-out on a static red spotlight, with
+   an offset hairline frame and the caption set on the plate. */
+.lead-portrait {
+  position: relative;
+  margin: 0;
+  min-height: 400px;
+  overflow: hidden;
+  background-color: #1d2427;
+  background-image:
+    radial-gradient(
+      circle 230px at 52% 36%,
+      rgba(215, 25, 32, 0.34) 0%,
+      rgba(215, 25, 32, 0.14) 48%,
+      rgba(215, 25, 32, 0) 100%
+    ),
+    linear-gradient(180deg, #1d2427 0%, #12181a 100%);
+}
+.lead-portrait-frame {
+  position: absolute;
+  inset: 14px;
+  z-index: 2;
+  border: 1px solid rgba(251, 250, 247, 0.14);
+  pointer-events: none;
+}
+.lead-portrait-media {
+  position: absolute;
+  inset: 28px 0 0;
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 86%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 86%);
+}
+.lead-portrait-image {
+  object-fit: cover;
+  /* Face centre sits at about 54% of the cut-out's width. */
+  object-position: 54% 0%;
+}
+.lead-portrait-caption {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 30px;
+  z-index: 3;
+  display: grid;
+  gap: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--neodent-red);
+  max-width: 200px;
+}
+.lead-portrait-caption strong {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--paper);
+}
+.lead-portrait-caption span {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: rgba(251, 250, 247, 0.66);
 }
 .lead-panel::before {
   content: "";
@@ -7054,6 +7120,22 @@ button {
 }
 .lead-directions:hover {
   color: rgba(251, 250, 247, 0.9);
+}
+@media (min-width: 561px) and (max-width: 767px) {
+  .lead-panel {
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  }
+  .lead-portrait {
+    min-height: 360px;
+  }
+  .lead-body {
+    padding: 36px 28px 30px;
+  }
+  .lead-portrait-caption {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .lead-backdrop,
@@ -7214,8 +7296,17 @@ button {
     outline: 2px solid var(--neodent-red);
     outline-offset: -3px;
   }
+  /* The CTA is an <a> directly inside the menu, so it also matches
+     `.mobile-menu > a` (width: 100%, row padding, space-between, top
+     border). With its side margins that pushed it 21px past the
+     viewport. Undo the row styles; the grid's stretch alignment then
+     fills the width between the margins. */
   .mobile-menu .button {
+    width: auto;
     margin: 18px 21px 22px;
+    padding: 0 26px;
+    justify-content: center;
+    border-top-color: transparent;
     font-weight: 600;
   }
   .scroll-note {
@@ -7898,28 +7989,101 @@ button {
     display: none;
   }
 
-  /* Lead capture becomes a bottom sheet on mobile */
+  /* Lead capture becomes a bottom sheet on mobile. The portrait rises
+     above the sheet's top edge as a round medallion beside his name;
+     only the copy below scrolls if the sheet is short on height. */
   .lead-backdrop {
     align-items: flex-end;
     padding: 0;
   }
   .lead-panel {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: none;
-    padding: 14px 22px calc(28px + env(safe-area-inset-bottom));
+    max-height: 85dvh;
+    margin-top: 56px;
+    padding: 0;
     border-radius: 16px 16px 0 0;
     animation: sheetRise 0.35s cubic-bezier(0.16, 0.72, 0.2, 1) both;
   }
   .lead-panel::before {
     border-radius: 16px 16px 0 0;
   }
+  .lead-portrait {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 0 56px 0 22px;
+    overflow: visible;
+    background: none;
+  }
+  .lead-portrait-frame {
+    display: none;
+  }
+  .lead-portrait-media {
+    position: relative;
+    inset: auto;
+    flex: 0 0 auto;
+    width: 96px;
+    height: 96px;
+    margin-top: -44px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-image:
+      radial-gradient(
+        circle 60px at 50% 40%,
+        rgba(215, 25, 32, 0.42) 0%,
+        rgba(215, 25, 32, 0.12) 70%,
+        rgba(215, 25, 32, 0) 100%
+      ),
+      linear-gradient(180deg, #232b2e 0%, #161c1e 100%);
+    box-shadow:
+      0 0 0 1px rgba(251, 250, 247, 0.18),
+      0 0 0 5px var(--ink-deep),
+      0 0 0 6px rgba(215, 25, 32, 0.55),
+      0 14px 28px -10px rgba(0, 0, 0, 0.6);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .lead-portrait-image {
+    /* Head and shoulders inside the round medallion. */
+    object-position: 54% 6%;
+    transform: scale(1.55);
+    transform-origin: 54% 12%;
+  }
+  .lead-portrait-caption {
+    position: static;
+    padding: 0 0 4px;
+    border-top: 0;
+    max-width: none;
+  }
+  .lead-portrait-caption strong {
+    font-size: 14.5px;
+  }
+  .lead-portrait-caption span {
+    font-size: 11px;
+  }
+  .lead-body {
+    position: static;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 18px 22px calc(28px + env(safe-area-inset-bottom));
+  }
   .lead-handle {
     display: block;
+    position: absolute;
+    top: 8px;
+    left: 50%;
     width: 36px;
     height: 4px;
+    margin-left: -18px;
     border-radius: 2px;
     background: rgba(251, 250, 247, 0.28);
-    margin: 0 auto 18px;
   }
   .lead-close {
     top: 14px;
@@ -9053,6 +9217,11 @@ button {
   .treatment-atlas-layout {
     display: flex;
     flex-direction: column;
+    /* The desktop grid sets align-items: start. In this flex column that
+       sizes the card row to its content (all eight cards, ~2500px), so
+       it never overflows and cannot be swiped. Stretch keeps it at the
+       viewport width (container + the bleed margins below). */
+    align-items: stretch;
     gap: 28px;
   }
   .treatment-atlas-cards {

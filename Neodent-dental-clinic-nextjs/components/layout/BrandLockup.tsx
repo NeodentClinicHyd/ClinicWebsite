@@ -17,7 +17,7 @@ import neodentMark from "@/public/assets/neodent-mark.png";
  *
  * Both wordmark lines are capitalised in CSS, not here. Keeping real casing
  * in the DOM means the accessible name and any copied text stay "Neodent
- * Dental Hospitals" instead of shouting, since some screen readers spell out
+ * Dental Hospital" instead of shouting, since some screen readers spell out
  * all-caps strings letter by letter.
  */
 export function BrandLockup({
@@ -34,7 +34,7 @@ export function BrandLockup({
       </span>
       <span className="brand-word">
         <span className="brand-word-name">Neodent</span>
-        <span className="brand-word-sub">Dental Hospitals</span>
+        <span className="brand-word-sub">Dental Hospital</span>
       </span>
     </a>
   );
