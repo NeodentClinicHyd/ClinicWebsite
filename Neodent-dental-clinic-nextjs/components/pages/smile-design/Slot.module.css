@@ -1,0 +1,10 @@
+/* Slot frames. Icon slots are fixed-size tiles. */
+
+.icon48 {
+  flex: none;
+  width: 66px;
+}
+.icon40 {
+  flex: none;
+  width: 58px;
+}

@@ -1,0 +1,239 @@
+/* Healing, aftercare and risks. Beige ground (#ece7dc). One row of three
+   equal-height cards on desktop: the diagram card, "After surgery" (paper,
+   pink foot) and "Risks" (dark, red top edge). The red band is the page's
+   second red surface. One list style: dash markers. */
+
+.section {
+  background: var(--di-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--di-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--di-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(16px, 2.2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(28px, 3.6vw, 44px);
+}
+.diagram {
+  min-width: 0;
+  display: flex;
+}
+/* The mask reveal wraps the card in two spans; pass the height through. */
+.diagram > *,
+.diagram > * > * {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.diagramCard {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 2vw, 22px);
+  background: var(--neodent-surface);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+/* The frame is 4:5, so width = cap x 0.8 keeps the height at the cap. */
+.diagramBox {
+  width: min(100%, calc(var(--di-cap-diagram, min(46dvh, 440px)) * 0.8));
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 24px);
+  min-width: 0;
+}
+.card {
+  --card-pad: clamp(20px, 2.4vw, 28px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--card-pad);
+  border-radius: 20px;
+}
+.cardTitle {
+  margin: 0 0 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.list {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 11px;
+}
+.list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.list li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--neodent-red);
+}
+/* Tinted foot strip along the bottom edge of the card. */
+.foot {
+  margin: auto calc(var(--card-pad) * -1) calc(var(--card-pad) * -1);
+  padding: 16px var(--card-pad);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.after {
+  background: var(--neodent-surface);
+  color: var(--neodent-ink);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+}
+.after .list li {
+  color: rgba(38, 48, 51, 0.88);
+}
+.after .foot {
+  background: var(--neodent-red-soft);
+  font-family: var(--app-font-serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ink);
+}
+.risks {
+  background: #191b1f;
+  color: #f1eee7;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.risks .list li {
+  color: rgba(241, 238, 231, 0.9);
+}
+.risks .foot {
+  background: rgba(241, 238, 231, 0.08);
+  color: rgba(241, 238, 231, 0.92);
+}
+
+/* ---- Red band: heading | two-column list | buttons ---- */
+.call {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(200px, 0.55fr);
+  gap: clamp(20px, 3.2vw, 44px);
+  align-items: center;
+  margin-top: clamp(16px, 2.2vw, 24px);
+  padding: clamp(24px, 3.4vw, 40px);
+  background: var(--neodent-red);
+  color: #fff;
+  border-radius: 20px;
+}
+.callTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.signs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 28px;
+}
+.signs li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #fff;
+}
+.signs li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+}
+.callActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.callActions :global(.button) {
+  width: 100%;
+  min-height: 52px;
+}
+
+@media (hover: hover) {
+  .callActions :global(.button-light:hover) {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* ---- Tablet ---- */
+@media (max-width: 1239px) {
+  .call {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    grid-template-areas:
+      "title actions"
+      "signs actions";
+    align-items: start;
+  }
+  .callTitle {
+    grid-area: title;
+  }
+  .signs {
+    grid-area: signs;
+  }
+  .callActions {
+    grid-area: actions;
+    align-self: center;
+  }
+}
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .diagramBox {
+    width: min(100%, calc(var(--di-cap-diagram-m, min(34dvh, 300px)) * 0.8));
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--di-container-m, min(100% - 32px, 600px));
+  }
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .call {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "signs"
+      "actions";
+    gap: 20px;
+    padding: 26px 20px;
+  }
+  .signs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .callActions {
+    align-self: stretch;
+  }
+}

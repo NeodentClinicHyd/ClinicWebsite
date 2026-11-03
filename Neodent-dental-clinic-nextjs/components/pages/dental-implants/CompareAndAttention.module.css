@@ -1,0 +1,314 @@
+/* Compare + attention: one dark band. Ground #242628 with a red glow at the
+   top right and the icon pattern as a luminance mask (home hero recipe),
+   both from 768 px up. The mask fades out toward the left and the bottom, so
+   the pattern never sits behind the headings or the attention cards. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  background-color: var(--di-dark-pattern, #242628);
+  color: #f1eee7;
+  padding: var(--di-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--di-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.filterDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ---- Backdrop (768 px and wider) ---- */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  pointer-events: none;
+}
+.glow,
+.pattern {
+  position: absolute;
+  inset: 0;
+}
+.glow {
+  background-image: radial-gradient(
+    ellipse 520px 60% at 92% 12%,
+    rgba(215, 25, 32, 0.2) 0%,
+    rgba(215, 25, 32, 0.08) 55%,
+    rgba(215, 25, 32, 0) 100%
+  );
+}
+.pattern {
+  display: none;
+}
+@supports (mask-mode: luminance) {
+  .pattern {
+    display: block;
+    opacity: 0.14;
+    filter: url("#di-pattern-levels-b");
+  }
+  .tile {
+    position: absolute;
+    inset: 0;
+    background-color: var(--neodent-ivory);
+    mask-image:
+      url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp"),
+      radial-gradient(
+        ellipse 62% 78% at 100% 0%,
+        #000 0%,
+        #000 30%,
+        rgba(0, 0, 0, 0.6) 58%,
+        transparent 100%
+      );
+    mask-mode: luminance, alpha;
+    mask-repeat: repeat, no-repeat;
+    mask-size: 420px 420px, 100% 100%;
+    mask-composite: intersect;
+  }
+}
+@media (min-width: 768px) {
+  .backdrop {
+    display: block;
+  }
+}
+
+/* ---- Comparison cards ---- */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(28px, 3.6vw, 48px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(18px, 2vw, 24px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.featured {
+  border-top: 3px solid var(--neodent-red);
+}
+.figure {
+  margin: 0;
+  min-width: 0;
+}
+.art {
+  height: var(--di-cap-card-illustration, min(22dvh, 190px));
+}
+.caption {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.82);
+}
+.note {
+  display: block;
+  margin-top: 2px;
+  color: rgba(38, 48, 51, 0.72);
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2rem, 2.8vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.blockLabel {
+  margin: 0;
+  color: var(--neodent-red-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.blockText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+/* Desktop: the three cards share four rows. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 1024px) {
+    .compare {
+      grid-template-rows: auto auto auto 1fr;
+      row-gap: 0;
+    }
+    .card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 14px;
+    }
+  }
+}
+@media (hover: hover) and (min-width: 1024px) {
+  .card:hover {
+    transform: translate3d(0, -4px, 0);
+    box-shadow: 0 18px 34px -18px rgba(0, 0, 0, 0.6);
+  }
+}
+/* Touch press feedback. */
+@media (hover: none) {
+  .card:active,
+  .tileCard:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ---- What may need attention first ---- */
+.attention {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.attentionHead {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: end;
+  gap: 10px clamp(24px, 4vw, 56px);
+}
+.attentionTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+  color: #f1eee7;
+}
+.attentionIntro {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(241, 238, 231, 0.84);
+}
+.grid {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 16px);
+}
+.tileCard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 22px;
+  background-color: var(--ivory);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.1);
+  border-radius: 16px;
+  transition: transform 0.28s ease;
+}
+.tileIcon {
+  flex: none;
+  width: 48px;
+}
+.tileBody {
+  min-width: 0;
+}
+.tileTitle {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.tileText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.86);
+}
+@media (hover: hover) and (min-width: 1024px) {
+  .tileCard:hover {
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+/* ---- Tablet: swipe row, two-column attention grid ---- */
+@media (max-width: 1023px) {
+  .compare {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 62%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .compare::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    scroll-snap-align: start;
+  }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .attentionHead {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* ---- Phone ---- */
+@media (max-width: 767px) {
+  .container {
+    width: var(--di-container-m, min(100% - 32px, 600px));
+  }
+  .compare {
+    grid-auto-columns: 84%;
+    gap: 14px;
+  }
+  .art {
+    height: var(--di-cap-card-illustration-m, min(18dvh, 150px));
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  /* Compact rows: icon left, text right. */
+  .tileCard {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+  }
+  .tileIcon {
+    width: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .tileCard {
+    transition: none;
+  }
+}

@@ -1,0 +1,164 @@
+/* When. Ivory ground. Paper cards (20px radius, surface fill, 1px hairline).
+   Desktop: the list is a 2-column grid and each card spans two rows
+   (title row, text row) with `subgrid`, so titles and first text lines
+   line up across a row of two cards; the illustration spans both rows and
+   is sized by the illustration cap (190 px wide scene height 143 px at a
+   650 px viewport). Phones: compact rows. The closing strip is the
+   "tinted footer strip" (red-soft, serif italic). */
+
+.section {
+  background: var(--fmr-ivory, var(--ivory));
+  color: var(--ink);
+  padding: var(--fmr-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--fmr-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.cards {
+  --cap: var(--fmr-cap-card-illustration, min(22dvh, 190px));
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 24px);
+  row-gap: 0;
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: calc(var(--cap) * 4 / 3) minmax(0, 1fr);
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+  column-gap: clamp(18px, 2.4vw, 28px);
+  align-content: start;
+  margin-bottom: clamp(16px, 2vw, 24px);
+  padding: clamp(16px, 2vw, 20px);
+  background: var(--neodent-surface);
+  border: 1px solid var(--fmr-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+.frame {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: start;
+  width: 100%;
+}
+.title {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  margin: 0 0 10px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.text {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+.foot {
+  position: relative;
+  margin: 0;
+  padding: 24px clamp(24px, 3vw, 36px) 24px calc(clamp(24px, 3vw, 36px) + 36px);
+  background: var(--neodent-red-soft);
+  border-radius: 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.7vw, 21px);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.foot::before {
+  content: "";
+  position: absolute;
+  left: clamp(24px, 3vw, 36px);
+  top: 34px;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+
+/* Narrower than 1024 px, and phones: one column of compact rows. */
+@media (max-width: 1023px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
+  }
+  .card {
+    grid-template-columns: minmax(0, 160px) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-row: auto;
+    margin-bottom: 0;
+    align-items: start;
+  }
+  .frame {
+    grid-row: 1 / span 2;
+  }
+  .foot {
+    margin-top: 16px;
+  }
+  .title {
+    align-self: end;
+    margin-bottom: 6px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--fmr-container-m, min(100% - 32px, 600px));
+  }
+  .card {
+    grid-template-columns: 112px minmax(0, 1fr);
+    column-gap: 14px;
+    padding: 12px 14px 12px 12px;
+  }
+  .title {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .text {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .foot {
+    padding: 20px 18px;
+    border-radius: 14px;
+  }
+  .foot::before {
+    position: static;
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
+/* ---- Motion polish (plan R8): a small lift on desktop hover, a press state
+   on touch. Uses the individual `translate` and `scale` properties so it
+   never competes with the reveal's own transform. None under reduced motion. */
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: scale 140ms ease-out;
+  }
+  .card:active {
+    scale: 0.99;
+  }
+}

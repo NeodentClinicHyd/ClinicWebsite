@@ -33,6 +33,26 @@ export function BranchGallery({ clinic }: { clinic: ClinicLocation }) {
   const content = branchContent[clinic.slug];
   const images = clinic.gallery;
 
+  /* Desktop fill. The set is four columns wide. When the photograph count
+     does not fill whole rows (7 leaves one cell empty), the gallery becomes
+     a row grid and that many landscape photographs span two columns, so the
+     block ends level with no empty cell. A multiple of four never takes this
+     path. Spanning photographs are chosen from the landscape ones first
+     (they lose the least when widened), then from the last ones. */
+  const missingCells = images.length > 2 ? (4 - (images.length % 4)) % 4 : 0;
+  const wide = new Set<number>();
+  if (missingCells > 0) {
+    const landscape = images.flatMap((image, index) => {
+      const { width, height } = photoSize(image.src);
+      return height > width ? [] : [index];
+    });
+    for (const index of landscape) if (wide.size < missingCells) wide.add(index);
+    for (let index = images.length - 1; index >= 0 && wide.size < missingCells; index -= 1) {
+      wide.add(index);
+    }
+  }
+  const uneven = wide.size > 0;
+
   const close = () => {
     setViewerIndex(null);
     triggerRef.current?.focus();
@@ -55,15 +75,19 @@ export function BranchGallery({ clinic }: { clinic: ClinicLocation }) {
         <div ref={listRef} className={styles.wrap}>
           <ul
             data-swipe
-            className={`${styles.set} ${images.length <= 2 ? styles.pair : ""}`}
+            className={`${styles.set} ${images.length <= 2 ? styles.pair : ""}${uneven ? ` ${styles.uneven}` : ""}`}
             tabIndex={0}
             aria-label={`Photographs of Neodent ${clinic.name}`}
           >
             {images.map((image, index) => {
               const { width, height } = photoSize(image.src);
               const tall = height > width;
+              const spans = wide.has(index);
               return (
-                <li key={image.src} className={`${styles.item} ${tall ? styles.tall : styles.short}`}>
+                <li
+                  key={image.src}
+                  className={`${styles.item} ${tall ? styles.tall : styles.short}${spans ? ` ${styles.wide}` : ""}`}
+                >
                   <figure className={styles.figure}>
                     <Reveal variant="mask" delay={(index % 4) * 90}>
                       <button
@@ -81,7 +105,11 @@ export function BranchGallery({ clinic }: { clinic: ClinicLocation }) {
                             src={image.src}
                             alt={image.alt}
                             fill
-                            sizes="(min-width: 1024px) 290px, (min-width: 640px) 46vw, 86vw"
+                            sizes={
+                              spans
+                                ? "(min-width: 1024px) 590px, (min-width: 640px) 46vw, 86vw"
+                                : "(min-width: 1024px) 290px, (min-width: 640px) 46vw, 86vw"
+                            }
                             className={styles.image}
                           />
                         </span>

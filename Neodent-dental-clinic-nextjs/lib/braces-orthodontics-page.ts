@@ -26,14 +26,10 @@ export { BRANCH_PAGE_HREF, GENERAL_INFO_NOTE };
 
 export const PAGE_PATH = "/treatments/braces-and-orthodontics";
 
-/** Single switch for the WHOLE cases section (before and after photographs,
- *  disclaimer). Default FALSE: the pair does not visibly show braces, both
- *  photographs show part of a patient's face, and the master reference says
- *  no before-and-after photographs until advertising compliance is cleared.
- *  Typed as boolean (not the literal `false`) so the flag-on branch is still
- *  type-checked. The hero uses a non-patient clinic photograph and is
- *  unaffected. */
-export const SHOW_BRACES_CASE_IMAGES: boolean = false;
+/** Single switch for the whole cases section: before and after photographs
+ *  and consent text. Typed as boolean (not the literal `true`) so the
+ *  flag-off branch is still type-checked. */
+export const SHOW_BRACES_CASE_IMAGES: boolean = true;
 
 /** Rendered only when BOTH are non-empty. */
 export const REVIEWED_BY = "";

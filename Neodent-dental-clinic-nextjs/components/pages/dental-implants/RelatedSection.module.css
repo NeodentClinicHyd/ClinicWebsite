@@ -1,0 +1,50 @@
+/* Related. Beige band. Heading left, three equal-height cards, then the
+   general-information note directly under the row at full width, 14 px,
+   with a hairline above it. */
+
+.section {
+  background: var(--di-beige, #ece7dc);
+  color: var(--ink);
+  padding: clamp(48px, 6vw, 80px) 0;
+}
+.container {
+  width: var(--di-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.26fr) minmax(0, 0.74fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: stretch;
+}
+.head {
+  align-self: center;
+  min-width: 0;
+}
+.note {
+  margin-top: clamp(20px, 2.6vw, 28px);
+  padding-top: 16px;
+  border-top: 1px solid rgba(38, 48, 51, 0.16);
+}
+.note p {
+  margin: 0;
+  max-width: none;
+  color: rgba(38, 48, 51, 0.9);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.note p + p {
+  margin-top: 4px;
+}
+
+@media (max-width: 1023px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--di-container-m, min(100% - 32px, 600px));
+  }
+}

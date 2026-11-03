@@ -1,0 +1,244 @@
+/* Stages. Ivory ground. Stage cards: paper surface, 16 px radius, hairline.
+   One red connector runs down the left, a node at the centre of each card;
+   each card's segment draws as that card scrolls into view (scroll timeline
+   where supported; otherwise it is simply drawn). The right column holds the
+   "How long does it take?" card and the red statement band: sticky on
+   desktop, after the last step below 1024 px. NB: no overflow on the section
+   or its parents, or sticky would break. */
+
+.section {
+  position: relative;
+  background: var(--di-ivory, var(--ivory));
+  color: var(--ink);
+  padding: var(--di-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--di-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+  margin-top: clamp(28px, 3.6vw, 48px);
+}
+
+/* ---- Stepper ---- */
+.steps {
+  --gap: 18px;
+  --rail: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--rail);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--di-cap-step, 120px) * 1.3334) minmax(0, 1fr);
+  gap: clamp(16px, 2.2vw, 26px);
+  align-items: center;
+  padding: 12px clamp(18px, 2.4vw, 26px) 12px 12px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+}
+/* Connector segment: from this card's top edge to the next card's top edge
+   (through the gap). The first starts at its node, the last stops at its. */
+.step::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 8px);
+  top: -1px;
+  bottom: calc(var(--gap) * -1 - 1px);
+  width: 2px;
+  background: var(--neodent-red);
+  transform-origin: 50% 0;
+}
+.step:first-child::before {
+  top: 50%;
+}
+.step:last-child::before {
+  bottom: 50%;
+}
+.step::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 9px);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  background: var(--neodent-red);
+  border: 3px solid var(--di-ivory, var(--ivory));
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+.tile {
+  min-width: 0;
+}
+.stepBody {
+  min-width: 0;
+}
+.stepBody h3 {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.1vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.stepBody p {
+  margin: 0;
+  max-width: 54ch;
+  color: rgba(38, 48, 51, 0.84);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+@keyframes drawDown {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .step::before {
+      animation: drawDown linear both;
+      animation-timeline: view();
+      animation-range: entry 25% cover 40%;
+    }
+  }
+}
+
+/* ---- Right column ---- */
+.side {
+  --pad: clamp(24px, 2.8vw, 32px);
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.stat,
+.statement {
+  min-width: 0;
+  padding: var(--pad);
+  border-radius: 20px;
+}
+.stat {
+  background: var(--neodent-surface);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+}
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--neodent-red);
+}
+.statTitle {
+  margin: 0 0 14px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+.statText {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.statement {
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 2.7vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.statementText em {
+  display: block;
+  font-style: italic;
+}
+.statementSub {
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(248, 246, 239, 0.94);
+}
+
+/* ---- Tablet: side column after the steps, two across ---- */
+@media (max-width: 1023px) {
+  .composition {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+
+/* ---- Phone ---- */
+@media (max-width: 767px) {
+  .container {
+    width: var(--di-container-m, min(100% - 32px, 600px));
+  }
+  .steps {
+    --gap: 12px;
+    --rail: 24px;
+  }
+  /* Illustration (96 px tall) and title side by side, text below. */
+  .step {
+    grid-template-columns: calc(var(--di-cap-step-m, 96px) * 1.3334) minmax(0, 1fr);
+    grid-template-areas:
+      "art title"
+      "text text";
+    column-gap: 14px;
+    row-gap: 10px;
+    align-items: center;
+    padding: 12px;
+  }
+  .step::before {
+    left: calc(var(--rail) * -1 + 5px);
+  }
+  .step::after {
+    left: calc(var(--rail) * -1 + 6px);
+  }
+  .tile {
+    grid-area: art;
+  }
+  .stepBody {
+    display: contents;
+  }
+  .stepBody h3 {
+    grid-area: title;
+    margin: 0;
+    font-size: 21px;
+  }
+  .stepBody p {
+    grid-area: text;
+    max-width: none;
+  }
+  .side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

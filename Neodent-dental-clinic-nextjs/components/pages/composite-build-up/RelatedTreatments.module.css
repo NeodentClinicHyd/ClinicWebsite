@@ -1,0 +1,92 @@
+/* Related-treatment cards (fork of components/ui/RelatedTreatments.module.css,
+   compact variant). Copied from `.treatment-atlas-card*`: 14px radius, red
+   arrow that nudges 3px on hover, card lifts 2px. Surface is the paper token
+   because the host section is ivory. The three cards share one row height. */
+
+.grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.cell {
+  display: flex;
+  min-width: 0;
+}
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  align-content: center;
+  column-gap: 12px;
+  width: 100%;
+  min-height: 96px;
+  padding: 14px 18px;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 14px;
+  background-color: var(--cbu-paper, var(--neodent-surface));
+  color: #252525;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+.card:hover {
+  border-color: rgba(37, 37, 37, 0.24);
+  transform: translateY(-2px);
+}
+.card:focus-visible {
+  outline: 2px solid #252525;
+  outline-offset: 2px;
+}
+.title {
+  grid-column: 1;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #252525;
+  text-wrap: balance;
+}
+.text {
+  grid-column: 1;
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #3f4547;
+}
+.more {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--neodent-red);
+}
+.more svg {
+  transition: transform 180ms ease;
+}
+.card:hover .more svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    min-height: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .more svg {
+    transition: none;
+  }
+  .card:hover,
+  .card:hover .more svg {
+    transform: none;
+  }
+}

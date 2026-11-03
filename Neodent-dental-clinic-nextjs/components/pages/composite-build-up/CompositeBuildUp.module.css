@@ -1,0 +1,38 @@
+/* Page wrapper for /treatments/composite-build-up. Applied to the chrome's
+   `.site` element (page.tsx is not edited). Holds only custom properties (no
+   layout), so every section module in this folder reads the same widths,
+   caps and tones. Sections fall back to the same literal values if a
+   property is missing. */
+.page {
+  /* Widths (the site container) */
+  --cbu-container: min(1180px, calc(100% - 48px));
+  --cbu-container-m: min(100% - 32px, 600px);
+
+  /* Tones (live values of the page's bands) */
+  --cbu-dark: var(--neodent-charcoal);
+  --cbu-dark-2: #15171a;
+  --cbu-dark-3: #14161a;
+  --cbu-dark-pattern: #242628;
+  --cbu-tan: #ece7dc;
+  --cbu-ivory: var(--ivory);
+  --cbu-paper: var(--neodent-surface);
+  --cbu-hairline: rgba(38, 48, 51, 0.12);
+
+  /* Image caps (plan 4.9 / Agent rules 13) */
+  --cbu-cap-header-photo: min(52dvh, 460px);
+  --cbu-cap-case-photo: min(34dvh, 300px);
+  --cbu-cap-case-photo-m: 30dvh;
+  --cbu-cap-diagram: min(46dvh, 440px);
+  --cbu-cap-diagram-m: min(34dvh, 300px);
+  --cbu-cap-card-illustration: min(22dvh, 190px);
+  --cbu-cap-card-illustration-m: min(18dvh, 150px);
+  --cbu-cap-step: 120px;
+  --cbu-cap-step-m: 96px;
+  --cbu-cap-portrait: 40dvh;
+  --cbu-cap-portrait-m: 34dvh;
+  --cbu-cap-clinic-photo: 36dvh;
+  --cbu-cap-clinic-photo-m: 28dvh;
+
+  /* Section rhythm */
+  --cbu-section-pad: clamp(56px, 7vw, 96px);
+}

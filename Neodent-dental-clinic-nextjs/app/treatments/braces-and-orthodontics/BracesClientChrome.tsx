@@ -4,19 +4,21 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AppButton } from "@/components/ui/AppButton";
-import { BrcHero } from "@/components/treatments/braces-and-orthodontics/BrcHero";
-import { BrcOverview } from "@/components/treatments/braces-and-orthodontics/BrcOverview";
-import { BrcSigns } from "@/components/treatments/braces-and-orthodontics/BrcSigns";
-import { BrcTypes } from "@/components/treatments/braces-and-orthodontics/BrcTypes";
-import { BrcStages } from "@/components/treatments/braces-and-orthodontics/BrcStages";
-import { BrcReaders } from "@/components/treatments/braces-and-orthodontics/BrcReaders";
-import { BrcCare } from "@/components/treatments/braces-and-orthodontics/BrcCare";
-import { BrcRetainers } from "@/components/treatments/braces-and-orthodontics/BrcRetainers";
-import { BrcCases } from "@/components/treatments/braces-and-orthodontics/BrcCases";
-import { BrcQuestions } from "@/components/treatments/braces-and-orthodontics/BrcQuestions";
-import { BrcFaq } from "@/components/treatments/braces-and-orthodontics/BrcFaq";
-import { BrcLocations } from "@/components/treatments/braces-and-orthodontics/BrcLocations";
-import { BrcRelated } from "@/components/treatments/braces-and-orthodontics/BrcRelated";
+import { PageHeader } from "@/components/pages/braces-and-orthodontics/PageHeader";
+import { ResultsCases } from "@/components/pages/braces-and-orthodontics/ResultsCases";
+import pageStyles from "@/components/pages/braces-and-orthodontics/BracesPage.module.css";
+import { WhatAreBraces } from "@/components/pages/braces-and-orthodontics/WhatAreBraces";
+import { WhenRight } from "@/components/pages/braces-and-orthodontics/WhenRight";
+import { TypesOfBraces } from "@/components/pages/braces-and-orthodontics/TypesOfBraces";
+import { Stages } from "@/components/pages/braces-and-orthodontics/Stages";
+import { WhoIsItFor } from "@/components/pages/braces-and-orthodontics/WhoIsItFor";
+import { CareAndRisks } from "@/components/pages/braces-and-orthodontics/CareAndRisks";
+import { Retainers } from "@/components/pages/braces-and-orthodontics/Retainers";
+import { AssessmentQuestions } from "@/components/pages/braces-and-orthodontics/AssessmentQuestions";
+import { FaqSection } from "@/components/pages/braces-and-orthodontics/FaqSection";
+import { ClinicLocations } from "@/components/pages/braces-and-orthodontics/ClinicLocations";
+import { RelatedSection } from "@/components/pages/braces-and-orthodontics/RelatedSection";
+import { ContactNextStep } from "@/components/sections/ContactNextStep";
 import { IllustrationDefs } from "@/components/treatment/illustrations/IllustrationDefs";
 import { BracesDefs } from "@/components/treatment/illustrations/BracesDefs";
 import { SHOW_BRACES_CASE_IMAGES } from "@/lib/braces-orthodontics-page";
@@ -30,30 +32,31 @@ import { ctaTelPhone } from "@/lib/site-data";
    globals.css is untouched).
 
    Section grounds, in order, never repeating in adjacent sections:
-   hero dark | tan | light | dark patterned | tan | light | dark | tan |
-   [light, cases] | dark | light | dark | tan.
-   With SHOW_BRACES_CASE_IMAGES off, retainers (tan) is followed by questions
-   (dark), so the alternation still holds. */
+   header dark | results light | tan | light | dark patterned | tan | light |
+   dark | tan | dark | light | dark | tan | closing block dark. The results
+   section sits directly after the header (standard T.1); the shared
+   ContactNextStep block ends the page directly before the footer. */
 export function BracesClientChrome() {
   return (
-    <div className="site" style={{ overflow: "clip" }}>
+    <div className={`site ${pageStyles.page}`} style={{ overflow: "clip" }}>
       <IllustrationDefs />
       <BracesDefs />
       <Navbar />
       <main>
-        <BrcHero />
-        <BrcOverview />
-        <BrcSigns />
-        <BrcTypes />
-        <BrcStages />
-        <BrcReaders />
-        <BrcCare />
-        <BrcRetainers />
-        {SHOW_BRACES_CASE_IMAGES ? <BrcCases /> : null}
-        <BrcQuestions />
-        <BrcFaq />
-        <BrcLocations />
-        <BrcRelated />
+        <PageHeader />
+        {SHOW_BRACES_CASE_IMAGES ? <ResultsCases /> : null}
+        <WhatAreBraces />
+        <WhenRight />
+        <TypesOfBraces />
+        <Stages />
+        <WhoIsItFor />
+        <CareAndRisks />
+        <Retainers />
+        <AssessmentQuestions />
+        <FaqSection />
+        <ClinicLocations />
+        <RelatedSection />
+        <ContactNextStep />
       </main>
       <Footer />
       <div className="mobile-bar">

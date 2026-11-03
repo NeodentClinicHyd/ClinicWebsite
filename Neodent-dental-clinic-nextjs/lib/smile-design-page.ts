@@ -27,8 +27,8 @@ export const PAGE_PATH = "/treatments/smile-design";
 /** Single switch for the WHOLE cases section (every patient photograph).
  *  The hero uses a non-patient clinic photograph and is unaffected. Typed as
  *  boolean (not the literal `true`) so the flag-off branch is still
- *  type-checked. When false, the Questions section switches to its tan
- *  variant so it never sits next to the dark aftercare section. */
+ *  type-checked. The cases section sits directly after the page header
+ *  (plan T.1); when false it is simply absent. */
 export const SHOW_SMILE_CASE_IMAGES: boolean = true;
 
 /** Rendered only when BOTH are non-empty. */

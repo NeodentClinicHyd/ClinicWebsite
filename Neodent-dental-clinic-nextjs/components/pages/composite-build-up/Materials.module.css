@@ -1,0 +1,248 @@
+/* Materials. Dark band (#242628) with the dental icon pattern as a luminance
+   mask over an ivory fill (Part 3.6: never a CSS background-image). Cards are
+   paper (#fffefa), 20px radius, all four identical. The "Main trade-off" value
+   sits on the soft red surface. The statement is the page's red surface.
+   Desktop: four columns sharing rows by subgrid. Tablet: two columns. Phone:
+   a scroll-snap swipe row, cards 84% wide. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  background-color: var(--cbu-dark-pattern, #242628);
+  color: #f1eee7;
+  padding: var(--cbu-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+@supports (mask-mode: luminance) {
+  .pattern {
+    background-color: var(--neodent-ivory);
+    opacity: 0.1;
+    mask-image: url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp");
+    mask-mode: luminance;
+    mask-repeat: repeat;
+    mask-size: 420px 420px;
+  }
+}
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--cbu-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+/* ---- Four equal cards -------------------------------------------------- */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+  align-items: stretch;
+  margin-top: clamp(28px, 3.6vw, 44px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(16px, 1.8vw, 20px);
+  background: var(--cbu-paper, var(--neodent-surface));
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+/* The scene is a wide 16:9 frame: width x 9/16 is its height, and the height
+   is capped at min(22dvh, 190px) (143 px at 650 px tall). */
+.ill {
+  width: min(100%, calc(var(--cbu-cap-card-illustration, min(22dvh, 190px)) * 16 / 9));
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 1.9vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.rows {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+.row {
+  min-width: 0;
+}
+.label {
+  display: block;
+  margin: 0 0 6px;
+  color: rgba(38, 48, 51, 0.78);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.label::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: var(--neodent-red);
+}
+.value {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.9);
+}
+/* The box is as tall as the tallest sibling's text (the subgrid row below, or
+   the flex row on narrower layouts), never taller. */
+.trade {
+  flex: 1 1 auto;
+  align-content: start;
+  padding: 14px 16px;
+  background: var(--neodent-red-soft);
+  border-radius: 12px;
+}
+
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 1024px) {
+    .compare {
+      /* frame, name, what, trade */
+      grid-template-rows: auto auto auto 1fr;
+      row-gap: 0;
+    }
+    .card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 14px;
+    }
+    .rows {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      row-gap: 12px;
+    }
+  }
+}
+
+.figureNote {
+  margin: 14px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(241, 238, 231, 0.78);
+}
+
+/* ---- Statement ----------------------------------------------------------- */
+.statement {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(20px, 2.6vw, 32px);
+  padding: clamp(26px, 3.6vw, 40px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.statementLead {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.statementLead::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #fff;
+}
+
+@media (max-width: 1023px) {
+  .compare {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card {
+    padding: 20px;
+  }
+  /* Tablet: the scene may be wider but stays within its height cap. */
+  .ill {
+    width: min(100%, calc(var(--cbu-cap-card-illustration, 190px) * 16 / 9));
+  }
+}
+@media (max-width: 900px) {
+  .statement {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--cbu-container-m, min(100% - 32px, 600px));
+  }
+  /* Phone: one scroll-snap row, cards 84% wide so the next one peeks. */
+  .compare {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .compare::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    scroll-snap-align: start;
+    padding: 16px;
+  }
+  .ill {
+    width: min(100%, calc(var(--cbu-cap-card-illustration-m, min(18dvh, 150px)) * 16 / 9));
+  }
+  .statement {
+    padding: 24px 20px;
+  }
+}
+
+/* Card hover lift (desktop pointers only) and press state (touch). Transform
+   only, 220 ms, ease-out; none under reduced motion. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+.card {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card:hover {
+  transform: translateY(-3px);
+}
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+.card:active {
+  transform: scale(0.992);
+}
+}

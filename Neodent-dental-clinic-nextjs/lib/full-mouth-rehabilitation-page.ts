@@ -25,12 +25,11 @@ export const PAGE_PATH = "/treatments/full-mouth-rehabilitation";
  *  branch is still type-checked. */
 export const SHOW_FMR_CASE_IMAGES: boolean = true;
 
-/** Dr. Miftah's full mouth rehabilitation pair is withheld by default: the
- *  "after" photograph shows an unmasked lower face (nose, beard, moles), and
- *  no consent record for publishing it is known. Set to true only once the
- *  owner confirms consent. Only has an effect while SHOW_FMR_CASE_IMAGES is
- *  true. */
-export const SHOW_MIFTAH_FMR_PAIR: boolean = false;
+/** Dr. Miftah's full mouth rehabilitation pair. The "after" photograph shows
+ *  an unmasked lower face (nose, beard, moles). The owner confirmed consent
+ *  to publish it on 3 Nov 2026, so it is switched on. Only has an effect
+ *  while SHOW_FMR_CASE_IMAGES is true. */
+export const SHOW_MIFTAH_FMR_PAIR: boolean = true;
 
 /** Rendered only when BOTH are non-empty. */
 export const REVIEWED_BY = "";

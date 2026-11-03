@@ -1,0 +1,85 @@
+/* Care + doctor. Dark ground (#15171a). Tips are stacked dark cards with an
+   icon tile on the left. The doctor card is the paper card; the layout
+   stretches both columns to one height and the card's button sits at the
+   bottom, so the card ends level with the last tip. */
+
+.section {
+  position: relative;
+  background: var(--di-dark-2, #15171a);
+  color: #f1eee7;
+  padding: var(--di-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--di-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: clamp(28px, 4.5vw, 64px);
+  align-items: stretch;
+}
+.left {
+  min-width: 0;
+}
+.doctor {
+  min-width: 0;
+  display: flex;
+}
+.doctor > aside {
+  flex: 1 1 auto;
+}
+
+.tips {
+  margin: clamp(24px, 3vw, 32px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: #191b1f;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-radius: 16px;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.tipIcon {
+  flex: none;
+  width: 44px;
+}
+.tipText {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(241, 238, 231, 0.92);
+}
+@media (hover: hover) and (min-width: 1024px) {
+  .tip:hover {
+    border-color: rgba(241, 238, 231, 0.3);
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--di-container-m, min(100% - 32px, 600px));
+  }
+  .tip {
+    padding: 12px 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tip {
+    transition: none;
+  }
+}

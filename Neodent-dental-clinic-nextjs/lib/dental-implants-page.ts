@@ -8,7 +8,6 @@ import { featuredTreatmentTitle } from "@/lib/featured-treatment-catalog";
 
 /** Single switch for ALL patient imagery and the patient video on this
  *  page (the hero uses a non-patient clinic photo and is unaffected).
- *  Set to false if the National Dental Commission advisory review requires it.
  *  Typed as boolean (not the literal `true`) so the flag-off branch is
  *  still type-checked. */
 export const SHOW_IMPLANT_CASE_IMAGES: boolean = true;

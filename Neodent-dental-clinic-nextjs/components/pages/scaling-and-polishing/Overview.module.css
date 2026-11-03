@@ -1,0 +1,205 @@
+/* What is. Tan ground (#ece7dc, var --sp-beige). Paper cards: #fffefa, 1px
+   hairline, 16px radius. Dark card: 4px 56px 4px 4px (home). One list style:
+   red dash markers. Diagram capped at min(46dvh, 440px) (min(34dvh, 300px)
+   on phones); the tile is 4:3, so its width is cap * 4 / 3. */
+
+.section {
+  background: var(--sp-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--sp-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sp-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+/* Row 1: heading + lede beside the scene. */
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+.copy {
+  min-width: 0;
+}
+.lede {
+  max-width: 62ch;
+  margin: 24px 0 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+.media {
+  min-width: 0;
+}
+.diagram {
+  --cap: var(--sp-cap-diagram, min(46dvh, 440px));
+  width: min(100%, calc(var(--cap) * 4 / 3));
+  margin-inline: auto;
+}
+
+/* Row 2: scaling, polishing, advice. Red dash on top of each. */
+.cards {
+  margin: clamp(28px, 3.6vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 16px);
+}
+.card {
+  min-width: 0;
+  padding: 22px 24px 24px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--sp-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(38, 48, 51, 0.04);
+}
+.card::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.cardTitle {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cardText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* Row 3: terms band. Each term spans two rows of a shared grid (subgrid), so
+   the five names sit on one line and the five meanings start on another. */
+.terms {
+  margin: clamp(12px, 1.6vw, 16px) 0 0;
+  padding: clamp(24px, 2.6vw, 32px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.termsTitle {
+  margin: 0 0 22px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.termList {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: auto 1fr;
+  gap: 0 clamp(18px, 2vw, 28px);
+}
+.term {
+  position: relative;
+  min-width: 0;
+  padding-left: 22px;
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  row-gap: 6px;
+}
+.term::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.term dt {
+  margin: 0;
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+.term dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1023px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .diagram {
+    --cap: var(--sp-cap-diagram-m, min(34dvh, 300px));
+    margin-inline: 0;
+  }
+  .termList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    gap: 22px clamp(18px, 2vw, 28px);
+  }
+  .term {
+    grid-row: auto;
+    grid-template-rows: none;
+    display: block;
+  }
+  .term dt {
+    margin-bottom: 6px;
+  }
+  /* Five terms in two columns: the last one spans both. */
+  .term:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 767px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .container {
+    width: var(--sp-container-m, min(100% - 32px, 600px));
+  }
+  .card {
+    padding: 18px 20px;
+  }
+  .terms {
+    border-radius: 4px 40px 4px 4px;
+  }
+  .termList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(38, 48, 51, 0.1);
+  }
+}
+
+/* Press state on touch screens (no hover there). */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform 0.18s ease;
+  }
+  .card:active {
+    transform: scale(0.985);
+  }
+}

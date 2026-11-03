@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DentalImplantsClientChrome } from "./DentalImplantsClientChrome";
+import pageStyles from "@/components/pages/dental-implants/DentalImplants.module.css";
 import { SITE_URL } from "@/lib/site-data";
 import {
   breadcrumbJsonLd,
@@ -85,7 +86,9 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <DentalImplantsClientChrome />
+      <div className={pageStyles.page}>
+        <DentalImplantsClientChrome />
+      </div>
     </>
   );
 }

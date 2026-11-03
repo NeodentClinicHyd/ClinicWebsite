@@ -4,54 +4,59 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AppButton } from "@/components/ui/AppButton";
-import { CbuHero } from "@/components/treatments/composite-build-up/CbuHero";
-import { CbuOverview } from "@/components/treatments/composite-build-up/CbuOverview";
-import { CbuWhen } from "@/components/treatments/composite-build-up/CbuWhen";
-import { CbuMaterials } from "@/components/treatments/composite-build-up/CbuMaterials";
-import { CbuVisit } from "@/components/treatments/composite-build-up/CbuVisit";
-import { CbuCare } from "@/components/treatments/composite-build-up/CbuCare";
-import { CbuCases } from "@/components/treatments/composite-build-up/CbuCases";
-import { CbuQuestions } from "@/components/treatments/composite-build-up/CbuQuestions";
-import { CbuFaq } from "@/components/treatments/composite-build-up/CbuFaq";
-import { CbuLocations } from "@/components/treatments/composite-build-up/CbuLocations";
-import { CbuRelated } from "@/components/treatments/composite-build-up/CbuRelated";
+import { PageHeader } from "@/components/pages/composite-build-up/PageHeader";
+import { ResultsCases } from "@/components/pages/composite-build-up/ResultsCases";
+import { WhatIs } from "@/components/pages/composite-build-up/WhatIs";
+import { WhenSuggested } from "@/components/pages/composite-build-up/WhenSuggested";
+import { Materials } from "@/components/pages/composite-build-up/Materials";
+import { VisitStages } from "@/components/pages/composite-build-up/VisitStages";
+import { CareAndRisks } from "@/components/pages/composite-build-up/CareAndRisks";
+import { QuestionsDoctor } from "@/components/pages/composite-build-up/QuestionsDoctor";
+import { FaqSection } from "@/components/pages/composite-build-up/FaqSection";
+import { ClinicLocations } from "@/components/pages/composite-build-up/ClinicLocations";
+import { RelatedSection } from "@/components/pages/composite-build-up/RelatedSection";
+import pageStyles from "@/components/pages/composite-build-up/CompositeBuildUp.module.css";
+import { ContactNextStep } from "@/components/sections/ContactNextStep";
 import { IllustrationDefs } from "@/components/treatment/illustrations/IllustrationDefs";
 import { RctDefs } from "@/components/treatment/illustrations/RctDefs";
 import { CbuDefs } from "@/components/treatment/illustrations/CbuDefs";
 import { SHOW_COMPOSITE_CASE_IMAGES } from "@/lib/composite-build-up-page";
 import { ctaTelPhone } from "@/lib/site-data";
 
-/* Client chrome for /treatments/composite-build-up, the same composition as
-   RootCanalClientChrome: fixed Navbar, page sections, global Footer and the
-   mobile call bar. `.site` is `overflow: hidden` globally, which would stop
-   sticky side columns from sticking; `overflow: clip` clips the same way
+/* Client chrome for /treatments/composite-build-up: fixed Navbar, page
+   sections, the shared consultation block, global Footer and the mobile call
+   bar. `.site` is `overflow: hidden` globally, which would stop sticky side
+   columns (the FAQ card) from sticking; `overflow: clip` clips the same way
    without creating a scroll container (set here only, globals.css is
-   untouched).
+   untouched). The page wrapper class on `.site` carries the page's custom
+   properties (widths, tones, image caps).
 
-   Section grounds, in order, never repeating in adjacent sections:
-   hero dark | tan | light | dark patterned | tan | light | [tan, cases] |
-   dark | tan | dark | light.
-   With SHOW_COMPOSITE_CASE_IMAGES off, care (light) is followed by
-   questions (dark), so the alternation still holds. */
+   Section order (the real results come straight after the header, doctor's
+   instruction of 2 Nov 2026) and grounds:
+   header dark | results ivory | what is tan | when ivory | materials dark
+   patterned | visit tan | care ivory | questions dark | FAQ tan | where to find
+   us dark | related ivory | consultation block dark | footer dark.
+   The results render only while SHOW_COMPOSITE_CASE_IMAGES is true. */
 export function CompositeBuildUpClientChrome() {
   return (
-    <div className="site" style={{ overflow: "clip" }}>
+    <div className={`site ${pageStyles.page}`} style={{ overflow: "clip" }}>
       <IllustrationDefs />
       <RctDefs />
       <CbuDefs />
       <Navbar />
       <main>
-        <CbuHero />
-        <CbuOverview />
-        <CbuWhen />
-        <CbuMaterials />
-        <CbuVisit />
-        <CbuCare />
-        {SHOW_COMPOSITE_CASE_IMAGES ? <CbuCases /> : null}
-        <CbuQuestions />
-        <CbuFaq />
-        <CbuLocations />
-        <CbuRelated />
+        <PageHeader />
+        {SHOW_COMPOSITE_CASE_IMAGES ? <ResultsCases /> : null}
+        <WhatIs />
+        <WhenSuggested />
+        <Materials />
+        <VisitStages />
+        <CareAndRisks />
+        <QuestionsDoctor />
+        <FaqSection />
+        <ClinicLocations />
+        <RelatedSection />
+        <ContactNextStep />
       </main>
       <Footer />
       <div className="mobile-bar">

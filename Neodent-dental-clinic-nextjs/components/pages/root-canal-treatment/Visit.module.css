@@ -1,0 +1,273 @@
+/* Visit. Tan ground (#ece7dc). Stage cards: 16px radius, paper surface.
+   One continuous red connector runs down the left of the list, with a node
+   at the centre of each card. The right column is sticky (top 96px) and
+   content-sized. NB: no overflow on the section, or sticky would break.
+   Values copied from ImplantsStages / FmrPlan. */
+
+.section {
+  position: relative;
+  background: var(--rct-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--rct-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--rct-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: stretch;
+  margin-top: clamp(28px, 3.6vw, 48px);
+}
+.stepsCol {
+  min-width: 0;
+}
+
+/* ---- Stage cards + connector ----------------------------------------- */
+.steps {
+  --gap: 20px;
+  --rail: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--rail);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--rct-cap-step, 120px) * 4 / 3) minmax(0, 1fr);
+  gap: clamp(18px, 2.4vw, 28px);
+  align-items: center;
+  padding: 16px clamp(18px, 2.4vw, 28px) 16px 16px;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
+}
+/* Connector: each card draws the line from its top edge to the next card's
+   top edge (through the gap). The first starts at its node, the last stops
+   at its node. */
+.step::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 8px);
+  top: -1px;
+  bottom: calc(var(--gap) * -1 - 1px);
+  width: 2px;
+  background: var(--neodent-red);
+}
+.step:first-child::before {
+  top: 50%;
+}
+.step:last-child::before {
+  bottom: 50%;
+}
+.step::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 9px);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  background: var(--neodent-red);
+  border: 3px solid #ece7dc;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+.tile {
+  min-width: 0;
+}
+.stepBody {
+  min-width: 0;
+}
+.stepBody h3 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(23px, 2.3vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.stepBody p {
+  margin: 0;
+  max-width: 54ch;
+  color: rgba(38, 48, 51, 0.82);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.figureNote {
+  margin: 14px 0 0 var(--rail, 36px);
+  padding-left: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.72);
+}
+
+/* ---- Sticky column ---------------------------------------------------- */
+.side {
+  --pad: clamp(26px, 3vw, 32px);
+  /* Not sticky: the column stretches to the stepper's height, the red
+     statement taking the leftover, so neither column is left empty in a
+     full-page view. */
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 20px;
+  min-width: 0;
+}
+.stat,
+.statement {
+  min-width: 0;
+  padding: var(--pad);
+  border-radius: 20px;
+}
+.stat {
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+}
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--neodent-red);
+}
+.statTitle {
+  margin: 0 0 14px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+.statText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+.statement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 2.7vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.statementText em {
+  display: block;
+  font-style: italic;
+}
+.statementSub {
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(248, 246, 239, 0.95);
+}
+
+@media (max-width: 1023px) {
+  .composition {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    align-items: stretch;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--rct-container-m, min(100% - 32px, 600px));
+  }
+  .composition {
+    margin-top: 32px;
+  }
+  .steps {
+    --gap: 14px;
+    --rail: 26px;
+  }
+  .figureNote {
+    margin-left: 26px;
+  }
+  .step {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    padding: 12px;
+  }
+  .step::before {
+    left: calc(var(--rail) * -1 + 5px);
+  }
+  .step::after {
+    left: calc(var(--rail) * -1 + 6px);
+  }
+  .stepBody h3 {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .stepBody p {
+    max-width: none;
+  }
+  .side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* The connecting line draws with scroll where scroll-linked animation is
+   supported; elsewhere it is simply drawn (the steps still rise in order). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .step::before {
+      transform-origin: top;
+      animation: drawStep linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 45%;
+    }
+    .step::after {
+      animation: popNode linear both;
+      animation-timeline: view();
+      animation-range: entry 15% entry 60%;
+    }
+  }
+}
+@keyframes drawStep {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes popNode {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .step {
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+  }
+  .step:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: 0 10px 22px rgba(38, 48, 51, 0.1);
+  }
+}

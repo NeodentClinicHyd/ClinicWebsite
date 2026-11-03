@@ -1,0 +1,40 @@
+/* Page wrapper for /treatments/braces-and-orthodontics. Holds only custom
+   properties (no layout), so every section module in this folder reads the
+   same widths, caps and tones. Sections fall back to the same literal values
+   if a property is missing. */
+.page {
+  /* Widths (the site container) */
+  --brc-container: min(1180px, calc(100% - 48px));
+  --brc-container-m: min(100% - 32px, 600px);
+
+  /* Tones */
+  --brc-dark: var(--neodent-charcoal);
+  --brc-dark-2: #15171a;
+  --brc-dark-3: #14161a;
+  --brc-dark-pattern: #242628;
+  --brc-beige: #ece7dc;
+  --brc-ivory: var(--ivory);
+  --brc-paper: var(--neodent-surface);
+  --brc-hairline: rgba(38, 48, 51, 0.12);
+
+  /* Image caps (plan 4.9 / Agent rules 13) */
+  --brc-cap-header-photo: min(52dvh, 460px);
+  --brc-cap-case-photo: min(34dvh, 300px);
+  --brc-cap-case-photo-m: 30dvh;
+  --brc-cap-diagram: min(46dvh, 440px);
+  --brc-cap-diagram-m: min(34dvh, 300px);
+  --brc-cap-card-illustration: min(22dvh, 190px);
+  --brc-cap-card-illustration-m: min(18dvh, 150px);
+  --brc-cap-type-photo: min(38dvh, 340px);
+  --brc-cap-type-photo-m: 30dvh;
+  --brc-cap-thumb: 96px;
+  --brc-cap-step: 120px;
+  --brc-cap-step-m: 96px;
+  --brc-cap-portrait: 40dvh;
+  --brc-cap-portrait-m: 34dvh;
+  --brc-cap-clinic-photo: 36dvh;
+  --brc-cap-clinic-photo-m: 28dvh;
+
+  /* Section rhythm */
+  --brc-section-pad: clamp(56px, 7vw, 96px);
+}

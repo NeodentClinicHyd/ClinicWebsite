@@ -1,0 +1,139 @@
+/* When might your dentist suggest one? Ivory ground. Paper cards (20px
+   radius, #fffefa, 1px hairline); the capped square scene sits left, title
+   and line right, vertically centred. Equal card heights by grid rows. The
+   strip is the root canal "signs" strip: --neodent-red-soft, 16px radius, red
+   dash, full width. */
+
+.section {
+  background: var(--cbu-ivory, var(--ivory));
+  color: var(--ink);
+  padding: var(--cbu-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--cbu-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.cards {
+  margin: clamp(28px, 3.6vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: clamp(16px, 2vw, 24px);
+}
+.card {
+  min-width: 0;
+  display: grid;
+  /* The illustration column is the card-illustration cap (143 px at 650 px
+     tall, 190 px at most), never more than 40% of the card. */
+  grid-template-columns: min(var(--cbu-cap-card-illustration, min(22dvh, 190px)), 40%) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 28px);
+  padding: clamp(16px, 2vw, 20px);
+  background: var(--cbu-paper, var(--neodent-surface));
+  border: 1px solid var(--cbu-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+.frame {
+  min-width: 0;
+}
+.body {
+  min-width: 0;
+  padding-right: clamp(0px, 0.6vw, 8px);
+}
+.title {
+  margin: 0 0 10px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.figureNote {
+  margin: 12px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.72);
+}
+
+.strip {
+  position: relative;
+  margin: clamp(24px, 3vw, 32px) 0 0;
+  padding: 20px clamp(22px, 3vw, 32px) 20px calc(clamp(22px, 3vw, 32px) + 36px);
+  background: var(--neodent-red-soft);
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.strip::before {
+  content: "";
+  position: absolute;
+  left: clamp(22px, 3vw, 32px);
+  top: 32px;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+
+@media (max-width: 1023px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+  }
+  .card {
+    grid-template-columns: min(var(--cbu-cap-card-illustration, 190px), 38%) minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--cbu-container-m, min(100% - 32px, 600px));
+  }
+  /* Compact rows: the illustration is about 96 px (cap: min(18dvh, 150px)). */
+  .card {
+    grid-template-columns: min(96px, var(--cbu-cap-card-illustration-m, 150px)) minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+    padding: 12px;
+  }
+  .title {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .strip {
+    padding: 20px;
+    border-radius: 14px;
+  }
+  .strip::before {
+    position: static;
+    display: block;
+    margin-bottom: 12px;
+  }
+}
+
+/* Card hover lift (desktop pointers only) and press state (touch). Transform
+   only, 220 ms, ease-out; none under reduced motion. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+.card {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card:hover {
+  transform: translateY(-3px);
+}
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+.card:active {
+  transform: scale(0.992);
+}
+}

@@ -1,0 +1,374 @@
+/* Plan. Tan ground (#ece7dc). Record cards and stage cards are paper
+   (surface fill), 16px radius. One continuous red connector runs down the
+   left of the stage list with a node at each card; the right column is
+   sticky (top 96px) and content-sized. NB: no overflow on the section (the
+   chrome's .site uses overflow: clip), or sticky would break. Stage
+   scenes are 160 x 120 px on a laptop and 112 x 84 px on a phone. */
+
+.section {
+  position: relative;
+  background: var(--fmr-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--fmr-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--fmr-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.partTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.partIntro {
+  max-width: 54ch;
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+
+/* ---- Part A: heading block, note, then three record cards ---- */
+.records {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  column-gap: clamp(28px, 5vw, 72px);
+  align-items: end;
+  margin-top: clamp(36px, 4.5vw, 56px);
+}
+.records > .partTitle {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+}
+.records > .partIntro {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+.recordsNote {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  max-width: 54ch;
+  margin: 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--neodent-red);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+.recordList {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  margin: clamp(24px, 3vw, 32px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+.record {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 20px 16px 16px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--fmr-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+}
+.recordBody {
+  min-width: 0;
+}
+.recordBody h4 {
+  margin: 0 0 4px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.recordBody p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* ---- Part B: stages ---- */
+.stagesHead {
+  margin-top: clamp(48px, 6vw, 80px);
+}
+
+.composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+  margin-top: clamp(28px, 3.5vw, 40px);
+}
+
+.steps {
+  --gap: 20px;
+  --rail: 36px;
+  --step-cap: var(--fmr-cap-step, 120px);
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--rail);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--step-cap) * 4 / 3) minmax(0, 1fr);
+  gap: clamp(18px, 2.4vw, 28px);
+  align-items: center;
+  padding: 16px clamp(18px, 2.4vw, 28px) 16px 16px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--fmr-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+}
+/* Connector: each card draws the line from its top edge to the next card's
+   top edge (through the gap). The first starts at its node, the last stops
+   at its node. */
+.step::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 8px);
+  top: -1px;
+  bottom: calc(var(--gap) * -1 - 1px);
+  width: 2px;
+  background: var(--neodent-red);
+}
+.step:first-child::before {
+  top: 50%;
+}
+.step:last-child::before {
+  bottom: 50%;
+}
+.step::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 9px);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  background: var(--neodent-red);
+  border: 3px solid #ece7dc;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+.tile {
+  min-width: 0;
+}
+.stepBody {
+  min-width: 0;
+}
+.stepBody h4 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(23px, 2.3vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.stepBody p {
+  margin: 0;
+  max-width: 54ch;
+  color: rgba(38, 48, 51, 0.82);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ---- Sticky column ---- */
+.side {
+  --pad: clamp(24px, 3vw, 30px);
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.stat,
+.statement {
+  min-width: 0;
+  padding: var(--pad);
+  border-radius: 20px;
+}
+.stat {
+  background: var(--neodent-surface);
+  border: 1px solid var(--fmr-hairline, rgba(38, 48, 51, 0.12));
+}
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--neodent-red);
+}
+.statTitle {
+  margin: 0 0 14px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+.statText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+.statement {
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 2.7vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.statementText em {
+  display: block;
+  font-style: italic;
+}
+
+@media (max-width: 1023px) {
+  .records {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .records > .partTitle,
+  .records > .partIntro,
+  .recordsNote,
+  .recordList {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .recordsNote {
+    margin-top: 20px;
+  }
+  .recordList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .composition {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--fmr-container-m, min(100% - 32px, 600px));
+  }
+  .record {
+    gap: 16px;
+    padding: 14px 16px 14px 14px;
+  }
+  .composition {
+    margin-top: 24px;
+  }
+  .steps {
+    --gap: 14px;
+    --rail: 26px;
+    --step-cap: var(--fmr-cap-step-m, 96px);
+  }
+  .step {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    padding: 12px;
+  }
+  .step::before {
+    left: calc(var(--rail) * -1 + 5px);
+  }
+  .step::after {
+    left: calc(var(--rail) * -1 + 6px);
+  }
+  .stepBody h4 {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .stepBody p {
+    max-width: none;
+  }
+  .side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---- Motion polish (plan R8): a small lift on desktop hover, a press state
+   on touch. Uses the individual `translate` and `scale` properties so it
+   never competes with the reveal's own transform. None under reduced motion. */
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .record, .step {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .record:hover, .step:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .record, .step {
+    transition: scale 140ms ease-out;
+  }
+  .record:active, .step:active {
+    scale: 0.99;
+  }
+}
+
+/* ---- The connecting line draws with scroll (plan R8) ----
+   Each step draws its own stretch of the red line as it scrolls into view
+   (scroll-driven animation); browsers without it, and reduced motion, show
+   the finished line. The node scales in with it. transform only. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .step::before {
+      transform-origin: top center;
+      animation: lineDraw linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 95%;
+    }
+    .step::after {
+      animation: nodePop linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+@keyframes lineDraw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes nodePop {
+  from {
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

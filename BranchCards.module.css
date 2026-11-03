@@ -1,0 +1,13 @@
+
+/* Reveal wrappers (mask) pass the photo height through. */
+.photo > *,
+.photo > * > * {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+@media (max-width: 767px) {
+  .photo {
+    height: var(--di-cap-clinic-photo-m, 28dvh);
+  }
+}

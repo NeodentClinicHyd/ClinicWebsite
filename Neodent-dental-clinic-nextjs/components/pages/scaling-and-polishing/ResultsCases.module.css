@@ -1,0 +1,245 @@
+/* Results (plan 4.2). Ivory ground directly under the dark header.
+   Desktop: heading row (heading left, the introduction right), one case card
+   with the before and after photographs side by side and centred, and a slim
+   consent strip. Below 1024 px the case card is the slide of a scroll-snap
+   swipe row (one case today; dots appear with a second).
+   The photographs are about 440 x 240 px at source. Each frame is as wide as
+   the lesser of its source width and the case-photo cap, so nothing is
+   enlarged: width = min(437px, cap * 437 / 239). */
+
+.section {
+  position: relative;
+  background: var(--ivory);
+  color: var(--ink);
+  padding: var(--sp-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sp-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+/* ---- Heading row ---- */
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  align-items: end;
+  gap: 16px clamp(24px, 4vw, 64px);
+}
+.intro {
+  margin: 0 0 6px;
+  max-width: 420px;
+}
+
+/* ---- Case card ---- */
+.row {
+  --cap: var(--sp-cap-case-photo, min(34dvh, 300px));
+  --w: min(437px, calc(var(--cap) * 437 / 239));
+  margin-top: clamp(24px, 3vw, 36px);
+}
+.card {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  padding: clamp(18px, 2.4vw, 28px);
+  background: var(--neodent-surface);
+  border: 1px solid var(--sp-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(38, 48, 51, 0.04);
+}
+.inner {
+  min-width: 0;
+  max-width: 100%;
+}
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, var(--w)));
+  gap: clamp(10px, 1.6vw, 18px);
+}
+.plate {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.media {
+  flex: none;
+}
+.thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 437 / 239;
+  padding: 0;
+  border: 1px solid rgba(38, 48, 51, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #e2ddd0;
+  cursor: zoom-in;
+}
+.thumb:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+.image {
+  object-fit: cover;
+  object-position: 50% 50%;
+  filter: saturate(0.92) contrast(1.02);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .thumb:hover .image {
+    transform: scale(1.03);
+  }
+}
+.thumb:active .image {
+  transform: scale(1.015);
+}
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: rgba(38, 48, 51, 0.78);
+}
+.caption {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--sp-hairline, rgba(38, 48, 51, 0.12));
+  color: var(--neodent-red-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+/* ---- Dots (more than one case, swipe row only) ---- */
+.dots {
+  display: none;
+}
+
+/* ---- Consent strip ---- */
+.consent {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 8px clamp(20px, 4vw, 56px);
+  margin-top: 16px;
+  padding: 16px clamp(18px, 2.4vw, 28px);
+  background: var(--neodent-red-soft);
+  border: 1px solid rgba(215, 25, 32, 0.14);
+  border-radius: 14px;
+}
+.consent p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.9);
+}
+.privacyLink {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-underline-offset: 3px;
+}
+.privacyLink:hover {
+  color: var(--neodent-red-dark);
+}
+.privacyLink:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+
+/* ---- Below 1024 px: the card is the slide of a swipe row ---- */
+@media (max-width: 1023px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .intro {
+    margin: 0;
+    max-width: 560px;
+  }
+  .row {
+    --cap: var(--sp-cap-case-photo-m, 30dvh);
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .row::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+  .dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .dotButton {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .dotButton:focus-visible {
+    outline: 2px solid var(--neodent-red);
+    outline-offset: -6px;
+    border-radius: 50%;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(38, 48, 51, 0.25);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .dotButton[aria-current="true"] .dot {
+    background: var(--neodent-red);
+    transform: scale(1.25);
+  }
+  .consent {
+    margin-top: 14px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--sp-container-m, min(100% - 32px, 600px));
+  }
+  .card {
+    padding: 14px;
+  }
+  .consent {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .privacyLink {
+    display: inline-block;
+    padding: 12px 0;
+    margin: -12px 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .image {
+    transition: none;
+  }
+  .thumb:hover .image,
+  .thumb:active .image {
+    transform: none;
+  }
+}

@@ -1,0 +1,247 @@
+/* Visit. Tan ground (#ece7dc). Stage cards: 16px radius, paper surface. One
+   continuous red connector runs down the left of the list, with a node at the
+   centre of each card. The scene in each card is at most 120 px tall (4:3, so
+   160 px wide), 96 px tall on phones. The right column holds two cards that
+   stretch to the stepper's height with their content vertically centred. */
+
+.section {
+  position: relative;
+  background: var(--cbu-tan, #ece7dc);
+  color: var(--ink);
+  padding: var(--cbu-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--cbu-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: stretch;
+  margin-top: clamp(28px, 3.6vw, 44px);
+}
+.stepsCol {
+  min-width: 0;
+}
+
+/* ---- Stage cards + connector ----------------------------------------- */
+.steps {
+  --gap: 18px;
+  --rail: 36px;
+  --cap: var(--cbu-cap-step, 120px);
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--rail);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--cap) * 4 / 3) minmax(0, 1fr);
+  gap: clamp(18px, 2.4vw, 28px);
+  align-items: center;
+  padding: 16px clamp(18px, 2.4vw, 28px) 16px 16px;
+  background: var(--cbu-paper, var(--neodent-surface));
+  border: 1px solid var(--cbu-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+}
+/* Connector: each card draws the line from its top edge to the next card's
+   top edge (through the gap). The first starts at its node, the last stops
+   at its node. It is a real (decorative) element so that it can draw with
+   scroll: scaleY from the top, driven by a view timeline where supported;
+   elsewhere the line is simply shown. */
+.connector {
+  position: absolute;
+  left: calc(var(--rail) * -1 + 8px);
+  top: -1px;
+  bottom: calc(var(--gap) * -1 - 1px);
+  width: 2px;
+  background: var(--neodent-red);
+  transform-origin: top center;
+  pointer-events: none;
+}
+.step:first-child .connector {
+  top: 50%;
+}
+.step:last-child .connector {
+  bottom: 50%;
+}
+@keyframes drawConnector {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .connector {
+      animation: drawConnector linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+  }
+}
+.step::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 9px);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  background: var(--neodent-red);
+  border: 3px solid var(--cbu-tan, #ece7dc);
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+.tile {
+  min-width: 0;
+}
+.stepBody {
+  min-width: 0;
+}
+.stepBody h3 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(23px, 2.3vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.stepBody p {
+  margin: 0;
+  max-width: 54ch;
+  color: rgba(38, 48, 51, 0.82);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.figureNote {
+  margin: 14px 0 0 var(--rail, 36px);
+  padding-left: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.72);
+}
+
+/* ---- Side column: two cards, stretched, content centred -------------- */
+.side {
+  --pad: clamp(26px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.stat,
+.statement {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--pad);
+  border-radius: 20px;
+}
+.stat {
+  background: var(--cbu-paper, var(--neodent-surface));
+  border: 1px solid var(--cbu-hairline, rgba(38, 48, 51, 0.12));
+}
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--neodent-red);
+}
+.statTitle {
+  margin: 0 0 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 2.9vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+.statText {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+.statement {
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(32px, 3.3vw, 46px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+.statementText em {
+  display: block;
+  font-style: italic;
+}
+.statementSub {
+  margin: 16px 0 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(248, 246, 239, 0.95);
+}
+
+@media (max-width: 1023px) {
+  .composition {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--cbu-container-m, min(100% - 32px, 600px));
+  }
+  .composition {
+    margin-top: 28px;
+  }
+  .steps {
+    --gap: 14px;
+    --rail: 26px;
+    --cap: var(--cbu-cap-step-m, 96px);
+  }
+  .figureNote {
+    margin-left: 26px;
+  }
+  .step {
+    gap: 14px;
+    align-items: start;
+    padding: 12px;
+  }
+  .step::after {
+    left: calc(var(--rail) * -1 + 6px);
+  }
+  .connector {
+    left: calc(var(--rail) * -1 + 5px);
+  }
+  .stepBody h3 {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .stepBody p {
+    max-width: none;
+  }
+  .side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

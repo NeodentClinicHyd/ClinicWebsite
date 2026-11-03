@@ -4,16 +4,17 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AppButton } from "@/components/ui/AppButton";
-import { ImplantsHero } from "@/components/treatments/dental-implants/ImplantsHero";
-import { ImplantsOverview } from "@/components/treatments/dental-implants/ImplantsOverview";
-import { ImplantsStages } from "@/components/treatments/dental-implants/ImplantsStages";
-import { ImplantsOptions } from "@/components/treatments/dental-implants/ImplantsOptions";
-import { ImplantsHealing } from "@/components/treatments/dental-implants/ImplantsHealing";
-import { ImplantsCases } from "@/components/treatments/dental-implants/ImplantsCases";
-import { ImplantsCare } from "@/components/treatments/dental-implants/ImplantsCare";
-import { ImplantsQuestions } from "@/components/treatments/dental-implants/ImplantsQuestions";
-import { ImplantsLocations } from "@/components/treatments/dental-implants/ImplantsLocations";
-import { ImplantsRelated } from "@/components/treatments/dental-implants/ImplantsRelated";
+import { PageHeader } from "@/components/pages/dental-implants/PageHeader";
+import { ResultsCases } from "@/components/pages/dental-implants/ResultsCases";
+import { WhatIsAnImplant } from "@/components/pages/dental-implants/WhatIsAnImplant";
+import { StagesOfTreatment } from "@/components/pages/dental-implants/StagesOfTreatment";
+import { CompareAndAttention } from "@/components/pages/dental-implants/CompareAndAttention";
+import { HealingAftercare } from "@/components/pages/dental-implants/HealingAftercare";
+import { CareAndDoctor } from "@/components/pages/dental-implants/CareAndDoctor";
+import { FaqSection } from "@/components/pages/dental-implants/FaqSection";
+import { ClinicLocations } from "@/components/pages/dental-implants/ClinicLocations";
+import { RelatedSection } from "@/components/pages/dental-implants/RelatedSection";
+import { ContactNextStep } from "@/components/sections/ContactNextStep";
 import { IllustrationDefs } from "@/components/treatment/illustrations/IllustrationDefs";
 import { SHOW_IMPLANT_CASE_IMAGES } from "@/lib/dental-implants-page";
 import { ctaTelPhone } from "@/lib/site-data";
@@ -30,16 +31,17 @@ export function DentalImplantsClientChrome() {
       <IllustrationDefs />
       <Navbar />
       <main>
-        <ImplantsHero />
-        <ImplantsOverview />
-        <ImplantsStages />
-        <ImplantsOptions />
-        <ImplantsHealing />
-        {SHOW_IMPLANT_CASE_IMAGES ? <ImplantsCases /> : null}
-        <ImplantsCare />
-        <ImplantsQuestions />
-        <ImplantsLocations />
-        <ImplantsRelated />
+        <PageHeader />
+        {SHOW_IMPLANT_CASE_IMAGES ? <ResultsCases /> : null}
+        <WhatIsAnImplant />
+        <StagesOfTreatment />
+        <CompareAndAttention />
+        <HealingAftercare />
+        <CareAndDoctor />
+        <FaqSection />
+        <ClinicLocations />
+        <RelatedSection />
+        <ContactNextStep />
       </main>
       <Footer />
       <div className="mobile-bar">
