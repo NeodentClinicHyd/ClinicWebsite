@@ -1,0 +1,37 @@
+/* Page wrapper for /treatments/root-canal-treatment. Holds only custom properties
+   (no layout), so every section module in this folder reads the same
+   widths, caps and tones. Sections fall back to the same literal values
+   if a property is missing. */
+.page {
+  /* Widths (the site container) */
+  --rct-container: min(1180px, calc(100% - 48px));
+  --rct-container-m: min(100% - 32px, 600px);
+
+  /* Tones */
+  --rct-dark: var(--neodent-charcoal);
+  --rct-dark-2: #15171a;
+  --rct-dark-3: #14161a;
+  --rct-dark-pattern: #242628;
+  --rct-beige: #ece7dc;
+  --rct-ivory: var(--ivory);
+  --rct-paper: var(--neodent-surface);
+  --rct-hairline: rgba(38, 48, 51, 0.12);
+
+  /* Image caps (plan 4.11 / Agent rules 13) */
+  --rct-cap-header-photo: min(52dvh, 460px);
+  --rct-cap-case-photo: min(34dvh, 300px);
+  --rct-cap-case-photo-m: 30dvh;
+  --rct-cap-diagram: min(46dvh, 440px);
+  --rct-cap-diagram-m: min(34dvh, 300px);
+  --rct-cap-card-illustration: min(22dvh, 190px);
+  --rct-cap-card-illustration-m: min(18dvh, 150px);
+  --rct-cap-step: 120px;
+  --rct-cap-step-m: 96px;
+  --rct-cap-portrait: 40dvh;
+  --rct-cap-portrait-m: 34dvh;
+  --rct-cap-clinic-photo: 36dvh;
+  --rct-cap-clinic-photo-m: 28dvh;
+
+  /* Section rhythm */
+  --rct-section-pad: clamp(56px, 7vw, 96px);
+}

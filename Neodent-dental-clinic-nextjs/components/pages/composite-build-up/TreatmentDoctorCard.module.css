@@ -1,0 +1,128 @@
+/* Doctor card (fork of components/treatments/TreatmentDoctorCard.module.css).
+   From 768 px the card is horizontal: the portrait (3:2, its height capped at
+   --cbu-cap-portrait = 40dvh) on the left, the facts and the button on the
+   right, vertically centred. On phones it is a column and the portrait is at
+   most 34dvh tall. */
+
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: min(52%, calc(var(--cbu-cap-portrait, 40dvh) * 3 / 2)) minmax(0, 1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+  align-items: center;
+  align-self: stretch;
+  padding: clamp(20px, 2.4vw, 28px);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+  background: var(--cbu-paper, var(--neodent-surface, #fffefa));
+  color: var(--neodent-ink, #263033);
+}
+
+/* A fixed frame and crop keep the doctor's scale and head position the same
+   whatever the width. */
+.portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #ece7dc;
+}
+.portraitImage {
+  object-fit: cover;
+  object-position: right 45%;
+  filter: saturate(0.92) contrast(1.02);
+}
+.identity {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: 54%;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 18px;
+}
+.name {
+  margin: 0 0 8px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.1vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.designation {
+  margin: 0;
+  color: rgba(38, 48, 51, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.details {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.facts {
+  margin: 0;
+  border-top: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(38, 48, 51, 0.12);
+}
+.fact dt {
+  color: rgba(38, 48, 51, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.fact dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.qualification {
+  font-weight: 600;
+}
+.action {
+  margin-top: 18px;
+}
+
+@media (max-width: 767px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    padding: 20px;
+    gap: 18px;
+  }
+  /* 4:3 at the card width, never taller than 34dvh. */
+  .portrait {
+    aspect-ratio: 4 / 3;
+    max-height: var(--cbu-cap-portrait-m, 34dvh);
+  }
+  .identity {
+    width: 58%;
+    padding: 14px;
+  }
+  .name {
+    font-size: 20px;
+  }
+  .designation {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  .action :global(.button) {
+    width: 100%;
+  }
+}

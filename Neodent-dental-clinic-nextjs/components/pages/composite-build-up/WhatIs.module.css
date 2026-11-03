@@ -1,0 +1,223 @@
+/* What is a composite build-up? Tan ground (#ece7dc). Paper cards: #fffefa,
+   1px hairline, 16px radius (small cards) and 20px (the assessment card);
+   dark card 4px 56px 4px 4px (the home seam shape). One list style: red dash
+   markers. Desktop: heading + lede across the top, two small cards beside the
+   cross-section, then the assessment card and the dark card side by side. */
+
+.section {
+  background: var(--cbu-tan, #ece7dc);
+  color: var(--ink);
+  padding: var(--cbu-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--cbu-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr);
+  grid-template-areas:
+    "head  head"
+    "stack media";
+  column-gap: clamp(24px, 4vw, 56px);
+  row-gap: clamp(24px, 3vw, 36px);
+  align-items: stretch;
+}
+.head {
+  grid-area: head;
+  min-width: 0;
+}
+.stack {
+  grid-area: stack;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.media {
+  grid-area: media;
+  min-width: 0;
+}
+/* The diagram is capped by height: its width is the cap times its 4:3 ratio. */
+.diagram {
+  width: min(100%, calc(var(--cbu-cap-diagram, min(46dvh, 440px)) * 4 / 3));
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 20px 0 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+
+.card,
+.check {
+  position: relative;
+  min-width: 0;
+  background: var(--cbu-paper, var(--neodent-surface));
+  border: 1px solid var(--cbu-hairline, rgba(38, 48, 51, 0.12));
+}
+.card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 22px clamp(22px, 2.4vw, 28px);
+  border-radius: 16px;
+}
+.card::before,
+.check::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 12px;
+  background: var(--neodent-red);
+}
+.cardTitle {
+  margin: 0 0 8px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cardText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* Assessment card and dark card: one row, equal height. */
+.pairRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(16px, 2vw, 24px);
+}
+.check {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 3vw, 32px);
+  border-radius: 20px;
+}
+.check .cardTitle {
+  margin-bottom: 14px;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.list li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--neodent-red);
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(26px, 3.2vw, 38px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.namesTitle {
+  margin: 0 0 14px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.namesTitle::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 16px;
+  background: var(--neodent-red);
+}
+.namesText {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* Tablet and phone: heading + lede, figure, the two small cards, the
+   assessment card, the dark card. */
+@media (max-width: 1023px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "media"
+      "stack";
+    row-gap: 24px;
+  }
+  .pairRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .names {
+    border-radius: 4px 40px 4px 4px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--cbu-container-m, min(100% - 32px, 600px));
+  }
+  .diagram {
+    width: min(100%, calc(var(--cbu-cap-diagram-m, min(34dvh, 300px)) * 4 / 3));
+  }
+  .lede {
+    margin-top: 16px;
+  }
+  .card {
+    padding: 18px 20px;
+  }
+}
+
+/* Card hover lift (desktop pointers only) and press state (touch). Transform
+   only, 220 ms, ease-out; none under reduced motion. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+.card,
+.check,
+.names {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card:hover,
+.check:hover,
+.names:hover {
+  transform: translateY(-3px);
+}
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+.card:active,
+.check:active,
+.names:active {
+  transform: scale(0.992);
+}
+}

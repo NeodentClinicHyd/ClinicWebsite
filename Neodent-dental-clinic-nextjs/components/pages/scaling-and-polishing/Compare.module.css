@@ -1,0 +1,303 @@
+/* Compare: dark band. Ground #242628 with a red glow at the top right and the
+   icon pattern as a luminance mask (home hero recipe), both from 768 px up.
+   The mask fades toward the left and the bottom, so the pattern never sits
+   behind the heading or the cards. Comparison cards are paper (#fffefa),
+   20px radius, both alike. The red band is the page's red surface.
+   Scenes are 4:3 tiles whose height is --art-h (min(22dvh, 190px) on wide
+   screens, min(18dvh, 150px) on phones), so their width is --art-h * 4 / 3. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  background-color: var(--sp-dark-pattern, #242628);
+  color: #f1eee7;
+  padding: var(--sp-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--sp-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.filterDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ---- Backdrop (768 px and wider) ---- */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  pointer-events: none;
+}
+.glow,
+.pattern {
+  position: absolute;
+  inset: 0;
+}
+.glow {
+  background-image: radial-gradient(
+    ellipse 520px 60% at 92% 12%,
+    rgba(215, 25, 32, 0.2) 0%,
+    rgba(215, 25, 32, 0.08) 55%,
+    rgba(215, 25, 32, 0) 100%
+  );
+}
+.pattern {
+  display: none;
+}
+@supports (mask-mode: luminance) {
+  .pattern {
+    display: block;
+    opacity: 0.14;
+    filter: url("#sp-pattern-levels-b");
+  }
+  .tile {
+    position: absolute;
+    inset: 0;
+    background-color: var(--neodent-ivory);
+    mask-image:
+      url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp"),
+      radial-gradient(
+        ellipse 62% 78% at 100% 0%,
+        #000 0%,
+        #000 30%,
+        rgba(0, 0, 0, 0.6) 58%,
+        transparent 100%
+      );
+    mask-mode: luminance, alpha;
+    mask-repeat: repeat, no-repeat;
+    mask-size: 420px 420px, 100% 100%;
+    mask-composite: intersect;
+  }
+}
+@media (min-width: 768px) {
+  .backdrop {
+    display: block;
+  }
+}
+
+/* ---- Two equal cards ---- */
+.compare {
+  --art-h: var(--sp-cap-card-illustration, min(22dvh, 190px));
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(28px, 3.6vw, 48px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(18px, 2vw, 24px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translate3d(0, -3px, 0);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+  }
+}
+.frame {
+  width: calc(var(--art-h) * 4 / 3);
+  max-width: 100%;
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.blockLabel {
+  position: relative;
+  margin: 0;
+  padding-left: 22px;
+  color: var(--neodent-red-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.blockLabel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 14px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.blockText {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+/* Wide screens: horizontal cards. Left column: the scene over the name.
+   Right column: the four label and value rows. The two cards share four rows
+   (subgrid) so every row lines up exactly across them. */
+@media (min-width: 1024px) {
+  .card {
+    display: grid;
+    grid-template-columns: calc(var(--art-h) * 4 / 3 + 8px) minmax(0, 1fr);
+    column-gap: clamp(20px, 2.4vw, 32px);
+    row-gap: 12px;
+    align-content: center;
+  }
+  .frame {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    width: 100%;
+  }
+  .name {
+    grid-column: 1;
+    grid-row: 3 / span 2;
+    align-self: start;
+    font-size: clamp(24px, 2.1vw, 28px);
+  }
+  .block {
+    grid-column: 2;
+  }
+}
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 1024px) {
+    .compare {
+      /* the four label and value rows */
+      grid-template-rows: repeat(4, auto);
+      row-gap: 0;
+    }
+    .card {
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+    }
+  }
+}
+.figNote {
+  margin: 14px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(241, 238, 231, 0.78);
+}
+
+/* The one framing fact, with the red dash rule used for notes. */
+.line {
+  max-width: 76ch;
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--neodent-red);
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(241, 238, 231, 0.92);
+}
+
+/* ---- Red band: who decides ---- */
+.decide {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 14px clamp(24px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(20px, 2.6vw, 28px);
+  padding: clamp(26px, 3.6vw, 40px) clamp(26px, 3.8vw, 44px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.statement {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.8vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.statementNote {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #fff;
+}
+
+/* ---- Tablet: two cards side by side, scene above ---- */
+@media (max-width: 1023px) {
+  .compare {
+    --art-h: var(--sp-cap-card-illustration-m, min(18dvh, 150px));
+  }
+  .frame {
+    margin-inline: auto;
+  }
+  .decide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* ---- Phone: swipe row ---- */
+@media (max-width: 767px) {
+  .container {
+    width: var(--sp-container-m, min(100% - 32px, 600px));
+  }
+  .compare {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .compare::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    flex: 0 0 84%;
+    padding: 18px;
+    scroll-snap-align: start;
+  }
+  .decide {
+    padding: 26px 22px;
+    border-radius: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}
+/* Press state on touch screens (no hover there). */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform 0.18s ease;
+  }
+  .card:active {
+    transform: scale(0.985);
+  }
+}

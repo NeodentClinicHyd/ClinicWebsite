@@ -51,3 +51,7 @@ next-env.d.ts
 /.frame-audit/
 /_tmp_*
 /undefinedsheet.jpg
+
+# internal working docs & design references (not part of the shipped site)
+/docs/docs-to-prepare/
+/docs/internal-pages/

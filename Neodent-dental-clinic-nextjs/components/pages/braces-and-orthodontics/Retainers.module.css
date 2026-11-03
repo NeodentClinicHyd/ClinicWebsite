@@ -1,0 +1,133 @@
+/* Retainers. Tan ground (#ece7dc). Matched pair: same height, padding and
+   radius (20px), paper surface, hairline border. The scene is capped at
+   min(22dvh, 190px) tall (4 : 3, so its width is 4/3 of that); the note has the
+   overview's red left rule. */
+
+.section {
+  background: var(--brc-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--brc-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--brc-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.rowWrap {
+  margin-top: clamp(28px, 3.6vw, 44px);
+}
+
+.cards {
+  --cap: var(--brc-cap-card-illustration, min(22dvh, 190px));
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 28px);
+  align-items: stretch;
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, calc(var(--cap) * 4 / 3)) minmax(0, 1fr);
+  column-gap: clamp(18px, 2.2vw, 28px);
+  align-items: center;
+  padding: clamp(18px, 2.2vw, 24px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.frame {
+  min-width: 0;
+}
+.body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cardTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.cardText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.figureNote {
+  margin: 12px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.72);
+}
+.note {
+  margin: clamp(22px, 2.8vw, 32px) 0 0;
+  padding: 2px 0 2px 18px;
+  border-left: 2px solid var(--neodent-red);
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+
+/* Swipe row below 1024 px: scene above the text. */
+@media (max-width: 1023px) {
+  .cards {
+    --cap: var(--brc-cap-card-illustration-m, min(18dvh, 150px));
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 62%;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .cards::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    scroll-snap-align: start;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 14px;
+    align-items: start;
+    align-content: start;
+  }
+  .frame {
+    width: calc(var(--cap) * 4 / 3);
+    max-width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--brc-container-m, min(100% - 32px, 600px));
+  }
+  .cards {
+    grid-auto-columns: 84%;
+  }
+  .card {
+    padding: 16px;
+  }
+}
+
+/* Hover lift on desktop, press state on touch (transform and shadow only). */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  .card:active {
+    transform: scale(0.985);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -20px rgba(38, 48, 51, 0.35);
+  }
+}

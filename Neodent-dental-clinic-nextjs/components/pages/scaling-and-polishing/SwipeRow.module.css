@@ -1,0 +1,46 @@
+/* Progress dots for a swipe row. Shown only where the row scrolls (below
+   768 px); each dot has a 44 x 44 px hit area. */
+.dots {
+  display: none;
+}
+@media (max-width: 767px) {
+  .dots {
+    display: flex;
+    justify-content: center;
+  }
+  .dotButton {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .dotButton:focus-visible {
+    outline: 2px solid var(--neodent-red);
+    outline-offset: -6px;
+    border-radius: 50%;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(38, 48, 51, 0.25);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .onDark .dot {
+    background: rgba(241, 238, 231, 0.3);
+  }
+  .dotButton[aria-current="true"] .dot {
+    background: var(--neodent-red);
+    transform: scale(1.25);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    transition: none;
+  }
+}

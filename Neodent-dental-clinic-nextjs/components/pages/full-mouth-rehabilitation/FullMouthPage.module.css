@@ -1,0 +1,38 @@
+/* Page wrapper for /treatments/full-mouth-rehabilitation. Holds only custom
+   properties (no layout), so every section module in this folder reads the
+   same widths, caps and tones. Sections fall back to the same literal
+   values if a property is missing. Same values as the finished dental
+   implants page (plan section 4.8 / Agent rules 13). */
+.page {
+  /* Widths (the site container) */
+  --fmr-container: min(1180px, calc(100% - 48px));
+  --fmr-container-m: min(100% - 32px, 600px);
+
+  /* Tones */
+  --fmr-dark: var(--neodent-charcoal);
+  --fmr-dark-2: #15171a;
+  --fmr-dark-3: #14161a;
+  --fmr-dark-pattern: #242628;
+  --fmr-beige: #ece7dc;
+  --fmr-ivory: var(--ivory);
+  --fmr-paper: var(--neodent-surface);
+  --fmr-hairline: rgba(38, 48, 51, 0.12);
+
+  /* Image caps */
+  --fmr-cap-header-photo: min(52dvh, 460px);
+  --fmr-cap-case-photo: min(34dvh, 300px);
+  --fmr-cap-case-photo-m: 30dvh;
+  --fmr-cap-diagram: min(46dvh, 440px);
+  --fmr-cap-diagram-m: min(34dvh, 300px);
+  --fmr-cap-card-illustration: min(22dvh, 190px);
+  --fmr-cap-card-illustration-m: min(18dvh, 150px);
+  --fmr-cap-step: 120px;
+  --fmr-cap-step-m: 96px;
+  --fmr-cap-portrait: 40dvh;
+  --fmr-cap-portrait-m: 34dvh;
+  --fmr-cap-clinic-photo: 36dvh;
+  --fmr-cap-clinic-photo-m: 28dvh;
+
+  /* Section rhythm */
+  --fmr-section-pad: clamp(56px, 7vw, 96px);
+}

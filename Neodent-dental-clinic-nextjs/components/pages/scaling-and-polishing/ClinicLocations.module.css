@@ -1,0 +1,22 @@
+/* Locations. Flat dark ground (#14161a). */
+
+.section {
+  position: relative;
+  background: var(--sp-dark-3, #14161a);
+  color: #f1eee7;
+  padding: var(--sp-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  position: relative;
+  width: var(--sp-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.cards {
+  margin-top: clamp(28px, 3.6vw, 44px);
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: var(--sp-container-m, min(100% - 32px, 600px));
+  }
+}

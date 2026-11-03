@@ -1,0 +1,364 @@
+/* "What is a dental implant?" Beige ground (#ece7dc), Results above is ivory.
+   Paper cards 16 to 20 px radius with a 1 px hairline, the dark card keeps
+   the home shape (4px 56px 4px 4px). One list style: red dash markers. */
+
+.section {
+  background: var(--di-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--di-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--di-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: clamp(28px, 4.5vw, 64px);
+  align-items: start;
+}
+.copy,
+.side {
+  min-width: 0;
+}
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.lede {
+  max-width: 62ch;
+  margin-top: 24px;
+}
+.lede p {
+  margin: 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+
+/* ---- "Can replace": three compact cards, 96 px illustrations ---- */
+.scope {
+  width: 100%;
+  margin-top: 30px;
+}
+.scopeLead {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: rgba(38, 48, 51, 0.78);
+}
+.scopeList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.scopeCard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 14px 16px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+}
+.scopeMedia {
+  width: 100%;
+  max-width: var(--di-cap-step, 120px);
+}
+.scopeTitle {
+  font-family: var(--app-font-serif);
+  font-size: clamp(18px, 1.6vw, 21px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.scopeText {
+  margin-top: 16px;
+  max-width: 62ch;
+}
+.scopeText p {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+.inlineLink {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+.inlineLink:hover {
+  color: var(--neodent-red-dark);
+}
+.inlineLink:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 2px;
+}
+
+/* ---- Right column: capped diagram, then the dark parts card ---- */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.diagramCard {
+  padding: 14px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+/* The frame is 4:3, so a width of cap x 4/3 keeps its height at the cap. */
+.diagramBox {
+  max-width: calc(var(--di-cap-diagram, min(46dvh, 440px)) * 1.3334);
+  margin: 0 auto;
+}
+.parts {
+  margin: 0;
+  padding: clamp(22px, 2.4vw, 28px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.partsTitle {
+  margin: 0 0 18px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.partList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.part {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.partTile {
+  flex: none;
+  width: 88px;
+}
+.partBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.partName {
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.partText {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* ---- Notes row: osseointegration card + side-rule note ---- */
+.notes {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: stretch;
+  margin-top: clamp(32px, 4vw, 52px);
+}
+.process {
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--neodent-surface);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.process p {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.92);
+}
+.closingNote {
+  padding-left: 20px;
+  border-left: 2px solid var(--neodent-red);
+  display: flex;
+  align-items: center;
+}
+.closingNote p {
+  margin: 0;
+  max-width: 66ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+/* ---- Matched pair of cards ---- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 28px);
+  align-items: stretch;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+.card {
+  --card-pad: clamp(22px, 2.6vw, 28px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--card-pad);
+  background: var(--neodent-surface);
+  border: 1px solid var(--di-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+.cardTitle {
+  margin: 0 0 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.dashList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.dashList li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.88);
+}
+.dashList li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+}
+/* The pink note runs edge to edge along the bottom of its card. */
+.cardFoot {
+  margin: auto calc(var(--card-pad) * -1) calc(var(--card-pad) * -1);
+  padding: 18px var(--card-pad);
+  background: var(--neodent-red-soft);
+  font-family: var(--app-font-serif);
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.dashList + .cardFoot {
+  margin-top: 20px;
+}
+
+/* ---- Below 1024 px: one reading order ---- */
+@media (max-width: 1023px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .copy,
+  .side {
+    display: contents;
+  }
+  .head {
+    order: 0;
+  }
+  .lede {
+    order: 1;
+  }
+  .diagram {
+    order: 2;
+    width: 100%;
+    margin-top: 28px;
+  }
+  .diagramBox {
+    max-width: calc(var(--di-cap-diagram-m, min(34dvh, 300px)) * 1.3334);
+  }
+  .scope {
+    order: 3;
+    margin-top: 28px;
+  }
+  .partsWrap {
+    order: 4;
+    width: 100%;
+    margin-top: 24px;
+  }
+  .notes {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--di-container-m, min(100% - 32px, 600px));
+  }
+  .lede {
+    margin-top: 18px;
+  }
+  .scopeList {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .scopeCard {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px 10px 10px;
+  }
+  .scopeMedia {
+    flex: none;
+    width: 88px;
+  }
+  .partTile {
+    width: 72px;
+  }
+  .part {
+    gap: 14px;
+  }
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .inlineLink {
+    padding-block: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inlineLink {
+    transition: none;
+  }
+}

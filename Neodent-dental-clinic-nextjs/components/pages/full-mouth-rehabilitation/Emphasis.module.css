@@ -1,0 +1,20 @@
+/* Plain emphasis: colour or weight only. No underline, no marker. */
+.em {
+  font-weight: 600;
+}
+mark.em {
+  background: transparent;
+  color: inherit;
+}
+.primary {
+  color: var(--neodent-red);
+}
+/* Red on the charcoal ground is under 3:1, so on dark the primary phrase
+   is brighter and heavier instead of red (standing decision D4). */
+.primary.onDark {
+  color: var(--neodent-ivory);
+  font-weight: 700;
+}
+mark.em.onDark {
+  color: var(--neodent-ivory);
+}

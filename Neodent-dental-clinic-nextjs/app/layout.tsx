@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { FloatingCta } from "@/components/ui/FloatingCta";
+import { PageLoader } from "@/components/ui/PageLoader";
 import { CookieConsentProvider } from "@/components/consent/CookieConsentContext";
 import { GoogleAnalyticsGate } from "@/components/analytics/GoogleAnalyticsGate";
 import { SITE_NAME, SITE_URL } from "@/lib/site-data";
@@ -46,6 +47,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-IN">
       <head>
+        {/* Without JavaScript the page loader is never dismissed, so it
+            is not shown at all. */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: "<style>[data-page-loader]{display:none!important}</style>",
+          }}
+        />
         {siteJsonLd.map((entry) => (
           <script
             key={entry["@id"] ?? entry["@type"]}
@@ -60,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <FloatingCta />
           <GoogleAnalyticsGate />
         </CookieConsentProvider>
+        <PageLoader />
       </body>
     </html>
   );

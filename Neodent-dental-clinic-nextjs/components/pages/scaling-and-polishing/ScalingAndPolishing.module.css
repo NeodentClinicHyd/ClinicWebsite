@@ -1,0 +1,37 @@
+/* Page wrapper for /treatments/scaling-and-polishing. Holds only custom properties
+   (no layout), so every section module in this folder reads the same
+   widths, caps and tones. Sections fall back to the same literal values
+   if a property is missing. */
+.page {
+  /* Widths (the site container) */
+  --sp-container: min(1180px, calc(100% - 48px));
+  --sp-container-m: min(100% - 32px, 600px);
+
+  /* Tones */
+  --sp-dark: var(--neodent-charcoal);
+  --sp-dark-2: #15171a;
+  --sp-dark-3: #14161a;
+  --sp-dark-pattern: #242628;
+  --sp-beige: #ece7dc;
+  --sp-ivory: var(--ivory);
+  --sp-paper: var(--neodent-surface);
+  --sp-hairline: rgba(38, 48, 51, 0.12);
+
+  /* Image caps (plan 4.8 / Agent rules 13) */
+  --sp-cap-header-photo: min(52dvh, 460px);
+  --sp-cap-case-photo: min(34dvh, 300px);
+  --sp-cap-case-photo-m: 30dvh;
+  --sp-cap-diagram: min(46dvh, 440px);
+  --sp-cap-diagram-m: min(34dvh, 300px);
+  --sp-cap-card-illustration: min(22dvh, 190px);
+  --sp-cap-card-illustration-m: min(18dvh, 150px);
+  --sp-cap-step: 120px;
+  --sp-cap-step-m: 96px;
+  --sp-cap-portrait: 40dvh;
+  --sp-cap-portrait-m: 34dvh;
+  --sp-cap-clinic-photo: 36dvh;
+  --sp-cap-clinic-photo-m: 28dvh;
+
+  /* Section rhythm */
+  --sp-section-pad: clamp(56px, 7vw, 96px);
+}

@@ -1,0 +1,266 @@
+/* What is smile design? Tan ground. Paper cards: #fffefa, 1px hairline, 16px
+   radius. Dark card: 4px 56px 4px 4px (home). One list style: red dash markers.
+   The planning view is capped at --sd-cap-diagram (min(46dvh, 440px); on
+   phones --sd-cap-diagram-m) and centred in a paper card. */
+
+.section {
+  background: var(--sd-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--sd-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sd-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: stretch;
+}
+.copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 24px 0 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+
+/* The three ideas: a stack of paper cards, red dash on top of each. */
+.cards {
+  width: 100%;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.card {
+  position: relative;
+  min-width: 0;
+  padding: 20px 24px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+}
+.card::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 12px;
+  background: var(--neodent-red);
+}
+.cardTitle {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cardText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* Right column: the diagram card, then the dark terms card taking the leftover
+   height. */
+.side {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.media {
+  min-width: 0;
+}
+.mediaCard {
+  padding: 16px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+/* A 4:3 frame whose height never passes the cap: width = cap x 4/3. */
+.diagram {
+  width: min(100%, calc(var(--sd-cap-diagram, min(46dvh, 440px)) * 4 / 3));
+  margin: 0 auto;
+}
+.diagram figcaption {
+  text-align: center;
+  text-wrap: balance;
+}
+.termsWrap {
+  flex: 1 1 auto;
+  display: flex;
+  min-width: 0;
+}
+.terms {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(22px, 2.4vw, 30px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.termsTitle {
+  margin: 0 0 20px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.termList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+}
+.term {
+  position: relative;
+  padding-left: 22px;
+}
+.term::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.term dt {
+  margin: 0 0 4px;
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.term dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Tablet and mobile: one column in reading order: heading, lede, diagram, the
+   three ideas, terms. `.copy` and `.side` dissolve so their children can be
+   ordered. */
+@media (max-width: 1023px) {
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .copy,
+  .side {
+    display: contents;
+  }
+  .copy > :nth-child(1) {
+    order: 0;
+  }
+  .copy > :nth-child(2) {
+    order: 1;
+  }
+  .media {
+    order: 2;
+    width: 100%;
+    max-width: 640px;
+    margin-top: 28px;
+  }
+  .diagram {
+    width: min(100%, calc(var(--sd-cap-diagram-m, min(34dvh, 300px)) * 4 / 3));
+  }
+  .cards {
+    order: 3;
+  }
+  .termsWrap {
+    order: 4;
+    flex: none;
+    width: 100%;
+    max-width: 640px;
+    margin-top: 24px;
+  }
+}
+/* Tablet (768-1023): the diagram card and the terms card sit side by side. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    align-items: stretch;
+  }
+  .copy > * {
+    grid-column: 1 / -1;
+  }
+  .media,
+  .termsWrap {
+    grid-column: auto;
+    max-width: none;
+    margin-top: 28px;
+  }
+  .media {
+    order: 2;
+  }
+  .termsWrap {
+    order: 2;
+  }
+  .cards {
+    order: 3;
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--sd-container-m, min(100% - 32px, 600px));
+  }
+  .section {
+    padding: 48px 0;
+  }
+  .lede {
+    margin-top: 18px;
+  }
+  .card {
+    padding: 18px 20px;
+  }
+  .mediaCard {
+    padding: 12px;
+  }
+}
+
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: scale 140ms ease-out;
+  }
+  .card:active {
+    scale: 0.99;
+  }
+}

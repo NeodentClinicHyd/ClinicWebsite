@@ -4,18 +4,20 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AppButton } from "@/components/ui/AppButton";
-import { SmileHero } from "@/components/treatments/smile-design/SmileHero";
-import { SmileOverview } from "@/components/treatments/smile-design/SmileOverview";
-import { SmileWhen } from "@/components/treatments/smile-design/SmileWhen";
-import { SmileOptions } from "@/components/treatments/smile-design/SmileOptions";
-import { SmilePlan } from "@/components/treatments/smile-design/SmilePlan";
-import { SmileReversible } from "@/components/treatments/smile-design/SmileReversible";
-import { SmileAftercare } from "@/components/treatments/smile-design/SmileAftercare";
-import { SmileCases } from "@/components/treatments/smile-design/SmileCases";
-import { SmileQuestions } from "@/components/treatments/smile-design/SmileQuestions";
-import { SmileFaq } from "@/components/treatments/smile-design/SmileFaq";
-import { SmileLocations } from "@/components/treatments/smile-design/SmileLocations";
-import { SmileRelated } from "@/components/treatments/smile-design/SmileRelated";
+import { PageHeader } from "@/components/pages/smile-design/PageHeader";
+import pageStyles from "@/components/pages/smile-design/SmilePage.module.css";
+import { Overview } from "@/components/pages/smile-design/Overview";
+import { When } from "@/components/pages/smile-design/When";
+import { Options } from "@/components/pages/smile-design/Options";
+import { Plan } from "@/components/pages/smile-design/Plan";
+import { Undone } from "@/components/pages/smile-design/Undone";
+import { Aftercare } from "@/components/pages/smile-design/Aftercare";
+import { ResultsCases } from "@/components/pages/smile-design/ResultsCases";
+import { Questions } from "@/components/pages/smile-design/Questions";
+import { Faq } from "@/components/pages/smile-design/Faq";
+import { Locations } from "@/components/pages/smile-design/Locations";
+import { Related } from "@/components/pages/smile-design/Related";
+import { ContactNextStep } from "@/components/sections/ContactNextStep";
 import { SHOW_SMILE_CASE_IMAGES } from "@/lib/smile-design-page";
 import { ctaTelPhone } from "@/lib/site-data";
 import { IllustrationDefs } from "@/components/treatment/illustrations/IllustrationDefs";
@@ -35,12 +37,11 @@ import { SdDefs } from "@/components/treatment/illustrations/SdDefs";
    (CbuDefs), the brackets and wire (BracesDefs) and the smile design set
    (SdDefs).
 
-   Section grounds, in order, never repeating in adjacent sections:
-   hero dark | tan | light | dark patterned | tan | light | dark | tan (cases)
-   | dark (questions) | light | dark | tan.
-   With SHOW_SMILE_CASE_IMAGES off, aftercare (dark) is followed by the
-   questions section in its tan variant, so the alternation still holds:
-   ... dark | tan (questions) | light | dark | tan. */
+   Section grounds, in order: header dark | results ivory (directly under the
+   header, plan T.1) | tan | ivory | dark patterned | tan | ivory | dark |
+   questions tan | FAQ ivory | locations dark | related tan | closing block
+   (shared ContactNextStep, dark) | footer dark. The closing block is the page's
+   last element before the footer (standing decision D8). */
 export function SmileDesignClientChrome() {
   return (
     <div className="site" style={{ overflow: "clip" }}>
@@ -50,19 +51,20 @@ export function SmileDesignClientChrome() {
       <BracesDefs />
       <SdDefs />
       <Navbar />
-      <main>
-        <SmileHero />
-        <SmileOverview />
-        <SmileWhen />
-        <SmileOptions />
-        <SmilePlan />
-        <SmileReversible />
-        <SmileAftercare />
-        {SHOW_SMILE_CASE_IMAGES ? <SmileCases /> : null}
-        <SmileQuestions variant={SHOW_SMILE_CASE_IMAGES ? "dark" : "tan"} />
-        <SmileFaq />
-        <SmileLocations />
-        <SmileRelated />
+      <main className={pageStyles.page}>
+        <PageHeader />
+        {SHOW_SMILE_CASE_IMAGES ? <ResultsCases /> : null}
+        <Overview />
+        <When />
+        <Options />
+        <Plan />
+        <Undone />
+        <Aftercare />
+        <Questions />
+        <Faq />
+        <Locations />
+        <Related />
+        <ContactNextStep />
       </main>
       <Footer />
       <div className="mobile-bar">

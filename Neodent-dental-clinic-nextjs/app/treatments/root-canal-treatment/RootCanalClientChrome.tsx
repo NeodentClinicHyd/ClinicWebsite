@@ -4,22 +4,24 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AppButton } from "@/components/ui/AppButton";
-import { RctHero } from "@/components/treatments/root-canal-treatment/RctHero";
-import { RctOverview } from "@/components/treatments/root-canal-treatment/RctOverview";
-import { RctSigns } from "@/components/treatments/root-canal-treatment/RctSigns";
-import { RctOptions } from "@/components/treatments/root-canal-treatment/RctOptions";
-import { RctVisit } from "@/components/treatments/root-canal-treatment/RctVisit";
-import { RctRestoring } from "@/components/treatments/root-canal-treatment/RctRestoring";
-import { RctAftercare } from "@/components/treatments/root-canal-treatment/RctAftercare";
-import { RctCases } from "@/components/treatments/root-canal-treatment/RctCases";
-import { RctQuestions } from "@/components/treatments/root-canal-treatment/RctQuestions";
-import { RctFaq } from "@/components/treatments/root-canal-treatment/RctFaq";
-import { RctLocations } from "@/components/treatments/root-canal-treatment/RctLocations";
-import { RctRelated } from "@/components/treatments/root-canal-treatment/RctRelated";
+import { PageHeader } from "@/components/pages/root-canal-treatment/PageHeader";
+import { ResultsCases } from "@/components/pages/root-canal-treatment/ResultsCases";
+import { Overview } from "@/components/pages/root-canal-treatment/Overview";
+import { Signs } from "@/components/pages/root-canal-treatment/Signs";
+import { Options } from "@/components/pages/root-canal-treatment/Options";
+import { Visit } from "@/components/pages/root-canal-treatment/Visit";
+import { Restoring } from "@/components/pages/root-canal-treatment/Restoring";
+import { Aftercare } from "@/components/pages/root-canal-treatment/Aftercare";
+import { Questions } from "@/components/pages/root-canal-treatment/Questions";
+import { Faq } from "@/components/pages/root-canal-treatment/Faq";
+import { ClinicLocations } from "@/components/pages/root-canal-treatment/ClinicLocations";
+import { RelatedSection } from "@/components/pages/root-canal-treatment/RelatedSection";
+import { ContactNextStep } from "@/components/sections/ContactNextStep";
 import { IllustrationDefs } from "@/components/treatment/illustrations/IllustrationDefs";
 import { RctDefs } from "@/components/treatment/illustrations/RctDefs";
 import { SHOW_RCT_CASE_MEDIA } from "@/lib/root-canal-treatment-page";
 import { ctaTelPhone } from "@/lib/site-data";
+import page from "@/components/pages/root-canal-treatment/RootCanal.module.css";
 
 /* Client chrome for /treatments/root-canal-treatment, the same composition as
    FullMouthRehabilitationClientChrome: fixed Navbar, page sections, global
@@ -28,30 +30,31 @@ import { ctaTelPhone } from "@/lib/site-data";
    the same way without creating a scroll container (set here only,
    globals.css is untouched).
 
-   Section grounds, in order, never repeating in adjacent sections:
-   hero dark | tan | light | dark patterned | tan | light | dark |
-   [light, cases] | tan | light | dark | tan.
-   With SHOW_RCT_CASE_MEDIA off, aftercare (dark) is followed by questions
-   (tan), so the alternation still holds. */
+   Section grounds, in order, never more than two dark in a row:
+   header dark | results ivory | what is beige | signs ivory | alternatives dark
+   patterned | visit beige | restoring ivory | aftercare dark | questions beige
+   | FAQ ivory | locations dark | related beige | closing block dark | footer
+   dark. The results section comes directly after the header (plan 4.2). */
 export function RootCanalClientChrome() {
   return (
     <div className="site" style={{ overflow: "clip" }}>
       <IllustrationDefs />
       <RctDefs />
       <Navbar />
-      <main>
-        <RctHero />
-        <RctOverview />
-        <RctSigns />
-        <RctOptions />
-        <RctVisit />
-        <RctRestoring />
-        <RctAftercare />
-        {SHOW_RCT_CASE_MEDIA ? <RctCases /> : null}
-        <RctQuestions />
-        <RctFaq />
-        <RctLocations />
-        <RctRelated />
+      <main className={page.page}>
+        <PageHeader />
+        {SHOW_RCT_CASE_MEDIA ? <ResultsCases /> : null}
+        <Overview />
+        <Signs />
+        <Options />
+        <Visit />
+        <Restoring />
+        <Aftercare />
+        <Questions />
+        <Faq />
+        <ClinicLocations />
+        <RelatedSection />
+        <ContactNextStep />
       </main>
       <Footer />
       <div className="mobile-bar">

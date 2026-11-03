@@ -191,7 +191,7 @@ function useTilt(
 export function SeamCard({
   ariaLabel = "Neodent brand statement",
   label = null,
-  lead = "Specialist-led care.",
+  lead = "We Maintain High Performance",
   emphasis = `Since ${ESTABLISHED_YEAR}.`,
   attribution = "— Neodent Dental Hospital",
   location = "Mehdipatnam · Nampally",

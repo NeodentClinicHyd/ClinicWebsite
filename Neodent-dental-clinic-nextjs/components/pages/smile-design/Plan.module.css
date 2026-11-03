@@ -1,0 +1,350 @@
+/* Plan. Tan ground. Stage cards are paper (#fffefa), 16px radius. One
+   continuous red connector runs down the left of the stage list with a node at
+   each card and draws as the page scrolls (scroll-driven animation where the
+   browser has it; a finished line elsewhere and under reduced motion). The
+   right column is sticky (top 96px) and content-sized. NB: no overflow on the
+   section (clip is set on `.site` only), or sticky would break. Stage scenes
+   are 120 px tall on desktop (--sd-cap-step), 72 px on phones. */
+
+.section {
+  position: relative;
+  background: var(--sd-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--sd-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sd-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(24px, 3.4vw, 48px);
+  align-items: start;
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.stages {
+  min-width: 0;
+}
+
+.steps {
+  --gap: 16px;
+  --rail: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--rail);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  min-width: 0;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: clamp(16px, 2.2vw, 26px);
+  align-items: center;
+  padding: 14px clamp(18px, 2.4vw, 28px) 14px 14px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+}
+/* Connector: each card draws the line from its top edge to the next card's top
+   edge (through the gap). The first starts at its node, the last stops at its
+   node. */
+.step::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 8px);
+  top: -1px;
+  bottom: calc(var(--gap) * -1 - 1px);
+  width: 2px;
+  background: var(--neodent-red);
+  transform-origin: top;
+}
+.step:first-child::before {
+  top: 50%;
+}
+.step:last-child::before {
+  bottom: 50%;
+}
+.step::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--rail) * -1 + 9px);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  background: var(--neodent-red);
+  border: 3px solid var(--sd-beige, #ece7dc);
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .step::before {
+      animation: drawLine linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+  }
+}
+@keyframes drawLine {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.tile {
+  min-width: 0;
+}
+.stepBody {
+  min-width: 0;
+}
+.stepBody h3 {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.2vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.stepBody p {
+  margin: 0;
+  max-width: 54ch;
+  color: rgba(38, 48, 51, 0.86);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.figNote {
+  margin: 12px 0 0 var(--rail, 36px);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.72);
+}
+
+/* ---- Sticky column ---------------------------------------------------- */
+.side {
+  --pad: clamp(24px, 2.8vw, 30px);
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.sideItem {
+  min-width: 0;
+}
+.stat,
+.statement {
+  min-width: 0;
+  padding: var(--pad);
+  border-radius: 20px;
+}
+.stat {
+  background: var(--neodent-surface);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+}
+.rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.statTitle {
+  margin: 0 0 12px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+.statText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.86);
+}
+.statement {
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+}
+.statementText {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 2.7vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.statementText em {
+  display: block;
+  font-style: italic;
+}
+.statementNote {
+  margin: 16px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(251, 250, 247, 0.92);
+}
+
+/* ---- What a visit can involve ---------------------------------------- */
+.visits {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.visitsHead {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: end;
+  gap: 12px clamp(24px, 4vw, 56px);
+}
+.visitsTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.visitsLabel {
+  margin: 0;
+  max-width: 54ch;
+  padding-left: 18px;
+  border-left: 2px solid var(--neodent-red);
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.86);
+}
+/* One panel, three columns divided by hairlines. */
+.visitList {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: var(--neodent-surface);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+  overflow: hidden;
+}
+.visit {
+  min-width: 0;
+  padding: 22px 24px 24px;
+}
+.visit + .visit {
+  border-left: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+}
+.visit::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 12px;
+  background: var(--neodent-red);
+}
+.visit h4 {
+  margin: 0 0 8px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.visit p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+@media (max-width: 1023px) {
+  .composition {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+  .sideItem > * {
+    height: 100%;
+  }
+  .visitsHead {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--sd-container-m, min(100% - 32px, 600px));
+  }
+  .section {
+    padding: 48px 0;
+  }
+  .composition {
+    margin-top: 24px;
+  }
+  .steps {
+    --gap: 12px;
+    --rail: 26px;
+  }
+  .figNote {
+    margin-left: 26px;
+  }
+  .step {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    padding: 12px;
+  }
+  .step::before {
+    left: calc(var(--rail) * -1 + 5px);
+  }
+  .step::after {
+    left: calc(var(--rail) * -1 + 6px);
+  }
+  .stepBody h3 {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .stepBody p {
+    max-width: none;
+  }
+  .side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .visitList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .visit + .visit {
+    border-left: 0;
+    border-top: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  }
+}
+
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .step {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .step:hover {
+    translate: 0 -2px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .step {
+    transition: scale 140ms ease-out;
+  }
+  .step:active {
+    scale: 0.99;
+  }
+}

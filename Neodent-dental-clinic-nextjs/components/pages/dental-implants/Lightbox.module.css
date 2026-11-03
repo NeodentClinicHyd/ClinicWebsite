@@ -1,0 +1,131 @@
+/* Lightbox: modal <dialog>, before and after side by side. Each photograph is
+   at most 72dvh tall, shown whole. Stacks on narrow screens (each then at
+   most 34dvh so both fit one screen). */
+
+.dialog {
+  width: min(1040px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: var(--neodent-charcoal);
+  color: var(--neodent-ivory);
+  overflow: auto;
+}
+.dialog::backdrop {
+  background: rgba(10, 12, 13, 0.82);
+}
+.panel {
+  padding: clamp(16px, 2.4vw, 28px);
+}
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.2;
+}
+.caption {
+  margin: 4px 0 0;
+  color: rgba(241, 238, 231, 0.78);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(241, 238, 231, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.close:hover {
+  background: rgba(241, 238, 231, 0.12);
+}
+.close:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+.photos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.figure {
+  margin: 0;
+  min-width: 0;
+}
+.frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: min(72dvh, 640px);
+  border-radius: 10px;
+  background: #0f1213;
+  overflow: hidden;
+}
+.image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.label {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(241, 238, 231, 0.88);
+}
+
+@media (max-width: 640px) {
+  .photos {
+    gap: 10px;
+  }
+  .frame {
+    height: min(34dvh, 300px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dialog[open] {
+    animation: lbIn 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .dialog[open]::backdrop {
+    animation: lbFade 220ms ease-out;
+  }
+}
+@keyframes lbIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lbFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

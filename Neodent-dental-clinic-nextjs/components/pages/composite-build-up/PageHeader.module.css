@@ -1,0 +1,338 @@
+/* Compact page header. Recipe copied from the home Hero (globals.css
+   `.hero`, `.hero-bg-glow`, `.hero-bg-pattern`, `.hero-bg-tile`): charcoal
+   gradient ground, red radial glow behind the media column, the icon pattern
+   as a luminance mask. Glow and pattern show from 768 px; only the pattern
+   drifts, and only with motion allowed. */
+
+.header {
+  --enter-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --glow-x: calc(50% + min(290px, 23vw));
+  --glow-y: 54%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  background-color: var(--neodent-charcoal);
+  background-image: linear-gradient(180deg, var(--neodent-charcoal) 0%, #0f1315 100%);
+  color: var(--neodent-ivory);
+  padding: calc(var(--nav-height-desktop) + 18px) 0 26px;
+}
+
+.filterDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ---- Backdrop (768 px and wider) ---- */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+.glow,
+.pattern {
+  position: absolute;
+  inset: 0;
+}
+.glow {
+  background-image:
+    radial-gradient(
+      ellipse min(440px, 34vw) 74% at var(--glow-x) var(--glow-y),
+      rgba(215, 25, 32, 0.3) 0%,
+      rgba(215, 25, 32, 0.15) 50%,
+      rgba(215, 25, 32, 0.075) 80%,
+      rgba(215, 25, 32, 0) 100%
+    ),
+    radial-gradient(circle 380px at 3% 104%, rgba(215, 25, 32, 0.12) 0%, rgba(215, 25, 32, 0) 100%);
+}
+/* Glow breathing (opacity 1 to 0.85, 9 s): 768 px and wider, motion allowed. */
+@keyframes glowBreathe {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .glow {
+    animation: glowBreathe 9s ease-in-out infinite alternate;
+    will-change: opacity;
+  }
+}
+.pattern {
+  inset: -14px;
+  display: none;
+}
+@supports (mask-mode: luminance) {
+  .pattern {
+    display: block;
+    opacity: 0.125;
+    filter: url("#cbu-pattern-levels");
+  }
+  .tile {
+    position: absolute;
+    inset: 0;
+    background-color: var(--neodent-ivory);
+    mask-image:
+      url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp"),
+      radial-gradient(
+        ellipse min(345px, 26vw) 86% at var(--glow-x) var(--glow-y),
+        #000 0%,
+        #000 46%,
+        rgba(0, 0, 0, 0.78) 74%,
+        transparent 100%
+      );
+    mask-mode: luminance, alpha;
+    mask-repeat: repeat, no-repeat;
+    mask-size: 420px 420px, 100% 100%;
+    mask-composite: intersect;
+  }
+}
+@media (min-width: 768px) {
+  .backdrop {
+    display: block;
+  }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .tile {
+    animation: patternDrift 48s linear infinite alternate;
+    will-change: transform;
+  }
+}
+@keyframes patternDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-14px, 10px, 0);
+  }
+}
+
+/* ---- Layout ---- */
+.inner {
+  position: relative;
+  z-index: 1;
+  width: var(--cbu-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(28px, 4.5vw, 72px);
+}
+.copy {
+  min-width: 0;
+  max-width: 580px;
+}
+
+.title {
+  margin: 12px 0 0;
+  font-size: min(var(--type-hero-supporting), 8.2dvh);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.line {
+  display: block;
+}
+.accent {
+  color: var(--neodent-red);
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin: 14px 0 0;
+  max-width: 520px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+.actions :global(.button-primary) {
+  min-width: 210px;
+}
+
+.consult {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 20px;
+  margin: 12px 0 0;
+  color: rgba(251, 250, 247, 0.78);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.consultLink {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--neodent-ivory);
+  text-decoration: underline;
+  text-decoration-color: rgba(241, 238, 231, 0.34);
+  text-underline-offset: 5px;
+  transition: text-decoration-color 0.2s ease;
+}
+.consultLink:hover {
+  text-decoration-color: var(--neodent-red);
+}
+.consultLink:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+
+/* ---- Photograph: capped height, cover with a deliberate focal point ---- */
+.visual {
+  margin: 0;
+  min-width: 0;
+}
+.frame {
+  position: relative;
+  height: var(--cbu-cap-header-photo, min(52dvh, 460px));
+  overflow: hidden;
+  border: 1px solid rgba(251, 250, 247, 0.14);
+  border-radius: 20px;
+  background: #1b1d1f;
+}
+.photo {
+  object-fit: cover;
+  object-position: 50% 62%;
+  filter: saturate(0.9) contrast(1.03);
+}
+/* Captions sit on a dark gradient at the bottom of the photograph. */
+.meta {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 44px 18px 14px;
+  background: linear-gradient(180deg, rgba(15, 19, 21, 0) 0%, rgba(15, 19, 21, 0.82) 100%);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.meta b {
+  color: #fff;
+  font-weight: 700;
+}
+.meta span {
+  color: rgba(241, 238, 231, 0.88);
+  font-weight: 600;
+}
+
+/* ---- Load sequence (class-keyed; ends in the finished state) ---- */
+@keyframes enterRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes enterPhoto {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes enterSettle {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation: enterRise 640ms var(--enter-ease) both;
+  }
+  .s0 { animation-delay: 0ms; }
+  .s1 { animation-delay: 80ms; }
+  .s2 { animation-delay: 180ms; }
+  .s3 { animation-delay: 280ms; }
+  .s4 { animation-delay: 380ms; }
+  .s5 { animation-delay: 480ms; }
+  .enterPhoto {
+    animation: enterPhoto 760ms var(--enter-ease) 200ms both;
+  }
+  .enterPhoto .photo {
+    animation: enterSettle 1200ms var(--enter-ease) 200ms both;
+  }
+}
+
+/* ---- Tablet and phone ---- */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .copy {
+    max-width: 620px;
+  }
+}
+@media (max-width: 1023px) {
+  .header {
+    padding-top: calc(var(--nav-height-mobile) + 12px);
+  }
+}
+@media (max-width: 768px) {
+  .inner {
+    width: var(--cbu-container-m, min(100% - 32px, 600px));
+  }
+  .header {
+    padding-bottom: 28px;
+  }
+  .title {
+    font-size: clamp(30px, 9.4vw, 38px);
+  }
+  .lede {
+    margin-top: 14px;
+  }
+  .actions {
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .actions :global(.button) {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 12px;
+  }
+  .actions :global(.button-primary) {
+    min-width: 0;
+  }
+  .consultLink {
+    min-height: 44px;
+  }
+  .frame {
+    height: min(38dvh, 340px);
+  }
+}
+@media (max-width: 480px) {
+  /* Two stacked full-width buttons: the primary action stays first. */
+  .actions {
+    flex-direction: column;
+  }
+  .actions :global(.button) {
+    flex: none;
+    width: 100%;
+  }
+}

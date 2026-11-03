@@ -1,0 +1,286 @@
+/* Why people ask about it. Ivory ground. Paper cards (20px radius, #fffefa,
+   1px hairline); the illustration sits left, title and line right. The note
+   strip is the "tinted footer strip" (red-soft, serif italic). The matched pair
+   copies the implants overview pair: same padding, radius and heading size, red
+   dash markers, tinted footer strip on the shorter card.
+   Illustration caps: --sd-cap-card-illustration (min(22dvh, 190px)) on
+   desktop, a 96 px tile on phones. */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: var(--sd-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sd-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.cards {
+  --ill: var(--sd-cap-card-illustration, min(22dvh, 190px));
+  margin: clamp(28px, 3.4vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: calc(var(--ill) * 4 / 3) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(16px, 2vw, 24px);
+  padding: clamp(14px, 1.6vw, 18px);
+  background: var(--neodent-surface);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+.frame {
+  min-width: 0;
+}
+.body {
+  min-width: 0;
+}
+/* Two lines reserved, so the first text line of every card in a row starts at
+   the same height. */
+.title {
+  margin: 4px 0 8px;
+  min-height: 2.3em;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+.figNote {
+  margin: 12px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(38, 48, 51, 0.72);
+}
+
+.note {
+  position: relative;
+  margin: clamp(14px, 1.8vw, 20px) 0 0;
+  padding: 22px clamp(24px, 3vw, 36px) 22px calc(clamp(24px, 3vw, 36px) + 36px);
+  background: var(--neodent-red-soft);
+  border-radius: 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.7vw, 21px);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.note::before {
+  content: "";
+  position: absolute;
+  left: clamp(24px, 3vw, 36px);
+  top: 32px;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+
+/* ---- Matched pair ----------------------------------------------------- */
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin-top: clamp(28px, 3.4vw, 44px);
+  align-items: stretch;
+}
+.pairCard {
+  --card-pad: clamp(22px, 2.6vw, 30px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--card-pad);
+  background: var(--neodent-surface);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+.pairTitle {
+  margin: 0 0 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.pairText {
+  margin: 0 0 24px;
+  max-width: 54ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.9);
+}
+/* Tinted footer strip: edge to edge along the bottom of the card, taking the
+   height left over so the shorter card has no empty area. */
+.pairFoot {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  margin: 0 calc(var(--card-pad) * -1) calc(var(--card-pad) * -1);
+  padding: 24px var(--card-pad);
+  background: var(--neodent-red-soft);
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 1.8vw, 23px);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.checkList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  flex: 1 1 auto;
+}
+.checkRow {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+/* Icon gutter: wide enough for the two tiles of the first row, so the text of
+   every row starts on one line. */
+.icons {
+  flex: none;
+  width: 124px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.noIcons {
+  position: relative;
+  align-self: stretch;
+}
+.noIcons::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.82em;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.checkText {
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+@media (max-width: 1023px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card {
+    grid-template-columns: calc(var(--ill) * 4 / 3) minmax(0, 1fr);
+  }
+  .title {
+    min-height: 0;
+  }
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* Phones: compact rows, the illustration a 96 px tile at the left. */
+@media (max-width: 767px) {
+  .container {
+    width: var(--sd-container-m, min(100% - 32px, 600px));
+  }
+  .section {
+    padding: 48px 0;
+  }
+  .cards {
+    gap: 12px;
+  }
+  .card {
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+    padding: 12px;
+    border-radius: 16px;
+  }
+  .title {
+    margin: 0 0 6px;
+    font-size: 21px;
+  }
+  .text {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .note {
+    padding: 20px;
+    border-radius: 14px;
+  }
+  .note::before {
+    position: static;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .pairCard {
+    --card-pad: 20px;
+  }
+  .pairText {
+    margin-bottom: 20px;
+  }
+  .pairFoot {
+    padding-block: 20px;
+  }
+  /* Icons sit above their line instead of beside it. */
+  .checkRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .icons {
+    width: auto;
+  }
+  .noIcons {
+    align-self: auto;
+    width: 22px;
+    height: 2px;
+    margin: 8px 0 0;
+    background: var(--neodent-red);
+  }
+  .noIcons::before {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: scale 140ms ease-out;
+  }
+  .card:active {
+    scale: 0.99;
+  }
+}

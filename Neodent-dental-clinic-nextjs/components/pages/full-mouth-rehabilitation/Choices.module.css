@@ -1,0 +1,140 @@
+/* Choices. Ivory ground. Comparison cards: paper (surface fill), 20px
+   radius, 3px red top edge on the featured card, four subgrid rows on wide
+   screens. "Worth knowing" sits in an ivory panel so the two text blocks
+   read as different kinds of information. */
+
+.section {
+  background: var(--fmr-ivory, var(--ivory));
+  color: var(--ink);
+  padding: var(--fmr-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--fmr-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.rowWrap {
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.compare {
+  --cap: var(--fmr-cap-card-illustration, min(22dvh, 190px));
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* frame, name, involves, know */
+  grid-template-rows: auto auto auto 1fr;
+  column-gap: clamp(16px, 2vw, 24px);
+  row-gap: 0;
+  align-items: stretch;
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 16px;
+  padding: clamp(18px, 2.2vw, 24px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid var(--fmr-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+.featured {
+  border-top: 3px solid var(--neodent-red);
+}
+.media {
+  height: var(--cap);
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  align-self: start;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.blockLabel {
+  margin: 0;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.blockText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.know {
+  padding: 14px 16px 16px;
+  background: var(--ivory);
+  border-radius: 12px;
+}
+
+/* ---- Below 1024 px: one swipe row with dots ---- */
+@media (max-width: 1023px) {
+  .compare {
+    --cap: min(18dvh, 150px);
+    grid-template-columns: none;
+    grid-template-rows: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 46%;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .compare::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    grid-row: auto;
+    grid-template-rows: auto auto auto 1fr;
+    scroll-snap-align: start;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--fmr-container-m, min(100% - 32px, 600px));
+  }
+  .compare {
+    --cap: var(--fmr-cap-card-illustration-m, min(18dvh, 150px));
+    grid-auto-columns: 84%;
+  }
+  .card {
+    padding: 16px;
+  }
+}
+
+/* ---- Motion polish (plan R8): a small lift on desktop hover, a press state
+   on touch. Uses the individual `translate` and `scale` properties so it
+   never competes with the reveal's own transform. None under reduced motion. */
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: scale 140ms ease-out;
+  }
+  .card:active {
+    scale: 0.99;
+  }
+}

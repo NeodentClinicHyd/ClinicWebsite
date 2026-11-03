@@ -1,0 +1,275 @@
+/* Include. Dark patterned band (#242628, the treatment-atlas ground), built
+   with the home-hero recipe: the icon pattern is a luminance mask over an
+   ivory fill (never a CSS background-image) that is cut to zero over the
+   heading and the introduction, so no icon ever shows behind text.
+   Cards are paper (surface fill), 20px radius. The closing note is the
+   page's red surface. */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  background-color: var(--fmr-dark-pattern, #242628);
+  color: #f1eee7;
+  padding: var(--fmr-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.filterDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  pointer-events: none;
+  overflow: hidden;
+}
+@supports (mask-mode: luminance) {
+  .backdrop {
+    display: block;
+  }
+  .pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.14;
+    filter: url("#fmr-include-levels");
+  }
+  .tile {
+    position: absolute;
+    inset: 0;
+    background-color: var(--neodent-ivory);
+    mask-image:
+      url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp"),
+      linear-gradient(
+        180deg,
+        transparent 0,
+        transparent calc(var(--fmr-section-pad, 96px) + 260px),
+        #000 calc(var(--fmr-section-pad, 96px) + 420px)
+      );
+    mask-mode: luminance, alpha;
+    mask-repeat: repeat, no-repeat;
+    mask-size: 420px 420px, 100% 100%;
+    mask-composite: intersect;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--fmr-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.rowWrap {
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+/* ---- Desktop: 3 x 2 grid of subgrid cards ---- */
+.grid {
+  --cap: var(--fmr-cap-card-illustration, min(22dvh, 190px));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 24px);
+  row-gap: 0;
+  align-items: stretch;
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 5;
+  row-gap: 12px;
+  margin-bottom: clamp(16px, 2vw, 24px);
+  padding: clamp(16px, 2vw, 20px) clamp(18px, 2vw, 22px) clamp(18px, 2vw, 22px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+}
+.media {
+  height: var(--cap);
+  min-width: 0;
+}
+.title {
+  margin: 4px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.examples {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.examples b {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.links {
+  align-self: end;
+  min-width: 0;
+}
+.linkList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 20px;
+}
+.link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+.link svg {
+  color: var(--neodent-red);
+  transition: transform 180ms ease;
+}
+.link:hover {
+  color: var(--neodent-red-dark);
+}
+.link:hover svg {
+  transform: translateX(3px);
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 3px;
+}
+
+/* Closing note: red surface, ivory dash and serif sentence. */
+.note {
+  grid-row: span 5;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: clamp(16px, 2vw, 24px);
+  padding: clamp(26px, 3vw, 34px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.note::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 20px;
+  background: var(--neodent-ivory);
+}
+.note p {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(23px, 2.1vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* ---- Below 1024 px: one swipe row with dots ---- */
+@media (max-width: 1023px) {
+  .grid {
+    --cap: min(18dvh, 150px);
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 46%;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    grid-template-rows: auto auto auto auto 1fr;
+    grid-row: auto;
+    margin-bottom: 0;
+    scroll-snap-align: start;
+  }
+  .note {
+    grid-row: auto;
+    margin-bottom: 0;
+    scroll-snap-align: start;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--fmr-container-m, min(100% - 32px, 600px));
+  }
+  .grid {
+    --cap: var(--fmr-cap-card-illustration-m, min(18dvh, 150px));
+    grid-auto-columns: 84%;
+  }
+  .card {
+    padding: 14px 16px 16px;
+  }
+  .note {
+    padding: 26px 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .link svg {
+    transition: none;
+  }
+  .link:hover svg {
+    transform: none;
+  }
+}
+
+/* ---- Motion polish (plan R8): a small lift on desktop hover, a press state
+   on touch. Uses the individual `translate` and `scale` properties so it
+   never competes with the reveal's own transform. None under reduced motion. */
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .card, .note {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover, .note:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card, .note {
+    transition: scale 140ms ease-out;
+  }
+  .card:active, .note:active {
+    scale: 0.99;
+  }
+}

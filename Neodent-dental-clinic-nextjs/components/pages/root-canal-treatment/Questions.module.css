@@ -1,0 +1,80 @@
+/* Questions + doctor. Tan ground (#ece7dc). The doctor card values are
+   copied from FmrQuestions (ClinicalLeadership `.card`: 20px radius, 12px
+   caps labels, 140px label column, `#ece7dc` avatar ground). The questions
+   sit in one dark card (4px 56px 4px 4px, the home dark card) so the two
+   cards are told apart by surface, with a red dash before each question. */
+
+.section {
+  position: relative;
+  background: var(--rct-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--rct-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--rct-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+  position: relative;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: stretch;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+/* Questions: one dark card, five rows. */
+.questions {
+  margin: 0;
+  padding: clamp(26px, 3.4vw, 40px);
+  list-style: none;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.question {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+.question::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 2px;
+  transform: translateY(-0.35em);
+  background: var(--neodent-red);
+}
+.question p {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.95);
+  text-wrap: pretty;
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--rct-container-m, min(100% - 32px, 600px));
+  }
+  .questions {
+    padding: 24px 22px;
+    gap: 20px;
+    border-radius: 4px 40px 4px 4px;
+  }
+}

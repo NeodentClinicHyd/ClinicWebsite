@@ -1,0 +1,150 @@
+/* When. Ivory ground. Paper cards (16px radius, #fffefa, 1px hairline). The
+   note strip is the implants "tinted footer strip" (red-soft, serif italic).
+   Left column: four equal cards in a 2 x 2 grid, icon left. Right column: the
+   gum diagram capped at min(46dvh, 440px), centred. */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: var(--sp-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sp-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  margin-top: clamp(28px, 3.6vw, 44px);
+}
+
+.signs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: clamp(12px, 1.6vw, 16px);
+  min-width: 0;
+}
+.sign {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--neodent-surface);
+  border: 1px solid var(--sp-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(38, 48, 51, 0.04);
+}
+.body {
+  min-width: 0;
+}
+.title {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 1.7vw, 22px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.88);
+}
+
+.media {
+  min-width: 0;
+}
+.diagram {
+  --cap: var(--sp-cap-diagram, min(46dvh, 440px));
+  width: min(100%, calc(var(--cap) * 4 / 3));
+  margin-inline: auto;
+}
+
+.note {
+  position: relative;
+  margin: clamp(16px, 2vw, 24px) 0 0;
+  padding: 24px clamp(24px, 3vw, 36px) 24px calc(clamp(24px, 3vw, 36px) + 36px);
+  background: var(--neodent-red-soft);
+  border-radius: 16px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.7vw, 21px);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.note::before {
+  content: "";
+  position: absolute;
+  left: clamp(24px, 3vw, 36px);
+  top: 34px;
+  width: 22px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  /* Reading order: the scene first, then the signs. */
+  .media {
+    order: -1;
+  }
+  .diagram {
+    --cap: var(--sp-cap-diagram-m, min(34dvh, 300px));
+    margin-inline: 0;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--sp-container-m, min(100% - 32px, 600px));
+  }
+  .signs {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+  }
+  .sign {
+    align-items: center;
+    padding: 16px 18px;
+  }
+  .note {
+    padding: 22px 20px;
+    border-radius: 14px;
+  }
+  .note::before {
+    position: static;
+    display: block;
+    margin-bottom: 12px;
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .sign {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .sign:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(38, 48, 51, 0.1);
+  }
+}
+
+/* Press state on touch screens (no hover there). */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .sign {
+    transition: transform 0.18s ease;
+  }
+  .sign:active {
+    transform: scale(0.985);
+  }
+}

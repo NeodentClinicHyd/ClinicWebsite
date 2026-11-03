@@ -1,0 +1,38 @@
+/* Page wrapper for /treatments/smile-design. Holds only custom
+   properties (no layout), so every section module in this folder reads the
+   same widths, caps and tones. Sections fall back to the same literal
+   values if a property is missing. Same values as the finished dental
+   implants page (plan section 4.8 / Agent rules 13). */
+.page {
+  /* Widths (the site container) */
+  --sd-container: min(1180px, calc(100% - 48px));
+  --sd-container-m: min(100% - 32px, 600px);
+
+  /* Tones */
+  --sd-dark: var(--neodent-charcoal);
+  --sd-dark-2: #15171a;
+  --sd-dark-3: #14161a;
+  --sd-dark-pattern: #242628;
+  --sd-beige: #ece7dc;
+  --sd-ivory: var(--ivory);
+  --sd-paper: var(--neodent-surface);
+  --sd-hairline: rgba(38, 48, 51, 0.12);
+
+  /* Image caps */
+  --sd-cap-header-photo: min(52dvh, 460px);
+  --sd-cap-case-photo: min(34dvh, 300px);
+  --sd-cap-case-photo-m: 30dvh;
+  --sd-cap-diagram: min(46dvh, 440px);
+  --sd-cap-diagram-m: min(34dvh, 300px);
+  --sd-cap-card-illustration: min(22dvh, 190px);
+  --sd-cap-card-illustration-m: min(18dvh, 150px);
+  --sd-cap-step: 120px;
+  --sd-cap-step-m: 96px;
+  --sd-cap-portrait: 40dvh;
+  --sd-cap-portrait-m: 34dvh;
+  --sd-cap-clinic-photo: 36dvh;
+  --sd-cap-clinic-photo-m: 28dvh;
+
+  /* Section rhythm */
+  --sd-section-pad: clamp(56px, 7vw, 96px);
+}

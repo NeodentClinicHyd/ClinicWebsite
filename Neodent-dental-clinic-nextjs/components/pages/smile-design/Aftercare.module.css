@@ -1,0 +1,251 @@
+/* Aftercare. Dark ground #15171a (ClinicalLeadership / implants care). Paper
+   care card and dark risks card are 20px radius; the risks card keeps the
+   implants healing treatment (#191b1f, hairline, 3px red top edge,
+   4px 20px 20px 20px). The call band is the page's red surface, copied from
+   the implants healing section. One list style: red dash markers. */
+
+.section {
+  position: relative;
+  background: var(--sd-dark-2, #15171a);
+  color: #f1eee7;
+  padding: var(--sd-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sd-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(14px, 2vw, 24px);
+  align-items: stretch;
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2.8vw, 32px);
+  border-radius: 20px;
+}
+.cardTitle {
+  margin: 0 0 18px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* ---- Care card ---------------------------------------------------------- */
+.care {
+  background: var(--neodent-surface);
+  color: var(--neodent-ink);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+}
+.careLabel {
+  margin: 0 0 8px;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.careList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.careRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.careText {
+  margin: 0;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(38, 48, 51, 0.9);
+}
+.careText strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+.careFoot {
+  margin: 20px 0 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--neodent-red);
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+/* ---- Risks card ----------------------------------------------------------- */
+.risks {
+  background: #191b1f;
+  color: #f1eee7;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+}
+.list {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+.list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(241, 238, 231, 0.92);
+}
+.list li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--neodent-red);
+}
+
+/* ---- Urgent symptoms: heading | list | buttons ---------------------------- */
+.call {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) minmax(190px, 0.5fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  margin-top: clamp(14px, 2vw, 24px);
+  padding: clamp(26px, 3.4vw, 40px);
+  background: var(--neodent-red);
+  color: #fff;
+  border-radius: 20px;
+}
+.callTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.signs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 28px;
+}
+.signs li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #fff;
+}
+.signs li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: #fff;
+}
+.callActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.callActions :global(.button) {
+  width: 100%;
+  min-height: 48px;
+}
+
+@media (max-width: 1239px) {
+  .call {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    grid-template-areas:
+      "title actions"
+      "signs actions";
+    align-items: start;
+  }
+  .callTitle {
+    grid-area: title;
+  }
+  .signs {
+    grid-area: signs;
+  }
+  .callActions {
+    grid-area: actions;
+    align-self: center;
+  }
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--sd-container-m, min(100% - 32px, 600px));
+  }
+  .section {
+    padding: 48px 0;
+  }
+  .card {
+    padding: 22px 20px;
+  }
+  .careRow {
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .call {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "signs"
+      "actions";
+    gap: 20px;
+    padding: 26px 22px;
+  }
+  .signs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .callActions {
+    align-self: stretch;
+  }
+}
+
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: scale 140ms ease-out;
+  }
+  .card:active {
+    scale: 0.99;
+  }
+}

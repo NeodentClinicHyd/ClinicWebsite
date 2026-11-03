@@ -1,0 +1,37 @@
+/* Page wrapper for /treatments/dental-implants. Holds only custom properties
+   (no layout), so every section module in this folder reads the same
+   widths, caps and tones. Sections fall back to the same literal values
+   if a property is missing. */
+.page {
+  /* Widths (the site container) */
+  --di-container: min(1180px, calc(100% - 48px));
+  --di-container-m: min(100% - 32px, 600px);
+
+  /* Tones */
+  --di-dark: var(--neodent-charcoal);
+  --di-dark-2: #15171a;
+  --di-dark-3: #14161a;
+  --di-dark-pattern: #242628;
+  --di-beige: #ece7dc;
+  --di-ivory: var(--ivory);
+  --di-paper: var(--neodent-surface);
+  --di-hairline: rgba(38, 48, 51, 0.12);
+
+  /* Image caps (plan 4.11 / Agent rules 13) */
+  --di-cap-header-photo: min(52dvh, 460px);
+  --di-cap-case-photo: min(34dvh, 300px);
+  --di-cap-case-photo-m: 30dvh;
+  --di-cap-diagram: min(46dvh, 440px);
+  --di-cap-diagram-m: min(34dvh, 300px);
+  --di-cap-card-illustration: min(22dvh, 190px);
+  --di-cap-card-illustration-m: min(18dvh, 150px);
+  --di-cap-step: 120px;
+  --di-cap-step-m: 96px;
+  --di-cap-portrait: 40dvh;
+  --di-cap-portrait-m: 34dvh;
+  --di-cap-clinic-photo: 36dvh;
+  --di-cap-clinic-photo-m: 28dvh;
+
+  /* Section rhythm */
+  --di-section-pad: clamp(56px, 7vw, 96px);
+}

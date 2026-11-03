@@ -1,0 +1,189 @@
+/* FAQ. Tan ground. Items are home cards (paper surface, hairline
+   border, 16px radius). Desktop: two columns of five questions, each column
+   its own stack so opening one item never moves the other column. Below
+   1024 px: one column. The "Ready to talk it through?" card sits under the
+   FAQ as a full-width ivory card with a hairline (not a second dark block). */
+
+.section {
+  background: var(--sp-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--sp-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sp-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+.faq {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px clamp(16px, 2vw, 24px);
+  align-items: start;
+  margin-top: clamp(28px, 3.6vw, 48px);
+}
+.column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.item {
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+.item:hover {
+  border-color: rgba(38, 48, 51, 0.28);
+}
+.item[open] {
+  border-color: rgba(215, 25, 32, 0.4);
+}
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  list-style: none;
+}
+.summary::-webkit-details-marker {
+  display: none;
+}
+.summary:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 2px;
+}
+.question {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.9vw, 23px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.chevron {
+  flex: none;
+  color: var(--neodent-red);
+  transition: transform 200ms ease;
+}
+.item[open] .chevron {
+  transform: rotate(180deg);
+}
+.answer {
+  margin: 0;
+  padding: 0 24px 22px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.88);
+}
+.link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.link:hover {
+  color: var(--neodent-red-dark);
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 2px;
+}
+
+/* Contact card. */
+.ask {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px clamp(24px, 4vw, 56px);
+  margin-top: clamp(20px, 2.6vw, 32px);
+  padding: clamp(22px, 3vw, 32px) clamp(22px, 3vw, 36px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.14);
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 16px;
+}
+.askTitle {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(26px, 2.4vw, 32px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.askActions {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.askActions :global(.button) {
+  min-height: 52px;
+  min-width: 180px;
+}
+
+@media (max-width: 1023px) {
+  .faq {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .ask {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--sp-container-m, min(100% - 32px, 600px));
+  }
+  .summary {
+    padding: 16px 18px;
+  }
+  .answer {
+    padding: 0 18px 18px;
+  }
+  .askActions {
+    flex-direction: column;
+  }
+  .askActions :global(.button) {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .chevron {
+    transition: none;
+  }
+}
+@media (hover: none) {
+  .summary:active {
+    background-color: rgba(38, 48, 51, 0.04);
+  }
+}
+
+/* Opening an item: the answer fades and rises a few pixels (opacity and
+   transform only). Closed items stay as they are; reduced motion gets none. */
+@keyframes answerIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .item[open] .answer {
+    animation: answerIn 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}

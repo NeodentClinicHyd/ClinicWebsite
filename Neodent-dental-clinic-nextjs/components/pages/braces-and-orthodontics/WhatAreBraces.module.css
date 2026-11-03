@@ -1,0 +1,200 @@
+/* What are braces. Tan ground (#ece7dc, as the home's "Decades" section).
+   Paper cards: #fffefa, 1px hairline, 16px radius. Dark card: 4px 56px 4px 4px
+   (home). One list style: red dash markers. */
+
+.section {
+  background: var(--brc-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--brc-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--brc-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  grid-template-areas:
+    "copy media"
+    "cards terms";
+  column-gap: clamp(32px, 5vw, 72px);
+  row-gap: 28px;
+  align-items: start;
+}
+.copy {
+  grid-area: copy;
+  min-width: 0;
+}
+.media {
+  grid-area: media;
+  min-width: 0;
+  /* The diagram frame is 4:3: cap its width so its height stays within
+     min(46dvh, 440px), centred in the column. */
+  width: min(100%, calc(var(--brc-cap-diagram, min(46dvh, 440px)) * 4 / 3));
+  justify-self: center;
+}
+.cards {
+  grid-area: cards;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  align-self: stretch;
+}
+.termsWrap {
+  grid-area: terms;
+  min-width: 0;
+  display: flex;
+  align-self: stretch;
+}
+
+.lede {
+  max-width: 62ch;
+  margin: 24px 0 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.9);
+}
+
+.card {
+  position: relative;
+  min-width: 0;
+  padding: 20px 24px;
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
+}
+.card::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 12px;
+  background: var(--neodent-red);
+}
+.cardTitle {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cardText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+}
+
+.terms {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: clamp(24px, 2.6vw, 32px);
+  border-radius: 4px 56px 4px 4px;
+  background: var(--neodent-charcoal);
+  color: #fff;
+}
+.termsTitle {
+  margin: 0 0 20px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.termList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+}
+.term {
+  position: relative;
+  padding-left: 22px;
+}
+.term::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--neodent-red);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.term dt {
+  margin: 0 0 4px;
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.term dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Tablet and phone: one column in reading order. */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "copy"
+      "media"
+      "cards"
+      "terms";
+    row-gap: 24px;
+  }
+  .media {
+    --brc-cap-diagram: var(--brc-cap-diagram-m, min(34dvh, 300px));
+    justify-self: start;
+    width: min(100%, calc(min(34dvh, 300px) * 4 / 3));
+  }
+  .terms {
+    max-width: 640px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--brc-container-m, min(100% - 32px, 600px));
+  }
+  .media {
+    justify-self: center;
+  }
+  .lede {
+    margin-top: 20px;
+  }
+  .card {
+    padding: 18px 20px;
+  }
+}
+
+/* Hover lift on desktop, press state on touch (transform and shadow only). */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  .card:active {
+    transform: scale(0.985);
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -20px rgba(38, 48, 51, 0.35);
+  }
+}

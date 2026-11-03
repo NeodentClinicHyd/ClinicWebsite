@@ -1,0 +1,329 @@
+/* Options. Dark band built from the home hero recipe (standard 3.6): a
+   charcoal gradient, then the dental icon pattern used as a luminance mask over
+   an ivory fill (never as a CSS background-image) at low strength, fading to
+   zero before the text column, so the pattern is never visible behind the
+   heading or the introduction. Comparison cards are paper (#fffefa), 20px
+   radius, all five alike. "Worth knowing" sits in an ivory panel so the two
+   text blocks read as different kinds of information. Red dash before each
+   label; no tag pills. Scene frames are capped at --sd-cap-card-illustration
+   (min(22dvh, 190px); on phones --sd-cap-card-illustration-m). */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  background-color: #242628;
+  background-image: linear-gradient(180deg, #2a2c2f 0%, #202224 100%);
+  color: #f1eee7;
+  padding: var(--sd-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--sd-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.filterDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ---- Backdrop: pattern only low on the right, gone before the text column ---- */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.pattern {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+@supports (mask-mode: luminance) {
+  .pattern {
+    display: block;
+    opacity: 0.11;
+    filter: url("#sd-options-pattern-levels");
+  }
+  .tile {
+    position: absolute;
+    inset: 0;
+    background-color: #f8f6ef;
+    mask-image:
+      url("/assets/backgrounds/neodent-treatments-icon-pattern-dark.webp"),
+      radial-gradient(
+        ellipse 52% 62% at 100% 100%,
+        #000 0%,
+        #000 40%,
+        rgba(0, 0, 0, 0.6) 70%,
+        transparent 100%
+      );
+    mask-mode: luminance, alpha;
+    mask-repeat: repeat, no-repeat;
+    mask-size: 420px 420px, 100% 100%;
+    mask-composite: intersect;
+  }
+}
+@media (max-width: 767px) {
+  .pattern {
+    opacity: 0.08;
+  }
+}
+
+/* ---- Grid: 6 columns; three cards of 2, then two cards of 3 ------------- */
+.rowWrap {
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.grid {
+  --ill: var(--sd-cap-card-illustration, min(22dvh, 190px));
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+  align-items: stretch;
+}
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(18px, 2vw, 24px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-radius: 20px;
+}
+.top {
+  grid-column: span 2;
+}
+.bottom {
+  grid-column: span 3;
+}
+.frame {
+  min-width: 0;
+  height: var(--ill);
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.9rem, 2.6vw, 2.3rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.blockLabel {
+  position: relative;
+  margin: 0;
+  padding-left: 22px;
+  color: var(--neodent-red-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.blockLabel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 14px;
+  height: 2px;
+  background: var(--neodent-red);
+}
+.blockText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.88);
+}
+.know {
+  padding: 12px 14px 14px;
+  background: var(--ivory);
+  border-radius: 12px;
+}
+.head {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+.link {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+.link svg {
+  color: var(--neodent-red);
+  transition: transform 180ms ease;
+}
+.link:hover {
+  color: var(--neodent-red-dark);
+}
+.link:hover svg {
+  transform: translateX(3px);
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 3px;
+}
+
+/* Wide screens: the top three share rows (subgrid) so the scene, the name and
+   both text blocks line up exactly. The bottom two lay the same parts out
+   beside the scene, which is centred in its column. */
+@media (min-width: 1024px) {
+  .bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    column-gap: clamp(18px, 2vw, 26px);
+    row-gap: 12px;
+    align-content: center;
+    align-items: start;
+  }
+  .bottom .frame {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+    align-self: center;
+  }
+  .bottom .head,
+  .bottom .block {
+    grid-column: 2;
+  }
+}
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 1024px) {
+    .grid {
+      /* frame, name, does, know (top row); then the bottom row. */
+      grid-template-rows: auto auto auto 1fr auto;
+      row-gap: 0;
+    }
+    .top {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      row-gap: 14px;
+    }
+    .bottom {
+      grid-row: 5;
+      margin-top: clamp(14px, 1.6vw, 20px);
+    }
+  }
+}
+
+.figNote {
+  margin: 14px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(241, 238, 231, 0.76);
+}
+
+/* Closing strip: paper, red top edge. */
+.closing {
+  margin: clamp(20px, 2.6vw, 30px) 0 0;
+  padding: clamp(20px, 2.4vw, 26px) clamp(24px, 3vw, 36px);
+  background: var(--neodent-surface);
+  color: var(--ink);
+  border: 1px solid var(--sd-hairline, rgba(38, 48, 51, 0.12));
+  border-top: 3px solid var(--neodent-red);
+  border-radius: 4px 20px 20px 20px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* ---- Swipe row below 1024 px: five vertical cards, equal height ---- */
+@media (max-width: 1023px) {
+  .grid {
+    --ill: var(--sd-cap-card-illustration-m, min(18dvh, 150px));
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 62%;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+  .top,
+  .bottom {
+    grid-column: auto;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+  }
+  .know {
+    margin-top: auto;
+  }
+  .link {
+    min-height: 44px;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--sd-container-m, min(100% - 32px, 600px));
+  }
+  .section {
+    padding: 48px 0;
+  }
+  .grid {
+    grid-auto-columns: 84%;
+  }
+  .card {
+    padding: 18px;
+  }
+}
+
+@media (hover: hover) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover {
+    translate: 0 -3px;
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: scale 140ms ease-out;
+  }
+  .card:active {
+    scale: 0.99;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .link svg {
+    transition: none;
+  }
+  .link:hover svg {
+    transform: none;
+  }
+}
