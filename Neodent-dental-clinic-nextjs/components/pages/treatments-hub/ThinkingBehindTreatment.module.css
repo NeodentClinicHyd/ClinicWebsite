@@ -38,18 +38,24 @@
   box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.7);
   transition: transform 0.25s var(--hub-ease), border-color 0.25s ease;
 }
-.portrait {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: linear-gradient(160deg, #ece7dc 0%, #d9d2c2 100%);
-  border-radius: calc(var(--hub-radius) - 6px);
+.top {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2vw, 24px);
+}
+.portraitWrap {
+  flex: 0 0 clamp(128px, 38%, 230px);
+  min-width: 0;
+}
+.ident {
+  min-width: 0;
 }
 .info {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  padding: 20px 10px 0;
+  padding: 22px 6px 0;
+  border-top: 0;
 }
 .name {
   margin: 0 0 4px;
@@ -72,7 +78,7 @@
 .facts {
   display: grid;
   gap: 12px;
-  margin: 18px 0 0;
+  margin: 0;
 }
 .fact {
   display: grid;
@@ -135,6 +141,10 @@
   .body > * {
     break-inside: auto;
   }
+  .body > p:first-child {
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+    line-height: 1.7;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -148,9 +158,6 @@
 @media (max-width: 899px) and (min-width: 768px) {
   .docs {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .portrait {
-    aspect-ratio: 16 / 8;
   }
 }
 

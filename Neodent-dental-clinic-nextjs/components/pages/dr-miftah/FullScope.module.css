@@ -1,0 +1,159 @@
+/* 04 Full scope. Light band. Seven cards, 4 + 3 flow: the cards of the
+   second row grow to fill the row. Under 768 px: one column of compact
+   rows, each at least 64 px tall. */
+
+.section {
+  background: var(--neodent-ivory);
+  color: var(--neodent-ink);
+  padding: var(--mf-pad-y) 0;
+}
+.container {
+  width: var(--mf-container);
+  margin: 0 auto;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.tile {
+  position: relative;
+  flex: 1 1 calc(25% - 12px);
+  min-width: 240px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "num icon"
+    "title title"
+    "focus focus"
+    "verb verb"
+    "link link";
+  align-content: start;
+  gap: 4px 12px;
+  padding: 18px 18px 14px;
+  border: 1px solid var(--neodent-border);
+  border-radius: var(--mf-radius);
+  background: var(--neodent-surface);
+  color: var(--neodent-ink);
+  box-shadow: 0 10px 24px -20px rgba(22, 28, 30, 0.45);
+  transition:
+    transform 300ms var(--mf-ease),
+    box-shadow 300ms ease,
+    border-color 300ms ease;
+}
+.tile:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tile:hover {
+    transform: translateY(-3px);
+    border-color: rgba(215, 25, 32, 0.4);
+    box-shadow: 0 18px 32px -20px rgba(22, 28, 30, 0.5);
+  }
+  .tile:hover .link svg {
+    transform: translateX(4px);
+  }
+}
+.tile:active {
+  transform: scale(0.99);
+}
+
+.number {
+  grid-area: num;
+  align-self: center;
+  color: rgba(38, 48, 51, 0.7);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.icon {
+  grid-area: icon;
+  display: block;
+  width: 52px;
+  height: 52px;
+}
+.title {
+  grid-area: title;
+  margin-top: 10px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.2;
+  color: var(--neodent-ink);
+}
+.focus {
+  grid-area: focus;
+  color: var(--neodent-red-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.verb {
+  grid-area: verb;
+  color: rgba(38, 48, 51, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.link {
+  grid-area: link;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 6px;
+  color: var(--neodent-red-dark);
+  font-size: 14px;
+  font-weight: 700;
+}
+.link svg {
+  transition: transform 300ms var(--mf-ease);
+}
+
+/* ---- Phone: one column of compact rows ------------------------------- */
+@media (max-width: 767px) {
+  .grid {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+  .tile {
+    flex: 0 0 auto;
+    min-width: 0;
+    grid-template-columns: 52px auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "icon title title title"
+      "icon num focus verb"
+      "icon link link link";
+    align-items: center;
+    column-gap: 14px;
+    min-height: 72px;
+    padding: 10px 14px 4px;
+  }
+  .icon {
+    align-self: start;
+  }
+  .title {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  .verb {
+    justify-self: start;
+  }
+  .link {
+    margin: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .link svg {
+    transition: none;
+  }
+  .tile:hover,
+  .tile:active {
+    transform: none;
+  }
+}

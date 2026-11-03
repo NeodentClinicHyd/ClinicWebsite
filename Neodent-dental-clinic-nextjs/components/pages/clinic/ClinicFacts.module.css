@@ -1,0 +1,131 @@
+/* S1 fact strip: one light strip under the dark header. Desktop: the
+   label cell, then four facts in a row. Phones: the label on its own
+   row, then a 2 by 2 grid. Cells are separated by hairlines drawn by the
+   list's own 1px gap, so the borders stay correct in either layout and
+   every cell fills its slot. */
+
+.strip {
+  background: var(--neodent-ivory);
+  padding: clamp(10px, 1.4vw, 18px) 0 0;
+}
+
+.inner {
+  width: var(--clinic-container);
+  margin: 0 auto;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  overflow: hidden;
+  background: #f6f3ec;
+  border: 1px solid rgba(38, 48, 51, 0.1);
+  border-radius: var(--clinic-radius);
+  box-shadow: 0 8px 28px rgba(22, 28, 30, 0.06);
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0 clamp(24px, 3vw, 40px);
+  border-right: 1px solid rgba(38, 48, 51, 0.1);
+  color: var(--neodent-ink);
+  font-family: var(--app-font-serif);
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+.title::after {
+  content: "";
+  width: 28px;
+  height: 3px;
+  background: var(--neodent-red);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 100px;
+  padding: 20px clamp(16px, 2.4vw, 36px);
+  background: #f6f3ec;
+}
+/* Hairlines sit on the cells, so nothing shows through while a cell is
+   still waiting for its reveal. */
+.cell + .cell {
+  border-left: 1px solid rgba(38, 48, 51, 0.1);
+}
+
+.value {
+  color: #242628;
+  font-family: var(--app-font-serif);
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+.label {
+  color: rgba(36, 38, 40, 0.74);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+/* Tablet and phone: label row, then the facts. */
+@media (max-width: 1023px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .title {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 16px 20px 14px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(38, 48, 51, 0.1);
+    font-size: 20px;
+  }
+  .cell {
+    min-height: 0;
+    padding: 18px 20px 20px;
+  }
+}
+@media (max-width: 767px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cell:nth-child(odd) {
+    border-left: 0;
+  }
+  .cell:nth-child(n + 3) {
+    border-top: 1px solid rgba(38, 48, 51, 0.1);
+  }
+}
+@media (max-width: 480px) {
+  .cell {
+    padding: 16px 16px 18px;
+  }
+  .value {
+    font-size: 22px;
+  }
+  .label {
+    font-size: 13px;
+  }
+}

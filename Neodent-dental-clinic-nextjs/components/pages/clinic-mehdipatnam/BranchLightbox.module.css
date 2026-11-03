@@ -1,0 +1,147 @@
+/* Native <dialog> lightbox. The photograph is shown whole inside the
+   media height cap; controls are 44px or larger; the open state fades in
+   (opacity only), and not at all under reduced motion. */
+
+.dialog {
+  width: min(1040px, 100vw);
+  max-width: 100vw;
+  height: auto;
+  max-height: 100dvh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--neodent-ivory);
+  overflow: visible;
+}
+.dialog::backdrop {
+  background: rgba(10, 13, 14, 0.9);
+}
+.dialog[open] {
+  animation: fadeIn 280ms ease-out both;
+}
+.dialog[open]::backdrop {
+  animation: fadeIn 280ms ease-out both;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 64px 64px 24px;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: min(var(--media-max-h), 68dvh);
+}
+.image {
+  object-fit: contain;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px 12px;
+  margin: 0;
+  text-align: center;
+}
+.captionHeading {
+  color: var(--neodent-ivory);
+  font-family: var(--app-font-serif);
+  font-size: 20px;
+  line-height: 1.2;
+}
+.captionLabel {
+  color: rgba(248, 246, 239, 0.8);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.round {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(248, 246, 239, 0.28);
+  border-radius: 50%;
+  background: rgba(22, 28, 30, 0.8);
+  color: var(--neodent-ivory);
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+.round:hover {
+  background: rgba(248, 246, 239, 0.14);
+  border-color: rgba(248, 246, 239, 0.6);
+}
+.round:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.close {
+  top: 8px;
+  right: 8px;
+}
+.prev,
+.next {
+  top: calc(64px + min(var(--media-max-h), 68dvh) / 2 - 24px);
+}
+.prev {
+  left: 8px;
+}
+.next {
+  right: 8px;
+}
+
+@media (max-width: 767px) {
+  .frame {
+    padding: 56px 12px 20px;
+  }
+  .stage {
+    height: min(var(--media-max-h), 58dvh);
+  }
+  .prev,
+  .next {
+    top: auto;
+    bottom: 16px;
+  }
+  .prev {
+    left: calc(50% - 60px);
+  }
+  .next {
+    right: calc(50% - 60px);
+  }
+  .caption {
+    padding-bottom: 56px;
+  }
+  .close {
+    top: 4px;
+    right: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dialog[open]::backdrop {
+    animation: none;
+  }
+  .round {
+    transition: none;
+  }
+}

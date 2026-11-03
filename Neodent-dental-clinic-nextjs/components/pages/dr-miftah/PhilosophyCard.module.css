@@ -1,0 +1,127 @@
+/* PhilosophyCard -- text-only fork of the home SeamCard. Sizes come from
+   the --seam-* tokens in app/globals.css, the same tokens the neighbouring
+   sections use for their compensating padding. */
+
+/* Zero-height, in-flow wrapper at the seam. z-index 10 clears the
+   sections' own layers and stays below the navbar and the call buttons. */
+.seam {
+  position: relative;
+  height: 0;
+  z-index: 10;
+}
+
+/* The seam, drawn: a 1px line on the exact boundary behind the card. */
+.seam::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: var(--mf-container, min(1180px, calc(100% - 48px)));
+  margin-inline: auto;
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+}
+
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  width: min(36rem, calc(100% - 32px));
+  height: var(--seam-card-h-text);
+  transform: translateY(calc(var(--seam-up-text) * -1));
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: var(--neodent-ivory);
+}
+
+.surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgba(241, 238, 231, 0.14);
+  border-radius: 20px;
+  background: var(--neodent-charcoal);
+  box-shadow: 0 24px 48px -24px rgba(22, 28, 30, 0.55);
+}
+
+.copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(22px, 5vw, 48px);
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 10px;
+  color: rgba(241, 238, 231, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.label::before {
+  content: "";
+  flex: none;
+  width: 22px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+
+.statement {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-weight: 400;
+  line-height: 1.02;
+}
+.lead {
+  display: block;
+  color: rgba(241, 238, 231, 0.9);
+  font-size: clamp(1.25rem, 2.6vw, 1.55rem);
+  letter-spacing: -0.01em;
+}
+.emphasis {
+  display: block;
+  margin-top: 4px;
+  color: var(--neodent-red);
+  font-size: clamp(1.8rem, 5.4vw, 2.6rem);
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.cite {
+  display: block;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(241, 238, 231, 0.16);
+  color: rgba(241, 238, 231, 0.78);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+.cite::before {
+  content: "\2014\00a0";
+}
+
+@media (max-width: 767px) {
+  .stage {
+    width: calc(100% - 32px);
+  }
+  .seam::before {
+    width: 100%;
+  }
+}

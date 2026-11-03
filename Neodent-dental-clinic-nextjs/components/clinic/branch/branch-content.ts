@@ -11,6 +11,7 @@ import {
   nampallyExteriorImage,
   nampallyInteriorImage,
 } from "@/lib/site-data";
+import { NAMPALLY_SPACES_IMAGES } from "@/lib/pages/clinic-content";
 
 /* ------------------------------------------------------------------
    Branch page -- editorial copy and photograph geometry.
@@ -39,6 +40,8 @@ export type BranchContent = {
   accent: string;
   /** Hero lede paragraph. */
   lede: string;
+  /** Hero location card value, worded as the lede already words it. */
+  locationLine: string;
   /** Intro chapter title: plain line, then a red italic closing line. */
   introTitle: [string, string];
   /** Intro prose, one string per paragraph. */
@@ -59,6 +62,7 @@ export const branchContent: Record<ClinicLocationSlug, BranchContent> = {
   mehdipatnam: {
     accent: "Mehdipatnam",
     lede: "Neodent’s original Hyderabad location is in Humayun Nagar, Mehdipatnam. The clinic offers evening appointments from Monday to Saturday.",
+    locationLine: "Humayun Nagar, Mehdipatnam",
     introTitle: ["Where Neodent began,", "in Humayun Nagar."],
     intro: [
       "Founded here in 1994, Neodent’s original Hyderabad clinic is at 10-3-14B/11/1, near Masjid-e-Azizia in Humayun Nagar, Mehdipatnam. The address and directions are provided below so you can plan your visit.",
@@ -76,6 +80,7 @@ export const branchContent: Record<ClinicLocationSlug, BranchContent> = {
   nampally: {
     accent: "Nampally",
     lede: "Neodent Dental Hospital’s Nampally clinic is inside Medwin Hospital Complex on Chirag Ali Lane, with daytime appointments from Monday to Saturday.",
+    locationLine: "Medwin Hospital Complex, Nampally",
     introTitle: ["Neodent, within the", "Medwin Hospital Complex."],
     intro: [
       "The Nampally clinic is at Medwin Hospital Complex, Pillar #A1270, Raghav Ratna Towers, Chirag Ali Lane, Mahesh Nagar Colony. Its street-frontage photograph below shows the clinic signage; the full address and directions are available in the visit details.",
@@ -84,7 +89,7 @@ export const branchContent: Record<ClinicLocationSlug, BranchContent> = {
     ],
     galleryTitle: ["Nampally, from the street", "to the reception."],
     galleryLede:
-      "Two photographs of the Nampally clinic: the street frontage with its signage, and the reception and staircase inside. Select either photograph to view it in full.",
+      "Photographs of the Nampally clinic: the street frontage and entrance with their signage, the reception counter and staircase, the doctor’s consultation desk and the treatment rooms. Select any photograph to view it in full.",
     treatmentsTitle: ["Featured dental treatments", "at Nampally."],
     treatmentsLede:
       "Open a featured treatment page for a clear overview of what it involves. Additional dental services are listed below.",
@@ -104,6 +109,10 @@ const photoSizes: Record<string, { width: number; height: number }> = {
   [mehdipatnamWaitingHallImage]: { width: 4032, height: 3024 },
   [nampallyExteriorImage]: { width: 1280, height: 960 },
   [nampallyInteriorImage]: { width: 1280, height: 1707 },
+  /* The five newer Nampally photographs: sizes live with the list. */
+  ...Object.fromEntries(
+    NAMPALLY_SPACES_IMAGES.map(({ src, width, height }) => [src, { width, height }]),
+  ),
 };
 
 export function photoSize(src: string): { width: number; height: number } {

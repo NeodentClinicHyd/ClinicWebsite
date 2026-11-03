@@ -1,0 +1,245 @@
+/* S4 the wider clinical team: dark band built with the page's own recipe
+   (gradient, red glow, icon-pattern mask via DoctorsBackdrop). The
+   header is the only dark band besides this one, and they are never
+   adjacent (light strip, leadership and Dr. Miftah at work sit between). */
+
+.section {
+  /* Glow behind the right of the band; the pattern fades out before the
+     heading column. Overrides the page values for this band only. */
+  --doc-glow-x: 82%;
+  --doc-glow-y: 18%;
+  --doc-glow-a: 0.26;
+  --doc-glow-rx: min(520px, 42vw);
+  --doc-glow-ry: 60%;
+  --doc-pattern-rx: min(520px, 42vw);
+  --doc-pattern-ry: 70%;
+  --team-gap: 16px;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--neodent-ivory);
+  background-color: var(--doc-dark-top);
+  background-image: linear-gradient(180deg, var(--doc-dark-top) 0%, var(--doc-dark-bottom) 100%);
+  padding: var(--doc-pad-y) 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--doc-container);
+  margin: 0 auto;
+}
+
+/* ---- Heading block ---- */
+.header {
+  max-width: 62ch;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: rgba(248, 246, 239, 0.78);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--neodent-red);
+}
+.title {
+  margin: 12px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.lede {
+  max-width: 52ch;
+  margin: 14px 0 0;
+  color: var(--doc-ivory-muted);
+  font-size: 16.5px;
+  line-height: 1.6;
+}
+
+/* ---- Track: wrapping row on desktop, swipe row below 1024 ---- */
+.trackWrap {
+  min-width: 0;
+  margin-top: clamp(28px, 4vw, 48px);
+}
+.track {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--team-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.track:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
+.item {
+  flex: 0 0 calc((100% - 4 * var(--team-gap)) / 5);
+  min-width: 0;
+  display: flex;
+}
+.dots {
+  display: none;
+}
+
+/* ---- Card: dark glass ---- */
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px 12px 18px;
+  border: 1px solid var(--doc-glass-line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.3s var(--doc-ease),
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+.card .frame {
+  width: 100%;
+}
+.portrait {
+  border-radius: 14px;
+}
+.name {
+  margin: 14px 4px 6px;
+  font-family: var(--app-font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.detail {
+  margin: 0 4px;
+  color: var(--doc-ivory-muted);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.07);
+  }
+}
+
+/* 3 across from 1024 to 1279; the second row is centred. */
+@media (max-width: 1279px) {
+  .item {
+    flex-basis: calc((100% - 2 * var(--team-gap)) / 3);
+  }
+}
+
+/* ---- Tablet and phone: one scroll-snap row, next card peeks ---- */
+@media (max-width: 1023px) {
+  .track {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .item {
+    flex: 0 0 min(42%, 280px);
+    scroll-snap-align: start;
+  }
+  .dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+  }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--neodent-ivory);
+    cursor: pointer;
+  }
+  .dot::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.35;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+  .dot[aria-current="true"]::before {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  .dot:focus-visible {
+    outline: 2px solid var(--neodent-ivory);
+    outline-offset: -6px;
+    border-radius: 6px;
+  }
+}
+@media (max-width: 767px) {
+  .section {
+    --doc-glow-x: 50%;
+    --doc-glow-y: 12%;
+    --doc-glow-rx: min(420px, 90vw);
+    --doc-pattern-rx: min(420px, 92vw);
+    --doc-pattern-ry: 40%;
+  }
+  /* Bleed the row to the screen edges so the next card peeks past the
+     page margin. */
+  .track {
+    margin-inline: -16px;
+    padding-inline: 16px;
+    scroll-padding-inline: 16px;
+  }
+  .item {
+    flex: 0 0 82%;
+  }
+  .name {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .dot::before {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}
+/* Touch press state. Transform only. */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .card:active {
+    transform: scale(0.985);
+  }
+}

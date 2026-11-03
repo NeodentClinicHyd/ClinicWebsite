@@ -1,0 +1,144 @@
+/* Swipe row. From 768px: a plain flex row (the section decides item
+   sizes). Below 768px: one scroll-snap row, every item in the DOM,
+   progress dots underneath (no numbered counters). */
+
+.swipe {
+  min-width: 0;
+}
+.track {
+  display: flex;
+  gap: var(--swipe-gap, 24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.track:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 4px;
+}
+.item {
+  min-width: 0;
+}
+.dots {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .track {
+    --swipe-gap: 14px;
+    gap: var(--swipe-gap);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .item {
+    flex: 0 0 var(--swipe-item-w, 86%);
+    scroll-snap-align: start;
+  }
+  .dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+  }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .dot::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.32;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+  .dot[aria-current="true"]::before {
+    opacity: 1;
+    background: var(--neodent-red);
+    transform: scale(1.35);
+  }
+  .dot:focus-visible {
+    outline: 2px solid var(--neodent-red);
+    outline-offset: -4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot::before {
+    transition: none;
+  }
+}
+
+/* wide: keep the swipe layout on tablets too (768 to 1023px). */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .wide .track {
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .wide .track::-webkit-scrollbar {
+    display: none;
+  }
+  .wide .item {
+    flex: 0 0 var(--swipe-item-w, 86%);
+    scroll-snap-align: start;
+  }
+  .wide .dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+  }
+  .wide .dot {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .wide .dot::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.32;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+  .wide .dot[aria-current="true"]::before {
+    opacity: 1;
+    background: var(--neodent-red);
+    transform: scale(1.35);
+  }
+  .wide .dot:focus-visible {
+    outline: 2px solid var(--neodent-red);
+    outline-offset: -4px;
+  }
+}

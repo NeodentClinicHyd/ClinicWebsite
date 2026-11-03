@@ -1,0 +1,144 @@
+/* S4 layout. Desktop: portrait left (spanning the heading, paragraph and
+   card rows), heading, first paragraph and glass card right, the
+   disclosure full width under both. Mobile order: heading, paragraph,
+   portrait (at most 38dvh), card, disclosure. */
+
+.founder {
+  --about-glow-x: 26%;
+  --about-glow-y: 46%;
+  --about-glow-rx: min(520px, 40vw);
+  --about-pattern-rx: min(460px, 36vw);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  grid-template-areas:
+    "head head"
+    "fig p1"
+    "fig card"
+    "more more";
+  grid-template-rows: auto auto 1fr auto;
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+.head {
+  grid-area: head;
+  margin-bottom: 32px;
+}
+.p1 {
+  grid-area: p1;
+}
+.cardWrap {
+  grid-area: card;
+  margin-top: 28px;
+}
+.fig {
+  grid-area: fig;
+  align-self: start;
+}
+.more {
+  grid-area: more;
+  margin-top: 40px;
+}
+
+/* Portrait panel: transparent cut-out, whole figure visible, resting on
+   the panel's lower edge; the caption sits in its own strip below. */
+.panel {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: min(var(--media-max-h), 540px);
+  overflow: hidden;
+  background:
+    radial-gradient(70% 60% at 50% 100%, rgba(215, 25, 32, 0.22), transparent 70%),
+    linear-gradient(180deg, #20262a 0%, #14191c 100%);
+  border: 1px solid var(--about-glass-line);
+  border-radius: var(--about-radius);
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.75);
+}
+.imgBox {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+}
+.imgReveal,
+.imgReveal > *,
+.imgReveal > * > * {
+  height: 100%;
+  min-height: 0;
+}
+.portrait {
+  object-fit: contain;
+  object-position: 50% 100%;
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 16px 14px;
+  border-top: 1px solid var(--about-glass-line);
+  background: linear-gradient(180deg, rgba(10, 13, 14, 0.4), rgba(10, 13, 14, 0.78));
+}
+.captionName {
+  color: var(--neodent-ivory);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.captionRole {
+  color: rgba(248, 246, 239, 0.72);
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(32px, 4vw, 56px);
+  align-items: start;
+}
+.cols .lede {
+  max-width: none;
+}
+
+@media (max-width: 899px) {
+  .founder {
+    --about-glow-x: 50%;
+    --about-glow-y: 40%;
+    --about-glow-rx: min(420px, 90vw);
+    --about-pattern-rx: min(420px, 92vw);
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "p1"
+      "fig"
+      "card"
+      "more";
+    grid-template-rows: none;
+  }
+  .head {
+    margin-bottom: 18px;
+  }
+  .fig {
+    margin-top: 28px;
+  }
+  .panel {
+    height: min(38dvh, 340px);
+  }
+  .cardWrap {
+    margin-top: 20px;
+  }
+  .more {
+    margin-top: 28px;
+  }
+  .cols {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 16px;
+  }
+}

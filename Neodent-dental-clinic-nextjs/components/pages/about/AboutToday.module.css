@@ -1,0 +1,188 @@
+/* S11 layout. Desktop: copy and the two clinic cards left, the two
+   photos right as a capped pair (a larger and a smaller, bottom-
+   aligned). Mobile: copy, clinic cards stacked, photos as one swipe row. */
+
+.today {
+  --about-glow-x: calc(50% + min(300px, 24vw));
+  --about-glow-y: 52%;
+  --about-glow-rx: min(480px, 38vw);
+  --about-pattern-rx: min(420px, 34vw);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.copy {
+  min-width: 0;
+}
+.prose {
+  margin-top: clamp(22px, 2.6vw, 32px);
+}
+.prose p + p {
+  margin-top: 16px;
+}
+.media {
+  min-width: 0;
+  align-self: center;
+}
+
+/* ---- Clinic cards ----------------------------------------------------- */
+.clinics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(28px, 3.4vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.clinic {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+.clinicCard {
+  width: 100%;
+  padding: 22px;
+  transition:
+    transform 0.3s var(--about-ease),
+    border-color 0.25s ease;
+}
+.clinicHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.clinicHead h3 {
+  margin: 0;
+}
+.clinicArrow {
+  flex: none;
+  margin-top: 8px;
+  color: var(--neodent-red);
+  transition: transform 0.25s var(--about-ease);
+}
+/* The name is the card's link; its hit area covers the whole card. */
+.clinicLink {
+  color: inherit;
+}
+.clinicLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--about-radius);
+}
+.clinicLink:focus-visible {
+  outline: none;
+}
+.clinicLink:focus-visible::after {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+.phone {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-underline-offset: 4px;
+}
+.phone:hover {
+  color: #ff8a8f;
+}
+.phone:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .clinic:hover .clinicCard {
+    transform: translateY(-3px);
+    border-color: rgba(248, 246, 239, 0.32);
+  }
+  .clinic:hover .clinicArrow {
+    transform: translateX(3px);
+  }
+}
+.clinic:active .clinicCard {
+  transform: scale(0.992);
+}
+
+/* ---- Photos ----------------------------------------------------------- */
+.photo {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #1c1e20;
+  border-radius: var(--about-radius);
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.75);
+}
+.lead {
+  aspect-ratio: 3 / 4;
+  max-height: var(--media-max-h);
+}
+.side {
+  aspect-ratio: 3 / 4;
+  max-height: var(--media-max-h-compact);
+}
+.image {
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+@media (min-width: 768px) {
+  .photoRow {
+    --swipe-gap: 16px;
+    align-items: flex-end;
+  }
+  .photoItem {
+    flex: var(--w) 1 0%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .today {
+    --about-glow-x: 50%;
+    --about-glow-y: 60%;
+    --about-glow-rx: min(420px, 90vw);
+    --about-pattern-rx: min(420px, 92vw);
+  }
+}
+@media (max-width: 899px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 40px;
+  }
+}
+@media (max-width: 639px) {
+  .clinics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .photoItem {
+    --swipe-item-w: 86%;
+  }
+  .lead,
+  .side {
+    aspect-ratio: 4 / 3;
+    max-height: 38dvh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clinicCard,
+  .clinicArrow {
+    transition: none;
+  }
+  .clinic:hover .clinicCard,
+  .clinic:active .clinicCard,
+  .clinic:hover .clinicArrow {
+    transform: none;
+  }
+}

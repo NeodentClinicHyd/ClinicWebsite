@@ -1,0 +1,56 @@
+/* Breadcrumb under the dark header: a quiet 14px line on the ivory
+   ground, the link 44px tall for touch. */
+
+.crumbs {
+  background: var(--neodent-ivory);
+  color: rgba(38, 48, 51, 0.78);
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 10px;
+  width: var(--clinic-container);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.item [aria-current="page"] {
+  color: var(--neodent-ink);
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  /* 44px hit area without widening the visual gap to the slash. */
+  padding: 0 6px;
+  margin: 0 -6px;
+  color: rgba(38, 48, 51, 0.78);
+  transition: color 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--neodent-red);
+  }
+}
+.link:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: 2px;
+}
+.sep {
+  color: rgba(38, 48, 51, 0.4);
+}
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}

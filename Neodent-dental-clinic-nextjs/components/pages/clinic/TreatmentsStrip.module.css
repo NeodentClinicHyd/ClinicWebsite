@@ -1,0 +1,273 @@
+/* Clinics hub -- S5 featured treatments.
+
+   Dark band (gradient + ClinicBackdrop, glow low right so it stays clear
+   of the heading). Cards are the home atlas card: 16px radius, #f3f0e8
+   surface, 1px border, serif-free sans title, red icon. Desktop 4 x 2;
+   tablet 2 columns; phones one compact column with the icon on the left.
+   The eighth card is outlined. Hover lift only on fine pointers. */
+
+.section {
+  --clinic-glow-x: 92%;
+  --clinic-glow-y: 90%;
+  --clinic-glow-rx: min(560px, 46vw);
+  --clinic-glow-a: 0.22;
+  --clinic-pattern-rx: min(520px, 40vw);
+  --clinic-pattern-ry: 60%;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--neodent-ivory);
+  background-color: var(--clinic-dark-top);
+  background-image: linear-gradient(162deg, #1c2427 0%, #131a1c 52%, var(--clinic-dark-bottom) 100%);
+  padding: var(--clinic-pad-y) 0;
+  scroll-margin-top: calc(var(--nav-height-desktop) + 16px);
+}
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--clinic-container);
+  margin: 0 auto;
+}
+
+/* ---- Heading ----------------------------------------------------------- */
+.head {
+  max-width: 820px;
+}
+.title {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.3rem, 3.8vw, 3.7rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  color: var(--neodent-ivory);
+  text-wrap: balance;
+}
+.accent {
+  display: block;
+  color: var(--neodent-red);
+  font-style: italic;
+}
+.support {
+  max-width: 58ch;
+  margin: 18px 0 0;
+  color: rgba(248, 246, 239, 0.8);
+  font-size: 16px;
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  .support {
+    font-size: 17px;
+  }
+}
+
+/* ---- Grid ---------------------------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(32px, 4vw, 52px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  display: flex;
+  min-width: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 220px;
+  padding: 22px;
+  border: 1px solid rgba(37, 37, 37, 0.1);
+  border-radius: 16px;
+  background-color: #f3f0e8;
+  color: #252525;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    transform 260ms var(--clinic-ease),
+    box-shadow 260ms var(--clinic-ease),
+    border-color 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37, 37, 37, 0.24);
+    box-shadow: 0 22px 36px -20px rgba(0, 0, 0, 0.6);
+  }
+  .card:hover .arrow,
+  .card:hover .ctaLink svg {
+    transform: translateX(3px);
+  }
+}
+.card:active {
+  transform: scale(0.985);
+}
+.card:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
+}
+
+.cardTitle {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cardSummary {
+  margin-top: 8px;
+  color: #44484a;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+.icon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  stroke-width: 1.5;
+  color: var(--neodent-red);
+}
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  color: var(--neodent-red-dark);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+/* The data holds the category words in capitals; show "Repair" etc. */
+.intent {
+  display: inline-block;
+  text-transform: lowercase;
+}
+.intent::first-letter {
+  text-transform: uppercase;
+}
+.arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 200ms ease;
+}
+
+/* ---- Eighth card: outlined ------------------------------------------------ */
+.cta {
+  background-color: transparent;
+  border: 1px solid rgba(248, 246, 239, 0.42);
+  color: var(--neodent-ivory);
+}
+.cta:hover {
+  background-color: rgba(248, 246, 239, 0.07);
+  border-color: rgba(248, 246, 239, 0.8);
+}
+.ctaHeading {
+  font-family: var(--app-font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.ctaText {
+  margin-top: 8px;
+  color: rgba(248, 246, 239, 0.8);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: auto;
+  padding-top: 16px;
+  color: var(--neodent-ivory);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.ctaLink svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 200ms ease;
+}
+
+/* ---- Tablet / phone ---------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card {
+    min-height: 200px;
+  }
+}
+@media (max-width: 599px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .title {
+    font-size: clamp(2.05rem, 8.6vw, 2.55rem);
+  }
+  /* Compact row: icon on the left, text beside it. */
+  .card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    grid-template-areas:
+      "icon title"
+      "icon summary"
+      "icon action";
+    column-gap: 14px;
+    min-height: 0;
+    padding: 18px;
+  }
+  .bottom {
+    display: contents;
+  }
+  .icon {
+    grid-area: icon;
+    align-self: start;
+    width: 36px;
+    height: 36px;
+  }
+  .cardTitle {
+    grid-area: title;
+  }
+  .cardSummary {
+    grid-area: summary;
+  }
+  .action {
+    grid-area: action;
+    justify-self: start;
+    margin: 10px 0 0;
+  }
+  .cta {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .arrow,
+  .ctaLink svg {
+    transition: none;
+  }
+  .card:hover,
+  .card:active {
+    transform: none;
+  }
+}

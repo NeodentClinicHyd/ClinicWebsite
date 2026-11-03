@@ -1,9 +1,26 @@
+import Link from "next/link";
 import { CountUp } from "@/components/motion/CountUp";
 import { Reveal } from "@/components/motion/Reveal";
 import { EVIDENCE } from "@/lib/treatments-hub";
+import { googleRating, nampallyGoogleRating } from "@/lib/site-data";
 import { Backdrop } from "./Backdrop";
 import shared from "./TreatmentsHub.module.css";
 import styles from "./ExperienceEvidence.module.css";
+
+/* Q2 resolved: the footer and the home page read their ratings from
+   lib/site-data.ts, while this page carried older hard-coded figures.
+   Score and count now come from the same source; the star glyphs stay
+   as the page had them. */
+const LIVE_RATINGS: Record<string, { score: string; count: number }> = {
+  Mehdipatnam: googleRating,
+  Nampally: nampallyGoogleRating,
+};
+const RATINGS = EVIDENCE.ratings.map((rating) => {
+  const live = LIVE_RATINGS[rating.branch];
+  return live
+    ? { ...rating, score: live.score, reviews: `${live.count} reviews` }
+    : rating;
+});
 
 /* S8. Experience, evidence & what patients see (pattern P2 fact strip) on
    the dark band. Left: the ratings as a dark glass card. Right: the
@@ -28,7 +45,11 @@ export function ExperienceEvidence() {
     >
       <Backdrop />
       <div className={shared.container}>
-        <Reveal as="h2" id="experience-title" className={`${shared.title} ${styles.title}`}>
+        <Reveal
+          as="h2"
+          id="experience-title"
+          className={`${shared.title} ${styles.title}`}
+        >
           {EVIDENCE.title} {EVIDENCE.accent}
         </Reveal>
 
@@ -36,13 +57,24 @@ export function ExperienceEvidence() {
           <Reveal className={styles.ratings}>
             <p className={styles.label}>{EVIDENCE.ratingsLabel}</p>
             <ul className={styles.ratingList}>
-              {EVIDENCE.ratings.map((rating) => {
+              {RATINGS.map((rating) => {
                 const reviews = splitReviews(rating.reviews);
                 return (
                   <li key={rating.branch} className={styles.rating}>
-                    <p className={styles.branch}>{rating.branch}</p>
+                    <p className={styles.branch}>
+                      <Link
+                        href={`/clinic/${rating.branch.toLowerCase()}`}
+                        className={styles.branchLink}
+                      >
+                        {rating.branch}
+                      </Link>
+                    </p>
                     <span className={styles.score}>
-                      <CountUp to={Number(rating.score)} decimals={1} grouping={false} />
+                      <CountUp
+                        to={Number(rating.score)}
+                        decimals={1}
+                        grouping={false}
+                      />
                     </span>
                     <span className={styles.meta}>
                       <span

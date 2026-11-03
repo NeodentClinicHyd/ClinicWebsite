@@ -1,0 +1,59 @@
+/* Branch page wrapper (/clinic/[slug]).
+
+   The page's custom properties live here so every band reads the same
+   values (same recipe as the /clinic hub: dark-band glow and icon pattern
+   copied from the home hero). A band overrides a value by setting the
+   same property on its own section class; BranchBackdrop never
+   re-declares them. Section padding is copied from LegacyStory.module.css
+   (clamp(72px, 8vw, 112px)).
+
+   Band rhythm: dark header -> light intro + visit card -> dark gallery ->
+   light treatments -> dark people -> light doctor and other-clinic cards
+   -> light patient story -> light FAQ -> red closing card -> footer. */
+
+.page {
+  /* Dark-band layer recipe: glow centre and strength. */
+  --clinic-glow-x: calc(50% + min(290px, 23vw));
+  --clinic-glow-y: 50%;
+  --clinic-glow-a: 0.3;
+  --clinic-glow-rx: min(460px, 36vw);
+  --clinic-glow-ry: 72%;
+  --clinic-glow2-a: 0.12;
+
+  /* Pattern tile: strength, size and the mask that fades it out
+     before the text column. */
+  --clinic-pattern-o: 0.125;
+  --clinic-pattern-size: 420px;
+  --clinic-pattern-rx: min(345px, 26vw);
+  --clinic-pattern-ry: 86%;
+
+  /* Section rhythm. */
+  --clinic-pad-y: clamp(72px, 8vw, 112px);
+  --clinic-container: min(1180px, calc(100% - 48px));
+  --clinic-radius: 0.35rem;
+  --clinic-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Light surfaces. */
+  --clinic-hairline: rgba(38, 48, 51, 0.16);
+  --clinic-card-shadow: 0 18px 40px -26px rgba(22, 28, 30, 0.34), 0 2px 8px rgba(22, 28, 30, 0.06);
+
+  /* Dark surfaces. */
+  --clinic-dark-top: var(--neodent-charcoal);
+  --clinic-dark-bottom: #0f1315;
+  --clinic-glass: rgba(16, 21, 23, 0.72);
+  --clinic-glass-line: rgba(255, 255, 255, 0.12);
+  --clinic-ivory-muted: rgba(248, 246, 239, 0.78);
+}
+
+@media (max-width: 1023px) {
+  .page {
+    /* Below 1024px the media sits under the copy, so the light moves
+       to the lower middle of the band. */
+    --clinic-glow-x: 50%;
+    --clinic-glow-y: 78%;
+    --clinic-glow-rx: min(420px, 90vw);
+    --clinic-pattern-rx: min(420px, 92vw);
+    --clinic-pattern-ry: 46%;
+    --clinic-container: min(100% - 32px, 640px);
+  }
+}

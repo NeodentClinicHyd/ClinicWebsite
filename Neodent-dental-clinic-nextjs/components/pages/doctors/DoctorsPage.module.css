@@ -1,0 +1,53 @@
+/* Doctors page wrapper. The page's custom properties live here so every
+   band reads the same values (same recipe as /clinic and /about: the
+   dark-band glow and icon pattern come from the home hero). A band
+   overrides a value by setting the same property on its own section
+   class; DoctorsBackdrop never re-declares them.
+
+   Band rhythm: dark header -> light fact strip -> light leadership and
+   Dr. Miftah at work -> dark team band -> light clinics band -> light
+   consultation block -> footer. During R1 the old two cards and closing
+   line still sit below the strip (dark) until R2 and R4 replace them. */
+
+.page {
+  /* Dark-band layer recipe: glow centre and strength. */
+  --doc-glow-x: calc(50% + min(290px, 23vw));
+  --doc-glow-y: 50%;
+  --doc-glow-a: 0.3;
+  --doc-glow-rx: min(460px, 36vw);
+  --doc-glow-ry: 72%;
+  --doc-glow2-a: 0.12;
+
+  /* Pattern tile: strength, size and the mask that fades it out
+     before the text column. */
+  --doc-pattern-o: 0.125;
+  --doc-pattern-size: 420px;
+  --doc-pattern-rx: min(345px, 26vw);
+  --doc-pattern-ry: 86%;
+
+  /* Section rhythm. */
+  --doc-pad-y: clamp(72px, 8vw, 112px);
+  --doc-container: min(1180px, calc(100% - 48px));
+  --doc-radius: 0.35rem;
+  --doc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Dark surfaces. */
+  --doc-dark-top: var(--neodent-charcoal);
+  --doc-dark-bottom: #0f1315;
+  --doc-glass: rgba(16, 21, 23, 0.72);
+  --doc-glass-line: rgba(255, 255, 255, 0.12);
+  --doc-ivory-muted: rgba(248, 246, 239, 0.78);
+}
+
+@media (max-width: 1023px) {
+  .page {
+    /* Below 1024px the media sits under the copy, so the light moves
+       to the lower middle of the band. */
+    --doc-glow-x: 50%;
+    --doc-glow-y: 78%;
+    --doc-glow-rx: min(420px, 90vw);
+    --doc-pattern-rx: min(420px, 92vw);
+    --doc-pattern-ry: 46%;
+    --doc-container: min(100% - 32px, 640px);
+  }
+}

@@ -1,0 +1,48 @@
+/* Shared 4:5 doctor portrait frame. Same charcoal backdrop and soft
+   light behind the head for every doctor, so cut-outs from different
+   shoots sit together. Width is capped so the frame never exceeds
+   --media-max-h-compact. */
+.frame {
+  position: relative;
+  width: min(100%, calc(var(--media-max-h-compact, 52vh) * 0.8));
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 14px;
+  background: radial-gradient(
+    ellipse 75% 55% at 50% 30%,
+    #3b4245 0%,
+    #262b2e 55%,
+    #1b1f21 100%
+  );
+}
+/* The width / left / top come from the doctor's `crop` (inline). */
+.cutout {
+  position: absolute;
+  max-width: none;
+  height: auto;
+  filter: saturate(0.92);
+}
+
+/* Monogram plate: initials on the same frame, a faint tooth behind. */
+.monogram {
+  display: grid;
+  place-items: center;
+}
+.tooth {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 62%;
+  transform: translate(-50%, -52%);
+  fill: none;
+  stroke: rgba(241, 238, 231, 0.1);
+  stroke-width: 1.4;
+}
+.initials {
+  position: relative;
+  color: rgba(241, 238, 231, 0.88);
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}

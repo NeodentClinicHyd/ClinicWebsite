@@ -10,6 +10,14 @@ import styles from "./TreatmentProcess.module.css";
    hairline dividers. No numerals, no boxed cards, no red top lines. The
    photo is the existing treatment-room image (Q9: a better one can be
    added later as an extra). Heading in one ink colour. */
+
+/* Q9 resolved: the dim treatment-room photo is replaced by the bright
+   Nampally reception and consultation-chamber photo already in /public
+   (authentic NeoDent media). The old image stays in lib/treatments-hub.ts. */
+const PHOTO = {
+  src: "/assets/neodent-clinic-nampally/Neodent dental hospital - nampally Interior.jpg",
+  alt: "Reception desk and consultation chambers at Neodent Dental Hospital, Nampally",
+};
 export function TreatmentProcess() {
   return (
     <section className={`${shared.paper} ${styles.section}`} aria-labelledby="planning-title">
@@ -31,8 +39,8 @@ export function TreatmentProcess() {
             <Reveal variant="mask">
               <div className={styles.photo}>
                 <Image
-                  src={PLANNING.image}
-                  alt={PLANNING.imageAlt}
+                  src={PHOTO.src}
+                  alt={PHOTO.alt}
                   fill
                   sizes="(max-width: 767px) 92vw, 440px"
                 />

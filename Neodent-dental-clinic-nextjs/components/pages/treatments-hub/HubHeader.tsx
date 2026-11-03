@@ -24,7 +24,10 @@ const SRC =
   "/assets/treatment-video/dr-miftah-explains-dmls-crowns-masticatory-efficiency.mp4";
 
 const at = (delay: string, index?: number) =>
-  ({ "--d": delay, ...(index === undefined ? {} : { "--i": index }) }) as CSSProperties;
+  ({
+    "--d": delay,
+    ...(index === undefined ? {} : { "--i": index }),
+  }) as CSSProperties;
 
 function Name({ slug, children }: { slug: string; children: string }) {
   const href = TREATMENTS.find((t) => t.slug === slug)?.href;
@@ -50,7 +53,11 @@ export function HubHeader() {
       <Backdrop />
       <div className={`${shared.container} ${styles.inner}`}>
         <div className={styles.copy}>
-          <nav className={`${styles.crumbs} ${styles.in}`} aria-label="Breadcrumb" style={at("0ms")}>
+          <nav
+            className={`${styles.crumbs} ${styles.in}`}
+            aria-label="Breadcrumb"
+            style={at("0ms")}
+          >
             <ol>
               {HUB_BREADCRUMBS.map((item, index) => {
                 const last = index === HUB_BREADCRUMBS.length - 1;
@@ -79,23 +86,41 @@ export function HubHeader() {
               </span>
             </span>{" "}
             <span className={styles.line}>
-              <span className={`${styles.lineInner} ${styles.titleAccent}`} style={at("0ms", 1)}>
+              <span
+                className={`${styles.lineInner} ${styles.titleAccent}`}
+                style={at("0ms", 1)}
+              >
                 bring you to Neodent.
               </span>
             </span>
           </h1>
 
-          <p className={`${shared.lede} ${styles.lede} ${styles.in}`} style={at("340ms")}>
+          <p
+            className={`${shared.lede} ${styles.lede} ${styles.in}`}
+            style={at("340ms")}
+          >
             From <Name slug="dental-implants">dental implants</Name> and{" "}
-            <Name slug="full-mouth-rehabilitation">full mouth rehabilitation</Name> to
-            orthodontic alignment,{" "}
-            <Name slug="root-canal-treatment">root canal treatment</Name>, crowns, dentures,
-            veneers and smile-focused <Name slug="smile-design">cosmetic dentistry</Name>, Neodent
-            brings different areas of dental care together around the concerns that matter to
-            each patient.
+            <Name slug="full-mouth-rehabilitation">
+              full mouth rehabilitation
+            </Name>{" "}
+            to orthodontic alignment,{" "}
+            <Name slug="root-canal-treatment">root canal treatment</Name>,
+            crowns, dentures, veneers and smile-focused{" "}
+            <Name slug="smile-design">cosmetic dentistry</Name>, Neodent brings
+            different areas of dental care together around the concerns that
+            matter to each patient.
           </p>
 
-          <div className={`${styles.actions} ${styles.in}`} style={at("440ms")} data-hub-primary-cta>
+          <p className={`${styles.support} ${styles.in}`} style={at("390ms")}>
+            Dental treatments at Neodent Dental Hospital in Mehdipatnam and
+            Nampally, Hyderabad.
+          </p>
+
+          <div
+            className={`${styles.actions} ${styles.in}`}
+            style={at("440ms")}
+            data-hub-primary-cta
+          >
             <AppButton href={ctaTelPhone} variant="primary">
               <Phone size={14} aria-hidden="true" /> Call Neodent{" "}
               <ArrowRight size={14} aria-hidden="true" />
@@ -120,7 +145,9 @@ export function HubHeader() {
           </div>
           <figcaption className={`${styles.caption} ${styles.captionIn}`}>
             <b>{miftah.name}</b>
-            <span>BDS · MDS · FICOI (U.S.A.) · Prosthodontist &amp; Implantologist</span>
+            <span>
+              BDS · MDS · FICOI (U.S.A.) · Prosthodontist &amp; Implantologist
+            </span>
           </figcaption>
         </figure>
       </div>

@@ -1,0 +1,296 @@
+/* S2 clinical leadership: light band, two featured cards in the home
+   format (see components/sections/ClinicalLeadership.module.css). */
+
+.section {
+  --red: var(--neodent-red);
+  --ink: var(--neodent-ink);
+  --muted: rgba(38, 48, 51, 0.76);
+  --hair: rgba(38, 48, 51, 0.14);
+  --accent-text: #b5121a;
+
+  background: var(--neodent-surface);
+  color: var(--ink);
+  padding: var(--doc-pad-y) 0 clamp(28px, 3.5vw, 48px);
+}
+
+.container {
+  width: var(--doc-container);
+  margin: 0 auto;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---- Heading block ---- */
+.header {
+  max-width: 62ch;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--accent-text);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--red);
+}
+.title {
+  margin: 12px 0 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.lede {
+  max-width: 52ch;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 16.5px;
+  line-height: 1.6;
+}
+
+/* ---- Cards ---- */
+.leaders {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  margin-top: clamp(28px, 4vw, 48px);
+}
+.leader {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  grid-template-areas:
+    "media head"
+    "body body"
+    "exp exp"
+    "link link";
+  column-gap: 16px;
+  align-items: start;
+  padding: 18px;
+  background: var(--neodent-ivory);
+  border: 1px solid rgba(38, 48, 51, 0.1);
+  border-radius: 20px;
+  transition:
+    transform 0.3s var(--doc-ease),
+    box-shadow 0.3s var(--doc-ease);
+}
+
+/* Phones: the aside dissolves so the experience figure sits on its own
+   full-width line under the paragraph. */
+.aside {
+  display: contents;
+}
+.media {
+  grid-area: media;
+  min-width: 0;
+}
+.media .portraitFrame {
+  width: 100%;
+}
+.head {
+  grid-area: head;
+  min-width: 0;
+}
+.body {
+  grid-area: body;
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(38, 48, 51, 0.88);
+}
+.leader > .profileLink {
+  grid-area: link;
+}
+
+.label {
+  margin: 0 0 6px;
+  color: var(--accent-text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.name {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 5.6vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.credentials {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+/* Treatment words inside Dr. Miftah's paragraph. */
+.inline {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+.inline:hover {
+  color: var(--accent-text);
+}
+.inline:focus-visible,
+.profileLink:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.exp {
+  grid-area: exp;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 14px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair);
+}
+.exp strong {
+  color: var(--red);
+  font-family: var(--app-font-serif);
+  font-size: 40px;
+  font-weight: 400;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.exp > span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.profileLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 6px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  justify-self: start;
+}
+.profileLink svg {
+  color: var(--red);
+  transition: transform 0.25s ease;
+}
+.profileLink:hover {
+  color: var(--red);
+}
+.profileLink:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---- Tablet and up: portrait and years left, text right ---- */
+@media (min-width: 641px) {
+  .leader {
+    grid-template-columns: minmax(150px, 30%) minmax(0, 1fr);
+    grid-template-areas:
+      "media head"
+      "media body"
+      "media link";
+    grid-template-rows: auto auto 1fr;
+    column-gap: 24px;
+    padding: 20px;
+  }
+  .aside {
+    grid-area: media;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+  .body {
+    margin-top: 14px;
+  }
+  .exp {
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding-top: 14px;
+  }
+  .exp strong {
+    font-size: 44px;
+  }
+  .leader > .profileLink {
+    align-self: end;
+  }
+  .name {
+    font-size: clamp(22px, 2.2vw, 28px);
+  }
+}
+
+/* Two cards side by side, built the same way. The label keeps two
+   lines' height so both names start level. */
+@media (min-width: 1024px) {
+  .leaders {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .leader {
+    grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+  }
+  .label {
+    min-height: calc(2 * 1.4em);
+  }
+}
+
+/* ---- Hover lift on fine pointers, press state on touch ---- */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .leader:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px -22px rgba(22, 28, 30, 0.35);
+  }
+}
+.profileLink:active {
+  opacity: 0.75;
+}
+/* Touch press state: a small, quick shrink. Transform only. */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .leader:active {
+    transform: scale(0.99);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .leader,
+  .profileLink svg,
+  .inline {
+    transition: none;
+  }
+  .leader:hover {
+    transform: none;
+  }
+}

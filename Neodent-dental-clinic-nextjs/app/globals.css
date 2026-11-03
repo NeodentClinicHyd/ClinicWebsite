@@ -180,7 +180,7 @@
    ORDER IS LOAD-BEARING. Custom properties do not cascade by
    specificity here (every block below targets :root), so the LAST
    matching declaration wins. The blocks therefore run widest-first, and
-   the height-conditional Level 2 tier must precede the ≤767px tier so a
+   the height-conditional Level 2 tier must precede the â‰¤767px tier so a
    narrow-but-tall viewport still resolves to the mobile value.
    ======================================== */
 
@@ -694,7 +694,6 @@ button {
 .hero {
   --hero-nav-h: var(--nav-height-desktop);
   --hero-controls-h: 60px;
-  --hero-h: calc(100vh - var(--hero-nav-h));
   --hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --hero-ink-muted: rgba(248, 246, 239, 0.72);
   --hero-line: rgba(248, 246, 239, 0.16);
@@ -710,11 +709,6 @@ button {
   color: var(--neodent-ivory);
   overflow: hidden;
   overflow: clip;
-}
-@supports (height: 1dvh) {
-  .hero {
-    --hero-h: calc(100dvh - var(--hero-nav-h));
-  }
 }
 
 /* ---- Background layers ---- */
@@ -869,6 +863,16 @@ button {
   }
 }
 
+/* The global .container is also a Tailwind utility with a max-width per
+   breakpoint (1024px from 1024px, 1280px from 1280px). Inside the hero
+   that capped the content at 1024px on a 1265px window (a 1280px screen
+   with the scrollbar) and let it jump to 1180px at 1280px. The hero
+   uses the site container width (min(1180px, 100% - 64px)) everywhere
+   (P1d). */
+.hero .container {
+  max-width: none;
+}
+
 .hero-slides {
   position: relative;
   z-index: 1;
@@ -931,6 +935,7 @@ button {
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 .hero-title .serif {
   color: var(--neodent-red);
@@ -1217,6 +1222,14 @@ button {
   right: 0;
   bottom: -48px;
 }
+/* The site's floating call button (bottom right of the window, 56px
+   wide) sits over the call card below about 1380px wide, so the card
+   steps left of it there (P1d; at 1265px they overlapped). */
+@media (min-width: 768px) and (max-width: 1379px) {
+  .hero-glass-call {
+    right: 72px;
+  }
+}
 
 /* ---- Photo plates (slides 2 and 3): hairline, soft shadow, caption on
    a dark gradient over the photo's lower edge ---- */
@@ -1318,7 +1331,7 @@ button {
    their width (as in P1b). */
 .hero-branch-item {
   --pair-h: min(
-    calc(var(--hero-media-h) / 1.07),
+    calc(var(--strip-h) / 1.07),
     calc((100cqw - var(--pair-gap)) / 2 * 1.45)
   );
 }
@@ -1339,6 +1352,41 @@ button {
   outline: 2px solid var(--neodent-ivory);
   outline-offset: 3px;
 }
+/* Hover (P1d, mouse devices only): the plate lifts 5px and a faint
+   white layer fades in over the photo (transform and opacity only).
+   Applies to the clinic cards and to the slide 3 plates. The layer sits
+   under the caption. */
+.hero-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+  .hero-plate {
+    transition:
+      transform 0.4s var(--hero-ease),
+      border-color 0.25s ease;
+  }
+  .hero-plate:hover {
+    transform: translate3d(0, -5px, 0);
+  }
+  .hero-plate:hover::after {
+    opacity: 0.07;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-plate,
+  .hero-plate::after {
+    transition: none;
+  }
+  .hero-plate:hover {
+    transform: none;
+  }
+}
 
 /* ---- Slide 3: public record ----
    The cutting is a document: shown whole (contain) above a solid
@@ -1356,8 +1404,8 @@ button {
   /* The cutting's own width at the row height, but never under 136px so
      the two-line caption fits. When the card is wider than the cutting,
      the cutting stays whole on the paper colour. */
-  width: max(136px, calc((var(--hero-media-h) - var(--doc-band) - 2px) * 631 / 1280 + 2px));
-  height: var(--hero-media-h);
+  width: max(136px, calc((var(--strip-h) - var(--doc-band) - 2px) * 631 / 1280 + 2px));
+  height: var(--strip-h);
   background: #efece4;
 }
 .hero-plate-document .hero-plate-media {
@@ -1389,6 +1437,78 @@ button {
 }
 .hero-record-photo {
   filter: saturate(0.85);
+}
+/* Tap-to-zoom on the press cutting (P1d). The image area is a button. */
+.hero-plate-zoom {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
+}
+.hero-plate-zoom:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: -4px;
+}
+.hero-plate-zoom-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(16, 21, 23, 0.82);
+  color: var(--neodent-ivory);
+  pointer-events: none;
+}
+.hero-zoom-dialog {
+  max-width: 96vw;
+  max-height: 96vh;
+  max-height: 96dvh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+.hero-zoom-dialog::backdrop {
+  background: rgba(8, 10, 11, 0.88);
+}
+.hero-zoom-dialog-body {
+  position: relative;
+}
+.hero-zoom-dialog-image {
+  display: block;
+  width: auto;
+  height: min(88vh, 1280px);
+  height: min(88dvh, 1280px);
+  max-width: 92vw;
+  border-radius: 3px;
+  background: #efece4;
+  object-fit: contain;
+}
+.hero-zoom-dialog-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: #101517;
+  color: var(--neodent-ivory);
+}
+.hero-zoom-dialog-close:focus-visible {
+  outline: 2px solid var(--neodent-ivory);
+  outline-offset: 3px;
 }
 
 /* ---- Slide dots with autoplay progress ----
@@ -1504,21 +1624,22 @@ button {
     transform: translate3d(0, 105%, 0);
   }
 }
-@keyframes heroRise {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 24px, 0);
-  }
-}
 @keyframes heroFadeUp {
   from {
     opacity: 0;
     transform: translate3d(0, 12px, 0);
   }
 }
-@keyframes heroFade {
+@keyframes heroSettle {
   from {
     opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(1.035);
+  }
+}
+@keyframes heroBloom {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
   }
 }
 @keyframes heroBreathe {
@@ -1543,40 +1664,44 @@ button {
   animation: heroLineIn 700ms var(--hero-ease) 80ms backwards;
 }
 .hero-slide-active .hero-title > span:nth-child(2) > span {
-  animation-delay: 170ms;
+  animation-delay: 180ms;
 }
 .hero-slide-active .hero-sub {
-  animation: heroFadeUp 600ms var(--hero-ease) 260ms backwards;
+  animation: heroFadeUp 600ms var(--hero-ease) 300ms backwards;
 }
 .hero-slide-active .hero-founder-meta {
-  animation: heroFadeUp 600ms var(--hero-ease) 320ms backwards;
-}
-.hero-slide-active .hero-actions {
   animation: heroFadeUp 600ms var(--hero-ease) 380ms backwards;
 }
+.hero-slide-active .hero-actions {
+  animation: heroFadeUp 600ms var(--hero-ease) 460ms backwards;
+}
+/* Entrance order (P1d): headline lines, supporting line, doctor line,
+   actions, then the media in 100ms steps. The portrait is the page's
+   LCP element, so it starts early (120ms) and settles slowly instead
+   of waiting its turn; the spotlight blooms behind it. */
 .hero-slide-active .hero-founder-spotlight {
-  animation: heroFade 900ms ease-out 60ms backwards;
+  animation: heroBloom 1300ms var(--hero-ease) 80ms backwards;
 }
 .hero-slide-active .hero-founder-figure {
-  animation: heroRise 800ms var(--hero-ease) 120ms backwards;
+  animation: heroSettle 1100ms var(--hero-ease) 120ms backwards;
 }
 .hero-slide-active .hero-glass-since {
-  animation: heroFadeUp 500ms var(--hero-ease) 450ms backwards;
+  animation: heroFadeUp 500ms var(--hero-ease) 560ms backwards;
 }
 .hero-slide-active .hero-glass-call {
-  animation: heroFadeUp 500ms var(--hero-ease) 600ms backwards;
+  animation: heroFadeUp 500ms var(--hero-ease) 680ms backwards;
 }
 .hero-slide-active .hero-branch-item,
 .hero-slide-active .hero-record > .hero-plate,
 .hero-slide-active .hero-record-side > .hero-plate {
-  animation: heroFadeUp 700ms var(--hero-ease) 160ms backwards;
+  animation: heroFadeUp 700ms var(--hero-ease) 560ms backwards;
 }
 .hero-slide-active .hero-branch-item + .hero-branch-item,
 .hero-slide-active .hero-record-side > .hero-plate:first-child {
-  animation-delay: 280ms;
+  animation-delay: 660ms;
 }
 .hero-slide-active .hero-record-side > .hero-plate + .hero-plate {
-  animation-delay: 400ms;
+  animation-delay: 760ms;
 }
 /* Atmosphere: on the active slide only, 768px and wider. */
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
@@ -1620,24 +1745,38 @@ button {
   }
 }
 
-/* ---- Desktop: fit 100dvh minus the nav ---- */
+/* ---- Desktop (1024px and wider): the hero is exactly the visible screen ----
+   P1d. The nav is position: fixed, so the hero starts at y = 0 under it
+   and its own padding (.hero-slides) leaves the nav's height free at the
+   top. P1 to P1c set the hero's HEIGHT to 100dvh - nav, so its bottom
+   edge stopped one nav height (78px) above the bottom of the window and
+   the next section showed underneath. They also took the nav off a
+   second time when working out the room for content.
+   Now: the visible area under the nav is --hero-vis-h = 100dvh - nav,
+   at least 500px and at most 1100px; the hero is nav + that, so its
+   bottom edge lands on the bottom of the window (up to the cap). The
+   content room is the visible area minus the dots row. The hero is a
+   size container (its height is explicit), so the tiers below are
+   container queries on the hero's own height. */
 @media (min-width: 1024px) {
   .hero {
-    height: var(--hero-h);
-    min-height: 540px;
-    /* Room left once the fixed nav (over the top) and the dots row (at
-       the bottom) are taken out. */
-    --hero-content-h: max(400px, calc(var(--hero-h) - var(--hero-nav-h) - var(--hero-controls-h)));
-    --hero-stage-h: min(600px, calc(var(--hero-content-h) - 24px));
-    /* Media cluster height on slides 2 and 3 (P1c): about 64% of the
-       hero, never above --media-max-h and never taller than the room
-       left between the nav and the dots. Captions sit on the photos, so
-       no caption row needs to be reserved. */
-    --hero-media-h: min(
-      var(--media-max-h),
-      calc(var(--hero-h) * 0.64),
-      calc(var(--hero-content-h) - 12px)
-    );
+    --hero-vis-h: clamp(500px, calc(100vh - var(--hero-nav-h)), 1100px);
+    container: hero / size;
+    height: calc(var(--hero-nav-h) + var(--hero-vis-h));
+    /* Room left once the nav (over the top) and the dots row (at the
+       bottom) are taken out. */
+    --hero-content-h: calc(var(--hero-vis-h) - var(--hero-controls-h));
+    --hero-stage-h: min(var(--hero-content-h), 700px);
+    /* Media cluster height on slides 2 and 3: the media cap, and never
+       taller than the room between the nav and the dots. Captions sit
+       on the photos, so no caption row needs to be reserved. */
+    --hero-media-h: min(var(--media-max-h), calc(var(--hero-content-h) - 16px));
+    --strip-h: var(--hero-media-h);
+  }
+  @supports (height: 1dvh) {
+    .hero {
+      --hero-vis-h: clamp(500px, calc(100dvh - var(--hero-nav-h)), 1100px);
+    }
   }
   .hero-slides {
     padding-top: var(--hero-nav-h);
@@ -1649,6 +1788,38 @@ button {
   .hero-slide-inner {
     max-height: var(--hero-content-h);
   }
+
+  /* Copy scaling (P1d): type and spacing follow the visible height, so a
+     540px hero is composed and an 825px one has no dead band. Slide 1
+     keeps Level 1 of the type scale, slides 2 and 3 Level 2; the viewport
+     width caps (--type-hero-*) still apply. */
+  .hero-title {
+    margin-top: clamp(12px, calc(var(--hero-vis-h) * 0.03), 26px);
+  }
+  .hero-title-primary {
+    font-size: min(var(--type-hero-primary), calc(var(--hero-vis-h) * 0.123));
+  }
+  .hero-title-secondary {
+    font-size: min(var(--type-hero-supporting), calc(var(--hero-vis-h) * 0.103));
+  }
+  .hero-sub {
+    margin-top: clamp(12px, calc(var(--hero-vis-h) * 0.028), 24px);
+    font-size: clamp(16px, calc(var(--hero-vis-h) * 0.029), 19px);
+  }
+  .hero-founder-meta {
+    margin-top: clamp(16px, calc(var(--hero-vis-h) * 0.034), 28px);
+  }
+  .hero-actions {
+    margin-top: clamp(20px, calc(var(--hero-vis-h) * 0.045), 36px);
+  }
+  /* Both actions fit one row in the slide 2 copy column (about 400px). */
+  .hero-actions .button {
+    padding-inline: 22px;
+  }
+  .hero-actions .button-primary {
+    min-width: 0;
+  }
+
   /* Slide 2: a wider media column (its headline needs less width than
      slides 1 and 3) and a landscape-friendly split of the pair. */
   .hero-slide-place .hero-slide-inner {
@@ -1661,54 +1832,145 @@ button {
   .hero-slide-place .hero-branch-item {
     --pair-h: min(
       calc(var(--hero-media-h) / 1.07),
-      calc((100cqw - var(--pair-gap)) * 0.58 * 1.52)
+      calc((100cqw - var(--pair-gap)) * 0.58 * 1.4)
     );
   }
 }
-/* Narrow desktops (1024 to 1279px): the media column is under about
-   580px, so the 113% portrait would put the head under the "Since 1994"
-   card. Here the portrait is as wide as the column (P1b's size). */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .hero-founder-stage > * {
-    --pw: min(100cqw, 166cqh);
-  }
-}
-/* Short laptops (1366 x 650, 1536 x 730): tighter vertical rhythm. */
-@media (min-width: 1024px) and (max-height: 760px) {
-  .hero-title {
-    margin-top: 14px;
-  }
-  .hero-sub {
-    margin-top: 14px;
-    font-size: 16px;
-  }
+
+/* ---- Height tiers (P1d) ----
+   Container queries on the hero's own height (nav + visible area):
+     A  up to 638px   (visible area up to 560)    short laptops, 1352x618
+     B  639 to 778    (561 to 700)                1366x650 to 1366x768
+     C  779 to 928    (701 to 850)                1265x903, 1440x900
+     D  929 and up    (851 and up)                1280x1024, 1920x1080
+   Sizes above are continuous in the visible height; the tiers change
+   structure only. */
+@container hero (max-height: 778px) {
+  /* A and B: the doctor line and the rating chip share one row (the
+     doctor's specialisms wrap to two lines inside their own column). */
   .hero-founder-meta {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px 18px;
-    margin-top: 18px;
+    gap: 10px 14px;
   }
   .hero-founder-name {
     flex-direction: column;
     gap: 2px;
+    max-width: 212px;
   }
-  .hero-actions {
-    margin-top: 22px;
+  .hero-rating {
+    padding: 7px 11px;
+    gap: 8px;
+  }
+  /* Slide 2: the copy column keeps "One standard of care." on one line. */
+  .hero-slide-place .hero-slide-inner {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
+@container hero (min-height: 779px) {
+  /* C and D: slide 2's photo pair is as tall as the media cap allows
+     (up to 680px), which needs a wider media column. */
+  .hero-slide-place .hero-slide-inner {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  }
+}
+@container hero (min-height: 929px) {
+  /* D: slide 2's pair reaches the 680px media cap only with a wider
+     Nampally card (its lettering needs a card no taller than 1.43 x its
+     width), so the media column takes 68% and the copy column 32%; the
+     headline is held at 60px to fit it. */
+  .hero-slide-place .hero-slide-inner {
+    grid-template-columns: minmax(0, 0.64fr) minmax(0, 1.36fr);
+  }
+  .hero-slide-place .hero-branches {
+    grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+  }
+  .hero-slide-place .hero-branch-item {
+    --pair-h: min(
+      calc(var(--hero-media-h) / 1.07),
+      calc((100cqw - var(--pair-gap)) * 0.6 * 1.43)
+    );
+  }
+  .hero-slide-place .hero-title-secondary {
+    font-size: min(var(--type-hero-supporting), calc(var(--hero-vis-h) * 0.103), 60px);
+  }
+  /* Slide 3: the cutting's width is fixed by its height, so the extra
+     media width goes to the broadcast frame and the awards, which
+     otherwise end up about 260px wide at 1920x1080. */
+  .hero-slide-record .hero-slide-inner {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+}
+@container hero (max-height: 778px) {
+  /* B: "Three decades" (about 6.25 x the font size) fits the 515px
+     column, so slide 1's headline is three lines, not four. */
+  .hero-title-primary {
+    font-size: min(var(--type-hero-primary), calc(var(--hero-vis-h) * 0.123), 82px);
+  }
+}
+@container hero (max-height: 638px) {
+  /* A: slide 1's second headline line stays whole. The line is about
+     7.5 x the font size wide and the column is about 515px, so the
+     headline is sized to it. */
+  .hero-title-primary > span {
+    white-space: nowrap;
+  }
+}
+/* Narrow desktops (1024 to 1243px): the container is under 1180px wide,
+   the media column is under about 580px, so the 113% portrait would put
+   the head under the "Since 1994" card. Here the portrait is as wide as
+   the column (P1b's size). */
+@media (min-width: 1024px) and (max-width: 1243px) {
+  .hero-founder-stage > * {
+    --pw: min(100cqw, 166cqh);
+  }
+  /* The figure is only as tall as the column is wide (its bottom is at
+     about 1.05 x the column width), so the stage is no taller than
+     that: the fade then ends inside the figure, not on a hard edge. */
+  .hero {
+    --hero-stage-h: min(
+      var(--hero-content-h),
+      calc((100vw - 64px - 4.5vw) * 0.54)
+    );
+  }
+  /* Slide 2 needs a wider media column here for its pair to reach the
+     media cap (the headline is 48px, so a 290px copy column holds it). */
+  .hero-slide-place .hero-slide-inner {
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
   }
 }
 
-/* ---- Tablet and phone: copy first, then a compact media strip ---- */
+/* ---- Tablet and phone (1023px and below): copy first, then a media strip ----
+   P1d. The hero is at least the first screen tall. 100svh is the small
+   viewport height: it does not change when the browser bar hides, so
+   the layout does not jump. Each slide is a flex column, centred in the
+   room between the nav and the dots: the copy block, then a media strip
+   that grows into the spare height (flex: 1) between a floor
+   (--hero-strip-min) and a cap (--hero-strip-max, about 54svh).
+   Slide 2's pair is sized by the strip's width instead (aspect-ratio),
+   because the Nampally photo must keep its whole sign visible; spare
+   height there is shared above and below the slide's content. If a
+   short phone cannot fit the copy and the floor, the hero grows past
+   the first screen (the type and spacing tighten first, see the
+   max-height block below). Media inside the strip is sized from the
+   strip's own height (--strip-h = 100cqh of the strip container). */
 @media (max-width: 1023px) {
   .hero {
-    --hero-media-h: min(32vh, 300px);
-    --hero-stage-h: var(--hero-media-h);
     --hero-controls-h: 56px;
+    --hero-strip-min: 200px;
+    --hero-strip-max: min(54vh, 600px);
+    /* Only the pattern mask below reads this: it keeps the pattern off
+       the copy by starting it above the smallest strip. */
+    --hero-media-h: var(--hero-strip-min);
+    --strip-h: 100cqh;
+    min-height: 100vh;
     padding-top: var(--hero-nav-h);
   }
-  @supports (height: 1dvh) {
+  @supports (height: 1svh) {
     .hero {
-      --hero-media-h: min(32dvh, 300px);
+      --hero-strip-max: min(54svh, 600px);
+      min-height: 100svh;
     }
   }
   /* The media strip is in the lower part of the hero: the glow sits
@@ -1732,21 +1994,44 @@ button {
     );
   }
   .hero-slide-inner {
-    grid-template-columns: minmax(0, 1fr);
-    align-content: start;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
     gap: 24px;
-    padding-top: clamp(20px, 3.5vh, 40px);
+    padding-top: 18px;
   }
-  /* The media strip sits at the bottom of the shared slide height, so
-     the strip and the dots stay put when a shorter slide is shown. */
-  .hero-slide-inner {
-    grid-template-rows: auto 1fr;
+  .hero-copy {
+    flex: 0 0 auto;
   }
   .hero-media {
-    align-self: end;
+    flex: 1 1 0;
+    min-height: var(--hero-strip-min);
+    max-height: var(--hero-strip-max);
   }
+  .hero-founder-stage {
+    height: 100%;
+  }
+  .hero-record {
+    height: auto;
+    container-type: size;
+  }
+  /* Slide 2: the strip is as tall as the pair needs at its width
+     (0.4 / 0.6 split, Nampally card 1.4 x its width tall, second card
+     7% lower), up to the cap. */
   .hero-branches {
-    align-self: end;
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 0.87;
+    grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+    container-type: size;
+  }
+  .hero-branch-item {
+    --pair-h: min(
+      calc(var(--strip-h) / 1.07),
+      calc((100cqw - var(--pair-gap)) * 0.6 * 1.4)
+    );
   }
   .hero-controls {
     position: static;
@@ -1780,8 +2065,8 @@ button {
     --glow2-a: 0.1;
   }
   .hero-slide-inner {
-    gap: 22px;
-    padding-top: 18px;
+    gap: 20px;
+    padding-top: 16px;
   }
   .hero-title {
     margin-top: 14px;
@@ -1820,12 +2105,24 @@ button {
   .hero-actions .button-ghost {
     min-height: 46px;
   }
-  /* Phones: the "Since 1994" card takes the strip's left side beside
-     the head, so the portrait is placed with the hair line (0.409 of the
-     width) 8px right of the card's 186px edge. The right side of the
-     figure passes the strip's edge and fades out there. */
+  /* Phones, slide 1: the "Since 1994" card takes the strip's left side
+     beside the head, so the portrait is placed with the hair line
+     (0.409 of the width) 8px right of the card's 186px edge. The figure
+     is 22% wider than the strip and passes its right edge, where it
+     fades out; the spotlight behind the shoulders is stronger than on
+     desktop. */
   .hero-founder-stage > * {
+    --pw: min(122cqw, 158cqh);
     --pl: calc(186px - var(--pw) * 0.409);
+  }
+  .hero-founder-spotlight {
+    background: radial-gradient(
+      circle closest-side,
+      rgba(215, 25, 32, 0.4) 0%,
+      rgba(215, 25, 32, 0.22) 42%,
+      rgba(215, 25, 32, 0.07) 72%,
+      rgba(215, 25, 32, 0) 100%
+    );
   }
   .hero-founder-clip {
     -webkit-mask-image:
@@ -1850,7 +2147,7 @@ button {
     font-size: 12px;
   }
   /* Phones: the call card is not shown. The hero's own "Call for
-     Consultation" button is about 80px above the strip, and at 360px
+     Consultation" button is directly above the strip, and at 360px
      the site's floating call button sits over the strip's bottom-right
      corner, where this card would be. */
   .hero-glass-call {
@@ -1882,8 +2179,41 @@ button {
     font-size: 12px;
   }
 }
-
-
+/* Short phones (358x681, 360x740 with a tall browser bar): the type and
+   spacing tighten so the headline, both actions and the dots stay in
+   the first screen. The actions share one row (the arrow is dropped
+   from the primary button; its label stays), which saves about 56px. */
+@media (max-width: 767px) and (max-height: 720px) {
+  .hero-slide-inner {
+    gap: 16px;
+    padding-top: 12px;
+  }
+  .hero-title {
+    margin-top: 10px;
+  }
+  .hero-sub {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.42;
+  }
+  .hero-founder-meta {
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .hero-actions {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .hero-actions .button {
+    padding: 0 12px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .hero-actions .button-primary svg {
+    display: none;
+  }
+}
 
 /* ---- Fixed mobile call bar vs. the hero's primary button ----
    Home.tsx sets data-hidden="true" on .mobile-bar while a hero
@@ -4057,7 +4387,7 @@ button {
   transform: scale(1.05);
 }
 
-/* Floating doctor portrait — editorial overlay composition */
+/* Floating doctor portrait â€” editorial overlay composition */
 .doctor-floating-portrait {
   position: absolute;
   top: -12px;
@@ -4376,7 +4706,7 @@ button {
   animation: recognition-drift-2 20s ease-in-out infinite;
 }
 
-/* Ambient drift — keeps the section feeling alive even without scroll interaction */
+/* Ambient drift â€” keeps the section feeling alive even without scroll interaction */
 @keyframes recognition-drift-1 {
   0%,
   100% {
@@ -4498,7 +4828,7 @@ button {
   transform: translateX(0);
 }
 
-/* Scroll-linked parallax wrapper — image drifts at a different rate than the page */
+/* Scroll-linked parallax wrapper â€” image drifts at a different rate than the page */
 .recognition-parallax {
   position: relative;
   will-change: transform;
@@ -4600,7 +4930,7 @@ button {
   animation: recognition-badge-breathe 4.5s ease-in-out 2s infinite;
 }
 
-/* Continuous ambient "breathing" — subtle scale, keeps the badge feeling alive at rest */
+/* Continuous ambient "breathing" â€” subtle scale, keeps the badge feeling alive at rest */
 @keyframes recognition-badge-breathe {
   0%,
   100% {
@@ -4694,7 +5024,7 @@ button {
   height: 100%;
 }
 
-/* Ambient idle float — subtle continuous life once the entrance animation settles */
+/* Ambient idle float â€” subtle continuous life once the entrance animation settles */
 .recognition-visible
   .recognition-credential-1
   .recognition-credential-icon
@@ -5540,7 +5870,7 @@ button {
 }
 
 /* ===================================================================
-   PATIENT EXPERIENCE — VISIT JOURNEY
+   PATIENT EXPERIENCE â€” VISIT JOURNEY
    ================================================================= */
 .experience {
   background: var(--paper);
@@ -5727,7 +6057,7 @@ button {
   transform: translateY(0);
 }
 
-/* Scroll-linked connector — track is static, fill grows with scroll position */
+/* Scroll-linked connector â€” track is static, fill grows with scroll position */
 .experience-connector {
   position: absolute;
   top: 56px;
@@ -5975,7 +6305,7 @@ button {
   }
 }
 /* ===================================================================
-   CONTACT — FIND YOUR WAY TO US
+   CONTACT â€” FIND YOUR WAY TO US
    ================================================================= */
 .contact {
   background: var(--ivory);
@@ -5992,7 +6322,7 @@ button {
   transform: translateY(0);
 }
 
-/* Ambient background drift — keeps the section feeling alive at rest */
+/* Ambient background drift â€” keeps the section feeling alive at rest */
 .contact-ambient {
   position: absolute;
   inset: 0;
@@ -6520,10 +6850,10 @@ button {
   margin: 0 auto 24px;
 }
 
-/* Floating CTA tray — persistent Call button, bottom-right.
+/* Floating CTA tray â€” persistent Call button, bottom-right.
    --cookie-banner-space is written by CookieConsentBanner (see
    components/consent/CookieConsentBanner.tsx) while the cookie
-   banner is visible, and removed once a decision is made — so this
+   banner is visible, and removed once a decision is made â€” so this
    button lifts clear of the banner instead of being covered by it,
    and returns to its normal position everywhere else. */
 .floating-cta {
@@ -6609,7 +6939,7 @@ button {
   display: none;
 }
 
-/* Lead capture — scroll-triggered mid-funnel prompt */
+/* Lead capture â€” scroll-triggered mid-funnel prompt */
 .lead-backdrop {
   position: fixed;
   inset: 0;
@@ -8042,7 +8372,7 @@ button {
 }
 
 /* ============================================================
-   Section 03 — Featured Treatment Atlas (components/sections/Expertise)
+   Section 03 â€” Featured Treatment Atlas (components/sections/Expertise)
 
    Card-grid tablist + detail panel on a dark base with a quiet
    clinical-icon texture. Normal page flow: a treatment is selected by
@@ -8275,7 +8605,7 @@ button {
   }
 }
 
-/* Active treatment card — pure white, red edge, elevated. The title keeps
+/* Active treatment card â€” pure white, red edge, elevated. The title keeps
    the resting size so selecting a card never changes the grid's height. */
 .treatment-atlas-card.is-active {
   border-color: var(--neodent-red);
@@ -8298,7 +8628,7 @@ button {
   color: #4a4a4a;
 }
 
-/* Closing CTA card — ivory surface, ink text. */
+/* Closing CTA card â€” ivory surface, ink text. */
 .treatment-atlas-cta {
   background: #f1eee7;
   border-color: #f1eee7;
@@ -8850,7 +9180,7 @@ button {
 }
 
 /* ========================================
-   SECTION LEDE (shared) — homepage section lead / description paragraphs.
+   SECTION LEDE (shared) â€” homepage section lead / description paragraphs.
    Defines font-size, line-height, weight, colour and measure only; each
    section keeps its own margins and layout. Add .section-lede--on-dark on
    dark surfaces. Kept last in the file so it wins same-specificity ties

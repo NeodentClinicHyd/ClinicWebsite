@@ -1,0 +1,247 @@
+/* Clinics hub -- S3 "Different surroundings."
+
+   Dark band (gradient + ClinicBackdrop). Desktop: photo, red statement
+   card, photo in three columns, the card vertically centred. Photos are
+   object-fit cover, capped at --media-max-h, with their caption on a
+   gradient at the bottom. Tablet: two photos, then the card. Phones: the
+   card first, then a snap-scrolling row holding both photos. Red card:
+   the home LegacyStory statement (20px radius, --neodent-red, serif). */
+
+.section {
+  /* Glow and pattern sit behind the right-hand photo, clear of the heading. */
+  --clinic-glow-x: 84%;
+  --clinic-glow-y: 30%;
+  --clinic-glow-rx: min(520px, 40vw);
+  --clinic-pattern-rx: min(420px, 32vw);
+  --clinic-pattern-ry: 70%;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--neodent-ivory);
+  background-color: var(--clinic-dark-top);
+  background-image: linear-gradient(162deg, #1c2427 0%, #131a1c 52%, var(--clinic-dark-bottom) 100%);
+  padding: var(--clinic-pad-y) 0;
+  scroll-margin-top: calc(var(--nav-height-desktop) + 16px);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: var(--clinic-container);
+  margin: 0 auto;
+}
+
+/* ---- Heading: one ink colour, no red italic here -------------------- */
+.title {
+  margin: 0;
+  max-width: 760px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(2.3rem, 3.8vw, 3.7rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+.title span {
+  display: block;
+}
+
+/* ---- Layout ----------------------------------------------------------- */
+.layout {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.5vw, 32px);
+  align-items: center;
+  margin-top: clamp(36px, 4.4vw, 60px);
+}
+/* Wrapper is transparent to the grid on tablet and desktop. */
+.photos {
+  display: contents;
+}
+.dots {
+  display: none;
+}
+
+.left {
+  grid-column: 1;
+  grid-row: 1;
+}
+.right {
+  grid-column: 3;
+  grid-row: 1;
+}
+.red {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.figure {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+}
+.photo {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  max-height: var(--media-max-h);
+  width: 100%;
+  overflow: hidden;
+  background: #1b1d1f;
+  border-radius: 16px;
+  box-shadow: 0 22px 44px -24px rgba(0, 0, 0, 0.75);
+}
+.photo img {
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.02);
+}
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 44%;
+  background: linear-gradient(180deg, transparent, rgba(15, 17, 15, 0.82));
+  pointer-events: none;
+}
+.caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.captionTitle {
+  color: var(--neodent-ivory);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.captionLine {
+  color: rgba(248, 246, 239, 0.84);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ---- Statement card ---------------------------------------------------- */
+.red {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  min-width: 0;
+  padding: clamp(28px, 3vw, 40px);
+  background: var(--neodent-red);
+  color: var(--neodent-ivory);
+  border-radius: 20px;
+}
+.redText {
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(19px, 1.65vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.redText em {
+  font-style: italic;
+}
+
+/* ---- Tablet: two photos, then the card -------------------------------- */
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+  .left {
+    grid-column: 1;
+  }
+  .right {
+    grid-column: 2;
+  }
+  .red {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding: clamp(28px, 5vw, 40px);
+  }
+  .redText {
+    max-width: 38ch;
+    font-size: clamp(24px, 3.4vw, 30px);
+  }
+}
+
+/* ---- Phone: statement first, then a swipe row ------------------------- */
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(2.05rem, 8.6vw, 2.55rem);
+  }
+  .layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    margin-top: 28px;
+  }
+  .red {
+    padding: 26px 22px;
+    border-radius: 16px;
+  }
+  .redText {
+    font-size: clamp(22px, 6.2vw, 26px);
+  }
+
+  .photos {
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    padding: 0 0 4px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .photos::-webkit-scrollbar {
+    display: none;
+  }
+  .photos:focus-visible {
+    outline: 2px solid var(--neodent-ivory);
+    outline-offset: 4px;
+  }
+  .figure {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+  .photo {
+    aspect-ratio: 4 / 5;
+    max-height: 56dvh;
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .dot,
+  .dotOn {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(248, 246, 239, 0.3);
+    transition: background-color 200ms ease, transform 200ms ease;
+  }
+  .dotOn {
+    background: var(--neodent-red);
+    transform: scale(1.25);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .dotOn {
+    transition: none;
+  }
+}

@@ -114,11 +114,11 @@
 }
 @media (min-width: 1024px) {
   .card {
-    grid-column: 1 / 8;
+    grid-column: 1 / 9;
     grid-row: 1;
   }
   .figure {
-    grid-column: 8 / -1;
+    grid-column: 9 / -1;
     grid-row: 1;
     justify-self: center;
   }

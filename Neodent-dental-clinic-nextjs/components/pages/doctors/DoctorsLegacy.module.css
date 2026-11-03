@@ -1,0 +1,40 @@
+/* Transient styles for the old closing line (see DoctorsLegacy.tsx). */
+
+.section {
+  padding: 0 0 clamp(48px, 6vw, 80px);
+  background: var(--neodent-surface);
+  color: var(--neodent-ink);
+}
+
+.container {
+  width: var(--doc-container);
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(38, 48, 51, 0.14);
+}
+
+.footnote {
+  color: rgba(38, 48, 51, 0.8);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.inline {
+  color: var(--neodent-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--neodent-red);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.inline:hover {
+  color: #b5121a;
+}
+
+.inline:focus-visible {
+  outline: 2px solid var(--neodent-ink);
+  outline-offset: 3px;
+  border-radius: 3px;
+}

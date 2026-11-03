@@ -1266,3 +1266,105 @@ Unsure, or needs a decision:
 - **Leftover folders outside the repo:** I ran `npm ci` and `next build` inside the leftover `E:\neodent dental delegate\neodent-seo-audit\baseline-wt` worktree (its `node_modules` was incomplete) to serve the baseline. I also left the P1b build copy at `E:\neodent dental delegate\_p1b_snapshot`. Both can be deleted, along with the worktree, using `git worktree remove --force` on that path. All servers I started (3100, 3102, 3104) are stopped.
 
 Owner inputs still missing: as before. A cleaner re-cut of the portrait would remove the head rim and the gold lapel mark, which are both still visible. Set `heroPortraitImage` in `lib/site-data.ts`, and check the proportions note next to it if the framing differs. Approval of the Siasat English caption is also still needed.
+
+## P1d Hero fit: exact visible height, content scaling, mobile strip (2 Nov 2026)
+
+Scope: `section#home` only. Nothing committed. The prompt describes P1 to P1c as uncommitted, but `git status` showed no pending changes on the hero files at the start, so the baseline is the committed tree (P1c snapshot served on :3100 for comparison).
+
+**Files changed**
+- `app/globals.css`: hero block (fit, tiers, slide polish, mobile strip, entrance timing, hover). The `.mobile-bar` and floating-call rules are untouched.
+- `components/hero/Hero.tsx`: tap-to-zoom on the Siasat cutting (`button-hero-zoom-press` and a native `<dialog>`).
+- `lib/site-data.ts`: Nampally card focal point 42% -> 45% 50%. `heroPortraitImage` unchanged.
+- `scripts/hero-fit-audit.mjs`: new. Measures hero fit at 10 desktop and 5 mobile viewports x 3 slides, plus `--real` for headed Chrome.
+- Not changed: `Home.tsx`, other sections, colour tokens, type system, schema, dependencies. No new asset.
+
+**Root cause of the 78px gap (three parts)**
+1. The nav is `position: fixed` and the hero started at y=0, but `.hero` was `100dvh - nav` high. So `hero.bottom = innerHeight - 78` at every desktop viewport and 78px of the next section showed under the hero. `--hero-content-h` also subtracted the nav a second time (the nav is already the top padding of `.hero-slides`).
+2. The Tailwind `.container` (max-width 1024px from 1024px, 1180px from 1280px) boxed the hero. At 1265x903 the hero content lived in a 1024px box. Fixed with `.hero .container { max-width: none }`.
+3. Mobile: the hero height was content-driven (756 to 855px), so it did not match the viewport, the strip had a fixed height, and the actions-to-strip gap was 98 to 154px. At 358x681 the dots were pushed below the fold.
+
+**What changed**
+- Desktop hero height = nav + `clamp(500px, 100dvh - nav, 1100px)`. The hero is a size container (`container: hero / size`), so content sizes follow its height.
+- Type and spacing scale with the visible height (continuous formulas). The width caps in `--type-hero-*` still apply.
+- Height tiers (container queries on hero height, nav included):
+  - A: up to 638px (visible area up to 560). Short laptops, 1352x618. Slide 1 headline sized to keep line 2 whole; slide 2 title does not wrap.
+  - B: 639 to 778px (561 to 700). 1366x650 to 1366x768. Doctor line and rating chip share one row; headline capped at 82px.
+  - C: 779 to 928px (701 to 850). 1265x903, 1440x900. Slide 2 media column 0.7 / 1.3.
+  - D: 929px and up (851 and up). 1280x1024, 1920x1080. Slide 2 media column 0.64 / 1.36 with the Nampally card ratio 1.43; slide 3 media column 0.8 / 1.2 so the broadcast frame and awards are wider than the first pass (about 264px at 1920x1080, was about 210px).
+- Narrow desktop (1024 to 1243px) has its own width-based rules. Call card sits at `right: 72px` from 768 to 1379px so it clears the floating call button. Nampally card ratio cap 1.52 -> 1.4.
+- Mobile (1023px and below): `min-height: 100svh`, slide is a flex column, and the media strip grows between 200px and `min(54svh, 600px)`. A short-phone block (767px wide and 720px or less high) tightens spacing and puts the buttons on one row.
+- Motion (transform and opacity only): entrance order re-timed (title, subtitle, meta, actions, plates, portrait settle with spotlight bloom). Hover lift on `.hero-plate` for hover devices only. `text-wrap: balance` on titles. Unused `heroRise` and `heroFade` keyframes removed.
+
+**Audit (before -> after)** (`.audit/hero-p1d/before.json`, `after.json`, production build on :3102)
+
+| Check | Before (P1c) | After (P1d) |
+|---|---|---|
+| Rows passing (15 viewports x 3 slides) | 3 of 45 | 45 of 45 |
+| Desktop gap, hero bottom to viewport bottom | -78px at all 10 viewports | 0px at all 10 |
+| Next-section pixels visible (desktop) | 78px | 0px |
+| Primary button and dots visible | dots OK, 78px of next section also visible | both visible |
+| Media cluster, % of hero (slides 2, 3) | about 64% of the old, shorter hero | 62.9 to 82% |
+| Empty space above and below the tallest element | not measured | max 12.1% (slides 2, 3), 11.2% (slide 1) |
+| Mobile hero height | 756 / 753 / 790 / 813 / 855px (content-driven) | equals viewport: 681 / 740 / 844 / 915 / 1024px |
+| Mobile actions-to-strip gap | 98 to 154px | 16 / 20 / 20 / 20 / 24px |
+| 358x681 dots | below the fold | visible |
+| Horizontal overflow (mobile) | 0 | 0 |
+
+Selected desktop values (cluster % / empty %):
+
+| Viewport | Slide 1 | Slides 2 and 3 |
+|---|---|---|
+| 1352x618 | 77.7 / 0 | 68 / 4.8 |
+| 1366x768 | 82 / 0 | 68 / 7 |
+| 1265x903 | 77.5 / 3.6 | 68 / 8.4 |
+| 1280x1024 | 68.4 / 9.1 | 66.4 / 10.1 |
+| 1920x1080 | 64.8 / 11.2 | 62.9 to 63 / 12.1 |
+
+Real headed Chrome (`after-real.json`): 1366x768, 1280x1024 and 1440x900 all report gap 0, next-section pixels 0, button and dots visible. Before (`before-real.json`) each was -78 with 78px of the next section visible.
+
+`scripts/home-viewport-audit.mjs` exits 0. Its only finding is the 8.5px `.brand-word-sub` text in the nav and footer, which predates this pass and is outside the hero.
+
+**Viewports checked**: 1352x618, 1366x650, 1366x768, 1440x900, 1265x903, 1280x1024, 1536x730, 1920x1080, 1024x768, 1280x720 (desktop); 358x681, 360x740, 390x844, 412x915, 768x1024 (mobile and tablet). Screenshots of all 3 slides: `.audit/hero-p1d/after/`; "before" copies in `.audit/hero-p1d/before/`.
+
+**Lighthouse** (mobile, production `next start`, 5 alternating runs, `.audit/hero-p1d/lh.mjs`):
+
+| Build | Scores | Median | Mean | LCP median | TBT median | CLS |
+|---|---|---|---|---|---|---|
+| P1c | 40 / 39 / 42 / 46 / 44 | 42 | 42.2 | 6.13s | 1,013ms | 0 |
+| P1d | 49 / 42 / 54 / 61 / 45 | 49 | 50.2 | 5.54s | 717ms | 0 |
+
+P1d is not worse than P1c (limit: no more than 3 points lower). The spread between runs is large, so read the 7-point gain as "not worse", not as a proven improvement. The LCP element is `img.hero-founder-portrait` in all 10 runs. The "fetchpriority" insight is left for the reason given under P1c. These numbers were taken before the last CSS change (slide 3 media column at tier D), which affects layout only.
+
+**Task 8 (portrait rim clean-up): skipped.** A blur-and-pull-in of the alpha channel gave a valid RGBA PNG with identical extents (21..696 x 13..571), but partial-alpha pixels rose from 6,235 to 7,091 and `rim-before.png` / `rim-after.png` show no clearly cleaner head edge. The trial file was deleted. The original portrait is untouched and `heroPortraitImage` is unchanged. The rim and the lapel mark need a better cut-out from the source photo.
+
+**Accessibility and motion**
+- Reduced motion (1366x768): `data-autoplay="false"`, no running hero animations, slide stays at index 0 after 8s.
+- Keyboard: tab order is Call for Consultation, Send an enquiry, call card, dots. Focus outlines are 2px (ivory on dark, red on the zoom button). Arrow keys on a focused dot change slides and focus follows. The pause button toggles its label and `data-paused`. The zoom dialog opens on Enter, closes on Escape, and focus returns to the zoom button. The dots are buttons with `aria-label` "Slide N of 3: ...", not `role=tab`.
+
+**Content preservation**: removed 0 / restored 0 / relocated 0 / dropped 0.
+- Hero server HTML with JavaScript off, P1c vs P1d: identical text (707 characters), 1 `h1`, 3 headings, 9 links, 6 alt texts, 4 JSON-LD blocks, same preloads. Slides 2 and 3 keep `h2`. No `display: none` on slide text. The call card is hidden at 767px and below only, as before.
+- `scripts/seo-content-audit.mjs` (baseline :3100, current :3102, 17 routes): missing 0, removed 0, kept 5,379, shortened 1. Text differs on `/clinic` and `/clinic/nampally` only, from other uncommitted work in the tree, not from this pass. "Removed rows without an owner decision": 0.
+- Build checks: `npm run build` passes, `npx tsc --noEmit` exits 0, eslint on `Hero.tsx`, `site-data.ts` and `hero-fit-audit.mjs` has 0 errors.
+
+**Re-ratings (my judgement, out of 10, after P1d; the limiting factor is named)**
+
+| Slide | Laptop (1366x768) | Desktop (1920x1080) | Phone (390x844) |
+|---|---|---|---|
+| 1 Founder | 8.5. Limit: portrait cut-out rim and lapel mark (source photo) | 8.5. Same limit | 8.5. Limit: source photo |
+| 2 Two clinics | 8. Limit: code, small copy column | 8. Limit: Nampally photo is a low-resolution shop front (source photo) | 7.5. Limit: code, spare height sits above the eyebrow |
+| 3 Public record | 8. Limit: news18 frame crops its own caption (source) | 7.5. Limit: code, side plates still narrow; source crop | 8. Limit: source photos |
+
+**Open issues**
+- Phones, slides 2 and 3: content is centred, so the spare height sits above the eyebrow (31 to 44% empty above, with the actions-to-strip gap at 16 to 24px). It meets the stated rules but should be checked by eye.
+- 1024x768 and 1280x1024, slide 2: "Send an enquiry" wraps under the primary button.
+- 1920x1080, slide 3: side plates are about 264px wide and the News18 frame crops the on-screen caption text.
+- The portrait rim cannot be fixed in code; the lapel mark was not attempted.
+- The portrait `sizes` attribute is unchanged.
+- Lighthouse's "fetchpriority" insight remains (see P1c).
+- Lighthouse numbers have wide run-to-run spread.
+
+**Owner inputs still missing**
+- A better cut-out of the founder portrait (clean hair/beard edge, lapel mark).
+- A higher-resolution Nampally exterior photo.
+- A News18 still with the caption text inside the frame.
+- Decision on whether `NEODENT_HOME_REDESIGN_REFERENCE.md` gets the P1d rating row and Part 9 decision lines (not edited here, it is outside the editable list).
