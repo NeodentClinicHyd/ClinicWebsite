@@ -10,6 +10,7 @@ import pageStyles from "@/components/pages/braces-and-orthodontics/BracesPage.mo
 import { WhatAreBraces } from "@/components/pages/braces-and-orthodontics/WhatAreBraces";
 import { WhenRight } from "@/components/pages/braces-and-orthodontics/WhenRight";
 import { TypesOfBraces } from "@/components/pages/braces-and-orthodontics/TypesOfBraces";
+import { InvisalignProvider } from "@/components/pages/braces-and-orthodontics/InvisalignProvider";
 import { Stages } from "@/components/pages/braces-and-orthodontics/Stages";
 import { WhoIsItFor } from "@/components/pages/braces-and-orthodontics/WhoIsItFor";
 import { CareAndRisks } from "@/components/pages/braces-and-orthodontics/CareAndRisks";
@@ -32,8 +33,9 @@ import { ctaTelPhone } from "@/lib/site-data";
    globals.css is untouched).
 
    Section grounds, in order, never repeating in adjacent sections:
-   header dark | results light | tan | light | dark patterned | tan | light |
-   dark | tan | dark | light | dark | tan | closing block dark. The results
+   header dark | results light | tan | light | dark patterned | ivory
+   (Invisalign provider) | tan | light | dark | tan | dark | light | dark |
+   tan | closing block dark. The results
    section sits directly after the header (standard T.1); the shared
    ContactNextStep block ends the page directly before the footer. */
 export function BracesClientChrome() {
@@ -48,6 +50,7 @@ export function BracesClientChrome() {
         <WhatAreBraces />
         <WhenRight />
         <TypesOfBraces />
+        <InvisalignProvider />
         <Stages />
         <WhoIsItFor />
         <CareAndRisks />

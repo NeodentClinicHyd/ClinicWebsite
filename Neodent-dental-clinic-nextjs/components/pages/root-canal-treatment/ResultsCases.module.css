@@ -22,6 +22,34 @@
   min-width: 0;
 }
 
+/* ---- Case titles (one per series) ---- */
+.caseTitle {
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--neodent-red-dark);
+}
+.caseNext {
+  margin-top: clamp(24px, 3vw, 36px);
+}
+.caseTitle + div > .row {
+  margin-top: 10px;
+}
+/* A row with no film beside it: the series card takes the full width. */
+.row.rowSolo {
+  grid-template-columns: minmax(0, 1fr);
+}
+/* The full-width series has wider frames, so they are slightly taller to
+   match the radiographs' proportions (no dark bars beside the images). */
+@media (min-width: 1024px) {
+  .row.rowSolo {
+    --cell-h: min(var(--cap), 245px);
+  }
+}
+
 /* ---- Cards ---- */
 .row {
   --cap: var(--rct-cap-case-photo, min(34dvh, 300px));

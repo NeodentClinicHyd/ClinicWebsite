@@ -6,6 +6,11 @@
    JSON-LD can never drift apart. Phones, addresses, hours and directions
    links are NOT defined here; they come from lib/site-data.ts.
 
+   Exception (owner brief): the Invisalign provider section (INVISALIGN,
+   directly after the types section) is owner-supplied copy. It names
+   Invisalign and clear aligners and describes comfort, and it is the only
+   section outside the types section that may do so.
+
    Copy rules for this file (owner brief + research pack): the main term is
    "braces and orthodontics"; the one synonym ("teeth straightening")
    appears once, in the first FAQ. No prices, no lifespans, no success
@@ -306,6 +311,57 @@ export const BRACE_TYPES: BraceType[] = [
     ],
   },
 ];
+/* ---------------- 4b. Invisalign provider (owner-supplied copy) ---------------- */
+export type InvisalignIcon = "eye" | "removable" | "custom" | "smooth";
+
+export const INVISALIGN = {
+  sans: "NeoDent Dental Hospital \u2013 Your",
+  accent: "Invisalign Provider",
+  description:
+    "Looking for a discreet way to straighten your teeth? NeoDent Dental Hospital offers Invisalign clear aligner treatment, an advanced orthodontic solution designed to gradually move your teeth into their desired positions using a series of custom-made, transparent aligners.",
+  features: [
+    {
+      icon: "eye",
+      title: "Nearly Invisible",
+      text: "Clear aligners offer a discreet alternative to traditional metal braces.",
+    },
+    {
+      icon: "removable",
+      title: "Removable Convenience",
+      text: "Remove your aligners while eating, drinking, brushing, and flossing.",
+    },
+    {
+      icon: "custom",
+      title: "Custom-Made for Your Smile",
+      text: "Each aligner is designed specifically for your teeth and treatment plan.",
+    },
+    {
+      icon: "smooth",
+      title: "Comfortable & Smooth",
+      text: "Smooth, custom-fitted aligners without traditional metal brackets and wires.",
+    },
+  ] as { icon: InvisalignIcon; title: string; text: string }[],
+  closing:
+    "Discover a more discreet approach to achieving your confident smile with Invisalign at NeoDent Dental Hospital.",
+  cta: {
+    label: "Book Your Consultation",
+    /* The existing "Book a consultation" block (ContactNextStep) at the
+       end of this page. */
+    href: "#get-in-touch",
+    /* Visually hidden suffix, so the accessible name reads "Book Your
+       Consultation for Invisalign treatment in Hyderabad". */
+    hiddenSuffix: " for Invisalign treatment in Hyderabad",
+  },
+  image: {
+    /* Served as-is (unoptimized) so the original file quality is kept. The
+       file name contains spaces, hence the encoded path. */
+    src: "/assets/Invisalign%20Clear%20Aligners.webp",
+    width: 1672,
+    height: 941,
+    alt: "Invisalign clear aligners and case: clear aligner treatment from an Invisalign provider in Hyderabad",
+  },
+};
+
 /* ---------------- 5. What happens at each stage ---------------- */
 export const STAGES = {
   sans: "What happens",

@@ -33,19 +33,18 @@ import {
   OptionRetreat,
   RctAnatomy,
   RestoreCrown,
-  RestoreTemporary,
+  RestoreSealed,
   VisitClean,
   VisitFilled,
   VisitNumb,
   VisitOpen,
-  VisitTemporary,
 } from "@/components/treatment/illustrations/rct-scenes";
 
 export type SlotId =
   | "R1"
   | "R2a" | "R2b" | "R2c" | "R2d" | "R2e" | "R2f"
   | "R3a" | "R3b" | "R3c"
-  | "R4a" | "R4b" | "R4c" | "R4d" | "R4e"
+  | "R4a" | "R4b" | "R4c" | "R4e" | "R4f"
   | "R5a" | "R5b"
   | "R6a" | "R6b" | "R6c" | "R6d";
 
@@ -106,11 +105,11 @@ export const SLOTS: Record<SlotId, SlotDef> = {
   R4a: scene("A numbed tooth with a dental dam around it", VisitNumb, "sm"),
   R4b: scene("The opening made to reach the pulp chamber", VisitOpen, "sm"),
   R4c: scene("Cleaned and shaped canals", VisitClean, "sm"),
-  R4d: scene("A temporary filling in the tooth", VisitTemporary, "sm"),
   R4e: scene("Sealed canals with the tooth restored", VisitFilled, "sm"),
+  R4f: scene("The crown placed on the treated tooth, at the next visit", RestoreCrown, "sm"),
 
   /* 6. Restoring the tooth */
-  R5a: scene("A temporary filling", RestoreTemporary),
+  R5a: scene("A root-treated tooth with its canals cleaned, filled and sealed", RestoreSealed),
   R5b: scene("The final restoration (a crown)", RestoreCrown),
 
   /* 7. Aftercare (40px icons) */

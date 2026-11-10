@@ -1,0 +1,193 @@
+/* Educational videos. Beige ground (#ece7dc), between the ivory crown
+   section and the dark aftercare. Two matched paper cards (16px radius,
+   hairline border, as the visit stage cards). Each card is the portrait
+   thumbnail beside its title; the frame is always 9 / 16 so the thumbnail,
+   the player and the error state occupy the same box. Play button values
+   are copied from the cases section. */
+
+.section {
+  background: var(--rct-beige, #ece7dc);
+  color: var(--ink);
+  padding: var(--rct-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--rct-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 32px);
+  align-items: stretch;
+  margin-top: clamp(32px, 4vw, 52px);
+}
+.card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: clamp(18px, 2.4vw, 28px);
+  align-items: center;
+  padding: clamp(14px, 1.8vw, 20px);
+  background: var(--neodent-surface);
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 16px;
+}
+
+/* ---- Frame: thumbnail, player, error share one 9 / 16 box -------------- */
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0f1213;
+}
+.thumb {
+  object-fit: cover;
+}
+.video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+}
+.video:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: -4px;
+}
+.play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: linear-gradient(180deg, rgba(15, 18, 19, 0) 40%, rgba(15, 18, 19, 0.28) 100%);
+  cursor: pointer;
+}
+.play:focus-visible {
+  outline: 2px solid var(--neodent-red);
+  outline-offset: -4px;
+}
+.playIcon {
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  background: rgba(15, 18, 19, 0.62);
+  color: #fff;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+.play:hover .playIcon {
+  transform: scale(1.06);
+  background: rgba(15, 18, 19, 0.8);
+}
+
+.error {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  background: rgba(15, 18, 19, 0.92);
+  color: #f1eee7;
+  text-align: center;
+}
+.error p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.retry {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid rgba(241, 238, 231, 0.6);
+  border-radius: 999px;
+  background: transparent;
+  color: #f1eee7;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.retry:hover {
+  background: rgba(241, 238, 231, 0.12);
+}
+.retry:focus-visible {
+  outline: 2px solid #f1eee7;
+  outline-offset: 2px;
+}
+
+/* ---- Text -------------------------------------------------------------- */
+.body {
+  min-width: 0;
+}
+.title {
+  margin: 0 0 10px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(22px, 2.1vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+.note {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(38, 48, 51, 0.82);
+}
+
+/* Tablet: cards stay side by side, thumbnail above its text. */
+@media (max-width: 1100px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .frame {
+    width: min(100%, 280px);
+    margin: 0 auto;
+  }
+}
+/* Phones: stacked cards. The portrait frame stays 280 px wide at most, so
+   the native player controls remain comfortably tappable. */
+@media (max-width: 767px) {
+  .container {
+    width: var(--rct-container-m, min(100% - 32px, 600px));
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .card {
+    gap: 16px;
+    padding: 14px;
+  }
+  .title {
+    font-size: 21px;
+  }
+}
+@media (hover: none) {
+  .play:hover .playIcon {
+    transform: none;
+    background: rgba(15, 18, 19, 0.62);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .playIcon {
+    transition: none;
+  }
+}

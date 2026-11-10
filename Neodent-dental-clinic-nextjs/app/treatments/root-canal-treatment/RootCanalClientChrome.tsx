@@ -6,11 +6,13 @@ import { Footer } from "@/components/layout/Footer";
 import { AppButton } from "@/components/ui/AppButton";
 import { PageHeader } from "@/components/pages/root-canal-treatment/PageHeader";
 import { ResultsCases } from "@/components/pages/root-canal-treatment/ResultsCases";
+import { SingleSitting } from "@/components/pages/root-canal-treatment/SingleSitting";
 import { Overview } from "@/components/pages/root-canal-treatment/Overview";
 import { Signs } from "@/components/pages/root-canal-treatment/Signs";
 import { Options } from "@/components/pages/root-canal-treatment/Options";
 import { Visit } from "@/components/pages/root-canal-treatment/Visit";
 import { Restoring } from "@/components/pages/root-canal-treatment/Restoring";
+import { EducationVideos } from "@/components/pages/root-canal-treatment/EducationVideos";
 import { Aftercare } from "@/components/pages/root-canal-treatment/Aftercare";
 import { Questions } from "@/components/pages/root-canal-treatment/Questions";
 import { Faq } from "@/components/pages/root-canal-treatment/Faq";
@@ -31,8 +33,9 @@ import page from "@/components/pages/root-canal-treatment/RootCanal.module.css";
    globals.css is untouched).
 
    Section grounds, in order, never more than two dark in a row:
-   header dark | results ivory | what is beige | signs ivory | alternatives dark
-   patterned | visit beige | restoring ivory | aftercare dark | questions beige
+   header dark | results ivory | single sitting dark | what is beige | signs
+   ivory | alternatives dark patterned | visit beige | restoring ivory |
+   videos beige | aftercare dark | questions beige
    | FAQ ivory | locations dark | related beige | closing block dark | footer
    dark. The results section comes directly after the header (plan 4.2). */
 export function RootCanalClientChrome() {
@@ -44,11 +47,13 @@ export function RootCanalClientChrome() {
       <main className={page.page}>
         <PageHeader />
         {SHOW_RCT_CASE_MEDIA ? <ResultsCases /> : null}
+        <SingleSitting />
         <Overview />
         <Signs />
         <Options />
         <Visit />
         <Restoring />
+        <EducationVideos />
         <Aftercare />
         <Questions />
         <Faq />
