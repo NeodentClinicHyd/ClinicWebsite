@@ -10,7 +10,6 @@ import {
   DentalDam,
   LoopArrow,
   NumbZone,
-  SlashedArrow,
   ToothGum,
   ToothSection,
 } from "./rct-parts";
@@ -222,19 +221,6 @@ export function VisitClean({ className }: P) {
   );
 }
 
-export function VisitTemporary({ className }: P) {
-  return (
-    <Scene
-      className={className}
-      viewBox={STAGE}
-      title="A temporary filling in the tooth"
-      desc="Cross-section of a back tooth with clean canals. A small grey tint at the entrance of each canal marks a medicated dressing, and a cream-grey temporary filling sits in the opening in the biting surface. Illustration, not to scale."
-    >
-      <Stage tooth={<ToothSection canals="cleaned" closure="temp" dressing />} />
-    </Scene>
-  );
-}
-
 export function VisitFilled({ className }: P) {
   return (
     <Scene
@@ -252,20 +238,17 @@ export function VisitFilled({ className }: P) {
 
 const CLOSE = "190 48 256 192";
 
-export function RestoreTemporary({ className }: P) {
+export function RestoreSealed({ className }: P) {
   return (
     <Scene
       className={className}
       viewBox={CLOSE}
-      title="A temporary filling that should not be chewed on"
-      desc="Close view of the top of a back tooth and its upper roots. A cream-grey temporary filling sits in the biting surface. A red arrow points down onto it with a slash through it, to say avoid chewing on this tooth. Illustration, not to scale."
+      title="A root-treated tooth with its canals cleaned, filled and sealed"
+      desc="Close view of the top of a back tooth and its upper roots. Both canals are filled with a grey material and a filling closes the opening in the biting surface. The tooth has no crown yet. Illustration, not to scale."
     >
       <Bone x0={186} x1={454} floor={FLOOR} />
       <ToothGum x0={186} x1={454} />
-      <ToothSection canals="filled" closure="temp" />
-      <Annot>
-        <SlashedArrow x1={CX} y1={50} x2={CX} y2={86} />
-      </Annot>
+      <ToothSection canals="filled" closure="final" />
     </Scene>
   );
 }

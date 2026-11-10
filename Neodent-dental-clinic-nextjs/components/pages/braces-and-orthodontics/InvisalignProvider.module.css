@@ -1,0 +1,164 @@
+/* Invisalign provider. Ivory ground (between the dark types band and the tan
+   stages band). The header is the page's standard chapter header. Below it:
+   a ruled feature list on the left (flat, no card surfaces, as in the stages
+   list), and on the right the photograph in the page's 20px hairline frame,
+   with the closing statement and the CTA beneath it. The photograph keeps its
+   natural 16:9 ratio and is never cropped. */
+
+.section {
+  background: var(--ivory);
+  color: var(--ink);
+  padding: var(--brc-section-pad, clamp(56px, 7vw, 96px)) 0;
+}
+.container {
+  width: var(--brc-container, min(1180px, calc(100% - 48px)));
+  margin: 0 auto;
+}
+
+/* Grid areas: on a phone the DOM order is the reading order. The feature list
+   spans both right-hand rows, so it ends level with the CTA. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-areas:
+    "features media"
+    "features closing";
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(32px, 5vw, 72px);
+  row-gap: clamp(22px, 2.6vw, 28px);
+  align-items: start;
+  margin-top: clamp(28px, 3.4vw, 40px);
+}
+.media {
+  grid-area: media;
+  min-width: 0;
+}
+.features {
+  grid-area: features;
+  align-self: stretch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.closeRow {
+  grid-area: closing;
+  min-width: 0;
+}
+
+/* ---- Photograph ---- */
+.frame {
+  overflow: hidden;
+  border: 1px solid rgba(38, 48, 51, 0.12);
+  border-radius: 20px;
+  background: #e9edf1;
+}
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---- Features ---- */
+.feature {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  column-gap: 16px;
+  align-content: start;
+  padding: 18px 0;
+  border-top: 1px solid rgba(38, 48, 51, 0.16);
+}
+.feature:last-child {
+  border-bottom: 1px solid rgba(38, 48, 51, 0.16);
+}
+.icon {
+  display: block;
+  margin-top: 3px;
+  color: var(--neodent-red);
+}
+.featureTitle {
+  margin: 0 0 6px;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.featureText {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(38, 48, 51, 0.86);
+  text-wrap: pretty;
+}
+
+/* ---- Closing statement and CTA ---- */
+.closing {
+  max-width: 52ch;
+  margin: 0;
+  font-family: var(--app-font-serif);
+  font-size: clamp(21px, 1.9vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.closing::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 14px;
+  background: var(--neodent-red);
+}
+.cta {
+  margin-top: 20px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Tablet and phone: one column, in reading order. */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "media"
+      "features"
+      "closing";
+    grid-template-rows: none;
+    row-gap: 24px;
+  }
+  .feature:last-child {
+    border-bottom: 0;
+  }
+}
+@media (max-width: 767px) {
+  .container {
+    width: var(--brc-container-m, min(100% - 32px, 600px));
+  }
+  .frame {
+    border-radius: 16px;
+  }
+  .feature {
+    padding: 16px 0;
+  }
+  /* The button is full width on a phone, easy to reach with a thumb. */
+  .cta :global(.button) {
+    width: 100%;
+  }
+}

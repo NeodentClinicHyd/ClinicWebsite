@@ -9,8 +9,10 @@
    Copy rules for this file (owner brief): the main term is "root canal
    treatment"; the one synonym ("endodontic treatment") appears once, in the
    "Terms you may hear" card. No prices, no lifespans, no success rates, no
-   visit count as a promise (one to three visits is a sourced range, always
-   "confirmed at your consultation"). The word "nerve" appears once on the
+   visit count as a promise for every tooth: the owner's stated speciality is
+   a root canal procedure completed in a single sitting, with any crown at
+   the next visit, and the plan is always "confirmed at your consultation".
+   The word "nerve" appears once on the
    page (the "Inside the tooth" card). The word "permanent" is not used:
    the copy deck's "permanent restoration" is written "final restoration".
    ------------------------------------------------------------------ */
@@ -212,19 +214,19 @@ export const VISIT = {
       text: "Each canal is cleaned, shaped and disinfected along its length, down towards the tip of the root.",
     },
     {
-      slot: "R4d",
-      title: "A temporary filling",
-      text: "A temporary filling is placed, sometimes with a medicated dressing if more than one visit is needed.",
-    },
-    {
       slot: "R4e",
       title: "The canals are filled",
-      text: "The cleaned canals are filled with a sealing material, so bacteria have less opportunity to re-enter. The tooth is then restored.",
+      text: "The cleaned canals are filled with a sealing material, so bacteria have less opportunity to re-enter. The tooth is then ready for its planned restoration.",
+    },
+    {
+      slot: "R4f",
+      title: "The crown is placed",
+      text: "A dental crown is placed during the next visit to protect the treated tooth, restore its strength and help reduce the risk of fracture.",
     },
   ] as { slot: SlotId; title: string; text: string }[],
   visitsTitle: "How many visits will it take?",
   visits:
-    "Sources describe one to three visits, depending on the tooth and how difficult it is to treat. How many visits your tooth needs is confirmed at your consultation.",
+    "Dr. Miftah-ur-Rahman specialises in completing the root canal procedure in a single sitting. A crown, when required, is placed during the next visit. Your dentist confirms the plan for your tooth at your consultation.",
   statementLead: "A plan built around",
   statementEm: "your tooth.",
   statementSub:
@@ -239,16 +241,16 @@ export const RESTORE = {
   cards: [
     {
       slot: "R5a",
-      title: "Before the final restoration",
-      text: "The tooth may have a temporary filling. Avoid chewing on the tooth until its final restoration is in place.",
+      title: "After root canal treatment",
+      text: "Once the root canals have been cleaned, filled and sealed, the treated tooth is ready for its planned final restoration.",
     },
     {
       slot: "R5b",
-      title: "The final restoration",
-      text: "A final restoration is usually needed to protect the tooth and lower the risk of fracture. A well-sealed tooth that is not properly protected can still fracture.",
+      title: "The crown is placed",
+      text: "A dental crown is placed during the next visit to protect the treated tooth and help reduce the risk of fracture. Your dentist will recommend the appropriate crown based on your tooth's condition.",
     },
   ] as { slot: SlotId; title: string; text: string }[],
-  note: "What the tooth needs, when, and who provides the crown are confirmed at your consultation.",
+  note: "What the tooth needs and who provides the crown are confirmed at your consultation.",
 };
 
 /* ---------------- 7. After treatment, risks and when to call ---------------- */
@@ -285,31 +287,75 @@ export const AFTERCARE = {
 };
 
 /* ---------------- 8. Cases ---------------- */
+export type RadiographItem = {
+  src: string;
+  alt: string;
+  label: string;
+  /** Pixel size of this file when it differs from the case default. */
+  width?: number;
+  height?: number;
+};
+
 export const CASES = {
   sans: "Root canal cases",
   accent: "from Neodent.",
   radiographs: {
+    title: "Case 1",
     items: [
       {
         src: "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-root-canal-treatment-pre-rct.webp",
         alt: "Root canal treatment radiograph — pre-treatment stage",
-        label: "Pre-treatment",
+        label: "Before Treatment",
       },
       {
         src: "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-root-canal-treatment-mid-rct.webp",
         alt: "Root canal treatment radiograph — mid-treatment stage",
-        label: "Mid-treatment",
+        label: "During Treatment",
       },
       {
         src: "/assets/dr-miftah/treatments/web/dr-md-miftah-ur-rahman-root-canal-treatment-post-rct.webp",
         alt: "Root canal treatment radiograph — post-treatment stage",
-        label: "Post-treatment",
+        label: "After Treatment",
       },
-    ],
+    ] as RadiographItem[],
     width: 1458,
     height: 1103,
     caption:
       "Radiographs from one root canal treatment, at the pre-treatment, mid-treatment and post-treatment stages.",
+  },
+  /* Second real case, supplied as three JPEGs already in the web folder
+     (used directly, no copies). Stages were confirmed by viewing each image:
+     untreated canals (before), files inside the canals (during), filled
+     canals with a restoration (after). Each has its own pixel size. */
+  additional: {
+    title: "Case 2",
+    items: [
+      {
+        src: "/assets/dr-miftah/treatments/web/root canal treatment neodent dental hospital-pre treatment.jpeg",
+        alt: "Radiograph of a second root canal case, before treatment: lower back teeth with the root canals not yet treated",
+        label: "Before Treatment",
+        width: 1280,
+        height: 806,
+      },
+      {
+        src: "/assets/dr-miftah/treatments/web/root canal treatment neodent dental hospital-mid treatment.jpeg",
+        alt: "Radiograph of a second root canal case, during treatment: thin files placed inside the cleaned root canals",
+        label: "During Treatment",
+        width: 1280,
+        height: 830,
+      },
+      {
+        src: "/assets/dr-miftah/treatments/web/root canal treatment neodent dental hospital-post treatment.jpeg",
+        alt: "Radiograph of a second root canal case, after treatment: root canals filled and the tooth restored",
+        label: "After Treatment",
+        width: 1280,
+        height: 870,
+      },
+    ] as RadiographItem[],
+    width: 1280,
+    height: 830,
+    caption:
+      "Radiographs from a second root canal treatment, before treatment, during treatment and after treatment.",
   },
   video: {
     /* 720 x 1280, 6.7 s. Poster: frame at 4.5 s (a hand and an educational
@@ -330,13 +376,78 @@ export const CASES = {
   privacyHref: "/privacy-policy",
 };
 
+/* ---------------- 8b. Single-sitting speciality ---------------- */
+/* Owner brief: completing the root canal procedure in a single sitting is a
+   speciality of Dr. Miftah-ur-Rahman. The crown, when required, is placed at
+   the next visit. No promise that every tooth or patient gets the same
+   outcome: the dentist decides the plan. */
+export const SINGLE_SITTING = {
+  eyebrow: "Speciality of Dr. Miftah-ur-Rahman",
+  sans: "Root Canal Treatment Completed in a",
+  accent: "Single Sitting",
+  description: [
+    "Dr. Miftah-ur-Rahman specialises in completing root canal treatment in a ",
+    { h: "single sitting", tone: "primary" },
+    ". This means the root canal procedure can be completed during ",
+    { h: "one treatment visit", tone: "secondary" },
+    ", helping patients avoid ",
+    { h: "multiple visits", tone: "quiet" },
+    " for the root canal procedure itself.",
+  ] as Rich,
+  statement: "The final dental crown is placed during the next visit, when required.",
+  pointsTitle: "At a glance",
+  points: [
+    "Root canal procedure completed in a single sitting.",
+    "Treatment planned around the condition of the tooth.",
+    "Final crown placement scheduled during the next visit, when required.",
+  ],
+  note: "Your dentist confirms the treatment plan for your tooth at your consultation.",
+};
+
+/* ---------------- 8c. Educational videos ---------------- */
+/* Two films of Dr. Miftah-ur-Rahman, each with its own supplied thumbnail
+   (1080 x 1920, used as supplied). Titles are taken from what each film says
+   (checked frame by frame): film 1 answers the idea that extracting a tooth
+   is better than root canal treatment; film 2 answers the idea that root
+   canal treatment needs frequent follow-up visits. The files are loaded only
+   after a visitor presses play. */
+export const EDUCATION_VIDEOS = {
+  sans: "Learn More About",
+  accent: "Root Canal Treatment",
+  intro:
+    "Watch Dr. Miftah-ur-Rahman explain root canal treatment and understand more about the procedure.",
+  playPrefix: "Play video: ",
+  errorText: "This video could not be played right now. Please try again, or call the clinic.",
+  retryText: "Try again",
+  items: [
+    {
+      id: "extraction-myth",
+      title: "Is it better to extract the tooth?",
+      note: "Dr. Miftah-ur-Rahman on saving natural teeth",
+      src: "/assets/dr-miftah/treatments/dr-md-miftah-ur-rahman-root-canal-treatment.mp4",
+      poster: "/assets/dr-miftah/treatments/dr-md-miftah-ur-rahman-root-canal-treatment.jpg",
+      alt: "Dr. Miftah-ur-Rahman seated at a desk beside a root canal treatment chart, introducing the video “Is it better to extract the tooth?”",
+    },
+    {
+      id: "follow-up-visits",
+      title: "Does root canal treatment need frequent follow-up visits?",
+      note: "Dr. Miftah-ur-Rahman on visits after treatment",
+      src: "/assets/dr-miftah/treatments/dr-md-miftah-ur-rahman-root-canal-treatment-explainer.mp4",
+      poster: "/assets/dr-miftah/treatments/dr-md-miftah-ur-rahman-root-canal-treatment-explainer.jpg",
+      alt: "Dr. Miftah-ur-Rahman seated at a desk beside a root canal treatment chart, introducing the video “Does root canal treatment need frequent follow-up visits?”",
+    },
+  ],
+  width: 1080,
+  height: 1920,
+};
+
 /* ---------------- 9. Questions to ask + doctor ---------------- */
 export const QUESTIONS = {
   sans: "Questions to",
   accent: "ask your dentist.",
   list: [
     "Does this tooth need a root canal or is there another option?",
-    "How many visits do you expect, and what will it involve?",
+    "Will the root canal be completed in a single sitting, and when will the crown be placed?",
     "What will the tooth need afterwards, and when?",
     "What are the chances it will need further treatment?",
     "Who should I call if pain returns?",
@@ -387,7 +498,7 @@ export const RCT_FAQ: RctFaqItem[] = [
   {
     question: "How many visits does it take?",
     answer:
-      "Sources describe one to three visits, depending on the tooth and how difficult it is to treat. There is no standard number that applies to every tooth. How many visits you need is confirmed at your consultation.",
+      "Dr. Miftah-ur-Rahman specialises in completing the root canal procedure in a single sitting. A crown, when required, is placed during the next visit. Your dentist confirms the plan for your tooth at your consultation.",
   },
   {
     question: "What happens if I do not treat the tooth?",
@@ -397,7 +508,7 @@ export const RCT_FAQ: RctFaqItem[] = [
   {
     question: "Why does the tooth usually need a filling or crown afterwards?",
     answer:
-      "A final restoration is usually needed to protect the tooth and lower the risk of fracture. Until then, avoid chewing on the tooth. What your tooth needs, and when, is confirmed at your consultation.",
+      "A crown is usually placed during the next visit to protect the tooth and lower the risk of fracture. Until then, avoid chewing on the tooth. What your tooth needs is confirmed at your consultation.",
   },
   {
     question: "Are there alternatives to a root canal?",
