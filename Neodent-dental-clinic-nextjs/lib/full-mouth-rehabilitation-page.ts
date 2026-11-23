@@ -143,7 +143,12 @@ export const WHEN = {
       title: "Gum health",
       text: "Severe gum disease. Gum health is usually dealt with early in a plan.",
     },
-  ] as { slot: "M2a" | "M2b" | "M2c" | "M2d"; title: string; text: string }[],
+    {
+      slot: "M2e",
+      title: "All teeth missing",
+      text: "When all teeth are missing in the upper jaw, lower jaw, or both, a full-arch tooth replacement plan may be considered.",
+    },
+  ] as { slot: "M2a" | "M2b" | "M2c" | "M2d" | "M2e"; title: string; text: string }[],
   foot: "Worn or sensitive teeth do not, on their own, mean this treatment is needed. Only an examination can say.",
 };
 

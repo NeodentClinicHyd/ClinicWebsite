@@ -32,6 +32,7 @@ export type ToothState =
   | "natural"
   | "worn"
   | "missing"
+  | "edentulous"
   | "largeFilling"
   | "decayed"
   | "cracked"
@@ -194,12 +195,14 @@ function ToothArt({ g, sp, uid }: { g: ToothGeo; sp: ToothSpec; uid: string }) {
 
 /* ---------- gum ---------- */
 
-function flagsOf(spec: ArchSpec): GumFlags[] {
+function flagsOf(spec: ArchSpec, arch: ArchId): GumFlags[] {
+  const T = archGeometry(arch);
   return Array.from({ length: 10 }, (_, i) => {
     const sp = spec[i] ?? {};
     return {
       ridge: isRidge(sp.state),
-      rec: sp.gum === "recession" ? 12 + (i % 2) * 3 : 0,
+      /* Healed, tooth-less ridge: the gum margin bulges past where the neck was, with a shallow dip between sockets. */
+      rec: sp.state === "edentulous" ? -2 * (1.5 + 0.25 * T[i].h) : sp.gum === "recession" ? 12 + (i % 2) * 3 : 0,
       infl: sp.gum === "inflamed",
     };
   });
@@ -207,7 +210,7 @@ function flagsOf(spec: ArchSpec): GumFlags[] {
 
 function GumArt({ arch, spec, uid, mute }: { arch: ArchId; spec: ArchSpec; uid: string; mute: boolean }) {
   const dir = arch === "upper" ? 1 : -1;
-  const gum = gumGeometry(arch, flagsOf(spec));
+  const gum = gumGeometry(arch, flagsOf(spec, arch));
   const cid = `${uid}g${arch[0]}`;
   return (
     <g filter={mute ? u("mute") : undefined}>
@@ -257,7 +260,7 @@ function ArchHalf({
     <g>
       {T.map((g) => {
         const sp = spec[g.i] ?? {};
-        if (sp.state === "missing") return null;
+        if (sp.state === "missing" || sp.state === "edentulous") return null;
         const mute = focus && !sp.hilite;
         return (
           <g key={g.i} transform={toothTransform(g, sp)} filter={mute ? u("mute") : undefined}>
@@ -275,13 +278,13 @@ function BiteShadow({ lower, upper, uid }: { lower: ArchSpec; upper: ArchSpec; u
   const L = archGeometry("lower");
   const U = archGeometry("upper");
   const cid = `${uid}bs`;
-  const pts: Pt[] = U.filter((g) => upper[g.i]?.state !== "missing").map((g) => [g.cx, g.yInc + 5]);
+  const pts: Pt[] = U.filter((g) => upper[g.i]?.state !== "missing" && upper[g.i]?.state !== "edentulous").map((g) => [g.cx, g.yInc + 5]);
   return (
     <g>
       <clipPath id={cid}>
         {L.map((g) => {
           const sp = lower[g.i] ?? {};
-          return sp.state === "missing" ? null : (
+          return sp.state === "missing" || sp.state === "edentulous" ? null : (
             <path key={g.i} d={toothPath(g)} transform={toothTransform(g, sp)} />
           );
         })}

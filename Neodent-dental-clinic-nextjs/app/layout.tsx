@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DM_Serif_Display, Manrope } from "next/font/google";
 import "./globals.css";
 import { FloatingCta } from "@/components/ui/FloatingCta";
 import { PageLoader } from "@/components/ui/PageLoader";
@@ -6,6 +7,21 @@ import { CookieConsentProvider } from "@/components/consent/CookieConsentContext
 import { GoogleAnalyticsGate } from "@/components/analytics/GoogleAnalyticsGate";
 import { SITE_NAME, SITE_URL } from "@/lib/site-data";
 import { siteJsonLd } from "@/lib/structured-data";
+
+/* Self-hosted by next/font: no render-blocking request to Google Fonts.
+   The CSS variables are read by --app-font-* in globals.css. */
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-manrope",
+});
+const dmSerif = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-dm-serif",
+});
 
 const defaultTitle = "Neodent Dental Hospital | Specialist Dental Care in Hyderabad";
 const defaultDescription =
@@ -45,7 +61,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" className={`${manrope.variable} ${dmSerif.variable}`}>
       <head>
         {/* Without JavaScript the page loader is never dismissed, so it
             is not shown at all. */}

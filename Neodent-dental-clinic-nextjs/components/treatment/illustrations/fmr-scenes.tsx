@@ -222,6 +222,23 @@ export function GumHealthScene({ className }: P) {
   );
 }
 
+export function AllTeethMissingScene({ className }: P) {
+  const none: ArchSpec = Object.fromEntries(
+    Array.from({ length: 10 }, (_, i) => [i, { state: "edentulous" as const }]),
+  );
+  return (
+    <Scene
+      className={className}
+      viewBox={CROP}
+      title="All teeth missing"
+      desc="Front view of the upper and lower jaws with every tooth missing. Only the pink gum ridges remain, with a gently scalloped edge where each tooth used to sit and an empty space between the upper and lower arch. Illustration, not to scale."
+    >
+      <ArchFront upper={none} lower={none} />
+      <EdgeFade viewBox={CROP} w={24} />
+    </Scene>
+  );
+}
+
 /* ================= M3 - What a plan can include (4:3) ================= */
 
 const ROW = "-10 -90 660 495";
