@@ -226,7 +226,7 @@ export const VISIT = {
   ] as { slot: SlotId; title: string; text: string }[],
   visitsTitle: "How many visits will it take?",
   visits:
-    "Dr. Miftah-ur-Rahman specialises in completing the root canal procedure in a single sitting. A crown, when required, is placed during the next visit. Your dentist confirms the plan for your tooth at your consultation.",
+    "Dr. Miftah-ur-Rahman specialises in completing the root canal procedure in a single sitting visit. A crown, when required, is placed during the next visit. Your dentist confirms the plan for your tooth at your consultation.",
   statementLead: "A plan built around",
   statementEm: "your tooth.",
   statementSub:
@@ -384,10 +384,10 @@ export const CASES = {
 export const SINGLE_SITTING = {
   eyebrow: "Speciality of Dr. Miftah-ur-Rahman",
   sans: "Root Canal Treatment Completed in a",
-  accent: "Single Sitting",
+  accent: "Single Sitting Visit",
   description: [
     "Dr. Miftah-ur-Rahman specialises in completing root canal treatment in a ",
-    { h: "single sitting", tone: "primary" },
+    { h: "single sitting visit", tone: "primary" },
     ". This means the root canal procedure can be completed during ",
     { h: "one treatment visit", tone: "secondary" },
     ", helping patients avoid ",
@@ -397,7 +397,7 @@ export const SINGLE_SITTING = {
   statement: "The final dental crown is placed during the next visit, when required.",
   pointsTitle: "At a glance",
   points: [
-    "Root canal procedure completed in a single sitting.",
+    "Root canal procedure completed in a single sitting visit.",
     "Treatment planned around the condition of the tooth.",
     "Final crown placement scheduled during the next visit, when required.",
   ],
@@ -447,7 +447,7 @@ export const QUESTIONS = {
   accent: "ask your dentist.",
   list: [
     "Does this tooth need a root canal or is there another option?",
-    "Will the root canal be completed in a single sitting, and when will the crown be placed?",
+    "Will the root canal be completed in a single sitting visit, and when will the crown be placed?",
     "What will the tooth need afterwards, and when?",
     "What are the chances it will need further treatment?",
     "Who should I call if pain returns?",
@@ -498,7 +498,7 @@ export const RCT_FAQ: RctFaqItem[] = [
   {
     question: "How many visits does it take?",
     answer:
-      "Dr. Miftah-ur-Rahman specialises in completing the root canal procedure in a single sitting. A crown, when required, is placed during the next visit. Your dentist confirms the plan for your tooth at your consultation.",
+      "Dr. Miftah-ur-Rahman specialises in completing the root canal procedure in a single sitting visit. A crown, when required, is placed during the next visit. Your dentist confirms the plan for your tooth at your consultation.",
   },
   {
     question: "What happens if I do not treat the tooth?",

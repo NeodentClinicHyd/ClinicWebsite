@@ -20,6 +20,7 @@ import {
 } from "@/components/treatment/illustrations/icons";
 import { IconHistory, IconScan, IconXray } from "@/components/treatment/illustrations/fmr-icons";
 import {
+  AllTeethMissingScene,
   BiteGrindScene,
   ChoiceMonitor,
   ChoicePhased,
@@ -41,7 +42,7 @@ import {
 
 export type SlotId =
   | "M1"
-  | "M2a" | "M2b" | "M2c" | "M2d"
+  | "M2a" | "M2b" | "M2c" | "M2d" | "M2e"
   | "M3a" | "M3b" | "M3c" | "M3d" | "M3e"
   | "M4a" | "M4b" | "M4c"
   | "M5a" | "M5b" | "M5c" | "M5d"
@@ -86,6 +87,7 @@ export const SLOTS: Record<SlotId, SlotDef> = {
   M2b: scene("Worn, cracked or broken teeth", WornTeethScene, "sm"),
   M2c: scene("Bite problems and grinding", BiteGrindScene, "sm"),
   M2d: scene("Gum health", GumHealthScene, "sm"),
+  M2e: scene("All teeth missing in both jaws", AllTeethMissingScene, "sm"),
 
   /* 4. What a plan can include */
   M3a: scene("Restorative care", IncludeRestorative, "sm"),

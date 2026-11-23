@@ -1,10 +1,12 @@
 /* ------------------------------------------------------------------
    waitForPageReady: resolves when the page that is currently in the
-   DOM has everything it shows: web fonts, every rendered <img> (lazy
-   ones are switched to eager so they start now), CSS background and
-   mask images on rendered elements, and <video> poster frames. Full
-   video files are not waited for, and nothing from other pages is
-   fetched.
+   DOM has everything the first screen shows: web fonts, rendered <img>
+   elements that are in (or just below) the viewport, CSS background and
+   mask images on such elements, and <video> poster frames in view.
+   Lazy images below the first screen are left lazy: they load as the
+   visitor scrolls, not all up front, so the loader and the main thread
+   are not held by the whole page. Full video files are not waited for,
+   and nothing from other pages is fetched.
 
    Failed images count as done. The whole wait is capped (maxMs from
    startedAt) and padded to a minimum (minMs from startedAt) so the
@@ -31,12 +33,23 @@ function isRendered(el: Element) {
   return el.getClientRects().length > 0;
 }
 
+/** In the first screen: overlaps the viewport, plus one extra screen of
+    margin below so images just under the fold are ready too. */
+function nearViewport(el: Element) {
+  const r = el.getBoundingClientRect();
+  return (
+    r.bottom > 0 &&
+    r.right > 0 &&
+    r.top < window.innerHeight * 1.5 &&
+    r.left < window.innerWidth
+  );
+}
+
 function outsideLoader(el: Element) {
   return !el.closest(LOADER_SELECTOR);
 }
 
 function waitForImage(img: HTMLImageElement): Promise<void> {
-  if (img.loading === "lazy") img.loading = "eager";
   const decode = () => (img.decode ? img.decode().catch(() => undefined) : undefined);
   if (img.complete) return Promise.resolve(img.naturalWidth > 0 ? decode() : undefined);
   return new Promise<void>((resolve) => {
@@ -66,7 +79,7 @@ function cssImageUrls(): string[] {
     const values = [cs.backgroundImage, cs.maskImage || cs.getPropertyValue("-webkit-mask-image")];
     for (const value of values) {
       if (!value || value === "none" || !value.includes("url(")) continue;
-      if (!isRendered(el)) break;
+      if (!isRendered(el) || !nearViewport(el)) break;
       for (const [, , raw] of value.matchAll(URL_RE)) {
         if (!raw || raw.startsWith("data:") || raw.startsWith("#")) continue;
         urls.add(new URL(raw, document.baseURI).href);
@@ -79,12 +92,12 @@ function cssImageUrls(): string[] {
 function collect(seen: Set<Element>): Promise<void>[] {
   const work: Promise<void>[] = [];
   for (const img of document.body.querySelectorAll("img")) {
-    if (seen.has(img) || !outsideLoader(img) || !isRendered(img)) continue;
+    if (seen.has(img) || !outsideLoader(img) || !isRendered(img) || !nearViewport(img)) continue;
     seen.add(img);
     work.push(waitForImage(img));
   }
   for (const video of document.body.querySelectorAll("video")) {
-    if (seen.has(video) || !video.poster || !outsideLoader(video)) continue;
+    if (seen.has(video) || !video.poster || !outsideLoader(video) || !nearViewport(video)) continue;
     seen.add(video);
     work.push(preloadUrl(video.poster));
   }
