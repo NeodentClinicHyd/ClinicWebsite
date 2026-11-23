@@ -395,6 +395,24 @@ export const CASES = {
     name: "Dr. Md. Miftah Ur Rahman",
     label: "Before and after treatment",
   },
+  /* Featured case: complete tooth loss in both arches (573x624 and 583x560). */
+  featured: {
+    eyebrow: "Real patient case study",
+    title: "Full Mouth Rehabilitation \u2013 Complete Tooth Replacement in Both Arches",
+    paragraphs: [
+      "This patient presented with complete tooth loss in both the upper and lower jaws. After clinical assessment and treatment planning, full mouth rehabilitation was carried out to restore teeth in both arches, as the photographs show.",
+    ],
+    highlights: [
+      "Complete tooth loss in both arches",
+      "Upper and lower arch rehabilitation",
+      "Restored appearance and dental function",
+    ],
+    note: "Every patient has different clinical requirements. Treatment options and outcomes depend on individual assessment.",
+    before: "/assets/treatment/before treatment.jpg",
+    after: "/assets/treatment/after treatment.jpg",
+    beforeAlt: "Before full mouth rehabilitation showing complete tooth loss in both upper and lower arches.",
+    afterAlt: "After full mouth rehabilitation showing restored teeth in both upper and lower arches.",
+  },
   video: {
     src: "/assets/treatment-video/neodent-full-mouth-rehabilitation-using-dental-implants.mp4",
     poster:
