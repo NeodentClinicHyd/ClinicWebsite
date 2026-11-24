@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Play, Volume2, VolumeX } from "lucide-react";
+import { Layers, Play, Smile, UserX, Volume2, VolumeX } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { CASES, SHOW_FMR_CASE_IMAGES, SHOW_MIFTAH_FMR_PAIR } from "@/lib/full-mouth-rehabilitation-page";
 import { Lightbox, type LightboxPhoto } from "./Lightbox";
@@ -28,14 +28,14 @@ import styles from "./ResultsCases.module.css";
    used exactly as supplied. */
 
 type Pair = {
-  key: "mehdipatnam" | "miftah";
+  key: "mehdipatnam" | "miftah" | "featured";
   photos: [LightboxPhoto, LightboxPhoto];
   title: string;
   place: string;
   label: string;
 };
 
-const { mehdipatnam, miftah, video } = CASES;
+const { mehdipatnam, miftah, video, featured } = CASES;
 
 const PAIRS: Pair[] = [
   {
@@ -60,6 +60,18 @@ const MIFTAH: Pair = {
   place: miftah.name,
   label: miftah.label,
 };
+
+const FEATURED: Pair = {
+  key: "featured",
+  photos: [
+    { src: featured.before, alt: featured.beforeAlt, width: 573, height: 624, label: "Before treatment" },
+    { src: featured.after, alt: featured.afterAlt, width: 583, height: 560, label: "After treatment" },
+  ],
+  title: featured.eyebrow,
+  place: "Complete tooth loss in both arches",
+  label: featured.title,
+};
+const FEATURED_ICONS = [UserX, Layers, Smile];
 
 export function ResultsCases() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -209,6 +221,60 @@ export function ResultsCases() {
             </figure>
           </SwipeRow>
         </div>
+
+        <Reveal className={styles.featuredWrap}>
+          <article className={styles.featured} aria-labelledby="fmr-featured-title">
+            <header className={styles.featuredHead}>
+              <p className={styles.featuredEyebrow}>{featured.eyebrow}</p>
+              <h3 id="fmr-featured-title" className={styles.featuredTitle}>
+                {featured.title}
+              </h3>
+            </header>
+
+            <div className={styles.featuredPhotos}>
+              {FEATURED.photos.map((photo) => (
+                <figure className={styles.featuredPlate} key={photo.src}>
+                  <button
+                    type="button"
+                    className={`${styles.thumb} ${styles.featuredThumb}`}
+                    onClick={() => setOpen(FEATURED)}
+                    aria-haspopup="dialog"
+                    aria-label={`Enlarge before and after photographs. ${photo.alt}`}
+                  >
+                    <Image
+                      className={styles.featuredImage}
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 767px) 44vw, (max-width: 1023px) 34vw, 340px"
+                    />
+                  </button>
+                  <figcaption className={styles.featuredLabel}>{photo.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className={styles.featuredBody}>
+              {featured.paragraphs.map((text) => (
+                <p key={text} className={styles.featuredText}>
+                  {text}
+                </p>
+              ))}
+              <ul className={styles.highlights}>
+                {featured.highlights.map((text, i) => {
+                  const Icon = FEATURED_ICONS[i];
+                  return (
+                    <li key={text}>
+                      <Icon size={16} aria-hidden="true" />
+                      <span>{text}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+              <p className={styles.featuredNote}>{featured.note}</p>
+            </div>
+          </article>
+        </Reveal>
 
         <Reveal className={styles.consent} delay={120}>
           <p className={styles.evidence}>{CASES.evidence}</p>
